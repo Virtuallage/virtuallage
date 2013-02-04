@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Project" table="project" catalog="vipro">
+        <id name="projectId" type="java.lang.Long">
+            <column name="project_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="institution" class="com.vipro.data.Institution" fetch="select">
+            <column name="institution_id" not-null="true" />
+        </many-to-one>
+        <property name="projectName" type="string">
+            <column name="project_name" length="40" />
+        </property>
+        <property name="projectCode" type="string">
+            <column name="project_code" length="10" />
+        </property>
+        <property name="propertyType" type="string">
+            <column name="property_type" length="20" />
+        </property>
+        <property name="reportGroup" type="string">
+            <column name="report_group" length="20" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="80" />
+        </property>
+        <property name="projectOfficeTelNo" type="string">
+            <column name="project_office_tel_no" length="20" />
+        </property>
+        <property name="projectOfficeFaxNo" type="string">
+            <column name="project_office_fax_no" length="20" />
+        </property>
+        <property name="personInCharge" type="string">
+            <column name="person_in_charge" length="30" />
+        </property>
+        <property name="picMobileNo" type="string">
+            <column name="pic_mobile_no" length="20" />
+        </property>
+        <property name="locationLongtitude" type="string">
+            <column name="location_longtitude" length="15" />
+        </property>
+        <property name="locationLatitude" type="string">
+            <column name="location_latitude" length="15" />
+        </property>
+        <property name="locationCity" type="string">
+            <column name="location_city" length="20" />
+        </property>
+        <property name="locationState" type="string">
+            <column name="location_state" length="20" />
+        </property>
+        <property name="locationCountry" type="string">
+            <column name="location_country" length="5" />
+        </property>
+        <property name="collectionInterestRate" type="big_decimal">
+            <column name="collection_interest_rate" precision="3" />
+        </property>
+        <property name="staffBookingFee" type="big_decimal">
+            <column name="staff_booking_fee" precision="7" />
+        </property>
+        <property name="publicBookingFee" type="big_decimal">
+            <column name="public_booking_fee" precision="7" />
+        </property>
+        <property name="maintenanceFeeRate" type="big_decimal">
+            <column name="maintenance_fee_rate" precision="3" />
+        </property>
+        <property name="launchDate" type="date">
+            <column name="launch_date" length="10" />
+        </property>
+        <property name="taxPercentage" type="big_decimal">
+            <column name="tax_percentage" precision="3" />
+        </property>
+        <set name="projectInventories" table="project_inventory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.ProjectInventory" />
+        </set>
+    </class>
+</hibernate-mapping>

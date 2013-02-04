@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Email" table="email" catalog="vipro">
+        <id name="emailId" type="java.lang.Long">
+            <column name="email_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <property name="emailAddress" type="string">
+            <column name="email_address" length="50" />
+        </property>
+        <property name="createdOn" type="date">
+            <column name="created_on" length="10" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

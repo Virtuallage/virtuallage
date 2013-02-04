@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Discount" table="discount" catalog="vipro">
+        <id name="discountId" type="long">
+            <column name="discount_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="description" type="string">
+            <column name="description" length="30" />
+        </property>
+        <property name="effectiveDate" type="date">
+            <column name="effective_date" length="10" />
+        </property>
+        <property name="expiryDate" type="date">
+            <column name="expiry_date" length="10" />
+        </property>
+        <property name="discountRate" type="big_decimal">
+            <column name="discount_rate" precision="3" />
+        </property>
+        <property name="createdOn" type="timestamp">
+            <column name="created_on" length="19" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

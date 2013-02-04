@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.ContactList" table="contact_list" catalog="vipro">
+        <id name="listId" type="java.lang.Long">
+            <column name="list_id" />
+            <generator class="identity" />
+        </id>
+        <property name="type" type="string">
+            <column name="type" length="5" />
+        </property>
+        <property name="subject" type="string">
+            <column name="subject" length="80" />
+        </property>
+        <set name="contacts" table="contact" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="list_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Contact" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.TransactionGroup" table="transaction_group" catalog="vipro">
+        <id name="transactionGroupId" type="java.lang.Long">
+            <column name="transaction_group_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="transactionCode" class="com.vipro.data.TransactionCode" fetch="select">
+            <column name="transaction_code" length="6" not-null="true" />
+        </many-to-one>
+        <property name="transactionDate" type="date">
+            <column name="transaction_date" length="10" />
+        </property>
+        <property name="groupType" type="string">
+            <column name="group_type" length="5" />
+        </property>
+        <property name="totalAmount" type="big_decimal">
+            <column name="total_amount" precision="9" />
+        </property>
+        <property name="totalTransaction" type="big_decimal">
+            <column name="total_transaction" precision="9" />
+        </property>
+    </class>
+</hibernate-mapping>

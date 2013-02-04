@@ -1,0 +1,31 @@
+package com.vipro.common;
+
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+/**
+ * 
+ * @author cvl
+ *
+ * @param <S>
+ */
+public class DaoImpl<S> extends HibernateDaoSupport implements Dao<S> {
+
+	@Override
+	public void insert(S o) {
+		getHibernateTemplate().persist(o);
+		
+	}
+
+	@Override
+	public void update(S o) {
+		getHibernateTemplate().persist(o);
+		
+	}
+
+	@Override
+	public void delete(S o) {
+		getHibernateTemplate().delete(o);
+		
+	}
+
+}

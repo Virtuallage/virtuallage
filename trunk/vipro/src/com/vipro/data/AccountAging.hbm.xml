@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.AccountAging" table="account_aging" catalog="vipro">
+        <id name="accountAgingId" type="java.lang.Long">
+            <column name="account_aging_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <property name="agingType" type="string">
+            <column name="aging_type" length="5" />
+        </property>
+        <property name="agingStartDate" type="date">
+            <column name="aging_start_date" length="10" />
+        </property>
+        <property name="delinquentLevel1" type="big_decimal">
+            <column name="delinquent_level_1" precision="9" />
+        </property>
+        <property name="delinquentLevel2" type="big_decimal">
+            <column name="delinquent_level_2" precision="9" />
+        </property>
+        <property name="delinquentLevel3" type="big_decimal">
+            <column name="delinquent_level_3" precision="9" />
+        </property>
+        <property name="delinquentLevel4" type="big_decimal">
+            <column name="delinquent_level_4" precision="9" />
+        </property>
+        <property name="delinquentLevel5" type="big_decimal">
+            <column name="delinquent_level_5" precision="9" />
+        </property>
+        <property name="delinquentLevel6" type="big_decimal">
+            <column name="delinquent_level_6" precision="9" />
+        </property>
+        <property name="delinquentLevel7" type="big_decimal">
+            <column name="delinquent_level_7" precision="9" />
+        </property>
+        <property name="delinquentLevel8" type="big_decimal">
+            <column name="delinquent_level_8" precision="9" />
+        </property>
+        <property name="delinquentLevel9" type="big_decimal">
+            <column name="delinquent_level_9" precision="9" />
+        </property>
+        <property name="delinquentLevel10" type="big_decimal">
+            <column name="delinquent_level_10" precision="9" />
+        </property>
+        <property name="delinquentLevel11" type="big_decimal">
+            <column name="delinquent_level_11" precision="9" />
+        </property>
+        <property name="delinquentLevel12" type="big_decimal">
+            <column name="delinquent_level_12" precision="9" />
+        </property>
+    </class>
+</hibernate-mapping>

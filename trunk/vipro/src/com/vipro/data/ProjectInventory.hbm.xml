@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.ProjectInventory" table="project_inventory" catalog="vipro">
+        <id name="inventoryId" type="java.lang.Long">
+            <column name="inventory_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="project" class="com.vipro.data.Project" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
+        <property name="unitNo" type="string">
+            <column name="unit_no" length="8" />
+        </property>
+        <property name="ptNo" type="string">
+            <column name="pt_no" length="8" />
+        </property>
+        <property name="hsdNo" type="string">
+            <column name="hsd_no" length="8" />
+        </property>
+        <property name="blockNo" type="string">
+            <column name="block_no" length="8" />
+        </property>
+        <property name="level" type="java.lang.Short">
+            <column name="level" precision="3" scale="0" />
+        </property>
+        <property name="layoutType" type="string">
+            <column name="layout_type" length="5" />
+        </property>
+        <property name="orientation" type="string">
+            <column name="orientation" length="5" />
+        </property>
+        <property name="landArea" type="java.lang.Integer">
+            <column name="land_area" />
+        </property>
+        <property name="builtUpArea" type="java.lang.Integer">
+            <column name="built_up_area" />
+        </property>
+        <property name="propertyStatus" type="string">
+            <column name="property_status" length="5" />
+        </property>
+        <property name="statusChangeDate" type="date">
+            <column name="status_change_date" length="10" />
+        </property>
+        <property name="purchasePrice" type="big_decimal">
+            <column name="purchase_price" precision="9" />
+        </property>
+        <property name="discountAmount" type="big_decimal">
+            <column name="discount_amount" precision="9" />
+        </property>
+        <property name="redemptionAmount" type="big_decimal">
+            <column name="redemption_amount" precision="9" />
+        </property>
+        <property name="redemptionPaidTodate" type="date">
+            <column name="redemption_paid_todate" length="10" />
+        </property>
+        <property name="assessment" type="big_decimal">
+            <column name="assessment" precision="7" />
+        </property>
+        <property name="quitRent" type="big_decimal">
+            <column name="quit_rent" precision="7" />
+        </property>
+        <property name="legalFee" type="big_decimal">
+            <column name="legal_fee" precision="7" />
+        </property>
+        <property name="disbursementFee" type="big_decimal">
+            <column name="disbursement_fee" precision="9" />
+        </property>
+        <property name="propertyAddress" type="string">
+            <column name="property_address" length="60" />
+        </property>
+        <property name="propertyTitleType" type="string">
+            <column name="property_title_type" length="10" />
+        </property>
+        <property name="strataTitleObtainedDate" type="date">
+            <column name="strata_title_obtained_date" length="10" />
+        </property>
+        <property name="keyHandoverDate" type="date">
+            <column name="key_handover_date" length="10" />
+        </property>
+        <property name="developmentStage" type="java.lang.Short">
+            <column name="development_stage" precision="3" scale="0" />
+        </property>
+        <set name="accounts" table="account" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="inventory_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Account" />
+        </set>
+        <set name="progressiveBillings" table="progressive_billing" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="inventory_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.ProgressiveBilling" />
+        </set>
+    </class>
+</hibernate-mapping>
