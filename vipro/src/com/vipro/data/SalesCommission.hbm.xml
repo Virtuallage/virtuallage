@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.SalesCommission" table="sales_commission" catalog="vipro">
+        <id name="commissionId" type="java.lang.Long">
+            <column name="commission_id" />
+            <generator class="identity" />
+        </id>
+        <property name="description" type="string">
+            <column name="description" length="30" />
+        </property>
+        <property name="effectiveDate" type="timestamp">
+            <column name="effective_date" length="19" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="5" />
+        </property>
+        <property name="amountOrRate" type="big_decimal">
+            <column name="amount_or_rate" precision="6" />
+        </property>
+        <property name="createdOn" type="timestamp">
+            <column name="created_on" length="19" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.TransactionHistory" table="transaction_history" catalog="vipro">
+        <id name="transactionId" type="java.lang.Long">
+            <column name="transaction_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="transactionCode" class="com.vipro.data.TransactionCode" fetch="select">
+            <column name="transaction_code" length="6" not-null="true" />
+        </many-to-one>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <property name="transactionDate" type="timestamp">
+            <column name="transaction_date" length="19" />
+        </property>
+        <property name="transactionDescription" type="string">
+            <column name="transaction_description" length="40" />
+        </property>
+        <property name="refNo" type="string">
+            <column name="ref_no" length="20" />
+        </property>
+        <property name="postingDate" type="date">
+            <column name="posting_date" length="10" />
+        </property>
+        <property name="statementDate" type="date">
+            <column name="statement_date" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

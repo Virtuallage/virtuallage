@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Address" table="address" catalog="vipro">
+        <id name="addressId" type="java.lang.Long">
+            <column name="address_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <property name="addressType" type="string">
+            <column name="address_type" length="5" />
+        </property>
+        <property name="addressLine1" type="string">
+            <column name="address_line_1" length="40" />
+        </property>
+        <property name="addressLine2" type="string">
+            <column name="address_line_2" length="40" />
+        </property>
+        <property name="addressLine3" type="string">
+            <column name="address_line_3" length="40" />
+        </property>
+        <property name="postcode" type="string">
+            <column name="postcode" length="10" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="20" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="20" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="5" />
+        </property>
+        <property name="createdOn" type="date">
+            <column name="created_on" length="10" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

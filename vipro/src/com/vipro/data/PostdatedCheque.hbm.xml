@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.PostdatedCheque" table="postdated_cheque" catalog="vipro">
+        <id name="chequeId" type="java.lang.Long">
+            <column name="cheque_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
+        <property name="transactionDate" type="date">
+            <column name="transaction_date" length="10" />
+        </property>
+        <property name="chequeValidDate" type="date">
+            <column name="cheque_valid_date" length="10" />
+        </property>
+        <property name="chequeAmount" type="big_decimal">
+            <column name="cheque_amount" precision="9" />
+        </property>
+        <property name="chequeNo" type="string">
+            <column name="cheque_no" length="20" />
+        </property>
+        <property name="bankName" type="string">
+            <column name="bank_name" length="10" />
+        </property>
+        <property name="transactionCode" type="string">
+            <column name="transaction_code" length="10" />
+        </property>
+        <property name="chequeStatus" type="string">
+            <column name="cheque_status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Account" table="account" catalog="vipro">
+        <id name="accountId" type="java.lang.Long">
+            <column name="account_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select">
+            <column name="inventory_id" not-null="true" />
+        </many-to-one>
+        <property name="accountType" type="string">
+            <column name="account_type" length="5" />
+        </property>
+        <property name="accountStatus" type="string">
+            <column name="account_status" length="5" />
+        </property>
+        <property name="attendedBy" type="java.lang.Long">
+            <column name="attended_by" />
+        </property>
+        <property name="registrationFee" type="big_decimal">
+            <column name="registration_fee" precision="7" />
+        </property>
+        <property name="registrationNo" type="string">
+            <column name="registration_no" length="20" />
+        </property>
+        <property name="datePurchased" type="date">
+            <column name="date_purchased" length="10" />
+        </property>
+        <property name="purchasePrice" type="big_decimal">
+            <column name="purchase_price" precision="9" />
+        </property>
+        <property name="discountedAmount" type="big_decimal">
+            <column name="discounted_amount" precision="7" />
+        </property>
+        <property name="commissionAmount" type="big_decimal">
+            <column name="commission_amount" precision="7" />
+        </property>
+        <property name="commissionPaidDate" type="date">
+            <column name="commission_paid_date" length="10" />
+        </property>
+        <property name="netPrice" type="big_decimal">
+            <column name="net_price" precision="9" />
+        </property>
+        <property name="purchaseType" type="string">
+            <column name="purchase_type" length="5" />
+        </property>
+        <property name="panelBankId" type="java.lang.Long">
+            <column name="panel_bank_id" />
+        </property>
+        <property name="loanAmount" type="big_decimal">
+            <column name="loan_amount" precision="9" />
+        </property>
+        <property name="totalPaymentTodate" type="big_decimal">
+            <column name="total_payment_todate" precision="9" />
+        </property>
+        <property name="redemptionBankId" type="java.lang.Long">
+            <column name="redemption_bank_id" />
+        </property>
+        <property name="bankRedemptionSum" type="big_decimal">
+            <column name="bank_redemption_sum" precision="9" />
+        </property>
+        <property name="bankRedemptionTodate" type="big_decimal">
+            <column name="bank_redemption_todate" precision="9" />
+        </property>
+        <property name="spaSignedDate" type="date">
+            <column name="spa_signed_date" length="10" />
+        </property>
+        <property name="spaStampedDate" type="date">
+            <column name="spa_stamped_date" length="10" />
+        </property>
+        <property name="spaVerifiedBy" type="java.lang.Long">
+            <column name="spa_verified_by" />
+        </property>
+        <property name="spaVerifiedDate" type="date">
+            <column name="spa_verified_date" length="10" />
+        </property>
+        <property name="spaSolicitorId" type="java.lang.Long">
+            <column name="spa_solicitor_id" />
+        </property>
+        <property name="loSignedDate" type="date">
+            <column name="LO_signed_date" length="10" />
+        </property>
+        <property name="loVerifiedDate" type="date">
+            <column name="LO_verified_date" length="10" />
+        </property>
+        <property name="loVerifiedBy" type="java.lang.Long">
+            <column name="LO_verified_by" />
+        </property>
+        <property name="laSignedDate" type="date">
+            <column name="LA_signed_date" length="10" />
+        </property>
+        <property name="laStampedDate" type="date">
+            <column name="LA_stamped_date" length="10" />
+        </property>
+        <property name="laVerifiedBy" type="java.lang.Long">
+            <column name="LA_verified_by" />
+        </property>
+        <property name="laVerifiedDate" type="date">
+            <column name="LA_verified_date" length="10" />
+        </property>
+        <property name="laSolicitorId" type="java.lang.Long">
+            <column name="LA_solicitor_id" />
+        </property>
+        <property name="adviseSignedDate" type="date">
+            <column name="advise_signed_date" length="10" />
+        </property>
+        <property name="adviseStampedDate" type="date">
+            <column name="advise_stamped_date" length="10" />
+        </property>
+        <property name="adviseVerifiedBy" type="java.lang.Long">
+            <column name="advise_verified_by" />
+        </property>
+        <property name="adviseVerifiedDate" type="date">
+            <column name="advise_verified_date" length="10" />
+        </property>
+        <property name="maintenanceStartDate" type="date">
+            <column name="maintenance_start_date" length="10" />
+        </property>
+        <property name="maintenanceEndDate" type="date">
+            <column name="maintenance_end_date" length="10" />
+        </property>
+        <property name="maintenanceFee" type="big_decimal">
+            <column name="maintenance_fee" precision="7" />
+        </property>
+        <property name="maintenanceBilingAddress" type="java.lang.Character">
+            <column name="maintenance_biling_address" length="1" />
+        </property>
+        <property name="maintenanceFeeFreq" type="string">
+            <column name="maintenance_fee_freq" length="2" />
+        </property>
+        <property name="fireInsuranceDueDate" type="date">
+            <column name="fire_insurance_due_date" length="10" />
+        </property>
+        <property name="fireInsuranceAmount" type="big_decimal">
+            <column name="fire_insurance_amount" precision="7" />
+        </property>
+        <property name="fireInsuranceCompanyId" type="java.lang.Long">
+            <column name="fire_insurance_company_id" />
+        </property>
+        <property name="lastPaymentMadeDate" type="date">
+            <column name="last_Payment_made_date" length="10" />
+        </property>
+        <property name="maintenanceBilingCycle" type="string">
+            <column name="maintenance_biling_cycle" length="2" />
+        </property>
+        <property name="cancelledReason" type="string">
+            <column name="cancelled_reason" length="5" />
+        </property>
+        <set name="waterBillings" table="water_billing" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.WaterBilling" />
+        </set>
+        <set name="projects" table="project" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Project" />
+        </set>
+        <set name="addresses" table="address" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Address" />
+        </set>
+        <set name="emails" table="email" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Email" />
+        </set>
+        <set name="postdatedCheques" table="postdated_cheque" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.PostdatedCheque" />
+        </set>
+        <set name="mobilePhones" table="mobile_phone" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.MobilePhone" />
+        </set>
+        <set name="joinAccounts" table="join_account" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.JoinAccount" />
+        </set>
+        <set name="transactionHistories" table="transaction_history" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.TransactionHistory" />
+        </set>
+        <set name="accountAgings" table="account_aging" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.AccountAging" />
+        </set>
+    </class>
+</hibernate-mapping>

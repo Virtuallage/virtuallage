@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Customer" table="customer" catalog="vipro">
+        <id name="customerId" type="java.lang.Long">
+            <column name="customer_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="institution" class="com.vipro.data.Institution" fetch="select">
+            <column name="institution_id" not-null="true" />
+        </many-to-one>
+        <property name="customerCategory" type="string">
+            <column name="customer_category" length="5" />
+        </property>
+        <property name="identityType" type="string">
+            <column name="identity_type" length="5" />
+        </property>
+        <property name="identityNo" type="string">
+            <column name="identity_no" length="15" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" length="10" />
+        </property>
+        <property name="fullName" type="string">
+            <column name="full_name" length="60" />
+        </property>
+        <property name="specialHandling" type="string">
+            <column name="special_handling" length="5" />
+        </property>
+        <property name="race" type="string">
+            <column name="race" length="5" />
+        </property>
+        <property name="bumiIndicator" type="string">
+            <column name="bumi_indicator" length="1" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="4" />
+        </property>
+        <property name="maritalStatus" type="string">
+            <column name="marital_status" length="4" />
+        </property>
+        <property name="employerName" type="string">
+            <column name="employer_name" length="60" />
+        </property>
+        <property name="houseTelNo" type="string">
+            <column name="house_tel_no" length="15" />
+        </property>
+        <property name="officeTelNo" type="string">
+            <column name="office_tel_no" length="15" />
+        </property>
+        <property name="faxNo" type="string">
+            <column name="fax_no" length="15" />
+        </property>
+        <property name="communicationType" type="string">
+            <column name="communication_type" length="5" />
+        </property>
+        <property name="language" type="string">
+            <column name="language" length="5" />
+        </property>
+        <property name="dateOfBirth" type="date">
+            <column name="date_of_birth" length="10" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="20" />
+        </property>
+        <property name="dateCreated" type="date">
+            <column name="date_created" length="10" />
+        </property>
+        <set name="addresses" table="address" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Address" />
+        </set>
+        <set name="accounts" table="account" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Account" />
+        </set>
+        <set name="emails" table="email" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Email" />
+        </set>
+        <set name="joinAccounts" table="join_account" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.JoinAccount" />
+        </set>
+        <set name="mobilePhones" table="mobile_phone" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.MobilePhone" />
+        </set>
+        <set name="contacts" table="contact" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Contact" />
+        </set>
+        <set name="vouchers" table="voucher" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Voucher" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Institution" table="institution" catalog="vipro">
+        <id name="institutionId" type="java.lang.Long">
+            <column name="institution_id" />
+            <generator class="identity" />
+        </id>
+        <property name="institutionName" type="string">
+            <column name="institution_name" length="60" />
+        </property>
+        <property name="initial" type="string">
+            <column name="initial" length="6" />
+        </property>
+        <property name="officeTel" type="string">
+            <column name="office_tel" length="20" />
+        </property>
+        <property name="contactPerson" type="string">
+            <column name="contact_person" length="60" />
+        </property>
+        <property name="contactPersonTitle" type="string">
+            <column name="contact_person_title" length="10" />
+        </property>
+        <property name="contactPersonMobile" type="string">
+            <column name="contact_person_mobile" length="20" />
+        </property>
+        <property name="contactPersonEmail" type="string">
+            <column name="contact_person_email" length="50" />
+        </property>
+        <property name="currencySymbol" type="string">
+            <column name="currency_symbol" length="4" />
+        </property>
+        <property name="decimalPoints" type="java.lang.Byte">
+            <column name="decimal_points" precision="2" scale="0" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+        <set name="projects" table="project" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="institution_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Project" />
+        </set>
+        <set name="holidaies" table="holiday" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="institution_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Holiday" />
+        </set>
+        <set name="userProfiles" table="user_profile" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="institution_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.UserProfile" />
+        </set>
+        <set name="customers" table="customer" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="institution_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Customer" />
+        </set>
+        <set name="businessPartners" table="business_partner" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="institution_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.BusinessPartner" />
+        </set>
+    </class>
+</hibernate-mapping>

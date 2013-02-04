@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.Contact" table="contact" catalog="vipro">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="contactList" class="com.vipro.data.ContactList" fetch="select">
+            <column name="list_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <property name="contactName" type="string">
+            <column name="contact_name" length="80" />
+        </property>
+        <property name="contactType" type="string">
+            <column name="contact_type" length="2" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="40" />
+        </property>
+        <property name="mobileNo" type="string">
+            <column name="mobile_no" length="20" />
+        </property>
+        <property name="docTemplateId" type="string">
+            <column name="doc_template_id" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

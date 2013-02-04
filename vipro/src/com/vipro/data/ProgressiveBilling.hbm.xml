@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.ProgressiveBilling" table="progressive_billing" catalog="vipro">
+        <id name="scheduleId" type="java.lang.Long">
+            <column name="schedule_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select">
+            <column name="inventory_id" not-null="true" />
+        </many-to-one>
+        <property name="seqNo" type="java.lang.Byte">
+            <column name="seq_no" precision="2" scale="0" />
+        </property>
+        <property name="stageNo" type="string">
+            <column name="stage_no" length="5" />
+        </property>
+        <property name="stageDescription" type="string">
+            <column name="stage_description" length="120" />
+        </property>
+        <property name="percentage" type="big_decimal">
+            <column name="percentage" precision="3" />
+        </property>
+        <property name="dueDate" type="date">
+            <column name="due_date" length="10" />
+        </property>
+        <property name="interestRate" type="big_decimal">
+            <column name="interest_rate" precision="3" />
+        </property>
+        <property name="amountBilled" type="big_decimal">
+            <column name="amount_billed" precision="9" />
+        </property>
+        <property name="dateBilled" type="date">
+            <column name="date_billed" length="10" />
+        </property>
+        <property name="paymentDueDate" type="date">
+            <column name="payment_due_date" length="10" />
+        </property>
+        <property name="datePaid" type="date">
+            <column name="date_paid" length="10" />
+        </property>
+        <property name="overdueInterest" type="big_decimal">
+            <column name="overdue_interest" precision="7" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

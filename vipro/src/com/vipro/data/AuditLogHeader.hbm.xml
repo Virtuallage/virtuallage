@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.AuditLogHeader" table="audit_log_header" catalog="vipro">
+        <id name="hdrId" type="java.lang.Long">
+            <column name="hdr_id" />
+            <generator class="identity" />
+        </id>
+        <set name="auditLogDets" table="audit_log_det" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="hdr_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.AuditLogDet" />
+        </set>
+    </class>
+</hibernate-mapping>

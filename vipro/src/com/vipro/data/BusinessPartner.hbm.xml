@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.BusinessPartner" table="business_partner" catalog="vipro">
+        <composite-id name="id" class="com.vipro.data.BusinessPartnerId">
+            <key-property name="partnerId" type="string">
+                <column name="partner_id" length="10" />
+            </key-property>
+            <key-property name="partnerType" type="string">
+                <column name="partner_type" length="10" />
+            </key-property>
+            <key-property name="businessRegistrationNo" type="string">
+                <column name="business_registration_no" length="30" />
+            </key-property>
+            <key-property name="registrationDate" type="date">
+                <column name="registration_date" length="10" />
+            </key-property>
+            <key-property name="companyName" type="string">
+                <column name="company_name" length="60" />
+            </key-property>
+            <key-property name="address" type="string">
+                <column name="address" length="100" />
+            </key-property>
+            <key-property name="contactPersonTitle" type="string">
+                <column name="contact_person_title" length="10" />
+            </key-property>
+            <key-property name="contactPersonName" type="string">
+                <column name="contact_person_name" length="50" />
+            </key-property>
+            <key-property name="officeTel" type="string">
+                <column name="office_tel" length="20" />
+            </key-property>
+            <key-property name="faxNo" type="string">
+                <column name="fax_no" length="20" />
+            </key-property>
+            <key-property name="mobileNo" type="string">
+                <column name="mobile_no" length="20" />
+            </key-property>
+            <key-property name="emailAddress" type="string">
+                <column name="email_address" length="30" />
+            </key-property>
+            <key-property name="status" type="string">
+                <column name="status" length="5" />
+            </key-property>
+            <key-property name="institutionId" type="long">
+                <column name="institution_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="institution" class="com.vipro.data.Institution" update="false" insert="false" fetch="select">
+            <column name="institution_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

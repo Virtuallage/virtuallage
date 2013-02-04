@@ -1,0 +1,58 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    <p:growl id="messages"/>
+    
+    <h:form>
+    <p:menubar>
+    	<p:submenu label="My Desk">
+    		
+    	</p:submenu>
+    	<p:submenu label="Setup">
+    		<p:menuitem value="Business Parameter" url="#" />  
+    		<p:menuitem value="Business Partner Profile" url="#" />  
+    		<p:menuitem value="User Group" url="#" />  
+    		<p:menuitem value="User Profile" url="#" />  
+    	</p:submenu>
+    	<p:submenu label="Sales">
+    		<p:menuitem value="Project Setup" url="#" />
+    		<p:menuitem value="Price Adjustment" url="#" />
+    		<p:menuitem value="Sales Registration" url="#" />
+    		<p:menuitem value="Sales Update" url="#" />
+    		<p:menuitem value="Sales Cancellation" url="#" />
+    		<p:menuitem value="Sales Commission" url="#" />
+    		<p:menuitem value="Potential Purchaser Entry" url="#" />        
+    	</p:submenu>
+    	<p:submenu label="Sales Admin">
+    		<p:menuitem value="Property Unit Update" url="#" />
+    		<p:menuitem value="Document Verification" url="#" />
+    		<p:menuitem value="Progessive Billing" url="#" />
+    		<p:menuitem value="Renotice Processing" url="#" />
+    		<p:menuitem value="Payment Entry" url="#" />
+    	</p:submenu>
+    	<p:submenu label="Customer Service">
+    		<p:menuitem value="Purchaser Information" url="#" />
+    		<p:menuitem value="Contact Management" url="#" />
+    	</p:submenu>
+    	<p:submenu label="Account">
+    		<p:menuitem value="Transaction Entry" url="#" />
+    		<p:menuitem value="Transaction Approval" url="#" />
+    		<p:menuitem value="External Transaction Upload" url="#" />
+    	</p:submenu>
+    	<p:submenu label="MIS">
+    		<p:menuitem value="..." url="#" />
+    	</p:submenu>
+    	<p:submenu label="System">
+    		<p:menuitem value="My Profile" url="#" />  
+    		<p:menuitem value="Change Password" url="change_password.xhtml" />  
+    		<p:menuitem value="Logout" url="#" onclick="javascript:window.location.href='/vipro/j_spring_security_logout';"/>  
+    	</p:submenu>
+    </p:menubar>
+    </h:form>
+    
+</ui:composition>
