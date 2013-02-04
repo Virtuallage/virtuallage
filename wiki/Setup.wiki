@@ -19,10 +19,15 @@ Run dml.sql to populate data.
 
 =Setup eclipse=
 Install svn plugin if you don't have it.
+
 Checkout source from https://virtuallage.googlecode.com/svn/trunk/vipro
+
 Create tomcat server in eclipse.
+
 Add project to tomcat server.
+
 Start Server.
 
 Visit http://localhost:8080/vipro/
+
 login "root", password is "password"
