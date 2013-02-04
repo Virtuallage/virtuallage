@@ -1,0 +1,26 @@
+
+#Setup Development Environment
+
+=MySQL=
+Install MySQL 5.x
+Install MySQL workbench 5.2
+Create user vipro with password="password".
+Create Schema vipro.
+Grant DBA and all permissions to user vipro.
+Run vipro.sql to create all tables.
+Run dml.sql to populate data.
+
+Install Tomcat 6.0.x
+
+=Setup eclipse=
+Install eclipse plugin http://download.eclipse.org/egit/updates
+When installing GIT plugin, uncheck "EGIT plugin import support"
+Checkout project using GIT from BitBucket repository
+
+
+Create tomcat server in eclipse.
+Add project to tomcat server.
+Start Server.
+
+Visit http://localhost:8080/vipro/
+login "root", password is "password"
