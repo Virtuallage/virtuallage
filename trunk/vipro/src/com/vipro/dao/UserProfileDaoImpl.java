@@ -2,6 +2,8 @@ package com.vipro.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.vipro.common.DaoImpl;
 import com.vipro.data.UserProfile;
 
@@ -11,6 +13,7 @@ import com.vipro.data.UserProfile;
  *
  */
 @SuppressWarnings("unchecked")
+@Repository("com.vipro.dao.UserProfileDao")
 public class UserProfileDaoImpl extends DaoImpl<UserProfile> implements UserProfileDao {
 
 	
