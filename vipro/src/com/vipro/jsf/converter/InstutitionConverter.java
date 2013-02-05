@@ -25,11 +25,15 @@ public class InstutitionConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (value instanceof String) {
+			return (String) value;
+		}
 		if (value instanceof Institution) {
 			Institution ins = (Institution) value;
 			return ins.getInstitutionId().toString();
 		}
 		return null;
+
 	}
 
 }

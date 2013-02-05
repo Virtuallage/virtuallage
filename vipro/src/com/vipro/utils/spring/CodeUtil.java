@@ -24,7 +24,7 @@ public final class CodeUtil {
 		List<SelectItem> insItems = new ArrayList<SelectItem>();
 		insItems.add( new SelectItem(null, "Select One"));
 		for (Institution i : ins) {
-			insItems.add( new SelectItem(i.getInstitutionId(), i.getInstitutionName()) );
+			insItems.add( new SelectItem(i.getInstitutionId().toString(), i.getInstitutionName()) );
 		}
 		
 		return insItems;

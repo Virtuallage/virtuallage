@@ -17,6 +17,7 @@ import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.CodeService;
 import com.vipro.service.InstitutionService;
+import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -77,6 +78,8 @@ public class MyUserProfile implements PageConst {
 	
 	
 	public String save() {
+		UserProfileService service = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		service.update(userProfile);
 		FacesUtil.addMessage("My User Profile", "User Profile is updated");
 		return MAIN;
 	}
