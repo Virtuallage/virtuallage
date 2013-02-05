@@ -1,0 +1,33 @@
+#header {
+	height: 10px;
+	overflow: hidden;
+}
+
+#content {
+	overflow: hidden;
+	margin-bottom: 20px;
+	float: center;
+	width: 1024px;
+	padding: 2px;
+	min-height: 500px;
+
+}
+
+
+#footer {
+	overflow: hidden;
+	float:center;
+	margin: 20px auto 0px auto;
+	padding: 20px 0px;
+
+}
+
+#footer p {
+	text-align: center;
+	font-size: 7px;
+}
+
+#footer a {
+}
+
+
