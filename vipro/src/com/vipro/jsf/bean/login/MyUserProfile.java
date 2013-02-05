@@ -22,17 +22,10 @@ public class MyUserProfile implements PageConst {
 	private UserProfile userProfile;
 	private List<SelectItem> institutions;
 	private List<SelectItem> departments;
-	private Long institutionId;
+
 	
 	
 
-	public Long getInstitutionId() {
-		return institutionId;
-	}
-
-	public void setInstitutionId(Long institutionId) {
-		this.institutionId = institutionId;
-	}
 
 	public List<SelectItem> getInstitutions() {
 		return institutions;
