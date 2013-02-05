@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:define name="title">
+My User Profile
+</ui:define>
+
+<ui:define name="content">	
+	
+	<h:form id="myUserProfileForm" >
+	
+	<p:panelGrid columns="2" style="width:60%;border:0px;"> 
+		
+		<p:outputLabel value="User Name" />
+		<p:outputLabel value="#{myUserProfile.userProfile.username}"/>
+		
+		<p:outputLabel value="Company Name" for="companyName"/>
+		<p:selectOneMenu id="companyName" required="true" value="#{myUserProfile.userProfile.institution}" converter="institution"> 
+			<f:selectItems value="#{myUserProfile.institutions}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Department" for="departments"/>
+		<p:selectOneMenu id="departments" required="true" value="#{myUserProfile.userProfile.officeNo}" >  
+			<f:selectItems value="#{myUserProfile.departments}"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Mobile No" for="mobileNo"/>
+		<p:inputText id="mobileNo" required="true" value="#{myUserProfile.userProfile.mobileNo}"/>
+		
+		<p:outputLabel value="Office No" for="officeNo"/>
+		<p:inputText id="officeNo" required="true" value="#{myUserProfile.userProfile.officeNo}"/>
+		
+		<p:outputLabel value="Email" for="email"/>
+		<p:inputText id="email" required="true" value="#{myUserProfile.userProfile.email}" maxlength="30"/>
+		
+	
+		<f:facet name="footer">
+                 <p:commandButton id="saveButton" action="#{myUserProfile.save}" value="Save" ajax="false"/>
+        </f:facet>		
+	</p:panelGrid>
+	
+	</h:form>
+
+</ui:define>
+</ui:composition>

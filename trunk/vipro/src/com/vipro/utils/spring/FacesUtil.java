@@ -16,7 +16,7 @@ import com.vipro.dao.UserProfileDao;
  * @author cvl
  *
  */
-public class FacesUtil {
+public final class FacesUtil {
 
 	
 	public static AuthUser getCurrentUser() {

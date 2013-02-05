@@ -7,10 +7,9 @@
 	overflow: hidden;
 	margin-bottom: 20px;
 	float: center;
-	width: 1280px;
+	width: 1320px;
 	padding: 2px;
-	min-height: 600px;
-	text-align: center;
+	min-height: 520px;
 	
 }
 
@@ -32,5 +31,5 @@
 }
 
 .ui-widget, .ui-widget .ui-widget {
-    font-size: 90%;
+    font-size: 95%;
 }

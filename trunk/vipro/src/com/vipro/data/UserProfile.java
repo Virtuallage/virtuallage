@@ -15,6 +15,7 @@ public class UserProfile implements java.io.Serializable {
 	private String name;
 	private String address;
 	private String staffNo;
+	private String department;
 	private String email;
 	private String mobileNo;
 	private String officeNo;
@@ -56,6 +57,14 @@ public class UserProfile implements java.io.Serializable {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 	public Institution getInstitution() {

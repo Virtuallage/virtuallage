@@ -26,6 +26,9 @@
         <property name="address" type="string">
             <column name="address" length="60" />
         </property>
+        <property name="department" type="string">
+            <column name="department" length="10"/>
+        </property>
         <property name="staffNo" type="string">
             <column name="staff_no" length="20" />
         </property>
