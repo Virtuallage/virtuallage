@@ -2,6 +2,11 @@ package com.vipro.service;
 
 import com.vipro.data.UserProfile;
 
+/**
+ * 
+ * @author cvl
+ *
+ */
 public interface UserProfileService {
 
 	

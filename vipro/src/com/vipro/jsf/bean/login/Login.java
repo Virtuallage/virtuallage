@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import com.vipro.auth.AuthUser;
 import com.vipro.utils.spring.FacesUtil;
 
+/**
+ * 
+ * @author cvl
+ *
+ */
 @ManagedBean(name = "login")
 public class Login {
 	private String username;
