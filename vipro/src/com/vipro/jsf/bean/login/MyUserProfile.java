@@ -1,7 +1,6 @@
 package com.vipro.jsf.bean.login;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -10,13 +9,8 @@ import javax.faces.model.SelectItem;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CodeConst;
-import com.vipro.data.CodeDet;
-import com.vipro.data.CodeHeader;
-import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.PageConst;
-import com.vipro.service.CodeService;
-import com.vipro.service.InstitutionService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
