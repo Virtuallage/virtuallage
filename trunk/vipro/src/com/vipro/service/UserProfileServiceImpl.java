@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 import com.vipro.dao.UserProfileDao;
 import com.vipro.data.UserProfile;
 
+/**
+ * 
+ * @author cvl
+ *
+ */
 @Service("com.vipro.service.UserProfileService")
 public class UserProfileServiceImpl implements UserProfileService {
 

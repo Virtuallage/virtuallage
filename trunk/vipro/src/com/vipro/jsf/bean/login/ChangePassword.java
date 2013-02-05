@@ -14,6 +14,11 @@ import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
+/**
+ * 
+ * @author cvl
+ *
+ */
 @ManagedBean(name = "changePassword")
 @RequestScoped
 public class ChangePassword implements PageConst {
