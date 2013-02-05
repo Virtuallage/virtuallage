@@ -1,10 +1,15 @@
 package com.vipro.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.vipro.dao.UserProfileDao;
 import com.vipro.data.UserProfile;
 
+@Service("com.vipro.service.UserProfileService")
 public class UserProfileServiceImpl implements UserProfileService {
 
+	@Autowired
 	private UserProfileDao userProfileDao;
 
 	public UserProfileDao getUserProfileDao() {

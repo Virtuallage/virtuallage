@@ -18,8 +18,5 @@
 	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder">
 	</bean>
 	
-	
-	<bean id="com.vipro.service.UserProfileService" class="com.vipro.service.UserProfileServiceImpl">
-	    <property name="userProfileDao" ref="com.vipro.dao.UserProfileDao"/>
-	</bean>
+
 </beans>
