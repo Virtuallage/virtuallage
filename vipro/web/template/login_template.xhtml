@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Vipro - <ui:insert name="title"></ui:insert></title>
+    </h:head>
+    <h:body>
+        <div id="header"><p:growl id="messages"/></div>
+        <div id="content"><ui:insert name="content">Default content</ui:insert></div>
+        <div id="footer">
+            <table border="0">
+        		<tr>
+        			<td align="left">Vipro - Virtuallage Property Development System</td>
+        			<td align="right">Copyright(C) 2013 Virtuallage Team  http://www.virtuallage.com</td>
+        		</tr>
+        	</table>
+        </div>
+    </h:body>
+</html>
