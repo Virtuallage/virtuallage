@@ -7,9 +7,9 @@
 	overflow: hidden;
 	margin-bottom: 20px;
 	float: center;
-	width: 1024px;
+	width: 1280px;
 	padding: 2px;
-	min-height: 500px;
+	min-height: 600px;
 
 }
 
@@ -30,4 +30,6 @@
 #footer a {
 }
 
-
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 90%;
+}
