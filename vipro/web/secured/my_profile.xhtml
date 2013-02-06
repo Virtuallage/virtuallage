@@ -9,14 +9,18 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 <ui:define name="title">
-My User Profile
+My Profile
 </ui:define>
 
 <ui:define name="content">	
 	
+	<p:panel id="panel" header="My Profile" style="width:60%">  
+    
+      <p:focus context="panel"/> 
+        
 	<h:form id="myUserProfileForm" >
 	
-	<p:panelGrid columns="2" style="width:60%;border:0px;"> 
+	<h:panelGrid columns="2" style="width:60%;border:0px;"> 
 		
 		<p:outputLabel value="User Name" />
 		<p:outputLabel value="#{myUserProfile.userProfile.username}"/>
@@ -40,13 +44,13 @@ My User Profile
 		<p:outputLabel value="Email" for="email"/>
 		<p:inputText id="email" required="true" value="#{myUserProfile.userProfile.email}" maxlength="30"/>
 		
+			
+	</h:panelGrid>
 	
-		<f:facet name="footer">
-                 <p:commandButton id="saveButton" action="#{myUserProfile.save}" value="Save" ajax="false"/>
-        </f:facet>		
-	</p:panelGrid>
+		<p:commandButton id="saveButton" action="#{myUserProfile.save}" value="Save" ajax="false"/>
 	
 	</h:form>
-
+	
+	</p:panel>
 </ui:define>
 </ui:composition>
