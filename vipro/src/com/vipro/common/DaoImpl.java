@@ -19,13 +19,13 @@ public class DaoImpl<S> extends HibernateDaoSupport implements Dao<S> {
 	
 	@Override
 	public void insert(S o) {
-		getHibernateTemplate().persist(o);
+		getHibernateTemplate().saveOrUpdate(o);
 		
 	}
 
 	@Override
 	public void update(S o) {
-		getHibernateTemplate().persist(o);
+		getHibernateTemplate().saveOrUpdate(o);
 		
 	}
 
