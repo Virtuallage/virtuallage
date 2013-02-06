@@ -3,7 +3,8 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:sec="http://www.springframework.org/security/tags">
     
     
     
@@ -12,12 +13,15 @@
     	<p:submenu label="My Desk">
     		
     	</p:submenu>
-    	<p:submenu label="Setup">
-    		<p:menuitem value="Business Parameter" url="#" />  
-    		<p:menuitem value="Business Partner Profile" url="#" />  
-    		<p:menuitem value="User Group" url="#" />  
-    		<p:menuitem value="User Profile" url="#" />  
-    	</p:submenu>
+    	<sec:authorize ifAnyGranted="ROLE_SETUP">
+	    	<p:submenu label="Setup">
+	    		<p:menuitem value="Business Parameter" url="#" />  
+	    		<p:menuitem value="Business Partner Profile" url="#" />  
+	    		<p:menuitem value="User Group" url="#" />  
+	    		<p:menuitem value="User Profile" url="#" />  
+	    	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales">
     		<p:menuitem value="Project Setup" url="#" />
     		<p:menuitem value="Price Adjustment" url="#" />
@@ -27,6 +31,8 @@
     		<p:menuitem value="Sales Commission" url="#" />
     		<p:menuitem value="Potential Purchaser Entry" url="#" />        
     	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
     	<p:submenu label="Sales Admin">
     		<p:menuitem value="Property Unit Update" url="#" />
     		<p:menuitem value="Document Verification" url="#" />
@@ -34,23 +40,32 @@
     		<p:menuitem value="Renotice Processing" url="#" />
     		<p:menuitem value="Payment Entry" url="#" />
     	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_CUST_SERV">
     	<p:submenu label="Customer Service">
     		<p:menuitem value="Purchaser Information" url="#" />
     		<p:menuitem value="Contact Management" url="#" />
     	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_ACCT">
     	<p:submenu label="Account">
     		<p:menuitem value="Transaction Entry" url="#" />
     		<p:menuitem value="Transaction Approval" url="#" />
     		<p:menuitem value="External Transaction Upload" url="#" />
     	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="MIS">
     		<p:menuitem value="..." url="#" />
     	</p:submenu>
+    	</sec:authorize>
+    	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System">
     		<p:menuitem value="My Profile" url="my_profile.xhtml" />  
     		<p:menuitem value="Change Password" url="change_password.xhtml" />  
     		<p:menuitem value="Logout" url="#" onclick="javascript:window.location.href='/vipro/j_spring_security_logout';"/>  
     	</p:submenu>
+    	</sec:authorize>
     </p:menubar>
     </h:form>
     
