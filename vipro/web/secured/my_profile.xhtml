@@ -23,7 +23,7 @@ My Profile
 	<h:panelGrid columns="2" style="width:60%;border:0px;"> 
 		
 		<p:outputLabel value="User Name" />
-		<p:outputLabel value="#{myUserProfile.userProfile.username}"/>
+		<p:outputLabel value="#{myUserProfile.userProfile.name}"/>
 		
 		<p:outputLabel value="Company Name" for="companyName"/>
 		<p:selectOneMenu id="companyName" required="true" value="#{myUserProfile.userProfile.institution}" converter="institution"> 
@@ -31,7 +31,7 @@ My Profile
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Department" for="departments"/>
-		<p:selectOneMenu id="departments" required="true" value="#{myUserProfile.userProfile.officeNo}" >  
+		<p:selectOneMenu id="departments" required="true" value="#{myUserProfile.userProfile.department}" >  
 			<f:selectItems value="#{myUserProfile.departments}"/>
 		</p:selectOneMenu>
 		
