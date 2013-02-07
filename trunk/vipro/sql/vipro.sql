@@ -634,6 +634,7 @@ ALTER TABLE vipro.contact
       
       
       
+
 DROP TABLE IF EXISTS vipro.case_activity;
 DROP TABLE IF EXISTS vipro.case;
 
@@ -656,12 +657,13 @@ CREATE TABLE vipro.case (
 );
 
 CREATE TABLE vipro.case_activity (
-       activity_id BIGINT
+       activity_id BIGINT NOT NULL AUTO_INCREMENT
      , action_by BIGINT
      , action_code VARCHAR(10)
      , action_time DATETIME
      , old_due_date DATE
      , case_id BIGINT NOT NULL
+     , primary key (activity_id)
 );
 
 
@@ -691,6 +693,7 @@ ALTER TABLE vipro.case_activity
   ADD CONSTRAINT FK_case_activity_1
       FOREIGN KEY (case_id)
       REFERENCES vipro.case (case_id);
+
 
 
 
