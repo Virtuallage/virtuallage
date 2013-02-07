@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 7, 2013 12:56:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.CaseActivity" table="case_activity" catalog="vipro">
+        <id name="activityId" type="java.lang.Long">
+            <column name="activity_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="case" class="com.vipro.data.Case" fetch="select">
+            <column name="case_id" not-null="true" />
+        </many-to-one>
+        <property name="actionBy" type="java.lang.Long">
+            <column name="action_by" />
+        </property>
+        <property name="actionCode" type="string">
+            <column name="action_code" length="10" />
+        </property>
+        <property name="actionTime" type="timestamp">
+            <column name="action_time" length="19" />
+        </property>
+        <property name="oldDueDate" type="date">
+            <column name="old_due_date" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>
