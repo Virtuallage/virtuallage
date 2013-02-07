@@ -1296,6 +1296,100 @@
 </foreign-key>
 </foreign-key-list>
 </table>
+<table id="3071de8d:13cb2e3ed6f:-7fa0" name="case">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f96" mandatory="true" name="case_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f95" mandatory="false" name="creation_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f94" mandatory="false" name="case_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f93" mandatory="false" name="subject">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f90" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8f" mandatory="false" name="mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="50" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8e" mandatory="false" name="email">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8d" mandatory="false" name="due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="1" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8c" mandatory="false" name="notification">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8b" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f65" mandatory="true" name="sender_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7ef4" mandatory="true" name="assignee_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7da4" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7d5e" mandatory="true" name="creator_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="3071de8d:13cb2e3ed6f:-7f9f" name="PK_CASE">
+<primary-key-column name="case_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f67" name="FK_case_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f2f" name="FK_case_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7ef6" name="FK_case_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7da6" name="FK_case_4" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7d60" name="FK_case_5" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="3071de8d:13cb2e3ed6f:-7f8a" name="case_activity">
+<column-list>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7c" mandatory="false" name="activity_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7b" mandatory="false" name="action_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7a" mandatory="false" name="action_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f79" mandatory="false" name="action_time">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f78" mandatory="false" name="old_due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f12" mandatory="true" name="case_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="3071de8d:13cb2e3ed6f:-7f89" name="PK_CASE_ACTIVITY"/>
+<foreign-key-list>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f14" name="FK_case_activity_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CASE" referenced-table="case" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="case_id" referenced-key-column-name="case_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
 </table-list>
 </schema>
 </schema-list>
@@ -1333,5 +1427,7 @@
 <table-figure refid="724eda4a:13c9eed27b2:-780a" x="1528" y="520"/>
 <table-figure refid="724eda4a:13c9eed27b2:-776e" x="1324" y="3104"/>
 <table-figure refid="724eda4a:13c9eed27b2:-7764" x="1524" y="3338"/>
+<table-figure refid="3071de8d:13cb2e3ed6f:-7fa0" x="1031" y="939"/>
+<table-figure refid="3071de8d:13cb2e3ed6f:-7f8a" x="1279" y="1227"/>
 </diagram>
 </clay-model>
