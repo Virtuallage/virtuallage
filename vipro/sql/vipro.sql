@@ -631,3 +631,70 @@ ALTER TABLE vipro.contact
       FOREIGN KEY (list_id)
       REFERENCES vipro.contact_list (list_id);
 
+      
+      
+      
+DROP TABLE IF EXISTS vipro.case_activity;
+DROP TABLE IF EXISTS vipro.case;
+
+CREATE TABLE vipro.case (
+       case_id BIGINT NOT NULL AUTO_INCREMENT
+     , creation_date DATE
+     , case_type VARCHAR(10)
+     , subject VARCHAR(60)
+     , name VARCHAR(60)
+     , mobile_no VARCHAR(20)
+     , email VARCHAR(50)
+     , due_date DATE
+     , notification CHAR(1)
+     , status VARCHAR(10)
+     , sender_id BIGINT NOT NULL
+     , assignee_id BIGINT NOT NULL
+     , customer_id BIGINT NOT NULL
+     , creator_id BIGINT NOT NULL
+     , PRIMARY KEY (case_id)
+);
+
+CREATE TABLE vipro.case_activity (
+       activity_id BIGINT
+     , action_by BIGINT
+     , action_code VARCHAR(10)
+     , action_time DATETIME
+     , old_due_date DATE
+     , case_id BIGINT NOT NULL
+);
+
+
+
+ALTER TABLE vipro.case
+  ADD CONSTRAINT FK_case_1
+      FOREIGN KEY (sender_id)
+      REFERENCES vipro.user_profile (user_id);
+
+ALTER TABLE vipro.case
+  ADD CONSTRAINT FK_case_2
+      FOREIGN KEY (assignee_id)
+      REFERENCES vipro.user_profile (user_id);
+
+ALTER TABLE vipro.case
+  ADD CONSTRAINT FK_case_3
+      FOREIGN KEY (creator_id)
+      REFERENCES vipro.user_profile (user_id);
+
+ALTER TABLE vipro.case
+  ADD CONSTRAINT FK_case_4
+      FOREIGN KEY (customer_id)
+      REFERENCES vipro.customer (customer_id);
+
+
+ALTER TABLE vipro.case_activity
+  ADD CONSTRAINT FK_case_activity_1
+      FOREIGN KEY (case_id)
+      REFERENCES vipro.case (case_id);
+
+
+
+
+      
+      
+      
