@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Create a Case
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Create a case" style="width:60%">  
+    
+<p:focus context="panel"/> 
+      		
+	<h:form>
+		<p:panelGrid>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Sender"/>
+			</p:column>
+			<p:column>
+				<p:inputText size="50"/>
+			</p:column>
+			<p:column>
+				<p:outputLabel value="Date"/>
+			</p:column>
+			<p:column>
+				<p:inputText />
+			</p:column>
+		</p:row>	
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Receiver"/>
+			</p:column>
+			<p:column colspan="3">
+				<p:selectOneMenu />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Category"/>
+			</p:column>
+			<p:column>
+				<p:selectOneMenu />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="Due Date"/>
+			</p:column>
+			<p:column>
+				<p:calendar />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Subject"/>
+			</p:column>
+			<p:column colspan="3">
+				<p:inputText  size="80"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Message"/>
+			</p:column>
+			<p:column colspan="3">
+				<p:inputTextarea  rows="10" cols="80" maxlength="300"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Existing Purchaser"/>
+			</p:column>
+			<p:column colspan="3">
+				<p:selectOneRadio>  
+            		<f:selectItem itemLabel="Yes" itemValue="1"  />  
+            		<f:selectItem itemLabel="No" itemValue="0" />
+            	</p:selectOneRadio>
+			</p:column>
+		</p:row>	
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Name"/>
+			</p:column>
+			<p:column colspan="2">
+				<p:inputText length="30" size="50"/>
+			</p:column>
+			<p:column>
+				<p:commandButton value="Search" ajax="false"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Mobile No"/>
+			</p:column>
+			<p:column>
+				<p:inputText  length="20"/>
+			</p:column>
+			<p:column>
+				<p:outputLabel value="Email"/>
+			</p:column>
+			<p:column>
+				<p:inputText length="40"/>
+			</p:column>
+		</p:row>
+		
+			
+		</p:panelGrid>
+	
+		<br/>
+		<p:commandButton value="Cancel" action="#{myDesk.cancel}" ajax="false"/>
+		<p:commandButton value="Save" action="#{myDesk.insertCase}" ajax="false"/>
+				
+		
+	</h:form>
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

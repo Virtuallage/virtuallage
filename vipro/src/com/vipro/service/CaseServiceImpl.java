@@ -18,5 +18,34 @@ public class CaseServiceImpl implements CaseService {
 	public List<Case> findByAssigneeId(Long assigneeId) {
 		return caseDao.findByAssigneeId(assigneeId);
 	}
+
+
+	@Override
+	public void insert(Case c) {
+		caseDao.insert(c);
+		
+	}
+
+
+	@Override
+	public void update(Case c) {
+		caseDao.update(c);
+		
+	}
+
+
+	@Override
+	public void delete(Long c) {
+		Case cs = caseDao.findById(c);
+		caseDao.delete(cs);
+		
+		
+	}
+
+
+	@Override
+	public Case findById(Long caseId) {
+		return caseDao.findById(caseId);
+	}
 	
 }

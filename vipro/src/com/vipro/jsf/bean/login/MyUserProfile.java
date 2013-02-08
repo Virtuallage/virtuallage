@@ -23,9 +23,6 @@ public class MyUserProfile implements PageConst {
 	private List<SelectItem> institutions;
 	private List<SelectItem> departments;
 
-	
-	
-
 
 	public List<SelectItem> getInstitutions() {
 		return institutions;

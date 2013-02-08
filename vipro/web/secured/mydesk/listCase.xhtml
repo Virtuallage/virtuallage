@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+My Work Queue
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="My Work Queue" style="width:80%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+    <p:dataTable var="c" value="#{myDesk.myCases}">  
+        <p:column headerText="Date">  
+            <h:outputText value="#{case.creationDate}"/>
+        </p:column>  
+  
+        <p:column headerText="Case No">  
+           <h:outputText value="#{case.caseId}"/>
+        </p:column>  
+  
+        <p:column headerText="Sender">  
+            <h:outputText value="#{case.sender.name}"/>
+        </p:column>  
+  
+        <p:column headerText="Category">  
+           <h:outputText value="#{case.caseType}"/>
+        </p:column>  
+        
+        <p:column headerText="Purchaser Name">  
+           <h:outputText value="#{case.customer.fullName}"/>
+        </p:column>
+        
+        <p:column headerText="Due Date">  
+           <h:outputText value="#{case.dueDate}"/>
+        </p:column>
+        
+        <p:column headerText="Status">  
+           <h:outputText value="#{case.status}"/>
+        </p:column>
+    </p:dataTable>  
+    
+    <br/>
+    
+    <p:commandButton action="#{myDesk.newCase}" value="Create a case" ajax="false"/>
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
