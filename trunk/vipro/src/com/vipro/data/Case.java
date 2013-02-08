@@ -12,10 +12,10 @@ import java.util.Set;
 public class Case implements java.io.Serializable {
 
 	private Long caseId;
-	private UserProfile userProfileBySenderId;
+	private UserProfile sender;
 	private Customer customer;
-	private UserProfile userProfileByCreatorId;
-	private UserProfile userProfileByAssigneeId;
+	private UserProfile creator;
+	private UserProfile assignee;
 	private Date creationDate;
 	private String caseType;
 	private String subject;
@@ -23,32 +23,31 @@ public class Case implements java.io.Serializable {
 	private String mobileNo;
 	private String email;
 	private Date dueDate;
-	private Character notification;
+	private boolean notification;
 	private String status;
+	private String message;
 	private Set caseActivities = new HashSet(0);
 
 	public Case() {
 	}
 
 	public Case(UserProfile userProfileBySenderId, Customer customer,
-			UserProfile userProfileByCreatorId,
-			UserProfile userProfileByAssigneeId) {
-		this.userProfileBySenderId = userProfileBySenderId;
+			UserProfile creator, UserProfile assignee) {
+		this.sender = sender;
 		this.customer = customer;
-		this.userProfileByCreatorId = userProfileByCreatorId;
-		this.userProfileByAssigneeId = userProfileByAssigneeId;
+		this.creator = creator;
+		this.assignee = assignee;
 	}
 
-	public Case(UserProfile userProfileBySenderId, Customer customer,
-			UserProfile userProfileByCreatorId,
-			UserProfile userProfileByAssigneeId, Date creationDate,
-			String caseType, String subject, String name, String mobileNo,
-			String email, Date dueDate, Character notification, String status,
+	public Case(UserProfile sender, Customer customer, UserProfile creator,
+			UserProfile assignee, Date creationDate, String caseType,
+			String subject, String name, String mobileNo, String email,
+			Date dueDate, boolean notification, String status,
 			Set caseActivities) {
-		this.userProfileBySenderId = userProfileBySenderId;
+		this.sender = sender;
 		this.customer = customer;
-		this.userProfileByCreatorId = userProfileByCreatorId;
-		this.userProfileByAssigneeId = userProfileByAssigneeId;
+		this.creator = creator;
+		this.assignee = assignee;
 		this.creationDate = creationDate;
 		this.caseType = caseType;
 		this.subject = subject;
@@ -69,14 +68,6 @@ public class Case implements java.io.Serializable {
 		this.caseId = caseId;
 	}
 
-	public UserProfile getUserProfileBySenderId() {
-		return this.userProfileBySenderId;
-	}
-
-	public void setUserProfileBySenderId(UserProfile userProfileBySenderId) {
-		this.userProfileBySenderId = userProfileBySenderId;
-	}
-
 	public Customer getCustomer() {
 		return this.customer;
 	}
@@ -85,20 +76,28 @@ public class Case implements java.io.Serializable {
 		this.customer = customer;
 	}
 
-	public UserProfile getUserProfileByCreatorId() {
-		return this.userProfileByCreatorId;
+	public UserProfile getSender() {
+		return sender;
 	}
 
-	public void setUserProfileByCreatorId(UserProfile userProfileByCreatorId) {
-		this.userProfileByCreatorId = userProfileByCreatorId;
+	public void setSender(UserProfile sender) {
+		this.sender = sender;
 	}
 
-	public UserProfile getUserProfileByAssigneeId() {
-		return this.userProfileByAssigneeId;
+	public UserProfile getCreator() {
+		return creator;
 	}
 
-	public void setUserProfileByAssigneeId(UserProfile userProfileByAssigneeId) {
-		this.userProfileByAssigneeId = userProfileByAssigneeId;
+	public void setCreator(UserProfile creator) {
+		this.creator = creator;
+	}
+
+	public UserProfile getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(UserProfile assignee) {
+		this.assignee = assignee;
 	}
 
 	public Date getCreationDate() {
@@ -157,11 +156,11 @@ public class Case implements java.io.Serializable {
 		this.dueDate = dueDate;
 	}
 
-	public Character getNotification() {
+	public boolean getNotification() {
 		return this.notification;
 	}
 
-	public void setNotification(Character notification) {
+	public void setNotification(boolean notification) {
 		this.notification = notification;
 	}
 
@@ -179,6 +178,14 @@ public class Case implements java.io.Serializable {
 
 	public void setCaseActivities(Set caseActivities) {
 		this.caseActivities = caseActivities;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

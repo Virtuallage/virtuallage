@@ -11,7 +11,7 @@
     <h:form>
     <p:menubar>
     	<p:submenu label="My Desk">
-    		
+    		<p:menuitem value="My Work Queue" url="/secured/mydesk/listCase.xhtml"/>
     	</p:submenu>
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">

@@ -22,4 +22,9 @@ public class CaseDaoImpl extends DaoImpl<Case> implements CaseDao {
 		return cases;
 	}
 
+	@Override
+	public Case findById(Long caseId) {
+		return (Case) getHibernateTemplate().get(Case.class, caseId);
+	}
+
 }

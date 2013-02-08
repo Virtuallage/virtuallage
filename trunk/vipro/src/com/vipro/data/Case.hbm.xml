@@ -8,16 +8,16 @@
             <column name="case_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="userProfileBySenderId" class="com.vipro.data.UserProfile" fetch="select">
+        <many-to-one name="sender" class="com.vipro.data.UserProfile" fetch="select">
             <column name="sender_id" not-null="true" />
         </many-to-one>
         <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
             <column name="customer_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="userProfileByCreatorId" class="com.vipro.data.UserProfile" fetch="select">
+        <many-to-one name="creator" class="com.vipro.data.UserProfile" fetch="select">
             <column name="creator_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="userProfileByAssigneeId" class="com.vipro.data.UserProfile" fetch="select">
+        <many-to-one name="assignee" class="com.vipro.data.UserProfile" fetch="select">
             <column name="assignee_id" not-null="true" />
         </many-to-one>
         <property name="creationDate" type="date">
@@ -41,11 +41,14 @@
         <property name="dueDate" type="date">
             <column name="due_date" length="10" />
         </property>
-        <property name="notification" type="java.lang.Character">
+        <property name="notification" type="java.lang.Boolean">
             <column name="notification" length="1" />
         </property>
         <property name="status" type="string">
             <column name="status" length="10" />
+        </property>
+        <property name="message" type="string">
+            <column name="message" length="300"/>
         </property>
         <set name="caseActivities" table="case_activity" inverse="true" lazy="true" fetch="select">
             <key>
