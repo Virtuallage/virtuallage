@@ -696,7 +696,7 @@ ALTER TABLE vipro.case_activity
 
 
 
-
+alter table vipro.case add message varchar(300);
 
       
       
