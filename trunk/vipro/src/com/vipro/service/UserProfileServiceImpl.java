@@ -1,5 +1,7 @@
 package com.vipro.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile up = findById(userId);
 		userProfileDao.delete(up);
 		
+	}
+
+	@Override
+	public List<UserProfile> findAll() {
+		
+		return userProfileDao.findAll();
 	}
 
 }

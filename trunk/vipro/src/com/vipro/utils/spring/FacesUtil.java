@@ -3,6 +3,7 @@ package com.vipro.utils.spring;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+
 import javax.faces.context.FacesContext;
 
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,6 @@ import com.vipro.dao.UserProfileDao;
  */
 public final class FacesUtil {
 
-	
 	public static AuthUser getCurrentUser() {
 		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		UserProfileDao userService = (UserProfileDao) SpringBeanUtil.lookup(UserProfileDao.class.getName());
@@ -33,7 +33,12 @@ public final class FacesUtil {
 		return null;
 	}
 	
-	public static void addMessage(String summary, String message) {
-		FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(summary, message));
+	public static void addInfoMessage(String summary, String message) {
+		FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, message));
+	}
+	
+	public static void addErrorMessage(String summary, String message) {
+		FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, message));
+		
 	}
 }

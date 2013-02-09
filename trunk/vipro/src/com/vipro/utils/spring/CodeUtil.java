@@ -8,8 +8,10 @@ import javax.faces.model.SelectItem;
 
 
 import com.vipro.data.Institution;
+import com.vipro.data.UserProfile;
 import com.vipro.service.CodeService;
 import com.vipro.service.InstitutionService;
+import com.vipro.service.UserProfileService;
 
 public final class CodeUtil {
 	
@@ -28,6 +30,21 @@ public final class CodeUtil {
 		}
 		
 		return insItems;
+	}
+	
+	
+	public static List<SelectItem> getUsersAsItems() {
+		UserProfileService userService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		List<UserProfile> users = userService.findAll();
+		
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		if (users!=null) {
+			for (UserProfile u : users) {
+				items.add( new SelectItem( u.getUserId().toString(), u.getName()));
+			}
+		}
+		
+		return items;
 	}
 
 }

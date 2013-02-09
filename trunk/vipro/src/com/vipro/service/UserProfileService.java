@@ -1,5 +1,7 @@
 package com.vipro.service;
 
+import java.util.List;
+
 import com.vipro.data.UserProfile;
 
 /**
@@ -11,6 +13,8 @@ public interface UserProfileService {
 
 	
 	public UserProfile findById(Long userId);
+	
+	public List<UserProfile> findAll();
 	
 	public void insert(UserProfile up);
 	

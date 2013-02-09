@@ -65,9 +65,9 @@ public class MyUserProfile implements PageConst {
 		try {
 			UserProfileService service = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 			service.update(userProfile);
-			FacesUtil.addMessage("My Profile", "User Profile is updated");
+			FacesUtil.addInfoMessage("My Profile", "User Profile is updated");
 		} catch (Throwable th) {
-			FacesUtil.addMessage("My Profile", "Error saving details. " + th.getMessage());
+			FacesUtil.addErrorMessage("My Profile", "Error saving details. " + th.getMessage());
 			return null;
 		}
 		

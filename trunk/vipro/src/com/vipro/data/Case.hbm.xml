@@ -12,7 +12,7 @@
             <column name="sender_id" not-null="true" />
         </many-to-one>
         <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
-            <column name="customer_id" not-null="true" />
+            <column name="customer_id"  />
         </many-to-one>
         <many-to-one name="creator" class="com.vipro.data.UserProfile" fetch="select">
             <column name="creator_id" not-null="true" />
