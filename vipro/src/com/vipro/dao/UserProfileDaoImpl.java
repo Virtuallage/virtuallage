@@ -33,4 +33,10 @@ public class UserProfileDaoImpl extends DaoImpl<UserProfile> implements UserProf
 		return up;
 	}
 
+	@Override
+	public List<UserProfile> findAll() {
+		String query = "select o from UserProfile o";
+		return getHibernateTemplate().find(query);
+	}
+
 }

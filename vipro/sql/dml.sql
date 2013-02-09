@@ -25,3 +25,11 @@ insert into vipro.user_profile (username, password, name, institution_id,  staff
 insert into vipro.user_profile (username, password, name, institution_id,  staff_no, status, group_id) values('developer', '5f4dcc3b5aa765d61d8327deb882cf99', 'developer', 1,'000', 'ACTV', 'PROP_DEV');
 
 
+
+insert into code_header (code_header_id, name) values ( 'CASE_TYPE', 'Case Type / Category');
+insert into code_det values ('CASE_TYPE', 'REMIND', 'Reminder', 'ACTV');
+insert into code_det values('CASE_TYPE', 'INQ', 'Inquiry', 'ACTV');
+insert into code_det values ('CASE_TYPE', 'APPR', 'Approval', 'ACTV');
+insert into code_det values ('CASE_TYPE', 'VERI', 'Verify', 'ACTV');
+
+

@@ -73,7 +73,7 @@ public class ChangePassword implements PageConst {
 		String oldPwd = encoder.encodePassword(oldPassword,  null);
 		
 		if (!password1.equals(password2)) {
-			FacesUtil.addMessage("New Password is not identical", "New Password is not identical");
+			FacesUtil.addInfoMessage("New Password is not identical", "New Password is not identical");
 			return null;
 		}
 		
@@ -83,7 +83,7 @@ public class ChangePassword implements PageConst {
 		if (authUser!=null) {
 			UserProfile up = authUser.getUserProfile();
 			if (!oldPwd.equals(up.getPassword())) {
-				FacesUtil.addMessage("Old Password not correct", "Old Password not correct.");
+				FacesUtil.addInfoMessage("Old Password not correct", "Old Password not correct.");
 				return null;
 			}
 			if (up!=null) {
@@ -94,7 +94,7 @@ public class ChangePassword implements PageConst {
 			}
 		}
 		
-		FacesUtil.addMessage("Password Changed", "Password Changed");
+		FacesUtil.addInfoMessage("Password Changed", "Password Changed");
 		return MAIN;
 	}
 
