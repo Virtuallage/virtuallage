@@ -10,10 +10,15 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.springframework.util.StringUtils;
+
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.CaseStatus;
 import com.vipro.data.Case;
+import com.vipro.data.Customer;
 import com.vipro.data.UserProfile;
 import com.vipro.service.CaseService;
+import com.vipro.service.CustomerService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
@@ -34,9 +39,51 @@ public class MyDesk implements Serializable {
 	private String toUserId;
 	private String existingCustomer;
 
+	private List<Customer> searchCustList;
+	private String searchIdNo;
+	private String searchName;
+
+	private Customer selectedCustomer;
+
 	public MyDesk() {
 		caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
 				.getName());
+	}
+
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+		newCase.setCustomer(selectedCustomer);
+		newCase.setName(selectedCustomer.getFullName());
+		newCase.setMobileNo( selectedCustomer.getHouseTelNo());
+		
+	}
+
+	public String getSearchIdNo() {
+		return searchIdNo;
+	}
+
+	public void setSearchIdNo(String searchIdNo) {
+		this.searchIdNo = searchIdNo;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
+	public List<Customer> getSearchCustList() {
+		return searchCustList;
+	}
+
+	public void setSearchCustList(List<Customer> searchCustList) {
+		this.searchCustList = searchCustList;
 	}
 
 	public String getExistingCustomer() {
@@ -114,17 +161,22 @@ public class MyDesk implements Serializable {
 			AuthUser user = FacesUtil.getCurrentUser();
 			UserProfile currentUser = user.getUserProfile();
 			newCase.setCreator(currentUser);
-			
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
-			UserProfile toUserProfile = userProfileService.findById( Long.parseLong(toUserId) );
-			
+
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+					.lookup(UserProfileService.class.getName());
+			UserProfile toUserProfile = userProfileService.findById(Long
+					.parseLong(toUserId));
+
 			newCase.setAssignee(toUserProfile);
-			
+
+			newCase.setStatus(CaseStatus.NEW);
+
 			caseService.insert(newCase);
 			FacesUtil.addInfoMessage("My Work Queue", "Case is created.");
-			
+
 		} catch (Throwable e) {
-			FacesUtil.addErrorMessage("My Work Queue", "Error Saving Case. " + e.getMessage() );
+			FacesUtil.addErrorMessage("My Work Queue", "Error Saving Case. "
+					+ e.getMessage());
 			return null;
 		}
 		return "listCase";
@@ -141,6 +193,24 @@ public class MyDesk implements Serializable {
 
 	public String cancel() {
 		return "listCase";
+	}
+	
+	public String searchCustomer() {
+		if (!StringUtils.hasText(searchIdNo) && !StringUtils.hasText(searchName)) {
+			FacesUtil.addErrorMessage("Search Customer", "Please enter customer name or Id No.");
+			return null;
+		}
+		
+		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+		if (StringUtils.hasText(searchIdNo)) {
+			setSearchCustList( customerService.findByIdNo(searchIdNo) );
+		}
+		
+		if (StringUtils.hasText(searchName)) {
+			setSearchCustList( customerService.findByName(searchName) );
+		}
+		
+		return null;
 	}
 
 }

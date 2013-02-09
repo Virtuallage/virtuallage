@@ -38,6 +38,7 @@ public final class CodeUtil {
 		List<UserProfile> users = userService.findAll();
 		
 		List<SelectItem> items = new ArrayList<SelectItem>();
+		items.add( new SelectItem(null, "Select One"));
 		if (users!=null) {
 			for (UserProfile u : users) {
 				items.add( new SelectItem( u.getUserId().toString(), u.getName()));
