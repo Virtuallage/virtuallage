@@ -68,6 +68,15 @@
         <property name="dateCreated" type="date">
             <column name="date_created" length="10" />
         </property>
+        <property name="addressId" type="long">
+            <column name="address_id" />
+        </property>
+        <property name="emailId" type="long">
+            <column name="email_id"/>
+        </property>
+        <property name="mobileId" type="long">
+            <column name="mobile_id"/>
+        </property>
         <set name="addresses" table="address" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />

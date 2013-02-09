@@ -39,6 +39,10 @@ public class Customer implements java.io.Serializable {
 	private Set mobilePhones = new HashSet(0);
 	private Set contacts = new HashSet(0);
 	private Set vouchers = new HashSet(0);
+	
+	private Long addressId;
+	private Long emailId;
+	private Long mobileId;
 
 	public Customer() {
 	}
@@ -307,6 +311,30 @@ public class Customer implements java.io.Serializable {
 
 	public void setVouchers(Set vouchers) {
 		this.vouchers = vouchers;
+	}
+
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
+	}
+
+	public Long getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(Long emailId) {
+		this.emailId = emailId;
+	}
+
+	public Long getMobileId() {
+		return mobileId;
+	}
+
+	public void setMobileId(Long mobileId) {
+		this.mobileId = mobileId;
 	}
 
 }

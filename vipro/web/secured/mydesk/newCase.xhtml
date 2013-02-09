@@ -9,6 +9,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
+
 <ui:define name="title">
 Create a Case
 </ui:define>
@@ -19,7 +20,7 @@ Create a Case
     
 <p:focus context="panel"/> 
       		
-	<h:form>
+	<h:form id="newCaseForm">
 		<h:panelGrid columns="4" style="width:800px;">
 				<p:outputLabel value="Sender"/>
 		
@@ -28,7 +29,7 @@ Create a Case
 				<p:outputLabel value="Date"/>
 
 				<h:outputText value="#{myDesk.newCase.creationDate}">
-					 <f:convertDateTime pattern="d/M/yyyy"/>  
+					 <f:convertDateTime pattern="dd/MM/yyyy"/>  
 				</h:outputText>
 			
 				<p:outputLabel value="To" for="to"/>
@@ -45,7 +46,7 @@ Create a Case
 			
 				<p:outputLabel value="Due Date" for="dueDate"/>
 			
-				<p:calendar id="dueDate" value="#{myDesk.newCase.dueDate}" showButtonPanel="true" pattern="d/M/yyyy" required="true">
+				<p:calendar id="dueDate" value="#{myDesk.newCase.dueDate}" showButtonPanel="true" pattern="dd/MM/yyyy" required="true">
 				</p:calendar>
 		</h:panelGrid>
 		
@@ -71,12 +72,12 @@ Create a Case
 				<h:panelGroup>
 				<p:inputText id="name" length="30" size="50" value="#{myDesk.newCase.name}" required="true"/>
 				&nbsp;&nbsp;
-				<p:commandButton value="Search" ajax="false"/>
+				<p:commandButton value="Search" immediate="true" onclick="dlgSearchCust.show();"/>
 				</h:panelGroup>
 				
 				<p:outputLabel value="Mobile No" for="mobile"/>
 			
-				<p:inputText id="mobile" length="20" value="#{myDesk.newCase.mobileNo}"/>
+				<p:inputText id="mobile" length="20" value="#{myDesk.newCase.mobileNo}" required="true"/>
 			
 				<p:outputLabel value="Email" for="email"/>
 			
@@ -88,12 +89,50 @@ Create a Case
 		<br/>
 		<p:commandButton value="Cancel" action="#{myDesk.cancel}" ajax="false" immediate="true"/>  &nbsp;&nbsp;
 		<p:commandButton value="Save" action="#{myDesk.insertCase}" ajax="false"/>
-				
+		
+		
+	
+		
 		
 	</h:form>
+	
+	<h:form id="searchCustForm">
+		<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="explode"> 
+			<h:panelGrid columns="2">
+				<p:outputLabel value="ID No." for="searchIdNo"/>
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{myDesk.searchIdNo}"/>
+				
+				<p:outputLabel value="Name" for="searchName"/>
+				<h:panelGroup>
+					<p:inputText id="searchName" length="60" size="30" value="#{myDesk.searchName}"/>
+					<p:commandButton  value="Search" action="#{myDesk.searchCustomer}" update=":searchCustForm:custs"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			<p:dataTable id="custs" var="c" value="#{myDesk.searchCustList}" style="width:500px;">  
+		        <p:column headerText="Id No." style="width:24%">  
+		            <h:outputText value="#{c.identityNo}" />  
+		        </p:column>  
+		        <p:column headerText="Name" style="width:24%">  
+		            <h:outputText value="#{c.fullName}" />  
+		        </p:column>  
+		     
+		        <p:column style="width:4%">  
+		                <p:commandButton id="selectButton" update=":newCaseForm:name" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
+		                <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCustomer}" />  
+		            </p:commandButton>  
+		        </p:column>  
+		  
+			</p:dataTable>  
+		
+		</p:dialog>				
+	</h:form>	
+		
 
 </p:panel>
 
 </ui:define>
+
+
+		
 
 </ui:composition>

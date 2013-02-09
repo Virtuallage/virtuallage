@@ -42,7 +42,9 @@ My Work Queue
         </p:column>
         
         <p:column headerText="Due Date">  
-           <h:outputText value="#{case.dueDate}"/>
+           <h:outputText value="#{case.dueDate}">
+           		<f:convertDateTime pattern="dd/MM/yyyy"/>
+           </h:outputText>
         </p:column>
         
         <p:column headerText="Status">  
