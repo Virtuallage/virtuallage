@@ -77,19 +77,19 @@
         <property name="mobileId" type="long">
             <column name="mobile_id"/>
         </property>
-        <set name="addresses" table="address" inverse="true" lazy="true" fetch="select">
+        <set name="addresses" table="address" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />
             </key>
             <one-to-many class="com.vipro.data.Address" />
         </set>
-        <set name="accounts" table="account" inverse="true" lazy="true" fetch="select">
+        <set name="accounts" table="account" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />
             </key>
             <one-to-many class="com.vipro.data.Account" />
         </set>
-        <set name="emails" table="email" inverse="true" lazy="true" fetch="select">
+        <set name="emails" table="email" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />
             </key>
@@ -101,13 +101,13 @@
             </key>
             <one-to-many class="com.vipro.data.JoinAccount" />
         </set>
-        <set name="mobilePhones" table="mobile_phone" inverse="true" lazy="true" fetch="select">
+        <set name="mobilePhones" table="mobile_phone" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />
             </key>
             <one-to-many class="com.vipro.data.MobilePhone" />
         </set>
-        <set name="contacts" table="contact" inverse="true" lazy="true" fetch="select">
+        <set name="contacts" table="contact" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="customer_id" not-null="true" />
             </key>

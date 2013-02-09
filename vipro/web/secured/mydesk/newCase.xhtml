@@ -117,7 +117,7 @@ Create a Case
 		        </p:column>  
 		     
 		        <p:column style="width:4%">  
-		                <p:commandButton id="selectButton" update=":newCaseForm:name" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
+		                <p:commandButton id="selectButton" update=":newCaseForm:name,:newCaseForm:mobile,:newCaseForm:email" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
 		                <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCustomer}" />  
 		            </p:commandButton>  
 		        </p:column>  

@@ -3,6 +3,7 @@ package com.vipro.jsf.bean.mydesk;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +17,8 @@ import com.vipro.auth.AuthUser;
 import com.vipro.constant.CaseStatus;
 import com.vipro.data.Case;
 import com.vipro.data.Customer;
+import com.vipro.data.Email;
+import com.vipro.data.MobilePhone;
 import com.vipro.data.UserProfile;
 import com.vipro.service.CaseService;
 import com.vipro.service.CustomerService;
@@ -58,7 +61,24 @@ public class MyDesk implements Serializable {
 		this.selectedCustomer = selectedCustomer;
 		newCase.setCustomer(selectedCustomer);
 		newCase.setName(selectedCustomer.getFullName());
-		newCase.setMobileNo( selectedCustomer.getHouseTelNo());
+		
+		Set<MobilePhone> phones = selectedCustomer.getMobilePhones();
+		if (phones!=null) {
+			for (MobilePhone p : phones) {
+				if (p.getMobileId().longValue()== selectedCustomer.getMobileId().longValue()) {
+					newCase.setMobileNo( p.getMobileNo() );
+				}
+			}
+		}
+		
+		Set<Email> emails = selectedCustomer.getEmails();
+		if (emails!=null) {
+			for (Email e : emails) {
+				if (e.getEmailId().longValue()==selectedCustomer.getEmailId().longValue()) {
+					newCase.setEmail( e.getEmailAddress() );
+				}
+			}
+		}
 		
 	}
 
