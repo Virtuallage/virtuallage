@@ -36,13 +36,13 @@ My Profile
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Mobile No" for="mobileNo"/>
-		<p:inputText id="mobileNo" required="true" value="#{myUserProfile.userProfile.mobileNo}"/>
+		<p:inputText id="mobileNo" required="true" value="#{myUserProfile.userProfile.mobileNo}" autocomplete="off"/>
 		
 		<p:outputLabel value="Office No" for="officeNo"/>
-		<p:inputText id="officeNo" required="true" value="#{myUserProfile.userProfile.officeNo}"/>
+		<p:inputText id="officeNo" required="true" value="#{myUserProfile.userProfile.officeNo}" autocomplete="off"/>
 		
 		<p:outputLabel value="Email" for="email"/>
-		<p:inputText id="email" required="true" value="#{myUserProfile.userProfile.email}" maxlength="30"/>
+		<p:inputText id="email" required="true" value="#{myUserProfile.userProfile.email}" maxlength="30" autocomplete="off"/>
 		
 			
 	</h:panelGrid>

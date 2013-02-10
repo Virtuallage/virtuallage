@@ -11,7 +11,7 @@
     <h:form>
     <p:menubar>
     	<p:submenu label="My Desk">
-    		<p:menuitem value="My Work Queue" url="/secured/mydesk/listCase.xhtml"/>
+    		<p:menuitem value="My Work Queue"  action="#{myDesk.listCases}"/>
     	</p:submenu>
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">
@@ -61,8 +61,8 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System">
-    		<p:menuitem value="My Profile" url="my_profile.xhtml" />  
-    		<p:menuitem value="Change Password" url="change_password.xhtml" />  
+    		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" />  
+    		<p:menuitem value="Change Password" url="/secured/change_password.xhtml" />  
     		<p:menuitem value="Logout" url="#" onclick="javascript:window.location.href='/vipro/j_spring_security_logout';"/>  
     	</p:submenu>
     	</sec:authorize>

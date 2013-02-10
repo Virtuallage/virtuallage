@@ -17,7 +17,7 @@ public class CaseDaoImpl extends DaoImpl<Case> implements CaseDao {
 
 	@Override
 	public List<Case> findByAssigneeId(Long assigneeId) {
-		String query = "select o from Case o where o.assigneeId=?";
+		String query = "select o from Case o where o.assignee.userId=?";
 		List<Case> cases = getHibernateTemplate().find(query, assigneeId);
 		return cases;
 	}

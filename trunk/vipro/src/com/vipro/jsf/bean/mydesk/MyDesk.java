@@ -158,6 +158,20 @@ public class MyDesk implements Serializable {
 	public void init() {
 		toUserList = CodeUtil.getUsersAsItems();
 		caseType = CodeUtil.getCodes("CASE_TYPE");
+		
+		
+		
+	}
+	
+	public String listCases() {
+		refreshMyCases();
+		return "listCase";
+	}
+	
+	private void refreshMyCases() {
+		AuthUser user = FacesUtil.getCurrentUser();
+		UserProfile userProfile = user.getUserProfile();
+		myCases = caseService.findByAssigneeId(userProfile.getUserId());
 	}
 
 	public Case getNewCase() {
@@ -192,6 +206,7 @@ public class MyDesk implements Serializable {
 			newCase.setStatus(CaseStatus.NEW);
 
 			caseService.insert(newCase);
+			refreshMyCases();
 			FacesUtil.addInfoMessage("My Work Queue", "Case is created.");
 
 		} catch (Throwable e) {
@@ -203,6 +218,7 @@ public class MyDesk implements Serializable {
 	}
 
 	public String updateCase() {
+		refreshMyCases();
 		FacesUtil.addInfoMessage("My Work Queue", "Case is updated.");
 		return "listCase";
 	}
