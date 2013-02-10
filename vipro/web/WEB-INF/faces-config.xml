@@ -20,6 +20,10 @@
             <to-view-id>/secured/main.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>listCase</from-outcome>
+            <to-view-id>/secured/mydesk/listCase.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>

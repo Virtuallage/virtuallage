@@ -24,11 +24,11 @@ Login
       	  <h:panelGrid columns="2" style="width:50%"> 
 			
                <p:outputLabel value="User Name" for="j_username"/>
-               <p:inputText id="j_username" required="true" value="#{login.username}" />
+               <p:inputText id="j_username" required="true" value="#{login.username}" autocomplete="off"/>
           
            
                <p:outputLabel value="Password" for="j_password"/>
-               <p:password id="j_password" required="true" value="#{login.password}"/> 
+               <p:password id="j_password" required="true" value="#{login.password}" autocomplete="off"/> 
                
                
          </h:panelGrid>
