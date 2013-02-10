@@ -15,7 +15,12 @@ Work with a case
 
 <ui:define name="content">	
 
+<p:panel id="panel" header="Case #{myDesk.newCase.caseId}" style="width:60%">  
+    
+	<p:focus context="panel"/> 
+	<ui:include src="case.xhtml"/>
 
+</p:panel>
 
 </ui:define>
 

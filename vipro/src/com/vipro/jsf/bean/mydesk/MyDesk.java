@@ -47,6 +47,7 @@ public class MyDesk implements Serializable {
 	private String searchName;
 
 	private Customer selectedCustomer;
+	
 
 	public MyDesk() {
 		caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
@@ -224,6 +225,7 @@ public class MyDesk implements Serializable {
 	}
 
 	public String openCase() {
+		setNewCase( getSelectedCase() );
 		return "openCase";
 	}
 
