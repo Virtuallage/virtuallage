@@ -49,8 +49,12 @@ My Work Queue
            </h:outputText>
         </p:column>
         
-        <p:column headerText="Status">  
-           <h:outputText value="#{c.status}"/>
+        <p:column headerText="Status"> 
+      
+        	 
+        	<p:commandLink value="#{c.status}" action="#{myDesk.openCase}">
+           		 <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCase}" />  
+           </p:commandLink>
         </p:column>
     </p:dataTable>  
     
