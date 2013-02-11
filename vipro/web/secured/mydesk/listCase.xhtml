@@ -20,7 +20,9 @@ My Work Queue
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{myDesk.myCases}">  
+    <p:dataTable var="c" value="#{myDesk.myCases}" paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15">  
         <p:column headerText="Date">  
             <h:outputText value="#{c.creationDate}">
             	<f:convertDateTime pattern="dd/MM/yyyy"/>  
