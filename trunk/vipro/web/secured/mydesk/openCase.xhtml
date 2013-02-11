@@ -101,14 +101,46 @@ Work with a case
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Note"/>
-		<p:inputTextarea rows="5" cols="50"/>
+		<p:inputTextarea rows="5" cols="50" value="#{myDesk.activity.note}"/>
 		
 	</h:panelGrid>
 	 
 	 <p:commandButton value="Cancel" action="#{myDesk.cancel}" ajax="false" immediate="true"/>  &nbsp;&nbsp;
+	 <p:commandButton value="History"  immediate="true" onclick="dlgHistory.show();"/>  &nbsp;&nbsp;
 	 <p:commandButton value="Save" action="#{myDesk.updateCase}" ajax="false"/>
 </p:panel>
 
+
+	<p:dialog header="History" widgetVar="dlgHistory"  modal="true" height="400" width="900"  showEffect="fade" hideEffect="explode"> 
+			
+			<p:dataTable id="hist" var="h" value="#{myDesk.histories}" style="width:800px;">  
+		        <p:column headerText="Time" style="width:24%">  
+		            <h:outputText value="#{h.actionTime}" >
+		            	<f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
+		            </h:outputText>  
+		        </p:column>  
+		        <p:column headerText="Action By." style="width:24%">  
+		            <h:outputText value="#{h.actionBy.name}" />  
+		        </p:column>  
+		        <p:column headerText="Note" style="width:50%">
+		        	<h:outputText value="#{h.note}"/>
+		        </p:column>
+		        <p:column headerText="Due Date" style="width:25%">
+		        	<h:outputText value="#{h.oldDueDate}">
+		        		<f:convertDateTime pattern="dd/MM/yyyy"/>
+		        	</h:outputText>
+		        </p:column>
+		        <p:column headerText="Action Type" style="width:25%">
+		        	<h:outputText value="#{h.actionCode}"/>
+		        </p:column>
+		     
+		       
+		  
+			</p:dataTable>  
+		
+		</p:dialog>		
+		
+		
 </h:form> 
 
 </ui:define>

@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.mydesk;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -51,10 +52,20 @@ public class MyDesk implements Serializable {
 
 	private CaseActivity activity;
 	private List<SelectItem> actionType;
+	
+	private List<CaseActivity> histories;
 
 	public MyDesk() {
 		caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
 				.getName());
+	}
+
+	public List<CaseActivity> getHistories() {
+		return histories;
+	}
+
+	public void setHistories(List<CaseActivity> histories) {
+		this.histories = histories;
 	}
 
 	public CaseActivity getActivity() {
@@ -245,6 +256,10 @@ public class MyDesk implements Serializable {
 	}
 
 	public String updateCase() {
+		
+		AuthUser authUser = FacesUtil.getCurrentUser();
+		UserProfile currentUserProfile = authUser.getUserProfile();
+		
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 				.lookup(UserProfileService.class.getName());
 		UserProfile toUserProfile = userProfileService.findById(Long
@@ -253,6 +268,8 @@ public class MyDesk implements Serializable {
 		newCase.setAssignee(toUserProfile);
 		
 		caseService.update(newCase);
+		activity.setActionTime(new Date());
+		activity.setActionBy(currentUserProfile);
 		caseService.insertActivity(activity);
 		
 		toUserId=null;
@@ -268,6 +285,17 @@ public class MyDesk implements Serializable {
 		CaseActivity act = new CaseActivity();
 		act.setCase(getSelectedCase());
 		setActivity( act );
+		
+		activity.setOldDueDate( newCase.getDueDate() );
+		
+		Case c = caseService.findById(newCase.getCaseId());
+		Set<CaseActivity> hists = c.getCaseActivities();
+		
+		histories = new ArrayList<CaseActivity>();
+		for(CaseActivity ca : hists) {
+			histories.add(ca);
+		}
+		
 		return "openCase";
 	}
 
@@ -295,5 +323,7 @@ public class MyDesk implements Serializable {
 
 		return null;
 	}
+	
+
 
 }

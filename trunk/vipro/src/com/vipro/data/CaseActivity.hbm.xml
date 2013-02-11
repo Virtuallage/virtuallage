@@ -11,9 +11,9 @@
         <many-to-one name="case" class="com.vipro.data.Case" fetch="select">
             <column name="case_id" not-null="true" />
         </many-to-one>
-        <property name="actionBy" type="java.lang.Long">
-            <column name="action_by" />
-        </property>
+        <many-to-one name="actionBy" class="com.vipro.data.UserProfile" fetch="select">
+            <column name="action_by" not-null="true" />
+        </many-to-one>
         <property name="actionCode" type="string">
             <column name="action_code" length="10" />
         </property>
