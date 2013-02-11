@@ -33,3 +33,9 @@ insert into code_det values ('CASE_TYPE', 'APPR', 'Approval', 'ACTV');
 insert into code_det values ('CASE_TYPE', 'VERI', 'Verify', 'ACTV');
 
 
+
+
+insert into code_header values ('ACTION', 'Action taken');
+insert into code_det values ( 'ACTION', 'REASS', 'Reassigned' , 'ACTV');
+insert into code_det values ( 'ACTION', 'EMAIL', 'Emailed', 'ACTV');
+

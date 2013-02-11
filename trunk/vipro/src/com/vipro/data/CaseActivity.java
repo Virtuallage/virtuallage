@@ -16,12 +16,23 @@ public class CaseActivity  implements java.io.Serializable {
      private String actionCode;
      private Date actionTime;
      private Date oldDueDate;
+     private String note;
 
     public CaseActivity() {
     }
 
 	
-    public CaseActivity(Case theCase) {
+    public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	public CaseActivity(Case theCase) {
         this.theCase = theCase;
     }
     public CaseActivity(Case theCase, Long actionBy, String actionCode, Date actionTime, Date oldDueDate) {
