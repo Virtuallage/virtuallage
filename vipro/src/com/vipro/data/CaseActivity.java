@@ -12,7 +12,7 @@ public class CaseActivity  implements java.io.Serializable {
 
      private Long activityId;
      private Case theCase;
-     private Long actionBy;
+     private UserProfile actionBy;
      private String actionCode;
      private Date actionTime;
      private Date oldDueDate;
@@ -35,7 +35,7 @@ public class CaseActivity  implements java.io.Serializable {
 	public CaseActivity(Case theCase) {
         this.theCase = theCase;
     }
-    public CaseActivity(Case theCase, Long actionBy, String actionCode, Date actionTime, Date oldDueDate) {
+    public CaseActivity(Case theCase, UserProfile actionBy, String actionCode, Date actionTime, Date oldDueDate) {
        this.theCase = theCase;
        this.actionBy = actionBy;
        this.actionCode = actionCode;
@@ -57,11 +57,11 @@ public class CaseActivity  implements java.io.Serializable {
     public void setCase(Case theCase) {
         this.theCase = theCase;
     }
-    public Long getActionBy() {
+    public UserProfile getActionBy() {
         return this.actionBy;
     }
     
-    public void setActionBy(Long actionBy) {
+    public void setActionBy(UserProfile actionBy) {
         this.actionBy = actionBy;
     }
     public String getActionCode() {
