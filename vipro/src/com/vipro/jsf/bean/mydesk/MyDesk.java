@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CaseStatus;
 import com.vipro.data.Case;
+import com.vipro.data.CaseActivity;
 import com.vipro.data.Customer;
 import com.vipro.data.Email;
 import com.vipro.data.MobilePhone;
@@ -47,11 +48,30 @@ public class MyDesk implements Serializable {
 	private String searchName;
 
 	private Customer selectedCustomer;
-	
+
+	private CaseActivity activity;
+	private List<SelectItem> actionType;
 
 	public MyDesk() {
 		caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
 				.getName());
+	}
+
+	public CaseActivity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(CaseActivity activity) {
+		this.activity = activity;
+	}
+
+	
+	public List<SelectItem> getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(List<SelectItem> actionType) {
+		this.actionType = actionType;
 	}
 
 	public Customer getSelectedCustomer() {
@@ -62,25 +82,27 @@ public class MyDesk implements Serializable {
 		this.selectedCustomer = selectedCustomer;
 		newCase.setCustomer(selectedCustomer);
 		newCase.setName(selectedCustomer.getFullName());
-		
+
 		Set<MobilePhone> phones = selectedCustomer.getMobilePhones();
-		if (phones!=null) {
+		if (phones != null) {
 			for (MobilePhone p : phones) {
-				if (p.getMobileId().longValue()== selectedCustomer.getMobileId().longValue()) {
-					newCase.setMobileNo( p.getMobileNo() );
+				if (p.getMobileId().longValue() == selectedCustomer
+						.getMobileId().longValue()) {
+					newCase.setMobileNo(p.getMobileNo());
 				}
 			}
 		}
-		
+
 		Set<Email> emails = selectedCustomer.getEmails();
-		if (emails!=null) {
+		if (emails != null) {
 			for (Email e : emails) {
-				if (e.getEmailId().longValue()==selectedCustomer.getEmailId().longValue()) {
-					newCase.setEmail( e.getEmailAddress() );
+				if (e.getEmailId().longValue() == selectedCustomer.getEmailId()
+						.longValue()) {
+					newCase.setEmail(e.getEmailAddress());
 				}
 			}
 		}
-		
+
 	}
 
 	public String getSearchIdNo() {
@@ -159,16 +181,15 @@ public class MyDesk implements Serializable {
 	public void init() {
 		toUserList = CodeUtil.getUsersAsItems();
 		caseType = CodeUtil.getCodes("CASE_TYPE");
-		
-		
-		
+		actionType = CodeUtil.getCodes("ACTION");
+
 	}
-	
+
 	public String listCases() {
 		refreshMyCases();
 		return "listCase";
 	}
-	
+
 	private void refreshMyCases() {
 		AuthUser user = FacesUtil.getCurrentUser();
 		UserProfile userProfile = user.getUserProfile();
@@ -207,6 +228,11 @@ public class MyDesk implements Serializable {
 			newCase.setStatus(CaseStatus.NEW);
 
 			caseService.insert(newCase);
+			
+			toUserId=null;
+			existingCustomer=null;
+			
+			
 			refreshMyCases();
 			FacesUtil.addInfoMessage("My Work Queue", "Case is created.");
 
@@ -219,35 +245,54 @@ public class MyDesk implements Serializable {
 	}
 
 	public String updateCase() {
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+				.lookup(UserProfileService.class.getName());
+		UserProfile toUserProfile = userProfileService.findById(Long
+				.parseLong(toUserId));
+
+		newCase.setAssignee(toUserProfile);
+		
+		caseService.update(newCase);
+		caseService.insertActivity(activity);
+		
+		toUserId=null;
+		existingCustomer=null;
+		
 		refreshMyCases();
 		FacesUtil.addInfoMessage("My Work Queue", "Case is updated.");
 		return "listCase";
 	}
 
 	public String openCase() {
-		setNewCase( getSelectedCase() );
+		setNewCase(getSelectedCase());
+		CaseActivity act = new CaseActivity();
+		act.setCase(getSelectedCase());
+		setActivity( act );
 		return "openCase";
 	}
 
 	public String cancel() {
 		return "listCase";
 	}
-	
+
 	public String searchCustomer() {
-		if (!StringUtils.hasText(searchIdNo) && !StringUtils.hasText(searchName)) {
-			FacesUtil.addErrorMessage("Search Customer", "Please enter customer name or Id No.");
+		if (!StringUtils.hasText(searchIdNo)
+				&& !StringUtils.hasText(searchName)) {
+			FacesUtil.addErrorMessage("Search Customer",
+					"Please enter customer name or Id No.");
 			return null;
 		}
-		
-		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+
+		CustomerService customerService = (CustomerService) SpringBeanUtil
+				.lookup(CustomerService.class.getName());
 		if (StringUtils.hasText(searchIdNo)) {
-			setSearchCustList( customerService.findByIdNo(searchIdNo) );
+			setSearchCustList(customerService.findByIdNo(searchIdNo));
 		}
-		
+
 		if (StringUtils.hasText(searchName)) {
-			setSearchCustList( customerService.findByName(searchName) );
+			setSearchCustList(customerService.findByName(searchName));
 		}
-		
+
 		return null;
 	}
 

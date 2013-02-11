@@ -23,5 +23,8 @@
         <property name="oldDueDate" type="date">
             <column name="old_due_date" length="10" />
         </property>
+        <property name="note" type="string">
+            <column name="note" length="300"/>
+        </property>
     </class>
 </hibernate-mapping>
