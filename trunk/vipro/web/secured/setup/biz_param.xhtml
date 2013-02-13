@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:define name="title">
+Business Parameters
+</ui:define>
+
+<ui:define name="content">	
+	<p:panel id="panel" header="Business Parameters">	
+	<p:tabView>
+		<p:tab id="tab1" title="Institution Information">
+			<h:form id="instInfoForm" >
+			<table width="100%">
+				<tr>
+					<td width="15%">
+						<p:outputLabel value="Institution Name" />
+					</td>
+					<td width="35%">
+						<p:inputText value="#{institutionInfoBean.institution.institutionName}" />
+					</td>
+					<td width="15%">
+						<p:outputLabel value="Initial" />
+					</td>
+					<td width="35%">
+						<p:inputText value="#{institutionInfoBean.institution.initial}" style="width:100px"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Contact Title / Name" />
+					</td>
+					<td colspan="3">
+						<p:selectOneMenu id="contactTitle" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" style="width:100px">  
+							<f:selectItems value="#{institutionInfoBean.contactTitleList}"/>
+						</p:selectOneMenu>
+						&nbsp;
+						<p:inputText value="#{institutionInfoBean.institution.contactPerson}" style="width:300px" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Address Line 1" />
+					</td>
+					<td>
+						<p:inputText value="" />
+					</td>
+					<td>
+						<p:outputLabel value="Mobile No" />
+					</td>
+					<td>
+						<p:inputText value="#{institutionInfoBean.institution.contactPersonMobile}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Address Line 2" />
+					</td>
+					<td>
+						<p:inputText value="" />
+					</td>
+					<td>
+						<p:outputLabel value="Email" />
+					</td>
+					<td>
+						<p:inputText value="#{institutionInfoBean.institution.contactPersonEmail}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Address Line 3" />
+					</td>
+					<td>
+						<p:inputText value="" />
+					</td>
+					<td>
+						<p:outputLabel value="Currency Symbol" />
+					</td>
+					<td>
+						<p:inputText value="#{institutionInfoBean.institution.currencySymbol}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Post Code" />
+					</td>
+					<td>
+						<p:inputText value="" style="width:100px"/>
+						&nbsp;
+						<p:selectOneMenu id="contactTitle2" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
+							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:outputLabel value="Date Format" />
+					</td>
+					<td>
+						<p:selectOneMenu id="contactTitle3" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
+							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="State" />
+					</td>
+					<td>
+						<p:selectOneMenu id="contactTitle4" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
+							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:outputLabel value="Password Retry" />
+					</td>
+					<td>
+						<p:inputText value="#{institution.contactPerson}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:outputLabel value="Country" />
+					</td>
+					<td>
+						<p:selectOneMenu id="contactTitle6" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
+							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:outputLabel value="Status" />
+					</td>
+					<td>
+						<p:inputText value="#{institution.status}" style="width:100px"/>
+						&nbsp;
+						<p:inputText value="" style="width:100px"/>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td colspan="4" align="right">
+						<p:commandButton id="cancelButton" action="#{institutionInfoBean.cancel}" value="Cancel" ajax="false"/>
+						<p:commandButton id="editButton" action="#{institutionInfoBean.edit}" value="Edit" ajax="false"/>
+						<p:commandButton id="saveButton" action="#{institutionInfoBean.save}" value="Save" ajax="false"/>
+					</td>
+				</tr>
+			</table>
+	        </h:form>
+	    </p:tab>  
+	  
+	    <p:tab id="tab2" title="General Code">  
+	        <h:panelGrid>  
+	        </h:panelGrid>  
+	    </p:tab>  
+	  
+	    <p:tab id="tab3" title="Transaction Code">  
+	        <h:panelGrid>  
+	        </h:panelGrid>  
+	    </p:tab>  
+	</p:tabView>
+
+</p:panel>
+</ui:define>
+</ui:composition>
