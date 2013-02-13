@@ -33,9 +33,9 @@ DROP TABLE IF EXISTS vipro.user_profile;
 DROP TABLE IF EXISTS vipro.holiday;
 DROP TABLE IF EXISTS vipro.audit_log_det;
 DROP TABLE IF EXISTS vipro.audit_log_header;
-DROP TABLE IF EXISTS vipro.Institution;
+DROP TABLE IF EXISTS vipro.institution;
 
-CREATE TABLE vipro.Institution (
+CREATE TABLE vipro.institution (
        institution_id BIGINT NOT NULL AUTO_INCREMENT
      , institution_name VARCHAR(60)
      , initial VARCHAR(6)
@@ -479,12 +479,12 @@ ALTER TABLE vipro.audit_log_det
 ALTER TABLE vipro.holiday
   ADD CONSTRAINT FK_holiday_1
       FOREIGN KEY (institution_id)
-      REFERENCES vipro.Institution (institution_id);
+      REFERENCES vipro.institution (institution_id);
 
 ALTER TABLE vipro.user_profile
   ADD CONSTRAINT FK_user_profile_1
       FOREIGN KEY (institution_id)
-      REFERENCES vipro.Institution (institution_id);
+      REFERENCES vipro.institution (institution_id);
 
 ALTER TABLE vipro.user_profile
   ADD CONSTRAINT FK_user_profile_2
@@ -509,12 +509,12 @@ ALTER TABLE vipro.code_det
 ALTER TABLE vipro.business_partner
   ADD CONSTRAINT FK_business_partner_1
       FOREIGN KEY (institution_id)
-      REFERENCES vipro.Institution (institution_id);
+      REFERENCES vipro.institution (institution_id);
 
 ALTER TABLE vipro.project
   ADD CONSTRAINT FK_project_1
       FOREIGN KEY (institution_id)
-      REFERENCES vipro.Institution (institution_id);
+      REFERENCES vipro.institution (institution_id);
 
 ALTER TABLE vipro.project
   ADD CONSTRAINT FK_project_2
@@ -549,7 +549,7 @@ ALTER TABLE vipro.account
 ALTER TABLE vipro.customer
   ADD CONSTRAINT FK_customer_1
       FOREIGN KEY (institution_id)
-      REFERENCES vipro.Institution (institution_id);
+      REFERENCES vipro.institution (institution_id);
 
 ALTER TABLE vipro.address
   ADD CONSTRAINT FK_address_1
