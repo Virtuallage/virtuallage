@@ -3,7 +3,7 @@ insert into vipro.user_group values('ADMIN', 'Administrator', 'ACTV');
 insert into institution (institution_name, status) values( 'B&E Engineering Sdn Bhd', 'ACTV');
 insert into vipro.user_profile (username, password, name, institution_id,  staff_no, status, group_id) values('root', '5f4dcc3b5aa765d61d8327deb882cf99', 'Administrator', 1,'000', 'ACTV', 'ADMIN');
 
-insert into code_header (id, name) values ('DEPARTMENT', 'deparments');
+insert into code_header (code_header_id, name) values ('DEPARTMENT', 'deparments');
 insert into code_det values ('DEPARTMENT', 'ACC', 'Account', 'ACTV');
 insert into code_det values ('DEPARTMENT', 'DEV', 'Developer', 'ACTV');
 
@@ -38,4 +38,11 @@ insert into code_det values ('CASE_TYPE', 'VERI', 'Verify', 'ACTV');
 insert into code_header values ('ACTION', 'Action taken');
 insert into code_det values ( 'ACTION', 'REASS', 'Reassigned' , 'ACTV');
 insert into code_det values ( 'ACTION', 'EMAIL', 'Emailed', 'ACTV');
+
+-- Contact Title
+INSERT INTO code_header VALUES ('CONTACT_TITLE', 'Contact Title');
+INSERT INTO code_det VALUES ('CONTACT_TITLE', 'MR', 'Mr', 'ACTV');
+INSERT INTO code_det VALUES ('CONTACT_TITLE', 'MS', 'Ms', 'ACTV');
+
+
 
