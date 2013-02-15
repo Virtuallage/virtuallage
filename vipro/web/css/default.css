@@ -30,6 +30,14 @@
 #footer a {
 }
 
+.label {
+	text-align: center;
+}
+
+.data {
+	text-align: left;
+}
+
 .ui-widget, .ui-widget .ui-widget {
     font-size: 95%;
 }
