@@ -15,152 +15,324 @@ Business Parameters
 <ui:define name="content">	
 	<p:panel id="panel" header="Business Parameters">	
 	<p:tabView>
-		<p:tab id="tab1" title="Institution Information">
-			<h:form id="instInfoForm" >
-			<table width="100%">
-				<tr>
-					<td width="15%">
-						<p:outputLabel value="Institution Name" />
-					</td>
-					<td width="35%">
-						<p:inputText value="#{institutionInfoBean.institution.institutionName}" />
-					</td>
-					<td width="15%">
-						<p:outputLabel value="Initial" />
-					</td>
-					<td width="35%">
-						<p:inputText value="#{institutionInfoBean.institution.initial}" style="width:100px"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
+		<p:tab id="institutionInfoTab" title="Institution Information">
+		<h:form id="institutionInfoForm" >
+			<p:panelGrid style="width:100%;border:0px;">
+				
+				<p:row>
+					<p:column styleClass="label" style="width:15%">
+						<p:outputLabel value="Institution Name" for="institutionName" />
+					</p:column>
+					<p:column styleClass="data" style="width:35%">
+						<p:inputText value="#{institutionInfoBean.institution.institutionName}" 
+						id="institutionName" required="true" />
+					</p:column>
+					<p:column styleClass="label" style="width:15%">
+						<p:outputLabel value="Initial" for="initial" />
+					</p:column>
+					<p:column styleClass="data" style="width:35%">
+						<p:inputText value="#{institutionInfoBean.institution.initial}"
+							style="width:100px" id="initial" required="true" />
+					</p:column>
+				</p:row>
+					
+				<p:row>
+					<p:column styleClass="label">
 						<p:outputLabel value="Contact Title / Name" />
-					</td>
-					<td colspan="3">
-						<p:selectOneMenu id="contactTitle" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" style="width:100px">  
+					</p:column>
+					<p:column colspan="3" styleClass="data">
+						<p:selectOneMenu id="contactTitle" value="#{institutionInfoBean.institution.contactPersonTitle}" 
+							 required="true" style="width:100px" label="Contact Title">  
 							<f:selectItems value="#{institutionInfoBean.contactTitleList}"/>
 						</p:selectOneMenu>
 						&nbsp;
-						<p:inputText value="#{institutionInfoBean.institution.contactPerson}" style="width:300px" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="Address Line 1" />
-					</td>
-					<td>
-						<p:inputText value="" />
-					</td>
-					<td>
-						<p:outputLabel value="Mobile No" />
-					</td>
-					<td>
-						<p:inputText value="#{institutionInfoBean.institution.contactPersonMobile}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="Address Line 2" />
-					</td>
-					<td>
-						<p:inputText value="" />
-					</td>
-					<td>
-						<p:outputLabel value="Email" />
-					</td>
-					<td>
-						<p:inputText value="#{institutionInfoBean.institution.contactPersonEmail}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="Address Line 3" />
-					</td>
-					<td>
-						<p:inputText value="" />
-					</td>
-					<td>
-						<p:outputLabel value="Currency Symbol" />
-					</td>
-					<td>
-						<p:inputText value="#{institutionInfoBean.institution.currencySymbol}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="Post Code" />
-					</td>
-					<td>
-						<p:inputText value="" style="width:100px"/>
+						<p:inputText value="#{institutionInfoBean.institution.contactPerson}" required="true" 
+							id="contactPerson" style="width:300px" label="Contact Name" />
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="Address Line 1" for="address1"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="address1" value="" required="true"/>
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Mobile No" for="mobileNo" />
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="mobileNo" value="#{institutionInfoBean.institution.contactPersonMobile}" required="true"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="Address Line 2" for="address2" />
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="address2" value="" required="true"/>
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Email" for="email"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="email" value="#{institutionInfoBean.institution.contactPersonEmail}" required="true"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="Address Line 3" for="address3"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="address3" value="" required="true"/>
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Currency Symbol" for="currencySymbol"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="currencySymbol" value="#{institutionInfoBean.institution.currencySymbol}" required="true"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="Post Code / City" />
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="postCode" value="" style="width:100px" required="true"/>
 						&nbsp;
-						<p:selectOneMenu id="contactTitle2" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
+						<p:selectOneMenu id="city" value="#{institutionInfoBean.institution.contactPersonTitle}" 
+							 required="true" style="width:200px" label="Contact Title">  
+							<f:selectItems value="#{institutionInfoBean.cityList}" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Date Format" for="dateFormat" />
+					</p:column>
+					<p:column styleClass="data">
+						<p:selectOneMenu id="dateFormat" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
 							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
 						</p:selectOneMenu>
-					</td>
-					<td>
-						<p:outputLabel value="Date Format" />
-					</td>
-					<td>
-						<p:selectOneMenu id="contactTitle3" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
-							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="State" for="state"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:selectOneMenu id="state" value="#{institutionInfoBean.institution.contactPersonTitle}" 
+							 required="true" style="width:200px">  
+							<f:selectItems value="#{institutionInfoBean.stateList}" />
 						</p:selectOneMenu>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="State" />
-					</td>
-					<td>
-						<p:selectOneMenu id="contactTitle4" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
-							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Password Retry" for="passwordRetry"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="passwordRetry" value="" required="true"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column styleClass="label">
+						<p:outputLabel value="Country" for="country" />
+					</p:column>
+					<p:column styleClass="data">
+						<p:selectOneMenu id="country" value="#{institutionInfoBean.institution.contactPersonTitle}" 
+							 required="true" style="width:200px">  
+							<f:selectItems value="#{institutionInfoBean.countryList}" />
 						</p:selectOneMenu>
-					</td>
-					<td>
-						<p:outputLabel value="Password Retry" />
-					</td>
-					<td>
-						<p:inputText value="#{institution.contactPerson}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p:outputLabel value="Country" />
-					</td>
-					<td>
-						<p:selectOneMenu id="contactTitle6" required="true" value="#{institutionInfoBean.institution.contactPersonTitle}" converter="institution">
-							<f:selectItems value="#{institutionInfoBean.contactTitleList}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
-						</p:selectOneMenu>
-					</td>
-					<td>
-						<p:outputLabel value="Status" />
-					</td>
-					<td>
-						<p:inputText value="#{institution.status}" style="width:100px"/>
+					</p:column>
+					<p:column styleClass="label">
+						<p:outputLabel value="Status" for="status"/>
+					</p:column>
+					<p:column styleClass="data">
+						<p:inputText id="status" value="#{institutionInfoBean.institution.status}" style="width:100px" required="true"/>
 						&nbsp;
-						<p:inputText value="" style="width:100px"/>
-					</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td colspan="4" align="right">
-						<p:commandButton id="cancelButton" action="#{institutionInfoBean.cancel}" value="Cancel" ajax="false"/>
-						<p:commandButton id="editButton" action="#{institutionInfoBean.edit}" value="Edit" ajax="false"/>
-						<p:commandButton id="saveButton" action="#{institutionInfoBean.save}" value="Save" ajax="false"/>
-					</td>
-				</tr>
-			</table>
+						<p:inputText value="" style="width:100px" required="true"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column colspan="4">
+						<p:commandButton id="cancelButton" action="#{institutionInfoBean.onCancel}" value="Cancel" ajax="false"/>
+						&nbsp;
+						<p:commandButton id="saveButton" action="#{institutionInfoBean.onSave}" value="Save" ajax="false"/>
+					</p:column>
+				</p:row>
+				
+			</p:panelGrid>
+	    </h:form>
+	    </p:tab>
+	  
+	    <p:tab id="generalCodeTab" title="General Code">
+        	<h:form id="generalCodeForm" >
+				<p:growl id="messages" showDetail="true"/> 
+        	
+				<h:panelGrid columns="3" style="width:50%;align:left">
+			
+					<p:outputLabel value="General Code Type" />
+					<h:selectOneMenu value="#{generalCodeBean.codeType}" style="width:200px">  
+                        <f:selectItems value="#{generalCodeBean.codeHeaderList}" />
+                    </h:selectOneMenu>  
+					<p:commandButton id="searchButton" action="#{generalCodeBean.onSearch}" value="Search" ajax="false"/>
+			
+				</h:panelGrid>        	
+		        
+		        <h:panelGrid style="width:100%" >
+	        		<p:dataTable var="codeDet" value="#{generalCodeBean.codeDetList}" id="codeDetList" editable="true">  
+			  
+						<p:ajax event="rowEdit" listener="#{generalCodeBean.onEdit}" />  
+				        <p:ajax event="rowEditCancel" listener="#{generalCodeBean.onCancel}" /> 
+        	  
+				        <p:column headerText="Type" style="width:15%">  
+				            <p:cellEditor>
+				                <f:facet name="output">
+				                    <h:outputText value="#{codeDet.id.codeHeaderId}" />
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <h:outputText value="#{codeDet.id.codeHeaderId}" />  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Name" style="width:20%">  
+				            <p:cellEditor>
+				                <f:facet name="output">  
+				                    <h:outputText value="#{codeDet.codeHeader.name}" />
+				                </f:facet>
+				                <f:facet name="input">
+				                    <h:outputText value="#{codeDet.codeHeader.name}" /> 
+				                </f:facet>
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Value" style="width:10%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{codeDet.id.code}" />  
+				                </f:facet>  
+				                 <f:facet name="input">  
+				                    <p:inputText value="#{codeDet.id.code}" style="width:100%" label="Year"/>  
+				                </f:facet>
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Description" style="width:30%">  
+				            <p:cellEditor>  
+				                 <f:facet name="output">  
+				                    <h:outputText value="#{codeDet.description}" />  
+				                </f:facet>  
+				                 <f:facet name="input">  
+				                    <p:inputText value="#{codeDet.description}" style="width:100%" label="Year"/>  
+				                </f:facet>
+				            </p:cellEditor>  
+				        </p:column>  
+				        
+				         <p:column headerText="Status" style="width:15%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{codeDet.status}" />  
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <h:selectOneMenu value="#{codeDet.status}" style="width:100%">  
+				                        <f:selectItems value="#{generalCodeBean.statusList}" />
+				                    </h:selectOneMenu>  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column> 
+				  
+				        <p:column style="width:10%">  
+				            <p:rowEditor />  
+				        </p:column>  
+			  
+				    </p:dataTable>
+		        </h:panelGrid>
+		        
 	        </h:form>
-	    </p:tab>  
+	    </p:tab>
 	  
-	    <p:tab id="tab2" title="General Code">  
-	        <h:panelGrid>  
-	        </h:panelGrid>  
-	    </p:tab>  
-	  
-	    <p:tab id="tab3" title="Transaction Code">  
-	        <h:panelGrid>  
-	        </h:panelGrid>  
-	    </p:tab>  
+	    <p:tab id="tab3" title="Transaction Code">
+	        <h:panelGrid>
+	        	<h:form id="form">  
+  
+				    <p:growl id="messages" showDetail="true"/>  
+				  
+				    <p:dataTable var="car" value="#{tableBean.carsSmall}" id="carList" editable="true">  
+				  
+				        <f:facet name="header">  
+				            In-Cell Editing  
+				        </f:facet>  
+				  
+				        <p:ajax event="rowEdit" listener="#{tableBean.onEdit}" />  
+				        <p:ajax event="rowEditCancel" listener="#{tableBean.onCancel}" />  
+				  
+				        <p:column headerText="Model" style="width:30%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{car.model}" />  
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <p:inputText value="#{car.model}" style="width:100%"/>  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Year" style="width:20%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{car.year}" />  
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <p:inputText value="#{car.year}" style="width:100%" label="Year"/>  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Manufacturer" style="width:24%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{car.manufacturer}" />  
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <h:selectOneMenu value="#{car.manufacturer}" >  
+				                        <f:selectItems value="#{tableBean.manufacturers}"  
+				                            var="man"   
+				                            itemLabel="#{man}"  
+				                            itemValue="#{man}" />  
+				                    </h:selectOneMenu>  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column headerText="Color" style="width:20%">  
+				            <p:cellEditor>  
+				                <f:facet name="output">  
+				                    <h:outputText value="#{car.color}" />  
+				                </f:facet>  
+				                <f:facet name="input">  
+				                    <h:selectOneMenu value="#{car.color}" >  
+				                        <f:selectItems value="#{tableBean.colors}"  
+				                            var="color"   
+				                            itemLabel="#{color}"  
+				                            itemValue="#{color}" />  
+				                    </h:selectOneMenu>  
+				                </f:facet>  
+				            </p:cellEditor>  
+				        </p:column>  
+				  
+				        <p:column style="width:6%">  
+				            <p:rowEditor />  
+				        </p:column>  
+				  
+				    </p:dataTable>  
+				  
+				</h:form>  
+	        </h:panelGrid>
+	    </p:tab>
 	</p:tabView>
 
 </p:panel>
