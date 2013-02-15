@@ -2,11 +2,10 @@ package com.vipro.utils.spring;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.model.SelectItem;
 
-
+import com.vipro.data.CodeDet;
 import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
 import com.vipro.service.CodeService;
@@ -15,9 +14,19 @@ import com.vipro.service.UserProfileService;
 
 public final class CodeUtil {
 	
+	public static List<SelectItem> getCodeHeaders() {
+		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
+		return codeService.getCodeHeaders();
+	}
+	
 	public static List<SelectItem> getCodes(String codeId) {
 		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
 		return codeService.getCodes(codeId);
+	}
+	
+	public static List<CodeDet> getCodeDetailList(String codeId) {
+		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
+		return codeService.getCodeDetailList(codeId);
 	}
 	
 	public static List<SelectItem> getInstitutionAsItems() {

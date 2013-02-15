@@ -1,9 +1,7 @@
 package com.vipro.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
@@ -48,6 +46,33 @@ public class CodeServiceImpl implements CodeService {
 			}
 		}
 		return items;
+	}
+	
+	@Override
+	public List<SelectItem> getCodeHeaders() {
+		List<CodeHeader> codeHeaderList = codeDao.findAllCodeHeaders();
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		
+		if (codeHeaderList != null && codeHeaderList.size() > 0) {
+			items.add( new SelectItem(null, "Select One"));
+			for (CodeHeader codeHeader : codeHeaderList) {
+				items.add( new SelectItem(codeHeader.getCodeHeaderId(), codeHeader.getName()) );
+			}
+		}
+		return items;
+	}
+	
+	@Override
+	public List<CodeDet> getCodeDetailList(String codeId) {
+		CodeHeader header = findById(codeId);
+		
+		if (header != null)  {
+			Set<CodeDet> map = header.getCodeDets();
+			if (map != null) {
+				return new ArrayList<CodeDet>(map);
+			}
+		}
+		return null;
 	}
 
 }
