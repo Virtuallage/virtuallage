@@ -44,5 +44,28 @@ INSERT INTO code_header VALUES ('CONTACT_TITLE', 'Contact Title');
 INSERT INTO code_det VALUES ('CONTACT_TITLE', 'MR', 'Mr', 'ACTV');
 INSERT INTO code_det VALUES ('CONTACT_TITLE', 'MS', 'Ms', 'ACTV');
 
+-- City
+INSERT INTO code_header VALUES ('CITY', 'City');
+INSERT INTO code_det VALUES ('CITY', 'SMY', 'Bandar Semenyih', 'ACTV');
+INSERT INTO code_det VALUES ('CITY', 'BK1', 'Bandar Kinrara 1', 'ACTV');
+INSERT INTO code_det VALUES ('CITY', 'BK2', 'Bandar Kinrara 2', 'ACTV');
+INSERT INTO code_det VALUES ('CITY', 'BK3', 'Bandar Kinrara 3', 'ACTV');
+INSERT INTO code_det VALUES ('CITY', 'SUN', 'Sunway', 'ACTV');
+
+-- State
+INSERT INTO code_header VALUES ('STATE', 'State');
+INSERT INTO code_det VALUES ('STATE', 'SEL', 'Selangor', 'ACTV');
+INSERT INTO code_det VALUES ('STATE', 'KUL', 'Kuala Lumpur', 'ACTV');
+INSERT INTO code_det VALUES ('STATE', 'PEN', 'Penang', 'ACTV');
+
+-- Country
+INSERT INTO code_header VALUES ('COUNTRY', 'Country');
+INSERT INTO code_det VALUES ('COUNTRY', 'MAS', 'Malaysia', 'ACTV');
+INSERT INTO code_det VALUES ('COUNTRY', 'IND', 'Indonesia', 'ACTV');
+
+-- Status
+INSERT INTO code_header VALUES ('STATUS', 'Status');
+INSERT INTO code_det VALUES ('STATUS', 'ACTV', 'Active', 'ACTV');
+INSERT INTO code_det VALUES ('STATUS', 'INACT', 'Inactive', 'ACTV');
 
 
