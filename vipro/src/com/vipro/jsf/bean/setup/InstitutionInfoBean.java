@@ -22,6 +22,9 @@ public class InstitutionInfoBean implements PageConst {
 
 	private Institution institution;
 	private List<SelectItem> contactTitleList;
+	private List<SelectItem> cityList;
+	private List<SelectItem> stateList;
+	private List<SelectItem> countryList;
 	private List<SelectItem> departments;
 
 
@@ -41,19 +44,40 @@ public class InstitutionInfoBean implements PageConst {
 		this.contactTitleList = contactTitleList;
 	}
 
-	
-	@PostConstruct
-	public void init() {
-		AuthUser user = FacesUtil.getCurrentUser();
-//		setUserProfile(user.getUserProfile());
-		
-		
-		setContactTitleList( CodeUtil.getCodes(CodeConst.CONTACT_TITLE) );
+	public List<SelectItem> getCityList() {
+		return cityList;
 	}
 
+	public void setCityList(List<SelectItem> cityList) {
+		this.cityList = cityList;
+	}
+
+	public List<SelectItem> getStateList() {
+		return stateList;
+	}
+
+	public void setStateList(List<SelectItem> stateList) {
+		this.stateList = stateList;
+	}
+
+	public List<SelectItem> getCountryList() {
+		return countryList;
+	}
+
+	public void setCountryList(List<SelectItem> countryList) {
+		this.countryList = countryList;
+	}
+
+	@PostConstruct
+	public void init() {
+		institution = new Institution();
+		contactTitleList = CodeUtil.getCodes(CodeConst.CONTACT_TITLE);
+		cityList = CodeUtil.getCodes(CodeConst.CITY);
+		stateList = CodeUtil.getCodes(CodeConst.STATE);
+		countryList = CodeUtil.getCodes(CodeConst.COUNTRY);
+	}
 	
-	
-	public String edit() {
+	public String onEdit() {
 		try {
 			InstitutionService service = (InstitutionService) SpringBeanUtil.lookup(InstitutionService.class.getName());
 			service.update(institution);
@@ -66,7 +90,7 @@ public class InstitutionInfoBean implements PageConst {
 		return MAIN;
 	}
 	
-	public String save() {
+	public String onSave() {
 		try {
 			InstitutionService service = (InstitutionService) SpringBeanUtil.lookup(InstitutionService.class.getName());
 			service.insert(institution);
@@ -79,7 +103,7 @@ public class InstitutionInfoBean implements PageConst {
 		return MAIN;
 	}
 	
-	public String cancel() {
+	public String onCancel() {
 		return MAIN;
 	}
 
