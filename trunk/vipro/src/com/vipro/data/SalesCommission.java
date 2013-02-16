@@ -17,6 +17,7 @@ public class SalesCommission implements java.io.Serializable {
 	private BigDecimal amountOrRate;
 	private Date createdOn;
 	private String status;
+	private Project project;
 
 	public SalesCommission() {
 	}
@@ -85,6 +86,14 @@ public class SalesCommission implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

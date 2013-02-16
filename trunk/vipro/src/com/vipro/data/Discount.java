@@ -17,6 +17,8 @@ public class Discount implements java.io.Serializable {
 	private BigDecimal discountRate;
 	private Date createdOn;
 	private String status;
+	private Project project;
+	
 
 	public Discount() {
 	}
@@ -92,5 +94,15 @@ public class Discount implements java.io.Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
+	
 
 }

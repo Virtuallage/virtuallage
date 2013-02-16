@@ -20,6 +20,9 @@
         <property name="projectCode" type="string">
             <column name="project_code" length="10" />
         </property>
+         <property name="postcode" type="string">
+            <column name="postcode" length="10" />
+        </property>
         <property name="propertyType" type="string">
             <column name="property_type" length="20" />
         </property>
@@ -74,11 +77,26 @@
         <property name="taxPercentage" type="big_decimal">
             <column name="tax_percentage" precision="3" />
         </property>
+        <property name="status" type="string">
+            <column name="status" length="10"/>
+        </property>
         <set name="projectInventories" table="project_inventory" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="project_id" not-null="true" />
             </key>
             <one-to-many class="com.vipro.data.ProjectInventory" />
+        </set>
+         <set name="salesCommissions" table="sales_commission" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.SalesCommission" />
+        </set>
+         <set name="discounts" table="discount" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id" not-null="true" />
+            </key>
+            <one-to-many class="com.vipro.data.Discount" />
         </set>
     </class>
 </hibernate-mapping>

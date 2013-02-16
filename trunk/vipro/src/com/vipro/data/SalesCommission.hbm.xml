@@ -8,6 +8,9 @@
             <column name="commission_id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="project" class="com.vipro.data.Project" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
         <property name="description" type="string">
             <column name="description" length="30" />
         </property>
