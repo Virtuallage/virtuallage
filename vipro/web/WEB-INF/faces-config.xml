@@ -28,5 +28,18 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/secured/mydesk/listCase.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newCase</from-outcome>
+            <to-view-id>/secured/mydesk/newCase.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>openCase</from-outcome>
+            <to-view-id>/secured/mydesk/openCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   
 </faces-config>
