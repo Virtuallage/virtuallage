@@ -20,6 +20,7 @@ public class Project implements java.io.Serializable {
 	private String propertyType;
 	private String reportGroup;
 	private String address;
+	private String postcode;
 	private String projectOfficeTelNo;
 	private String projectOfficeFaxNo;
 	private String personInCharge;
@@ -35,7 +36,10 @@ public class Project implements java.io.Serializable {
 	private BigDecimal maintenanceFeeRate;
 	private Date launchDate;
 	private BigDecimal taxPercentage;
-	private Set projectInventories = new HashSet(0);
+	private String status;
+	private Set<ProjectInventory> projectInventories = new HashSet(0);
+	private Set<SalesCommission> salesCommissions = new HashSet(0);
+	private Set<Discount> discounts = new HashSet(0);
 
 	public Project() {
 	}
@@ -264,12 +268,48 @@ public class Project implements java.io.Serializable {
 		this.taxPercentage = taxPercentage;
 	}
 
-	public Set getProjectInventories() {
-		return this.projectInventories;
+
+
+	public Set<ProjectInventory> getProjectInventories() {
+		return projectInventories;
 	}
 
-	public void setProjectInventories(Set projectInventories) {
+	public void setProjectInventories(Set<ProjectInventory> projectInventories) {
 		this.projectInventories = projectInventories;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<SalesCommission> getSalesCommissions() {
+		return salesCommissions;
+	}
+
+	public void setSalesCommissions(Set<SalesCommission> salesCommissions) {
+		this.salesCommissions = salesCommissions;
+	}
+
+	public Set<Discount> getDiscounts() {
+		return discounts;
+	}
+
+	public void setDiscounts(Set<Discount> discounts) {
+		this.discounts = discounts;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	
+	
 
 }

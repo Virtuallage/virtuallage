@@ -54,9 +54,21 @@ INSERT INTO code_det VALUES ('CITY', 'SUN', 'Sunway', 'ACTV');
 
 -- State
 INSERT INTO code_header VALUES ('STATE', 'State');
-INSERT INTO code_det VALUES ('STATE', 'SEL', 'Selangor', 'ACTV');
-INSERT INTO code_det VALUES ('STATE', 'KUL', 'Kuala Lumpur', 'ACTV');
-INSERT INTO code_det VALUES ('STATE', 'PEN', 'Penang', 'ACTV');
+insert into code_det values('STATE', 'SEL', 'Selangor', 'ACTV');
+insert into code_det values('STATE', 'KUL', 'Kuala Lumpur', 'ACTV');
+insert into code_det values('STATE', 'JOH', 'Johor', 'ACTV');
+insert into code_det values('STATE', 'MEL', 'Melaka', 'ACTV');
+insert into code_det values('STATE', 'SEM', 'Sembilan', 'ACTV');
+insert into code_det values('STATE', 'PAH', 'Pahang', 'ACTV');
+insert into code_det values('STATE', 'PER', 'Perak', 'ACTV');
+insert into code_det values('STATE', 'TER', 'Terrenganu', 'ACTV');
+insert into code_det values('STATE', 'KEL', 'Kelantan', 'ACTV');
+insert into code_det values('STATE', 'PEN', 'Penang', 'ACTV');
+insert into code_det values('STATE', 'PEL', 'Perlis', 'ACTV');
+insert into code_det values('STATE', 'KED', 'Kedah', 'ACTV');
+insert into code_det values('STATE', 'SAR', 'Sarawak', 'ACTV');
+insert into code_det values('STATE', 'SAB', 'Sabah', 'ACTV');
+insert into code_det values('STATE', 'LAB', 'Labuan', 'ACTV');
 
 -- Country
 INSERT INTO code_header VALUES ('COUNTRY', 'Country');
@@ -69,3 +81,13 @@ INSERT INTO code_det VALUES ('STATUS', 'ACTV', 'Active', 'ACTV');
 INSERT INTO code_det VALUES ('STATUS', 'INACT', 'Inactive', 'ACTV');
 
 
+
+
+insert into code_header values ('PROP_TYPE', 'Property types');
+insert into code_det values( 'PROP_TYPE', 'CON', 'Condo/Service Residential', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'APT', 'Apartment/Flat', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'TER', 'Terrence/Townhouse', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'BGL', 'Semi-D/Bungalow', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'SHP', 'Shop/Office', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'HTL', 'Hotel/Resort', 'ACTV');
+insert into code_det values( 'PROP_TYPE', 'FTR', 'Warehouse/Factory', 'ACTV');

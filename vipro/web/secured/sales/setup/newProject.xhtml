@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Project Setup
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Add New Project" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+<h:form>  
+	<h:panelGrid columns="4" style="width:100%">
+		<p:outputLabel value="Project Name" for="projectName"/>
+		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" length="30" required="true"/>
+		
+		<p:outputLabel value="Project Address" for="address"/>
+		<p:inputTextarea id="address" value="#{projectSetup.project.address}" length="30" row="3" cols="50" required="true"/>
+		
+		<p:outputLabel value="Project Code" for="code"/>
+		<p:inputText id="code" value="#{projectSetup.project.projectCode}" length="30" required="true"/>
+		
+
+		
+		<p:outputLabel value="Developer Name" for="developerName"/>
+		<p:selectOneMenu id="developerName" value="#{projectSetup.project.institution}" > 
+			<f:selectItems value="#{projectSetup.institutions}" />
+		</p:selectOneMenu>
+
+		
+		<p:outputLabel value="Property Type" for="propType"/>
+		<p:selectOneMenu id="propType" value="#{projectSetup.project.propertyType}" >
+			<f:selectItems value="#{projectSetup.propertyTypes}"/>
+		</p:selectOneMenu>
+		
+
+		<p:outputLabel value="Post Code" for="postcode"/>
+		<h:panelGroup>
+			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" length="30"/>
+			<p:selectOneMenu value="#{projectSetup.project.locationCity}">
+				<f:selectItems value="#{projectSetup.cities}"/>
+			</p:selectOneMenu>
+		</h:panelGroup>
+		
+		<p:outputLabel value="Report Group" for="rptGroup"/>
+		<p:selectOneMenu id="rptGroup" value="#{projectSetup.project.propertyType}" >
+			<f:selectItems value="#{projectSetup.propertyTypes}"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="State" for="state"/>
+		<p:selectOneMenu id="state" value="#{projectSetup.project.locationState}">
+			<f:selectItems value="#{projectSetup.states}"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Person In Charge" for="pic"/>
+		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" length="30"/>
+		
+		<p:outputLabel value="Country" for="cnty"/>
+		<p:selectOneMenu id="cnty" value="#{projectSetup.project.locationCountry}">
+			<f:selectItems value="#{projectSetup.countries}"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="PIC Mobile" for="picMobile"/>
+		<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" length="30"/>
+		
+		<p:outputLabel value="Project Tel" for="tel"/>
+		<h:panelGroup>
+			<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" length="15"/>&nbsp;&nbsp;
+			<p:outputLabel value="Fax" for="fax"/>
+			<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" length="151"/>
+		</h:panelGroup>
+		
+		<p:outputLabel value="Launch Date" for="launchDate"/>
+		<p:calendar id="launchDate" value="#{projectSetup.project.launchDate}"/>
+		
+		<p:outputLabel value="Location Search" for="locationSearch"/>
+		<p:inputText id="locationSearch" value="#{projectSetup.locationSearch}" length="20"/>
+		
+		<p:outputLabel value="Total Units"/>
+		<p:inputText value="#{projectSetup.totalUnits}" length="10" disabled="true"/>
+		
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		
+		<p:outputLabel value="Price Range"/>
+		<h:panelGroup>
+			<p:inputText value="#{projectSetup.priceRangeFrom}" size="5" disabled="true"/> <h:outputText value=" to "/> <p:inputText value="#{projectSetup.priceRangeTo}" size="5" disabled="true"/>
+		</h:panelGroup>
+		
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		
+		
+		<p:outputLabel value="Current Discount"/>
+		<h:panelGroup>
+			<p:inputText value="#{projectSetup.currentDiscount}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.discountExpiry}" size="5" disabled="true"/>
+			<p:commandButton value="Add"/>
+		</h:panelGroup>
+		
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		
+		<p:outputLabel value="Sales Commission"/>
+		<h:panelGroup>
+			<p:inputText value="#{projectSetup.salesCommission}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.commisionExpiry}" size="5" disabled="true"/>
+			<p:commandButton value="Add"/>
+		</h:panelGroup>	
+		
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		
+	</h:panelGrid>
+	
+	<br/>
+		<p:commandButton value="Cancel" action="#{projectSetup.listProject}" ajax="false" immediate="true"/>  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{projectSetup.saveProject}" ajax="false"/>
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

@@ -23,7 +23,7 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales">
-    		<p:menuitem value="Project Setup" url="#" />
+    		<p:menuitem value="Project Setup" action="#{projectSetup.listProject}" />
     		<p:menuitem value="Price Adjustment" url="#" />
     		<p:menuitem value="Sales Registration" url="#" />
     		<p:menuitem value="Sales Update" url="#" />
