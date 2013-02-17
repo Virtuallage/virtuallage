@@ -3,16 +3,14 @@ package com.vipro.jsf.bean.setup;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.RowEditEvent;
 
 import com.vipro.constant.CodeConst;
-import com.vipro.data.Car;
 import com.vipro.data.CodeDet;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.utils.spring.CodeUtil;
@@ -23,12 +21,13 @@ import com.vipro.utils.spring.CodeUtil;
 public class GeneralCodeBean implements PageConst {
 
 	private String codeType;
+	private CodeDet selectedCodeDet;
 	
 	private List<SelectItem> codeHeaderList;
 	private List<SelectItem> statusList;
 	
-	private List<CodeDet>codeDetList;
-
+	private List<CodeDet> codeDetList;
+	
 	public List<SelectItem> getCodeHeaderList() {
 		return codeHeaderList;
 	}
@@ -61,10 +60,19 @@ public class GeneralCodeBean implements PageConst {
 		this.codeType = codeType;
 	}
 
+	public CodeDet getSelectedCodeDet() {
+		return selectedCodeDet;
+	}
+
+	public void setSelectedCodeDet(CodeDet selectedCodeDet) {
+		this.selectedCodeDet = selectedCodeDet;
+	}
+
 	@PostConstruct
 	public void init() {
 		codeHeaderList = CodeUtil.getCodeHeaders();
 		statusList = CodeUtil.getCodes(CodeConst.STATUS);
+		codeDetList = CodeUtil.getCodeDetailList(null);
 	}
 	
     public void onSearch() {
@@ -72,15 +80,24 @@ public class GeneralCodeBean implements PageConst {
     }
 	
     public void onEdit(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Car Edited", ((Car) event.getObject()).getModel());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    	System.out.println("ONEDIT");
+    	
+//        FacesMessage msg = new FacesMessage("Car Edited", ((Car) event.getObject()).getModel());  
+//  
+//        FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
       
-    public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    public void onCancel(RowEditEvent event) {
+    	System.out.println("ONCANCEL");
+//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
+//  
+//        FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
 	
+    public void onDelete() {
+    	System.out.println("ONDELETE");
+//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
+//  
+//        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
 }

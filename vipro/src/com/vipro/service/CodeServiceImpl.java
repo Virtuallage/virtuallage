@@ -64,13 +64,26 @@ public class CodeServiceImpl implements CodeService {
 	
 	@Override
 	public List<CodeDet> getCodeDetailList(String codeId) {
-		CodeHeader header = findById(codeId);
-		
-		if (header != null)  {
-			Set<CodeDet> map = header.getCodeDets();
-			if (map != null) {
-				return new ArrayList<CodeDet>(map);
+		if (codeId != null && !codeId.equals("")) {
+			CodeHeader header = findById(codeId);
+			if (header != null)  {
+				Set<CodeDet> map = header.getCodeDets();
+				if (map != null) {
+					return new ArrayList<CodeDet>(map);
+				}
 			}
+		} else {
+			// find codeDet for all codeHeader if codeId is null
+			List<CodeHeader> codeHeaderList = codeDao.findAllCodeHeaders();
+			List<CodeDet> codeDetList = new ArrayList<CodeDet>();
+			for (CodeHeader codeHeader : codeHeaderList) {
+				Set<CodeDet> map = codeHeader.getCodeDets();
+				if (map != null) {
+					List<CodeDet> tempList = new ArrayList<CodeDet>(map);
+					codeDetList.addAll(tempList);
+				}
+			}
+			return codeDetList;
 		}
 		return null;
 	}
