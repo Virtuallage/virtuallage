@@ -130,7 +130,7 @@ Project Setup
 
 <h:form id="discountForm">
 	<p:dialog header="Discount Maintenance" widgetVar="dlgDiscount"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
-		<p:dataTable var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  
+		<p:dataTable var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
 	            <h:outputText value="#{c.effectiveDate}">
@@ -156,7 +156,7 @@ Project Setup
 
 <h:form id="commissionForm">
 	<p:dialog header="Sales Commission Maintenance" widgetVar="dlgCommission"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
-		<p:dataTable var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  
+		<p:dataTable var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
 	            <h:outputText value="#{c.effectiveDate}">

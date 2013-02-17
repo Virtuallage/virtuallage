@@ -20,7 +20,7 @@ Project Setup
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{projectSetup.projects}" paginator="true" rows="10"  
+    <p:dataTable var="c" value="#{projectSetup.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15" >   
         <p:column headerText="Project Code">  
