@@ -9,6 +9,7 @@ public interface ProjectService {
 
 	
 	public List<Project> findAllProjects();
+	public Project findById(Long projectId);
 	public List<ProjectInventory> findInventories(Long projectId);
 	
 	public void insert(Project p);

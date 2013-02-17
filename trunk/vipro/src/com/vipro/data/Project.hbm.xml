@@ -9,10 +9,10 @@
             <generator class="identity" />
         </id>
         <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
-            <column name="account_id" not-null="true" />
+            <column name="account_id"  />
         </many-to-one>
         <many-to-one name="institution" class="com.vipro.data.Institution" fetch="select">
-            <column name="institution_id" not-null="true" />
+            <column name="institution_id"  />
         </many-to-one>
         <property name="projectName" type="string">
             <column name="project_name" length="40" />

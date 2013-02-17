@@ -9,8 +9,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import com.vipro.constant.ProjectStatusConst;
+import com.vipro.data.Discount;
 import com.vipro.data.Project;
+import com.vipro.data.SalesCommission;
+import com.vipro.service.DiscountService;
 import com.vipro.service.ProjectService;
+import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -19,6 +24,9 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class ProjectSetup implements Serializable {
 	private List<Project> projects;
+	private List<Discount> discounts;
+	private List<SalesCommission> commissions;
+	private Long projectId;
 	private Project project;
 	private List<SelectItem> countries;
 	private List<SelectItem> states;
@@ -26,7 +34,7 @@ public class ProjectSetup implements Serializable {
 	private List<SelectItem> propertyTypes;
 	private List<SelectItem> institutions;
 	private String locationSearch;
-	
+
 	private int totalUnits;
 	private double priceRangeFrom;
 	private double priceRangeTo;
@@ -46,6 +54,30 @@ public class ProjectSetup implements Serializable {
 		states = CodeUtil.getCodes("STATE");
 		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
 		institutions = CodeUtil.getInstitutionAsItems();
+	}
+
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+
+	public List<Discount> getDiscounts() {
+		return discounts;
+	}
+
+	public void setDiscounts(List<Discount> discounts) {
+		this.discounts = discounts;
+	}
+
+	public List<SalesCommission> getCommissions() {
+		return commissions;
+	}
+
+	public void setCommissions(List<SalesCommission> commissions) {
+		this.commissions = commissions;
 	}
 
 	public int getTotalUnits() {
@@ -180,10 +212,30 @@ public class ProjectSetup implements Serializable {
 		return "newProject";
 	}
 
+	public String editProject() {
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
+		
+		DiscountService discountService = (DiscountService) SpringBeanUtil
+				.lookup(DiscountService.class.getName());
+		discounts = discountService.findByProjectId(projectId);
+		
+		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+				.lookup(SalesCommissionService.class.getName());
+		
+		commissions = salesCommissionService.findByProjectId(projectId);
+
+		return "newProject";
+	}
+
 	public String saveProject() {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
+		project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
 		projectService.insert(project);
+
+		listProject();
 		return "project";
 	}
 
