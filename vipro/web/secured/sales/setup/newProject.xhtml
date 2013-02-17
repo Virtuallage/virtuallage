@@ -22,18 +22,18 @@ Project Setup
 <h:form>  
 	<h:panelGrid columns="4" style="width:100%">
 		<p:outputLabel value="Project Name" for="projectName"/>
-		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" length="30" required="true"/>
+		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" length="30" required="true" autocomplete="off"/>
 		
 		<p:outputLabel value="Project Address" for="address"/>
-		<p:inputTextarea id="address" value="#{projectSetup.project.address}" length="30" row="3" cols="50" required="true"/>
+		<p:inputTextarea id="address" value="#{projectSetup.project.address}" length="30" row="3" cols="50" required="true" />
 		
 		<p:outputLabel value="Project Code" for="code"/>
-		<p:inputText id="code" value="#{projectSetup.project.projectCode}" length="30" required="true"/>
+		<p:inputText id="code" value="#{projectSetup.project.projectCode}" length="30" required="true" autocomplete="off"/>
 		
 
 		
 		<p:outputLabel value="Developer Name" for="developerName"/>
-		<p:selectOneMenu id="developerName" value="#{projectSetup.project.institution}" > 
+		<p:selectOneMenu id="developerName" value="#{projectSetup.project.institution}" converter="institution"> 
 			<f:selectItems value="#{projectSetup.institutions}" />
 		</p:selectOneMenu>
 
@@ -46,14 +46,14 @@ Project Setup
 
 		<p:outputLabel value="Post Code" for="postcode"/>
 		<h:panelGroup>
-			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" length="30"/>
+			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" length="30" autocomplete="off"/>
 			<p:selectOneMenu value="#{projectSetup.project.locationCity}">
 				<f:selectItems value="#{projectSetup.cities}"/>
 			</p:selectOneMenu>
 		</h:panelGroup>
 		
 		<p:outputLabel value="Report Group" for="rptGroup"/>
-		<p:selectOneMenu id="rptGroup" value="#{projectSetup.project.propertyType}" >
+		<p:selectOneMenu id="rptGroup" value="#{projectSetup.project.reportGroup}" >
 			<f:selectItems value="#{projectSetup.propertyTypes}"/>
 		</p:selectOneMenu>
 		
@@ -63,7 +63,7 @@ Project Setup
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Person In Charge" for="pic"/>
-		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" length="30"/>
+		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" length="30" autocomplete="off"/>
 		
 		<p:outputLabel value="Country" for="cnty"/>
 		<p:selectOneMenu id="cnty" value="#{projectSetup.project.locationCountry}">
@@ -71,20 +71,20 @@ Project Setup
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="PIC Mobile" for="picMobile"/>
-		<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" length="30"/>
+		<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" length="30" autocomplete="off"/>
 		
 		<p:outputLabel value="Project Tel" for="tel"/>
 		<h:panelGroup>
-			<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" length="15"/>&nbsp;&nbsp;
+			<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" length="15" autocomplete="off"/>&nbsp;&nbsp;
 			<p:outputLabel value="Fax" for="fax"/>
-			<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" length="151"/>
+			<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" length="151" autocomplete="off"/>
 		</h:panelGroup>
 		
 		<p:outputLabel value="Launch Date" for="launchDate"/>
-		<p:calendar id="launchDate" value="#{projectSetup.project.launchDate}"/>
+		<p:calendar id="launchDate" value="#{projectSetup.project.launchDate}"  pattern="dd/MM/yyyy"/>
 		
 		<p:outputLabel value="Location Search" for="locationSearch"/>
-		<p:inputText id="locationSearch" value="#{projectSetup.locationSearch}" length="20"/>
+		<p:inputText id="locationSearch" value="#{projectSetup.locationSearch}" length="20" autocomplete="off"/>
 		
 		<p:outputLabel value="Total Units"/>
 		<p:inputText value="#{projectSetup.totalUnits}" length="10" disabled="true"/>
@@ -104,7 +104,7 @@ Project Setup
 		<p:outputLabel value="Current Discount"/>
 		<h:panelGroup>
 			<p:inputText value="#{projectSetup.currentDiscount}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.discountExpiry}" size="5" disabled="true"/>
-			<p:commandButton value="Add"/>
+			<p:commandButton value="Add" onclick="dlgDiscount.show();"/>
 		</h:panelGroup>
 		
 		<p:outputLabel value=""/>
@@ -113,7 +113,7 @@ Project Setup
 		<p:outputLabel value="Sales Commission"/>
 		<h:panelGroup>
 			<p:inputText value="#{projectSetup.salesCommission}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.commisionExpiry}" size="5" disabled="true"/>
-			<p:commandButton value="Add"/>
+			<p:commandButton value="Add" onclick="dlgCommission.show();"/>
 		</h:panelGroup>	
 		
 		<p:outputLabel value=""/>
@@ -128,6 +128,60 @@ Project Setup
 
 </p:panel>
 
+<h:form id="discountForm">
+	<p:dialog header="Discount Maintenance" widgetVar="dlgDiscount"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
+		<p:dataTable var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  
+	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
+	        <p:column headerText="Effective Date">  
+	            <h:outputText value="#{c.effectiveDate}">
+	            <f:convertDateTime pattern="dd/MM/yyyy"/>  
+	            </h:outputText>
+	        </p:column>  
+	        <p:column headerText="Expiry Date">  
+	           <h:outputText value="#{c.expiryDate}">
+	           <f:convertDateTime pattern="dd/MM/yyyy"/>  
+	           </h:outputText>
+	        </p:column>  
+	        <p:column headerText="Discount Rate">  
+	            <h:outputText value="#{c.discountRate}">
+	            </h:outputText>
+	        </p:column>  
+	    </p:dataTable>
+	
+	
+		<p:commandButton value="Close" onclick="dlgDiscount.hide();"/>
+	</p:dialog>
+</h:form>
+
+
+<h:form id="commissionForm">
+	<p:dialog header="Sales Commission Maintenance" widgetVar="dlgCommission"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
+		<p:dataTable var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  
+	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
+	        <p:column headerText="Effective Date">  
+	            <h:outputText value="#{c.effectiveDate}">
+	            <f:convertDateTime pattern="dd/MM/yyyy"/>  
+	            </h:outputText>
+	        </p:column>  
+	        <p:column headerText="Expiry Date">  
+	           <h:outputText value="#{c.expiryDate}">
+	           <f:convertDateTime pattern="dd/MM/yyyy"/>  
+	           </h:outputText>
+	        </p:column>  
+	        <p:column headerText="Type">  
+	            <h:outputText value="#{c.type}">
+	            </h:outputText>
+	        </p:column>  
+	        <p:column headerText="Commission">  
+	            <h:outputText value="#{c.amountOrRate}">
+	            </h:outputText>
+	        </p:column>  
+	    </p:dataTable>
+	
+	
+		<p:commandButton value="Close" onclick="dlgCommission.hide();"/>
+	</p:dialog>
+</h:form>
 </ui:define>
 
 </ui:composition>
