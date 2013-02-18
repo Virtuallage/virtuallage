@@ -52,11 +52,11 @@ My Work Queue
         </p:column>
         
         <p:column headerText="Status"> 
-      
-        	 
-        	<p:commandLink value="#{c.status}" action="#{myDesk.openCase}" ajax="false">
+      		<h:outputText value="#{c.status}"/>
+        	 &nbsp;
+        	<p:commandButton  action="#{myDesk.openCase}" ajax="false" icon="ui-icon-search" title="View">
            		 <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCase}" />  
-           </p:commandLink>
+           </p:commandButton>
         </p:column>
     </p:dataTable>  
     
