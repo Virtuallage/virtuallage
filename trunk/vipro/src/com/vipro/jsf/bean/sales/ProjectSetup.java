@@ -215,7 +215,7 @@ public class ProjectSetup implements Serializable {
 	public String editProject() {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
-		project = projectService.findById(projectId);
+		projectId = project.getProjectId();
 		
 		DiscountService discountService = (DiscountService) SpringBeanUtil
 				.lookup(DiscountService.class.getName());

@@ -45,6 +45,11 @@ Project Setup
         
         <p:column headerText="Status">  
            <h:outputText value="#{c.status}"/>
+           &nbsp;
+           <p:commandButton action="#{projectSetup.editProject}" ajax="false" icon="ui-icon-search" title="View">
+           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  
+           </p:commandButton>
+           
         </p:column>
         
 
