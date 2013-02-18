@@ -180,7 +180,7 @@ Business Parameters
 			
 				</h:panelGrid> 
         	
-        		<p:dataTable var="codeDet" value="#{generalCodeBean.codeDetList}" id="codeDetDataTable" lazy="false" editable="true">  
+        		<p:dataTable var="codeDet" value="#{generalCodeBean.codeDetList}" id="codeDetDataTable" editable="true">  
 		  
 					<p:ajax event="rowEdit" listener="#{generalCodeBean.onEdit}" />  
 			        <p:ajax event="rowEditCancel" listener="#{generalCodeBean.onCancel}" /> 
@@ -192,7 +192,6 @@ Business Parameters
 			                </f:facet>  
 			                <f:facet name="input">
 			                    <h:outputText value="#{codeDet.id.codeHeaderId}" />
-			                	<p:inputText value="#{codeDet.id.codeHeaderId}" style="width:100%;display:none" /> 
 			                </f:facet>  
 			            </p:cellEditor>  
 			        </p:column>  
@@ -204,7 +203,6 @@ Business Parameters
 			                </f:facet>
 			                <f:facet name="input">
 			                	<h:outputText value="#{codeDet.codeHeader.name}" />
-			                	<p:inputText value="#{codeDet.codeHeader.name}" style="width:100%;display:none" />
 			                </f:facet>
 			            </p:cellEditor>  
 			        </p:column>  
@@ -216,7 +214,6 @@ Business Parameters
 			                </f:facet>  
 			                 <f:facet name="input">  
 			                    <h:outputText value="#{codeDet.id.code}" />
-			                	<p:inputText value="#{codeDet.id.code}" style="width:100%;display:none" />
 			                </f:facet>
 			            </p:cellEditor>  
 			        </p:column>  
