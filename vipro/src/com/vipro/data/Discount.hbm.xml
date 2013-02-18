@@ -4,9 +4,9 @@
 <!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.vipro.data.Discount" table="discount" catalog="vipro">
-        <id name="discountId" type="long">
+        <id name="discountId" type="java.lang.Long">
             <column name="discount_id" />
-            <generator class="assigned" />
+         	 <generator class="identity" />
         </id>
         <many-to-one name="project" class="com.vipro.data.Project" fetch="select">
             <column name="project_id" not-null="true" />
@@ -20,14 +20,14 @@
         <property name="expiryDate" type="date">
             <column name="expiry_date" length="10" />
         </property>
-        <property name="discountRate" type="big_decimal">
+        <property name="discountRate" type="double">
             <column name="discount_rate" precision="3" />
         </property>
         <property name="createdOn" type="timestamp">
             <column name="created_on" length="19" />
         </property>
-        <property name="status" type="string">
+        <!-- property name="status" type="string">
             <column name="status" length="5" />
-        </property>
+        </property-->
     </class>
 </hibernate-mapping>

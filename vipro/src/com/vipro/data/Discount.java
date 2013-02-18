@@ -10,40 +10,39 @@ import java.util.Date;
  */
 public class Discount implements java.io.Serializable {
 
-	private long discountId;
+	private Long discountId;
 	private String description;
 	private Date effectiveDate;
 	private Date expiryDate;
-	private BigDecimal discountRate;
+	private Double discountRate;
 	private Date createdOn;
-	private String status;
+//	private String status;
 	private Project project;
 	
 
 	public Discount() {
 	}
 
-	public Discount(long discountId) {
+	public Discount(Long discountId) {
 		this.discountId = discountId;
 	}
 
-	public Discount(long discountId, String description, Date effectiveDate,
-			Date expiryDate, BigDecimal discountRate, Date createdOn,
-			String status) {
+	public Discount(Long discountId, String description, Date effectiveDate,
+			Date expiryDate, Double discountRate, Date createdOn) {
 		this.discountId = discountId;
 		this.description = description;
 		this.effectiveDate = effectiveDate;
 		this.expiryDate = expiryDate;
 		this.discountRate = discountRate;
 		this.createdOn = createdOn;
-		this.status = status;
+
 	}
 
-	public long getDiscountId() {
+	public Long getDiscountId() {
 		return this.discountId;
 	}
 
-	public void setDiscountId(long discountId) {
+	public void setDiscountId(Long discountId) {
 		this.discountId = discountId;
 	}
 
@@ -71,11 +70,11 @@ public class Discount implements java.io.Serializable {
 		this.expiryDate = expiryDate;
 	}
 
-	public BigDecimal getDiscountRate() {
+	public Double getDiscountRate() {
 		return this.discountRate;
 	}
 
-	public void setDiscountRate(BigDecimal discountRate) {
+	public void setDiscountRate(Double discountRate) {
 		this.discountRate = discountRate;
 	}
 
@@ -87,13 +86,13 @@ public class Discount implements java.io.Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	public String getStatus() {
+//		return this.status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public Project getProject() {
 		return project;

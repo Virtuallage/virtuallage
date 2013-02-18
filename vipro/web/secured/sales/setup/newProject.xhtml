@@ -130,7 +130,7 @@ Project Setup
 
 <h:form id="discountForm">
 	<p:dialog header="Discount Maintenance" widgetVar="dlgDiscount"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
-		<p:dataTable var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+		<p:dataTable id="dtDiscount" var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
 	            <h:outputText value="#{c.effectiveDate}">
@@ -147,8 +147,21 @@ Project Setup
 	            </h:outputText>
 	        </p:column>  
 	    </p:dataTable>
-	
-	
+		
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Effective Date" for="dEffDate"/>	
+			<p:calendar id="dEffDate" pattern="dd/MM/yyyy" value="#{projectSetup.discount.effectiveDate}" required="true"/>
+			
+			<p:outputLabel value="Expiry Date" for="dExpDate"/>
+			<p:calendar id="dExpDate" pattern="dd/MM/yyyy" value="#{projectSetup.discount.expiryDate}" required="true"/>
+			
+			<p:outputLabel value="Discount Rate" for="dRate"/>
+			<p:inputText id="dRate"  value="#{projectSetup.discount.discountRate}" required="true"/>
+			
+		</h:panelGrid>
+		
+		<br/>
+		<p:commandButton value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}" />
 		<p:commandButton value="Close" onclick="dlgDiscount.hide();"/>
 	</p:dialog>
 </h:form>
