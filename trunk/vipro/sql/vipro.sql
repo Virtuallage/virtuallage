@@ -130,7 +130,7 @@ CREATE TABLE vipro.code_det (
 );
 
 CREATE TABLE vipro.discount (
-       discount_id BIGINT NOT NULL
+       discount_id BIGINT NOT NULL  AUTO_INCREMENT
      , description VARCHAR(30)
      , effective_date DATE
      , expiry_date DATE

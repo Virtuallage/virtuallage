@@ -42,6 +42,8 @@ public class ProjectSetup implements Serializable {
 	private Date discountExpiry;
 	private double salesCommission;
 	private Date commisionExpiry;
+	private Discount discount;
+	private SalesCommission commission;
 
 	public ProjectSetup() {
 
@@ -54,6 +56,22 @@ public class ProjectSetup implements Serializable {
 		states = CodeUtil.getCodes("STATE");
 		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
 		institutions = CodeUtil.getInstitutionAsItems();
+	}
+
+	public Discount getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Discount discount) {
+		this.discount = discount;
+	}
+
+	public SalesCommission getCommission() {
+		return commission;
+	}
+
+	public void setCommission(SalesCommission commission) {
+		this.commission = commission;
 	}
 
 	public Long getProjectId() {
@@ -216,15 +234,18 @@ public class ProjectSetup implements Serializable {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
 		projectId = project.getProjectId();
-		
+
 		DiscountService discountService = (DiscountService) SpringBeanUtil
 				.lookup(DiscountService.class.getName());
 		discounts = discountService.findByProjectId(projectId);
-		
+
 		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 				.lookup(SalesCommissionService.class.getName());
-		
+
 		commissions = salesCommissionService.findByProjectId(projectId);
+		
+		discount = new Discount();
+		commission = new SalesCommission();
 
 		return "newProject";
 	}
@@ -236,7 +257,32 @@ public class ProjectSetup implements Serializable {
 		projectService.insert(project);
 
 		listProject();
+		
+		discount = new Discount();
+		commission = new SalesCommission();
+		
 		return "project";
+	}
+	
+	public String addDiscount() {
+		DiscountService discountService = (DiscountService) SpringBeanUtil
+				.lookup(DiscountService.class.getName());
+		discount.setProject(project);
+		discount.setCreatedOn(new Date());
+		discountService.insert(discount);
+		discounts = discountService.findByProjectId(projectId);
+		discount = new Discount();
+		return null;
+	}
+	
+	public String addSalesCommission() {
+		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+				.lookup(SalesCommissionService.class.getName());
+		commission.setProject(project);
+		salesCommissionService.insert(commission);
+		commissions = salesCommissionService.findByProjectId(projectId);
+		commission = new SalesCommission();
+		return "newProject";
 	}
 
 }
