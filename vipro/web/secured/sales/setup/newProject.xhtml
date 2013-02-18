@@ -129,7 +129,7 @@ Project Setup
 </p:panel>
 
 <h:form id="discountForm">
-	<p:dialog header="Discount Maintenance" widgetVar="dlgDiscount"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
+	<p:dialog header="Discount Maintenance" widgetVar="dlgDiscount"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="fade"> 
 		<p:dataTable id="dtDiscount" var="c" value="#{projectSetup.discounts}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
@@ -145,6 +145,10 @@ Project Setup
 	        <p:column headerText="Discount Rate">  
 	            <h:outputText value="#{c.discountRate}">
 	            </h:outputText>
+	            &nbsp;
+	            <p:commandButton id="dDelBtn" update=":discountForm:dtDiscount"  icon="ui-icon-trash" title="Delete" immediate="true" action="#{projectSetup.deleteDiscount}">
+	           	   <f:setPropertyActionListener value="#{c}" target="#{projectSetup.discount}" />  
+	            </p:commandButton>
 	        </p:column>  
 	    </p:dataTable>
 		
@@ -168,7 +172,7 @@ Project Setup
 
 
 <h:form id="commissionForm">
-	<p:dialog header="Sales Commission Maintenance" widgetVar="dlgCommission"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
+	<p:dialog header="Sales Commission Maintenance" widgetVar="dlgCommission"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="fade"> 
 		<p:dataTable id="dtCommission" var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
@@ -184,6 +188,10 @@ Project Setup
 	        <p:column headerText="Commission">  
 	            <h:outputText value="#{c.amountOrRate}">
 	            </h:outputText>
+	            &nbsp;
+	            <p:commandButton id="comDelBtn" update=":commissionForm:dtCommission"  icon="ui-icon-trash" title="Delete" immediate="true" action="#{projectSetup.deleteSalesCommission}">
+	           	   <f:setPropertyActionListener value="#{c}" target="#{projectSetup.commission}" />  
+	            </p:commandButton>
 	        </p:column>  
 	    </p:dataTable>
 	

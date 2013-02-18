@@ -32,7 +32,7 @@ alter table project add postcode varchar(10);
 alter table project modify institution_id bigint;
 alter table project modify account_id bigint;
 
-
+alter table discount modify discount_rate decimal(5,2);
 
       
       
