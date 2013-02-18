@@ -169,18 +169,14 @@ Project Setup
 
 <h:form id="commissionForm">
 	<p:dialog header="Sales Commission Maintenance" widgetVar="dlgCommission"  modal="true" height="400" width="700"  showEffect="fade" hideEffect="explode"> 
-		<p:dataTable var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  paginatorPosition="bottom"
+		<p:dataTable id="dtCommission" var="c" value="#{projectSetup.commissions}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "   >   
 	        <p:column headerText="Effective Date">  
 	            <h:outputText value="#{c.effectiveDate}">
 	            <f:convertDateTime pattern="dd/MM/yyyy"/>  
 	            </h:outputText>
 	        </p:column>  
-	        <p:column headerText="Expiry Date">  
-	           <h:outputText value="#{c.expiryDate}">
-	           <f:convertDateTime pattern="dd/MM/yyyy"/>  
-	           </h:outputText>
-	        </p:column>  
+	     
 	        <p:column headerText="Type">  
 	            <h:outputText value="#{c.type}">
 	            </h:outputText>
@@ -191,7 +187,24 @@ Project Setup
 	        </p:column>  
 	    </p:dataTable>
 	
-	
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Effective Date" for="cEffDate"/>	
+			<p:calendar id="cEffDate" pattern="dd/MM/yyyy" value="#{projectSetup.commission.effectiveDate}" required="true"/>
+			
+		
+			<p:outputLabel value="Commission Type" for="cType"/>
+			<p:selectOneMenu id="cType" value="#{projectSetup.commission.type}">
+				<f:selectItem itemValue="PCT" itemLabel="Percentage"/>
+				<f:selectItem itemValue="AMT" itemLabel="Fixed Amount"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Commission" for="cComm"/>
+			<p:inputText id="cComm"  value="#{projectSetup.commission.amountOrRate}" required="true"/>
+			
+		</h:panelGrid>
+		
+		<br/>
+		<p:commandButton value="Add" update="dtCommission, cEffDate, cType, cComm" action="#{projectSetup.addSalesCommission}" />
 		<p:commandButton value="Close" onclick="dlgCommission.hide();"/>
 	</p:dialog>
 </h:form>
