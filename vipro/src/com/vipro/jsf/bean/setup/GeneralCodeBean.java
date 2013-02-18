@@ -4,10 +4,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.RowEditEvent;
 
 import com.vipro.constant.CodeConst;
@@ -16,8 +15,8 @@ import com.vipro.jsf.bean.PageConst;
 import com.vipro.utils.spring.CodeUtil;
 
 
-@ManagedBean
-@RequestScoped
+@ManagedBean(name = "generalCodeBean")
+@SessionScoped
 public class GeneralCodeBean implements PageConst {
 
 	private String codeType;
@@ -72,7 +71,6 @@ public class GeneralCodeBean implements PageConst {
 	public void init() {
 		codeHeaderList = CodeUtil.getCodeHeaders();
 		statusList = CodeUtil.getCodes(CodeConst.STATUS);
-		codeDetList = CodeUtil.getCodeDetailList(null);
 	}
 	
     public void onSearch() {
