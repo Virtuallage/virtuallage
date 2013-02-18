@@ -26,8 +26,8 @@
         <property name="createdOn" type="timestamp">
             <column name="created_on" length="19" />
         </property>
-        <property name="status" type="string">
+        <!-- property name="status" type="string">
             <column name="status" length="5" />
-        </property>
+        </property-->
     </class>
 </hibernate-mapping>

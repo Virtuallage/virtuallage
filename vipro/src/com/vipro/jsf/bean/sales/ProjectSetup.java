@@ -279,6 +279,7 @@ public class ProjectSetup implements Serializable {
 		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 				.lookup(SalesCommissionService.class.getName());
 		commission.setProject(project);
+		commission.setCreatedOn(new Date());
 		salesCommissionService.insert(commission);
 		commissions = salesCommissionService.findByProjectId(projectId);
 		commission = new SalesCommission();
