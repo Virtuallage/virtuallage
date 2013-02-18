@@ -16,20 +16,20 @@ public class SalesCommission implements java.io.Serializable {
 	private String type;
 	private BigDecimal amountOrRate;
 	private Date createdOn;
-	private String status;
+//	private String status;
 	private Project project;
 
 	public SalesCommission() {
 	}
 
 	public SalesCommission(String description, Date effectiveDate, String type,
-			BigDecimal amountOrRate, Date createdOn, String status) {
+			BigDecimal amountOrRate, Date createdOn) {
 		this.description = description;
 		this.effectiveDate = effectiveDate;
 		this.type = type;
 		this.amountOrRate = amountOrRate;
 		this.createdOn = createdOn;
-		this.status = status;
+	
 	}
 
 	public Long getCommissionId() {
@@ -80,13 +80,13 @@ public class SalesCommission implements java.io.Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	public String getStatus() {
+//		return this.status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public Project getProject() {
 		return project;
