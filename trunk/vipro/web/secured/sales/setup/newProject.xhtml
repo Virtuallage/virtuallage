@@ -94,7 +94,7 @@ Project Setup
 		
 		<p:outputLabel value="Price Range"/>
 		<h:panelGroup>
-			<p:inputText value="#{projectSetup.priceRangeFrom}" size="5" disabled="true"/> <h:outputText value=" to "/> <p:inputText value="#{projectSetup.priceRangeTo}" size="5" disabled="true"/>
+			<h:outputText value="#{projectSetup.priceRangeFrom}" ><f:convertNumber type="currency" currencySymbol="" /></h:outputText> <h:outputText value=" to "/> <h:outputText value="#{projectSetup.priceRangeTo}"><f:convertNumber type="currency" currencySymbol="" /></h:outputText>
 		</h:panelGroup>
 		
 		<p:outputLabel value=""/>
@@ -103,7 +103,7 @@ Project Setup
 		
 		<p:outputLabel value="Current Discount"/>
 		<h:panelGroup>
-			<p:inputText value="#{projectSetup.currentDiscount}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.discountExpiry}" size="5" disabled="true"/>
+			<h:outputText value="#{projectSetup.currentDiscount}"><f:convertNumber type="number" /></h:outputText> <h:outputText value=" expires on " /> <h:outputText value="#{projectSetup.discountExpiry}"><f:convertDateTime pattern="dd/MM/yyyy"/>  </h:outputText>
 			<p:commandButton value="Add" onclick="dlgDiscount.show();"/>
 		</h:panelGroup>
 		
@@ -112,7 +112,7 @@ Project Setup
 		
 		<p:outputLabel value="Sales Commission"/>
 		<h:panelGroup>
-			<p:inputText value="#{projectSetup.salesCommission}" size="5" disabled="true"/> <h:outputText value=" Expires on " /> <p:inputText value="#{projectSetup.commisionExpiry}" size="5" disabled="true"/>
+			<h:outputText value="#{projectSetup.salesCommission}" /> <h:outputText value=" effective on " /> <h:outputText value="#{projectSetup.commisionEffective}" ><f:convertDateTime pattern="dd/MM/yyyy"/>  </h:outputText>
 			<p:commandButton value="Add" onclick="dlgCommission.show();"/>
 		</h:panelGroup>	
 		

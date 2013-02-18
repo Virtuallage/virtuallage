@@ -41,7 +41,7 @@ public class ProjectSetup implements Serializable {
 	private double currentDiscount;
 	private Date discountExpiry;
 	private double salesCommission;
-	private Date commisionExpiry;
+	private Date commisionEffective;
 	private Discount discount;
 	private SalesCommission commission;
 
@@ -146,12 +146,14 @@ public class ProjectSetup implements Serializable {
 		this.salesCommission = salesCommission;
 	}
 
-	public Date getCommisionExpiry() {
-		return commisionExpiry;
+
+
+	public Date getCommisionEffective() {
+		return commisionEffective;
 	}
 
-	public void setCommisionExpiry(Date commisionExpiry) {
-		this.commisionExpiry = commisionExpiry;
+	public void setCommisionEffective(Date commisionEffective) {
+		this.commisionEffective = commisionEffective;
 	}
 
 	public String getLocationSearch() {
@@ -247,6 +249,8 @@ public class ProjectSetup implements Serializable {
 		discount = new Discount();
 		commission = new SalesCommission();
 
+		refreshCommissionDiscount();
+		
 		return "newProject";
 	}
 
@@ -261,7 +265,28 @@ public class ProjectSetup implements Serializable {
 		discount = new Discount();
 		commission = new SalesCommission();
 		
+		refreshCommissionDiscount();
+		
 		return "project";
+	}
+	
+	public void refreshCommissionDiscount() {
+		DiscountService discountService = (DiscountService) SpringBeanUtil
+				.lookup(DiscountService.class.getName());
+		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+				.lookup(SalesCommissionService.class.getName());
+		
+		Discount d = discountService.findCurrentEffectiveDiscount(projectId);
+		SalesCommission s = salesCommissionService.findCurrentEffectiveSalesCommission(projectId);
+		
+		if (d!=null) {
+			this.currentDiscount = d.getDiscountRate().doubleValue();
+			this.discountExpiry = d. getExpiryDate();
+		}
+		if (s!=null) {
+			this.commisionEffective = s.getEffectiveDate();
+			this.salesCommission = s.getAmountOrRate().doubleValue();
+		}
 	}
 	
 	public String addDiscount() {
@@ -272,6 +297,7 @@ public class ProjectSetup implements Serializable {
 		discountService.insert(discount);
 		discounts = discountService.findByProjectId(projectId);
 		discount = new Discount();
+		refreshCommissionDiscount();
 		return null;
 	}
 	
@@ -283,6 +309,7 @@ public class ProjectSetup implements Serializable {
 		salesCommissionService.insert(commission);
 		commissions = salesCommissionService.findByProjectId(projectId);
 		commission = new SalesCommission();
+		refreshCommissionDiscount();
 		return "newProject";
 	}
 	
@@ -293,6 +320,7 @@ public class ProjectSetup implements Serializable {
 			discountService.delete(discount.getDiscountId());
 			discounts = discountService.findByProjectId(projectId);
 			discount = new Discount();
+			refreshCommissionDiscount();
 		}
 		return null;
 	}
@@ -304,6 +332,7 @@ public class ProjectSetup implements Serializable {
 			salesCommissionService.delete(commission.getCommissionId());
 			commissions = salesCommissionService.findByProjectId(projectId);
 			commission = new SalesCommission();
+			refreshCommissionDiscount();
 		}
 		return null;
 	}

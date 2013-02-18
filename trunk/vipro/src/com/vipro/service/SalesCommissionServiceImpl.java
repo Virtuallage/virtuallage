@@ -47,4 +47,9 @@ public class SalesCommissionServiceImpl implements SalesCommissionService {
 		
 	}
 
+	@Override
+	public SalesCommission findCurrentEffectiveSalesCommission(Long projectId) {
+		return salesCommissionDao.findCurrentEffectiveSalesCommission(projectId);
+	}
+
 }

@@ -52,4 +52,9 @@ public class DiscountServiceImpl implements DiscountService {
 		return d;
 	}
 
+	@Override
+	public Discount findCurrentEffectiveDiscount(Long projectId) {
+		return discountDao.findCurrentEffectiveDiscount(projectId);
+	}
+
 }

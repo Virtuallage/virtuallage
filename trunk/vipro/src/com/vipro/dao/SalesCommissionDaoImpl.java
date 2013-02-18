@@ -1,5 +1,6 @@
 package com.vipro.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,16 @@ public class SalesCommissionDaoImpl extends DaoImpl<SalesCommission> implements 
 	@Override
 	public SalesCommission findById(Long id) {
 		return getHibernateTemplate().get(SalesCommission.class, id);
+	}
+
+	@Override
+	public SalesCommission findCurrentEffectiveSalesCommission(Long projectId) {
+		String query = "select o from SalesCommission o where o.effectiveDate <= ? order by o.effectiveDate desc";
+		List<SalesCommission> list = getHibernateTemplate().find(query, new Date());
+		if (list!=null && list.size()>0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 }
