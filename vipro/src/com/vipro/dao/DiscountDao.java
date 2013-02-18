@@ -9,4 +9,5 @@ public interface DiscountDao extends Dao<Discount>{
 
 	public List<Discount> findByProjectId(Long projectId);
 	public Discount findById(Long id);
+	public Discount findCurrentEffectiveDiscount(Long projectId);
 }
