@@ -285,5 +285,27 @@ public class ProjectSetup implements Serializable {
 		commission = new SalesCommission();
 		return "newProject";
 	}
+	
+	public String deleteDiscount() {
+		if (discount!=null && discount.getDiscountId()!=null) {
+			DiscountService discountService = (DiscountService) SpringBeanUtil
+					.lookup(DiscountService.class.getName());
+			discountService.delete(discount.getDiscountId());
+			discounts = discountService.findByProjectId(projectId);
+			discount = new Discount();
+		}
+		return null;
+	}
+	
+	public String deleteSalesCommission() {
+		if (commission!=null && commission.getCommissionId()!=null) {
+			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+					.lookup(SalesCommissionService.class.getName());
+			salesCommissionService.delete(commission.getCommissionId());
+			commissions = salesCommissionService.findByProjectId(projectId);
+			commission = new SalesCommission();
+		}
+		return null;
+	}
 
 }

@@ -46,4 +46,10 @@ public class DiscountServiceImpl implements DiscountService {
 		
 	}
 
+	@Override
+	public Discount findById(Long discountId) {
+		Discount d = discountDao.findById(discountId);
+		return d;
+	}
+
 }
