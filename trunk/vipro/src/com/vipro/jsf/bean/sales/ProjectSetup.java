@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.sales;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,10 @@ import javax.faces.model.SelectItem;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
+import com.vipro.data.ProjectInventory;
 import com.vipro.data.SalesCommission;
 import com.vipro.service.DiscountService;
+import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
@@ -23,6 +26,9 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @ManagedBean(name = "projectSetup")
 @SessionScoped
 public class ProjectSetup implements Serializable {
+	/**
+	 * project related propertiess
+	 */
 	private List<Project> projects;
 	private List<Discount> discounts;
 	private List<SalesCommission> commissions;
@@ -45,6 +51,14 @@ public class ProjectSetup implements Serializable {
 	private Discount discount;
 	private SalesCommission commission;
 
+	/**
+	 * inventory related properties
+	 */
+	private List<ProjectInventory> inventories;
+	private ProjectInventory inventory;
+	private List<SelectItem> propertyStatusList;
+	private List<SelectItem> titleTypeList;
+
 	public ProjectSetup() {
 
 	}
@@ -55,7 +69,41 @@ public class ProjectSetup implements Serializable {
 		cities = CodeUtil.getCodes("CITY");
 		states = CodeUtil.getCodes("STATE");
 		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
+		propertyStatusList = CodeUtil.getPropertyStatusAsItems();
+		titleTypeList = CodeUtil.getCodes("TITLE_TYPE");
 		institutions = CodeUtil.getInstitutionAsItems();
+	}
+
+	public List<SelectItem> getPropertyStatusList() {
+		return propertyStatusList;
+	}
+
+	public void setPropertyStatusList(List<SelectItem> propertyStatusList) {
+		this.propertyStatusList = propertyStatusList;
+	}
+
+	public List<SelectItem> getTitleTypeList() {
+		return titleTypeList;
+	}
+
+	public void setTitleTypeList(List<SelectItem> titleTypeList) {
+		this.titleTypeList = titleTypeList;
+	}
+
+	public ProjectInventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(ProjectInventory inventory) {
+		this.inventory = inventory;
+	}
+
+	public List<ProjectInventory> getInventories() {
+		return inventories;
+	}
+
+	public void setInventories(List<ProjectInventory> inventories) {
+		this.inventories = inventories;
 	}
 
 	public Discount getDiscount() {
@@ -145,8 +193,6 @@ public class ProjectSetup implements Serializable {
 	public void setSalesCommission(double salesCommission) {
 		this.salesCommission = salesCommission;
 	}
-
-
 
 	public Date getCommisionEffective() {
 		return commisionEffective;
@@ -245,12 +291,12 @@ public class ProjectSetup implements Serializable {
 				.lookup(SalesCommissionService.class.getName());
 
 		commissions = salesCommissionService.findByProjectId(projectId);
-		
+
 		discount = new Discount();
 		commission = new SalesCommission();
 
 		refreshCommissionDiscount();
-		
+
 		return "newProject";
 	}
 
@@ -261,34 +307,35 @@ public class ProjectSetup implements Serializable {
 		projectService.insert(project);
 
 		listProject();
-		
+
 		discount = new Discount();
 		commission = new SalesCommission();
-		
+
 		refreshCommissionDiscount();
-		
+
 		return "project";
 	}
-	
+
 	public void refreshCommissionDiscount() {
 		DiscountService discountService = (DiscountService) SpringBeanUtil
 				.lookup(DiscountService.class.getName());
 		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 				.lookup(SalesCommissionService.class.getName());
-		
+
 		Discount d = discountService.findCurrentEffectiveDiscount(projectId);
-		SalesCommission s = salesCommissionService.findCurrentEffectiveSalesCommission(projectId);
-		
-		if (d!=null) {
+		SalesCommission s = salesCommissionService
+				.findCurrentEffectiveSalesCommission(projectId);
+
+		if (d != null) {
 			this.currentDiscount = d.getDiscountRate().doubleValue();
-			this.discountExpiry = d. getExpiryDate();
+			this.discountExpiry = d.getExpiryDate();
 		}
-		if (s!=null) {
+		if (s != null) {
 			this.commisionEffective = s.getEffectiveDate();
 			this.salesCommission = s.getAmountOrRate().doubleValue();
 		}
 	}
-	
+
 	public String addDiscount() {
 		DiscountService discountService = (DiscountService) SpringBeanUtil
 				.lookup(DiscountService.class.getName());
@@ -300,7 +347,7 @@ public class ProjectSetup implements Serializable {
 		refreshCommissionDiscount();
 		return null;
 	}
-	
+
 	public String addSalesCommission() {
 		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 				.lookup(SalesCommissionService.class.getName());
@@ -312,9 +359,9 @@ public class ProjectSetup implements Serializable {
 		refreshCommissionDiscount();
 		return "newProject";
 	}
-	
+
 	public String deleteDiscount() {
-		if (discount!=null && discount.getDiscountId()!=null) {
+		if (discount != null && discount.getDiscountId() != null) {
 			DiscountService discountService = (DiscountService) SpringBeanUtil
 					.lookup(DiscountService.class.getName());
 			discountService.delete(discount.getDiscountId());
@@ -324,9 +371,9 @@ public class ProjectSetup implements Serializable {
 		}
 		return null;
 	}
-	
+
 	public String deleteSalesCommission() {
-		if (commission!=null && commission.getCommissionId()!=null) {
+		if (commission != null && commission.getCommissionId() != null) {
 			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 					.lookup(SalesCommissionService.class.getName());
 			salesCommissionService.delete(commission.getCommissionId());
@@ -337,4 +384,37 @@ public class ProjectSetup implements Serializable {
 		return null;
 	}
 
+	public String toInventoryList() {
+		if (project!=null) {
+			projectId = project.getProjectId();
+		}
+
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+		inventories = inventoryService.getInventories(projectId);
+
+		return "inventoryList";
+	}
+	
+	public String addInventory() {
+		
+		inventory = new ProjectInventory();
+		
+		return "editInventory";
+	}
+
+	
+	public String editInventory() {
+		
+		return "editInventory";
+	}
+	
+	public String saveInventory() {
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+		inventory.setProject(project);
+		inventoryService.update(inventory);
+		
+		return toInventoryList();
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.CodeDet;
 import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
@@ -55,6 +56,14 @@ public final class CodeUtil {
 		}
 		
 		return items;
+	}
+
+	public static List<SelectItem> getPropertyStatusAsItems() {
+		List<SelectItem> list = new ArrayList<SelectItem>();
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_ACTIVE, "Available") );
+		list.add( new SelectItem( PropertyUnitStatusConst.STATUS_DISABLED, "Not Available"));
+		
+		return list;
 	}
 
 }
