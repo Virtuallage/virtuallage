@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Project Setup
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Add Property Unit" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+<h:form>  
+	<h:panelGrid columns="6" style="width:100%">
+		<p:outputLabel value="Project Name"/>
+		<p:outputLabel value="#{project.projectName}"/>
+		<p:outputLabel value=""/>
+			<p:outputLabel value=""/>
+		<p:outputLabel value="Status" for="status"/>
+		<p:selectOneMenu id="status" value="#{projectSetup.inventory.propertyStatus}"> 
+			<f:selectItems value="#{projectSetup.propertyStatusList}" />
+		</p:selectOneMenu>
+
+		
+		<p:outputLabel value="Block No" for="blockNo"/>
+		<p:inputText id="blockNo" value="#{projectSetup.inventory.blockNo}" size="15" maxlength="15" autocomplete="off"/>
+		<p:outputLabel value="Level" for="level"/>
+		<p:inputText id="level" value="#{projectSetup.inventory.level}" size="15" maxlength="15" autocomplete="off"/>
+		<p:outputLabel value="Selling Price" for="sellingPrice"/>
+		<p:inputText id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" size="10" maxlength="8" autocomplete="off" >
+		 		<f:convertNumber maxFractionDigits="0" />
+                <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
+		</p:inputText>
+
+		<p:outputLabel value="Unit No"/>
+		<p:inputText value="#{projectSetup.inventory.unitNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Type"/>
+		<p:inputText value="#{projectSetup.inventory.layoutType}" size="15" maxlength="15" autocomplete="off"/>
+		<p:outputLabel value="Discount Rate"/>
+		<p:outputLabel value=""/>
+		
+		<p:outputLabel value="Build Up Area"/>
+		<p:inputText value="#{projectSetup.inventory.builtUpArea}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Land Area"/>
+		<p:inputText  value="#{projectSetup.inventory.landArea}"  size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Discount Amount" for="discountAmt"/>
+		<p:inputText id="discountAmt" value="#{projectSetup.inventory.discountAmount}" size="10" maxlength="10" autocomplete="off">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
+		</p:inputText>
+		
+		<p:outputLabel value="HSD No"/>
+		<p:inputText value="#{projectSetup.inventory.hsdNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="PT No"/>
+		<p:inputText value="#{projectSetup.inventory.ptNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Redemption Amount"/>
+		<p:inputText value="#{projectSetup.inventory.redemptionAmount}" size="10" maxlength="10" autocomplete="off"/>
+		
+		<p:outputLabel value="Orientation"/>
+		<p:inputText value="#{projectSetup.inventory.orientation}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Legal Fee"/>
+		<p:inputText value="#{projectSetup.inventory.legalFee}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Assessment Fee"/>
+		<p:inputText value="#{projectSetup.inventory.assessment}" size="10" maxlength="10" autocomplete="off"/>
+		
+		<p:outputLabel value="Quit Rent"/>
+		<p:inputText value="#{projectSetup.inventory.quitRent}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Disbursement Fee"/>
+		<p:inputText value="#{projectSetup.inventory.disbursementFee}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Title Type" for="titleType"/>
+		<p:selectOneMenu id="titleType" value="#{projectSetup.inventory.propertyTitleType}"> 
+			<f:selectItems value="#{projectSetup.titleTypeList}" />
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Strata Title Date"/>
+		<p:calendar value="#{projectSetup.inventory.strataTitleObtainedDate}"/>
+		<p:outputLabel value="Handover Date"/>
+		<p:calendar value="#{projectSetup.inventory.keyHandoverDate}"/>
+		<p:outputLabel value="DNC Date"/>
+		<p:outputLabel value=""/>
+	</h:panelGrid>
+	
+	<h:panelGrid columns="2" style="width:100%">
+		<p:outputLabel value="Address"/>
+		<p:inputTextarea value="#{projectSetup.inventory.propertyAddress}" cols="50" rows="5"/>
+
+	</h:panelGrid>
+	
+	<br/>
+		<p:commandButton value="Cancel" action="#{projectSetup.toInventoryList}" ajax="false" immediate="true"/>  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{projectSetup.saveInventory}" ajax="false"/>
+</h:form> 
+
+</p:panel>
+
+
+</ui:define>
+
+</ui:composition>
