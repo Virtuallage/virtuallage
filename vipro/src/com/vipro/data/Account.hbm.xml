@@ -8,22 +8,22 @@
             <column name="account_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
+        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select" lazy="false">
             <column name="customer_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="customer2" class="com.vipro.data.Customer" fetch="select">
+        <many-to-one name="customer2" class="com.vipro.data.Customer" fetch="select" lazy="false">
             <column name="customer_id2" not-null="false" />
         </many-to-one>
-        <many-to-one name="customer3" class="com.vipro.data.Customer" fetch="select">
+        <many-to-one name="customer3" class="com.vipro.data.Customer" fetch="select" lazy="false">
             <column name="customer_id3" not-null="false" />
         </many-to-one>
-        <many-to-one name="customer4" class="com.vipro.data.Customer" fetch="select">
+        <many-to-one name="customer4" class="com.vipro.data.Customer" fetch="select" lazy="false">
             <column name="customer_id4" not-null="false" />
         </many-to-one>
-        <many-to-one name="customer5" class="com.vipro.data.Customer" fetch="select">
+        <many-to-one name="customer5" class="com.vipro.data.Customer" fetch="select" lazy="false">
             <column name="customer_id5" not-null="false" />
         </many-to-one>
-        <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select">
+        <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select" lazy="false">
             <column name="inventory_id" not-null="true" />
         </many-to-one>
         <property name="accountType" type="string">

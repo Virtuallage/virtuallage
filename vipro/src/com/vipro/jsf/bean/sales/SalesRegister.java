@@ -10,6 +10,8 @@ import javax.faces.bean.SessionScoped;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
@@ -35,64 +37,62 @@ public class SalesRegister {
 	private List<Customer> customers;
 	private Account account;
 	private UserProfile attendedBy;
-	
+
 	/**
 	 * search customer dialog
 	 */
-	
+
 	private String searchIdNo;
 	private String searchName;
 	private List<Customer> searchCustList;
 	private Customer selectedCustomer;
-	
+	private Customer delCustomer;
 
 	@PostConstruct
 	public void init() {
-		
-		
+
 	}
-	
-	
+
+	public Customer getDelCustomer() {
+		return delCustomer;
+	}
+
+	public void setDelCustomer(Customer delCustomer) {
+		this.delCustomer = delCustomer;
+	}
+
 	public String getSearchIdNo() {
 		return searchIdNo;
 	}
-
 
 	public void setSearchIdNo(String searchIdNo) {
 		this.searchIdNo = searchIdNo;
 	}
 
-
 	public String getSearchName() {
 		return searchName;
 	}
-
 
 	public void setSearchName(String searchName) {
 		this.searchName = searchName;
 	}
 
-
 	public List<Customer> getSearchCustList() {
 		return searchCustList;
 	}
-
 
 	public void setSearchCustList(List<Customer> searchCustList) {
 		this.searchCustList = searchCustList;
 	}
 
-
 	public Customer getSelectedCustomer() {
 		return selectedCustomer;
 	}
-
 
 	public void setSelectedCustomer(Customer selectedCustomer) {
 		this.selectedCustomer = selectedCustomer;
 		customers.add(selectedCustomer);
 	}
-
 
 	public UserProfile getAttendedBy() {
 		return attendedBy;
@@ -176,51 +176,64 @@ public class SalesRegister {
 
 		return "selectUnit";
 	}
-	
+
 	public String selectInventory() {
 		AuthUser user = FacesUtil.getCurrentUser();
-		if (user!=null) attendedBy = user.getUserProfile();
-		
-		
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
-		
-		List<Account> accounts =  accountService.findByProjectInventoryId(inventory.getInventoryId());
+		if (user != null)
+			attendedBy = user.getUserProfile();
+
+		AccountService accountService = (AccountService) SpringBeanUtil
+				.lookup(AccountService.class.getName());
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+				.lookup(UserProfileService.class.getName());
+
+		List<Account> accounts = accountService
+				.findByProjectInventoryId(inventory.getInventoryId());
 		/**
 		 * support only one account as per one property unit.
 		 */
 		for (Account a : accounts) {
 			account = a;
-			if (account.getAttendedBy()!=null) {
-				UserProfile up = userProfileService.findById(account.getAttendedBy());
+			if (account.getAttendedBy() != null) {
+				UserProfile up = userProfileService.findById(account
+						.getAttendedBy());
 				attendedBy = up;
 			}
 			customers = new ArrayList<Customer>();
-			if (account.getCustomer()!=null) customers.add(account.getCustomer());
-			if (account.getCustomer2()!=null) customers.add(account.getCustomer2());
-			if (account.getCustomer3()!=null) customers.add(account.getCustomer3());
-			if (account.getCustomer4()!=null) customers.add(account.getCustomer4());
-			if (account.getCustomer5()!=null) customers.add(account.getCustomer5());
+			if (account.getCustomer() != null)
+				customers.add(account.getCustomer());
+			if (account.getCustomer2() != null)
+				customers.add(account.getCustomer2());
+			if (account.getCustomer3() != null)
+				customers.add(account.getCustomer3());
+			if (account.getCustomer4() != null)
+				customers.add(account.getCustomer4());
+			if (account.getCustomer5() != null)
+				customers.add(account.getCustomer5());
 		}
-		
+
 		if (customers == null) {
 			customers = new ArrayList<Customer>();
 		}
-		
+
 		if (account == null) {
 			account = new Account();
 		}
-		
+
 		return "registration";
 	}
-	
+
 	public String saveRegister() {
 		try {
-			AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			AccountService accountService = (AccountService) SpringBeanUtil
+					.lookup(AccountService.class.getName());
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+
 			/**
 			 * support max 5 customers per account only
 			 */
-			for (int i=0; i<customers.size(); i++) {
+			for (int i = 0; i < customers.size(); i++) {
 				Customer c = customers.get(i);
 				switch (i) {
 				case 0:
@@ -242,14 +255,22 @@ public class SalesRegister {
 			}
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
+			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
 			accountService.insert(account);
-			FacesUtil.addInfoMessage("Sales Registration", "Sales Registration Saved. Registration No is " + account.getAccountId() );
+
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
+			inventoryService.update(inventory);
+
+			FacesUtil.addInfoMessage(
+					"Sales Registration",
+					"Sales Registration Saved. Registration No is "
+							+ account.getAccountId());
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage("Sales Registration", t.getMessage());
 		}
 		return listPropertyUnits();
 	}
-	
+
 	public String searchCustomer() {
 		if (!StringUtils.hasText(searchIdNo)
 				&& !StringUtils.hasText(searchName)) {
@@ -269,5 +290,11 @@ public class SalesRegister {
 		}
 
 		return null;
+	}
+	
+	public String deleteCustomer() {
+		
+		customers.remove(delCustomer);
+		return "registration";
 	}
 }

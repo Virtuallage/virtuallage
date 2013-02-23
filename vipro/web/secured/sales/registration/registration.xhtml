@@ -54,7 +54,9 @@ Sales Registration
             </h:outputText>
         </p:column> 
         <p:column headerText="Action">  
-            
+            <p:commandButton action="#{salesRegister.deleteCustomer}" ajax="false" icon="ui-icon-trash" title="Delete Customer">
+           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.delCustomer}" />  
+           </p:commandButton>
         </p:column> 
      </p:dataTable>
      <br/>
