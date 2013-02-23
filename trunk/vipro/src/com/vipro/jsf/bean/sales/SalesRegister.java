@@ -1,10 +1,13 @@
 package com.vipro.jsf.bean.sales;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.data.Account;
@@ -13,6 +16,7 @@ import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.UserProfile;
 import com.vipro.service.AccountService;
+import com.vipro.service.CustomerService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
@@ -31,6 +35,16 @@ public class SalesRegister {
 	private List<Customer> customers;
 	private Account account;
 	private UserProfile attendedBy;
+	
+	/**
+	 * search customer dialog
+	 */
+	
+	private String searchIdNo;
+	private String searchName;
+	private List<Customer> searchCustList;
+	private Customer selectedCustomer;
+	
 
 	@PostConstruct
 	public void init() {
@@ -38,6 +52,48 @@ public class SalesRegister {
 		
 	}
 	
+	
+	public String getSearchIdNo() {
+		return searchIdNo;
+	}
+
+
+	public void setSearchIdNo(String searchIdNo) {
+		this.searchIdNo = searchIdNo;
+	}
+
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
+
+	public List<Customer> getSearchCustList() {
+		return searchCustList;
+	}
+
+
+	public void setSearchCustList(List<Customer> searchCustList) {
+		this.searchCustList = searchCustList;
+	}
+
+
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+		customers.add(selectedCustomer);
+	}
+
+
 	public UserProfile getAttendedBy() {
 		return attendedBy;
 	}
@@ -139,8 +195,21 @@ public class SalesRegister {
 				UserProfile up = userProfileService.findById(account.getAttendedBy());
 				attendedBy = up;
 			}
+			customers = new ArrayList<Customer>();
+			if (account.getCustomer()!=null) customers.add(account.getCustomer());
+			if (account.getCustomer2()!=null) customers.add(account.getCustomer2());
+			if (account.getCustomer3()!=null) customers.add(account.getCustomer3());
+			if (account.getCustomer4()!=null) customers.add(account.getCustomer4());
+			if (account.getCustomer5()!=null) customers.add(account.getCustomer5());
 		}
 		
+		if (customers == null) {
+			customers = new ArrayList<Customer>();
+		}
+		
+		if (account == null) {
+			account = new Account();
+		}
 		
 		return "registration";
 	}
@@ -179,5 +248,26 @@ public class SalesRegister {
 			FacesUtil.addErrorMessage("Sales Registration", t.getMessage());
 		}
 		return listPropertyUnits();
+	}
+	
+	public String searchCustomer() {
+		if (!StringUtils.hasText(searchIdNo)
+				&& !StringUtils.hasText(searchName)) {
+			FacesUtil.addErrorMessage("Search Customer",
+					"Please enter customer name or Id No.");
+			return null;
+		}
+
+		CustomerService customerService = (CustomerService) SpringBeanUtil
+				.lookup(CustomerService.class.getName());
+		if (StringUtils.hasText(searchIdNo)) {
+			setSearchCustList(customerService.findByIdNo(searchIdNo));
+		}
+
+		if (StringUtils.hasText(searchName)) {
+			setSearchCustList(customerService.findByName(searchName));
+		}
+
+		return null;
 	}
 }
