@@ -62,6 +62,7 @@ public final class CodeUtil {
 		List<SelectItem> list = new ArrayList<SelectItem>();
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_ACTIVE, "Available") );
 		list.add( new SelectItem( PropertyUnitStatusConst.STATUS_DISABLED, "Not Available"));
+		list.add( new SelectItem( PropertyUnitStatusConst.STATUS_SOLD, "Sold"));
 		
 		return list;
 	}
