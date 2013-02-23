@@ -279,39 +279,48 @@ public class ProjectSetup implements Serializable {
 	}
 
 	public String editProject() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		projectId = project.getProjectId();
-
-		DiscountService discountService = (DiscountService) SpringBeanUtil
-				.lookup(DiscountService.class.getName());
-		discounts = discountService.findByProjectId(projectId);
-
-		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-				.lookup(SalesCommissionService.class.getName());
-
-		commissions = salesCommissionService.findByProjectId(projectId);
-
-		discount = new Discount();
-		commission = new SalesCommission();
-
-		refreshCommissionDiscount();
+		try {
+			ProjectService projectService = (ProjectService) SpringBeanUtil
+					.lookup(ProjectService.class.getName());
+			projectId = project.getProjectId();
+	
+			DiscountService discountService = (DiscountService) SpringBeanUtil
+					.lookup(DiscountService.class.getName());
+			discounts = discountService.findByProjectId(projectId);
+	
+			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+					.lookup(SalesCommissionService.class.getName());
+	
+			commissions = salesCommissionService.findByProjectId(projectId);
+	
+			discount = new Discount();
+			commission = new SalesCommission();
+	
+			refreshCommissionDiscount();
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 
 		return "newProject";
 	}
 
 	public String saveProject() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
-		projectService.insert(project);
-
-		listProject();
-
-		discount = new Discount();
-		commission = new SalesCommission();
-
-		refreshCommissionDiscount();
+		try {
+			ProjectService projectService = (ProjectService) SpringBeanUtil
+					.lookup(ProjectService.class.getName());
+			project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
+			projectService.insert(project);
+	
+			listProject();
+	
+			discount = new Discount();
+			commission = new SalesCommission();
+	
+			refreshCommissionDiscount();
+			FacesUtil.addInfoMessage("Project", "Project Saved");
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 
 		return "project";
 	}
@@ -337,26 +346,36 @@ public class ProjectSetup implements Serializable {
 	}
 
 	public String addDiscount() {
-		DiscountService discountService = (DiscountService) SpringBeanUtil
-				.lookup(DiscountService.class.getName());
-		discount.setProject(project);
-		discount.setCreatedOn(new Date());
-		discountService.insert(discount);
-		discounts = discountService.findByProjectId(projectId);
-		discount = new Discount();
-		refreshCommissionDiscount();
+		try {
+			DiscountService discountService = (DiscountService) SpringBeanUtil
+					.lookup(DiscountService.class.getName());
+			discount.setProject(project);
+			discount.setCreatedOn(new Date());
+			discountService.insert(discount);
+			discounts = discountService.findByProjectId(projectId);
+			discount = new Discount();
+			refreshCommissionDiscount();
+			FacesUtil.addInfoMessage("Discount", "Discount Added");
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 		return null;
 	}
 
 	public String addSalesCommission() {
-		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-				.lookup(SalesCommissionService.class.getName());
-		commission.setProject(project);
-		commission.setCreatedOn(new Date());
-		salesCommissionService.insert(commission);
-		commissions = salesCommissionService.findByProjectId(projectId);
-		commission = new SalesCommission();
-		refreshCommissionDiscount();
+		try {
+			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+					.lookup(SalesCommissionService.class.getName());
+			commission.setProject(project);
+			commission.setCreatedOn(new Date());
+			salesCommissionService.insert(commission);
+			commissions = salesCommissionService.findByProjectId(projectId);
+			commission = new SalesCommission();
+			refreshCommissionDiscount();
+			FacesUtil.addInfoMessage("Sales Commission", "Sales Commission Added");
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 		return "newProject";
 	}
 
@@ -410,11 +429,29 @@ public class ProjectSetup implements Serializable {
 	}
 	
 	public String saveInventory() {
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		inventory.setProject(project);
-		inventoryService.update(inventory);
-		
+		try {
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+			inventory.setProject(project);
+			inventoryService.update(inventory);
+			FacesUtil.addInfoMessage("Property Unit", "Property Unit Saved");
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 		return toInventoryList();
+	}
+	
+	public String saveInventoryAsNew() {
+		try {
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+			inventory.setProject(project);
+			inventory.setInventoryId(null);
+			inventoryService.insert(inventory);
+			FacesUtil.addInfoMessage("Property Unit", "Property Unit Added");
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		return editInventory();
 	}
 }
