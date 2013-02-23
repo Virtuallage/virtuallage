@@ -15,5 +15,7 @@ public interface ProjectInventoryService {
 	
 	public void update(ProjectInventory p);
 	
-	public void update(Long inventoryId);
+	public void delete(Long inventoryId);
+	
+
 }

@@ -47,7 +47,7 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	}
 
 	@Override
-	public void update(Long inventoryId) {
+	public void delete(Long inventoryId) {
 		ProjectInventory o = projectInventoryDao.findById(inventoryId);
 		projectInventoryDao.delete(o);
 		

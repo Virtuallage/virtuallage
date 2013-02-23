@@ -428,6 +428,17 @@ public class ProjectSetup implements Serializable {
 		return "editInventory";
 	}
 	
+	public String deleteInventory() {
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+		
+		if (inventory!=null) {
+			inventoryService.delete(inventory.getInventoryId());
+			FacesUtil.addInfoMessage("Property Unit", "Property Unit Deleted");
+		}
+		return  toInventoryList();
+	}
+	
 	public String saveInventory() {
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
