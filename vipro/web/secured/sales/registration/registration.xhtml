@@ -19,8 +19,8 @@ Sales Registration
 
 <p:focus context="panel"/> 
       
-	<h:form>  
-   	<p:panelGrid columns="4">
+	<h:form id="registerForm">  
+   	<h:panelGrid columns="4" style="width:70%">
    		<p:outputLabel value="Project Name"/>
    		<p:outputLabel value="#{salesRegister.project.projectName}"/>
    		<p:outputLabel value="Registration No"/>
@@ -34,37 +34,74 @@ Sales Registration
    		<p:outputLabel value="Purchase Price"/>
    		<p:outputLabel value="#{salesRegister.inventory.purchasePrice}"/>
    		<p:outputLabel value="Property Type"/>
-   		<p:outputLabel value="#{salesRegister.inventory.propertyType}"/>
+   		<p:outputLabel value="#{salesRegister.inventory.layoutType}"/>
    		
    		<p:outputLabel value="Purchase Date"/>
    		<p:calendar value="#{salesRegister.account.datePurchased}" pattern="dd/MM/yyyy"/>
    		<p:outputLabel value="Attended By"/>
    		<p:outputLabel value="#{salesRegister.attendedBy.name}"/>
-   	</p:panelGrid>
+   	</h:panelGrid>
    	
    	<h4>Purchaser Information</h4>
    	
-   	 <p:dataTable var="c" value="#{salesRegister.customers}" paginator="true" rows="5"  paginatorPosition="bottom"
-                 paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}  ">   
+   	 <p:dataTable id="customerList" var="c" value="#{salesRegister.customers}" paginator="false">   
         <p:column headerText="Name">  
-            <h:outputText value="">
+            <h:outputText value="#{c.fullName}">
             </h:outputText>
         </p:column>  
         <p:column headerText="ID. No">  
-            <h:outputText value="">
+            <h:outputText value="#{c.identityNo}">
             </h:outputText>
         </p:column> 
         <p:column headerText="Action">  
             
         </p:column> 
+     </p:dataTable>
+     <br/>
+     <p:commandButton value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>
     <br/>
-    
-    
+    <br/>
+    <br/>
     <p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
     <p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>  &nbsp;&nbsp;
 </h:form> 
 
 </p:panel>
+
+
+
+	<h:form id="searchCustForm">
+		<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
+			<h:panelGrid columns="2">
+				<p:outputLabel value="ID No." for="searchIdNo"/>
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>
+				
+				<p:outputLabel value="Name" for="searchName"/>
+				<h:panelGroup>
+					<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+					<p:commandButton  value="Search" action="#{salesRegister.searchCustomer}" update=":searchCustForm:custs"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:500px;">  
+		        <p:column headerText="Id No." style="width:24%">  
+		            <h:outputText value="#{c.identityNo}" />  
+		        </p:column>  
+		        <p:column headerText="Name" style="width:24%">  
+		            <h:outputText value="#{c.fullName}" />  
+		        </p:column>  
+		     
+		        <p:column style="width:4%">  
+		           <p:commandButton id="selectButton" update=":registerForm:customerList" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
+		                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
+		            </p:commandButton>  
+		        </p:column>  
+		  
+			</p:dataTable>  
+		
+		</p:dialog>				
+	</h:form>	
+	
+	
 
 </ui:define>
 
