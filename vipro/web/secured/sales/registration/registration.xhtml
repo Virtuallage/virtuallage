@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Registration
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Registration Info. #{salesRegister.project.projectName}" style="width:95%">  
+
+<p:focus context="panel"/> 
+      
+	<h:form>  
+   	<p:panelGrid columns="4">
+   		<p:outputLabel value="Project Name"/>
+   		<p:outputLabel value="#{salesRegister.project.projectName}"/>
+   		<p:outputLabel value="Registration No"/>
+   		<p:outputLabel value="#{salesRegister.account.accountId}"/>
+   		
+   		<p:outputLabel value="Lot/Unit No"/>
+   		<p:outputLabel value="#{salesRegiser.inventory.unitNo}"/>
+   		<p:outputLabel value="Developer"/>
+   		<p:outputLabel value="#{project.institution.institutionName}"/>
+   		
+   		<p:outputLabel value="Purchase Price"/>
+   		<p:outputLabel value="#{salesRegister.inventory.purchasePrice}"/>
+   		<p:outputLabel value="Property Type"/>
+   		<p:outputLabel value="#{salesRegister.inventory.propertyType}"/>
+   		
+   		<p:outputLabel value="Purchase Date"/>
+   		<p:calendar value="#{salesRegister.account.datePurchased}" pattern="dd/MM/yyyy"/>
+   		<p:outputLabel value="Attended By"/>
+   		<p:outputLabel value="#{salesRegister.attendedBy.name}"/>
+   	</p:panelGrid>
+   	
+   	<h4>Purchaser Information</h4>
+   	
+   	 <p:dataTable var="c" value="#{salesRegister.customers}" paginator="true" rows="5"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}  ">   
+        <p:column headerText="Name">  
+            <h:outputText value="">
+            </h:outputText>
+        </p:column>  
+        <p:column headerText="ID. No">  
+            <h:outputText value="">
+            </h:outputText>
+        </p:column> 
+        <p:column headerText="Action">  
+            
+        </p:column> 
+    <br/>
+    
+    
+    <p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+    <p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>  &nbsp;&nbsp;
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

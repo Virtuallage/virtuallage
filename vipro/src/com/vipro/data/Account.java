@@ -14,9 +14,14 @@ public class Account implements java.io.Serializable {
 
 	private Long accountId;
 	private Customer customer;
+	private Customer customer2;
+	private Customer customer3;
+	private Customer customer4;
+	private Customer customer5;
 	private ProjectInventory projectInventory;
 	private String accountType;
 	private String accountStatus;
+	private BigDecimal accountBalance;
 	private Long attendedBy;
 	private BigDecimal registrationFee;
 	private String registrationNo;
@@ -61,6 +66,7 @@ public class Account implements java.io.Serializable {
 	private Date lastPaymentMadeDate;
 	private String maintenanceBilingCycle;
 	private String cancelledReason;
+	private String remark;
 	private Set waterBillings = new HashSet(0);
 	private Set projects = new HashSet(0);
 	private Set addresses = new HashSet(0);
@@ -159,6 +165,38 @@ public class Account implements java.io.Serializable {
 		this.joinAccounts = joinAccounts;
 		this.transactionHistories = transactionHistories;
 		this.accountAgings = accountAgings;
+	}
+
+	public Customer getCustomer2() {
+		return customer2;
+	}
+
+	public void setCustomer2(Customer customer2) {
+		this.customer2 = customer2;
+	}
+
+	public Customer getCustomer3() {
+		return customer3;
+	}
+
+	public void setCustomer3(Customer customer3) {
+		this.customer3 = customer3;
+	}
+
+	public Customer getCustomer4() {
+		return customer4;
+	}
+
+	public void setCustomer4(Customer customer4) {
+		this.customer4 = customer4;
+	}
+
+	public Customer getCustomer5() {
+		return customer5;
+	}
+
+	public void setCustomer5(Customer customer5) {
+		this.customer5 = customer5;
 	}
 
 	public Long getAccountId() {
