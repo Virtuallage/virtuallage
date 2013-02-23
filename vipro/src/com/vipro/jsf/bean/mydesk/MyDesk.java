@@ -250,10 +250,12 @@ public class MyDesk implements Serializable {
 		
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 				.lookup(UserProfileService.class.getName());
-		UserProfile toUserProfile = userProfileService.findById(Long
-				.parseLong(toUserId));
-
-		newCase.setAssignee(toUserProfile);
+		if (toUserId!=null) {
+			UserProfile toUserProfile = userProfileService.findById(Long
+					.parseLong(toUserId));
+	
+			newCase.setAssignee(toUserProfile);
+		}
 		
 		caseService.update(newCase);
 		activity.setActionTime(new Date());
