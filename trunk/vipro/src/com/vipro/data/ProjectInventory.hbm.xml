@@ -89,7 +89,7 @@
         <property name="developmentStage" type="java.lang.Short">
             <column name="development_stage" precision="3" scale="0" />
         </property>
-        <set name="accounts" table="account" inverse="true" lazy="true" fetch="select">
+        <set name="accounts" table="account" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="inventory_id" not-null="true" />
             </key>
