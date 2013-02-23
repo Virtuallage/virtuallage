@@ -233,6 +233,11 @@ public class SalesRegister {
 			/**
 			 * support max 5 customers per account only
 			 */
+			account.setCustomer(null);
+			account.setCustomer2(null);
+			account.setCustomer3(null);
+			account.setCustomer4(null);
+			account.setCustomer5(null);
 			for (int i = 0; i < customers.size(); i++) {
 				Customer c = customers.get(i);
 				switch (i) {
