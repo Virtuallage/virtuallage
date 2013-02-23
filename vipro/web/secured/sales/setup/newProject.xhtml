@@ -104,7 +104,7 @@ Project Setup
 		<p:outputLabel value="Current Discount"/>
 		<h:panelGroup>
 			<h:outputText value="#{projectSetup.currentDiscount}"><f:convertNumber type="number" /></h:outputText> <h:outputText value=" expires on " /> <h:outputText value="#{projectSetup.discountExpiry}"><f:convertDateTime pattern="dd/MM/yyyy"/>  </h:outputText>
-			<p:commandButton value="Add" onclick="dlgDiscount.show();"/>
+			&nbsp;&nbsp;<p:commandButton value="Add" onclick="dlgDiscount.show();"/>
 		</h:panelGroup>
 		
 		<p:outputLabel value=""/>
@@ -113,7 +113,7 @@ Project Setup
 		<p:outputLabel value="Sales Commission"/>
 		<h:panelGroup>
 			<h:outputText value="#{projectSetup.salesCommission}" /> <h:outputText value=" effective on " /> <h:outputText value="#{projectSetup.commisionEffective}" ><f:convertDateTime pattern="dd/MM/yyyy"/>  </h:outputText>
-			<p:commandButton value="Add" onclick="dlgCommission.show();"/>
+			&nbsp;&nbsp;<p:commandButton value="Add" onclick="dlgCommission.show();"/>
 		</h:panelGroup>	
 		
 		<p:outputLabel value=""/>
@@ -122,8 +122,8 @@ Project Setup
 	</h:panelGrid>
 	
 	<br/>
-		<p:commandButton value="Cancel" action="#{projectSetup.listProject}" ajax="false" immediate="true"/>  &nbsp;&nbsp;
-		<p:commandButton value="Save" action="#{projectSetup.saveProject}" ajax="false"/>
+		<p:commandButton value="Back" action="#{projectSetup.listProject}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{projectSetup.saveProject}" ajax="false"  icon="ui-icon-disk"/>
 </h:form> 
 
 </p:panel>
@@ -165,7 +165,7 @@ Project Setup
 		</h:panelGrid>
 		
 		<br/>
-		<p:commandButton value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}" />
+		<p:commandButton value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}"  icon="ui-icon-disk"/>
 		<p:commandButton value="Close" onclick="dlgDiscount.hide();"/>
 	</p:dialog>
 </h:form>
@@ -189,7 +189,7 @@ Project Setup
 	            <h:outputText value="#{c.amountOrRate}">
 	            </h:outputText>
 	            &nbsp;
-	            <p:commandButton id="comDelBtn" update=":commissionForm:dtCommission"  icon="ui-icon-trash" title="Delete" immediate="true" action="#{projectSetup.deleteSalesCommission}">
+	            <p:commandButton id="comDelBtn" update=":commissionForm:dtCommission"  icon="ui-icon-trash" title="Delete" immediate="true" action="#{projectSetup.deleteSalesCommission}" >
 	           	   <f:setPropertyActionListener value="#{c}" target="#{projectSetup.commission}" />  
 	            </p:commandButton>
 	        </p:column>  
@@ -212,7 +212,7 @@ Project Setup
 		</h:panelGrid>
 		
 		<br/>
-		<p:commandButton value="Add" update="dtCommission, cEffDate, cType, cComm" action="#{projectSetup.addSalesCommission}" />
+		<p:commandButton value="Add" update="dtCommission, cEffDate, cType, cComm" action="#{projectSetup.addSalesCommission}"  icon="ui-icon-disk"/>
 		<p:commandButton value="Close" onclick="dlgCommission.hide();"/>
 	</p:dialog>
 </h:form>
