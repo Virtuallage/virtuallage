@@ -10,17 +10,17 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
 <ui:define name="title">
-Project Setup
+Sales Registration
 </ui:define>
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Project Setup - Property Units for #{projectSetup.project.projectName}" style="width:95%">  
+<p:panel id="panel" header="Sales Registration - Select Unit for #{salesRegister.project.projectName}" style="width:95%">  
 
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{projectSetup.inventories}" paginator="true" rows="20"  paginatorPosition="bottom"
+    <p:dataTable var="c" value="#{salesRegister.inventories}" paginator="true" rows="20"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="20,40,60,80,100" >   
         <p:column headerText="Block">  
@@ -48,18 +48,20 @@ Project Setup
            </h:outputText>
         </p:column>  
         
+        <p:column headerText="Status">  
+        	<h:outputText value="#{c.propertyStatus}">
+        	</h:outputText>
+        </p:column>
+        
         <p:column headerText="Price">  
            <h:outputText value="#{c.purchasePrice}">
            		<f:convertNumber type="currency" currencySymbol="" />
            </h:outputText>
            &nbsp;&nbsp;
-           <p:commandButton action="#{projectSetup.editInventory}" ajax="false" icon="ui-icon-pencil" title="Edit Property Unit">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
+           <p:commandButton action="#{salesRegister.selectInventory}" ajax="false" icon="ui-icon-check" title="Select Property Unit">
+           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.inventory}" />  
            </p:commandButton>
-           &nbsp;
-           <p:commandButton action="#{projectSetup.deleteInventory}" ajax="false" icon="ui-icon-trash" title="Delete Property Unit">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
-           </p:commandButton>
+         
            
         </p:column>
         
@@ -68,8 +70,8 @@ Project Setup
     </p:dataTable>  
     
     <br/>
-    <p:commandButton value="Back" action="#{projectSetup.listProject}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
-    <p:commandButton action="#{projectSetup.addInventory}" value="Add Property Unit" ajax="false"/>
+    <p:commandButton value="Back" action="#{salesRegister.listProject}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   
 </h:form> 
 
 </p:panel>

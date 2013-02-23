@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales  Registration
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Registration - Select Project" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+    <p:dataTable var="c" value="#{salesRegister.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15" >   
+        <p:column headerText="Project Code">  
+            <h:outputText value="#{c.projectCode}">
+            	
+            </h:outputText>
+        </p:column>  
+  
+        <p:column headerText="Project Name">  
+           <h:outputText value="#{c.projectName}"/>
+        </p:column>  
+  
+        <p:column headerText="Date Launched">  
+            <h:outputText value="#{c.launchDate}">
+            <f:convertDateTime pattern="dd/MM/yyyy"/>  
+            </h:outputText>
+        </p:column>  
+  
+        <p:column headerText="Property Type">  
+           <h:outputText value="#{c.propertyType}"/>
+        </p:column>  
+        
+        <p:column headerText="Status">  
+           <h:outputText value="#{c.status}"/>
+           &nbsp;
+           <p:commandButton action="#{salesRegister.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
+           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.project}" />  
+           </p:commandButton>
+           &nbsp;
+         
+        </p:column>
+        
+
+  
+    </p:dataTable>  
+    
+    <br/>
+    
+   
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
