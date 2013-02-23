@@ -167,6 +167,22 @@ public class Account implements java.io.Serializable {
 		this.accountAgings = accountAgings;
 	}
 
+	public BigDecimal getAccountBalance() {
+		return accountBalance;
+	}
+
+	public void setAccountBalance(BigDecimal accountBalance) {
+		this.accountBalance = accountBalance;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	public Customer getCustomer2() {
 		return customer2;
 	}
