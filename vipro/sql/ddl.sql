@@ -72,3 +72,13 @@ alter table account add account_balance decimal(9,2);
 
 alter table account add remark varchar(300);
 
+alter table customer drop mobile_id;
+alter table customer drop email_id;
+
+alter table customer add mobile_no varchar(20);
+alter table customer add email varchar(40);
+
+
+alter table customer modify institution_id bigint;
+alter table address modify customer_id bigint;
+

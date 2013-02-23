@@ -94,25 +94,13 @@ public class MyDesk implements Serializable {
 		newCase.setCustomer(selectedCustomer);
 		newCase.setName(selectedCustomer.getFullName());
 
-		Set<MobilePhone> phones = selectedCustomer.getMobilePhones();
-		if (phones != null) {
-			for (MobilePhone p : phones) {
-				if (p.getMobileId().longValue() == selectedCustomer
-						.getMobileId().longValue()) {
-					newCase.setMobileNo(p.getMobileNo());
-				}
-			}
-		}
+	
+		newCase.setMobileNo(selectedCustomer.getMobileNo());
+		
 
-		Set<Email> emails = selectedCustomer.getEmails();
-		if (emails != null) {
-			for (Email e : emails) {
-				if (e.getEmailId().longValue() == selectedCustomer.getEmailId()
-						.longValue()) {
-					newCase.setEmail(e.getEmailAddress());
-				}
-			}
-		}
+	
+		newCase.setEmail(selectedCustomer.getEmail());
+		
 
 	}
 

@@ -1,11 +1,14 @@
 package com.vipro.jsf.bean.sales;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 import org.springframework.util.StringUtils;
 
@@ -13,21 +16,35 @@ import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.Account;
+import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.UserProfile;
 import com.vipro.service.AccountService;
+import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
+import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "salesRegister")
 @SessionScoped
-public class SalesRegister {
+public class SalesRegister implements Serializable {
+
+	private List<SelectItem> listCountry = null;
+	private List<SelectItem> listCity = null;
+	private List<SelectItem> listState = null;
+	private List<SelectItem> listIdType = null;
+	private List<SelectItem> listTitle = null;
+	private List<SelectItem> listGender = null;
+	private List<SelectItem> listMaritalStatus = null;
+	private List<SelectItem> listBumi = null;
+	private List<SelectItem> listLanguage = null;
+	private List<SelectItem> listRace = null;
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -48,9 +65,129 @@ public class SalesRegister {
 	private Customer selectedCustomer;
 	private Customer delCustomer;
 
+	/**
+	 * add customer
+	 */
+	private Customer individual;
+	private Customer company;
+	private Address address;
+
 	@PostConstruct
 	public void init() {
+		listCountry = CodeUtil.getCodes("COUNTRY");
+		listCity = CodeUtil.getCodes("CITY");
+		listIdType = CodeUtil.getCodes("IDTYPE");
+		listTitle = CodeUtil.getCodes("CONTACT_TITLE");
+		listGender = CodeUtil.getCodes("SEX");
+		listMaritalStatus = CodeUtil.getCodes("MARITAL");
+		listBumi = CodeUtil.getCodes("BUMI");
+		listLanguage = CodeUtil.getCodes("LANGUAGE");
+		listRace = CodeUtil.getCodes("RACE");
+		listState = CodeUtil.getCodes("STATE");
+	}
 
+	public List<SelectItem> getListState() {
+		return listState;
+	}
+
+	public void setListState(List<SelectItem> listState) {
+		this.listState = listState;
+	}
+
+	public List<SelectItem> getListRace() {
+		return listRace;
+	}
+
+	public void setListRace(List<SelectItem> listRace) {
+		this.listRace = listRace;
+	}
+
+	public List<SelectItem> getListCountry() {
+		return listCountry;
+	}
+
+	public void setListCountry(List<SelectItem> listCountry) {
+		this.listCountry = listCountry;
+	}
+
+	public List<SelectItem> getListCity() {
+		return listCity;
+	}
+
+	public void setListCity(List<SelectItem> listCity) {
+		this.listCity = listCity;
+	}
+
+	public List<SelectItem> getListIdType() {
+		return listIdType;
+	}
+
+	public void setListIdType(List<SelectItem> listIdType) {
+		this.listIdType = listIdType;
+	}
+
+	public List<SelectItem> getListTitle() {
+		return listTitle;
+	}
+
+	public void setListTitle(List<SelectItem> listTitle) {
+		this.listTitle = listTitle;
+	}
+
+	public List<SelectItem> getListGender() {
+		return listGender;
+	}
+
+	public void setListGender(List<SelectItem> listGender) {
+		this.listGender = listGender;
+	}
+
+	public List<SelectItem> getListMaritalStatus() {
+		return listMaritalStatus;
+	}
+
+	public void setListMaritalStatus(List<SelectItem> listMaritalStatus) {
+		this.listMaritalStatus = listMaritalStatus;
+	}
+
+	public List<SelectItem> getListBumi() {
+		return listBumi;
+	}
+
+	public void setListBumi(List<SelectItem> listBumi) {
+		this.listBumi = listBumi;
+	}
+
+	public List<SelectItem> getListLanguage() {
+		return listLanguage;
+	}
+
+	public void setListLanguage(List<SelectItem> listLanguage) {
+		this.listLanguage = listLanguage;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Customer getIndividual() {
+		return individual;
+	}
+
+	public void setIndividual(Customer individual) {
+		this.individual = individual;
+	}
+
+	public Customer getCompany() {
+		return company;
+	}
+
+	public void setCompany(Customer company) {
+		this.company = company;
 	}
 
 	public Customer getDelCustomer() {
@@ -180,7 +317,8 @@ public class SalesRegister {
 	public String selectInventory() {
 		customers = new ArrayList<Customer>();
 		account = new Account();
-		
+		account.setDatePurchased(new Date());
+
 		AuthUser user = FacesUtil.getCurrentUser();
 		if (user != null)
 			attendedBy = user.getUserProfile();
@@ -215,17 +353,22 @@ public class SalesRegister {
 				customers.add(account.getCustomer5());
 		}
 
-		
-
-		if (account == null) {
-			account = new Account();
-		}
+		individual = new Customer();
+		company = new Customer();
+		address = new Address();
 
 		return "registration";
 	}
 
 	public String saveRegister() {
 		try {
+
+			if (customers.size() <= 0) {
+				FacesUtil.addInfoMessage("Sales Registration",
+						"Please select a customer");
+				return null;
+			}
+
 			AccountService accountService = (AccountService) SpringBeanUtil
 					.lookup(AccountService.class.getName());
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
@@ -295,12 +438,71 @@ public class SalesRegister {
 			setSearchCustList(customerService.findByName(searchName));
 		}
 
+		individual = new Customer();
+		company = new Customer();
+		address = new Address();
+
 		return null;
 	}
-	
+
 	public String deleteCustomer() {
-		
+
 		customers.remove(delCustomer);
+		return "registration";
+	}
+
+	public String toAddIndividual() {
+		individual = new Customer();
+		address = new Address();
+		return "addIndividual";
+	}
+
+	public String toAddCompany() {
+		company = new Customer();
+		address = new Address();
+		return "addCompany";
+	}
+
+	public String saveIndividual() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			customerService.insert(individual);
+			
+			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+			address.setCustomer(individual);
+			addressService.insert(address);
+			
+			individual.setAddressId(address.getAddressId());
+			
+			customerService.update(company);
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage("Add Individual", t.getMessage());
+			return null;
+		}
+		return "registration";
+	}
+
+	public String saveCompany() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			customerService.insert(company);
+			
+			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+			address.setCustomer(company);
+			addressService.insert(address);
+			
+			company.setAddressId(address.getAddressId());
+			customerService.update(company);
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage("Add Company", t.getMessage());
+			return null;
+		}
+		return "registration";
+	}
+
+	public String backToRegistration() {
 		return "registration";
 	}
 }

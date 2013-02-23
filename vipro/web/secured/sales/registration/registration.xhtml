@@ -37,7 +37,7 @@ Sales Registration
    		<p:outputLabel value="#{salesRegister.inventory.layoutType}"/>
    		
    		<p:outputLabel value="Purchase Date"/>
-   		<p:calendar value="#{salesRegister.account.datePurchased}" pattern="dd/MM/yyyy"/>
+   		<p:calendar value="#{salesRegister.account.datePurchased}" pattern="dd/MM/yyyy" required="true"/>
    		<p:outputLabel value="Attended By"/>
    		<p:outputLabel value="#{salesRegister.attendedBy.name}"/>
    	</h:panelGrid>
@@ -60,7 +60,11 @@ Sales Registration
         </p:column> 
      </p:dataTable>
      <br/>
-     <p:commandButton value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>
+     <p:commandButton value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>&nbsp;&nbsp;
+     <p:commandButton value="Add Invidual" immediate="true" action="#{salesRegister.toAddIndividual}"  icon="ui-icon-plus"/> &nbsp;&nbsp;
+	 <p:commandButton value="Add Company" immediate="true" action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/> 
+		
+				
     <br/>
     <br/>
     <br/>
@@ -71,9 +75,9 @@ Sales Registration
 </p:panel>
 
 
-
+<!-- Search customer dialog -->
 	<h:form id="searchCustForm">
-		<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
+		<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 			<h:panelGrid columns="2">
 				<p:outputLabel value="ID No." for="searchIdNo"/>
 				<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>
@@ -99,6 +103,12 @@ Sales Registration
 		        </p:column>  
 		  
 			</p:dataTable>  
+			
+			<br/>
+			<br/>
+			
+			
+			<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
 		
 		</p:dialog>				
 	</h:form>	
