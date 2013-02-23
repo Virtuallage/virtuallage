@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
@@ -267,9 +268,13 @@ public class ProjectSetup implements Serializable {
 	}
 
 	public String listProject() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		projects = projectService.findAllProjects();
+		try {
+			ProjectService projectService = (ProjectService) SpringBeanUtil
+					.lookup(ProjectService.class.getName());
+			projects = projectService.findAllProjects();
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 		return "project";
 	}
 
@@ -283,19 +288,19 @@ public class ProjectSetup implements Serializable {
 			ProjectService projectService = (ProjectService) SpringBeanUtil
 					.lookup(ProjectService.class.getName());
 			projectId = project.getProjectId();
-	
+
 			DiscountService discountService = (DiscountService) SpringBeanUtil
 					.lookup(DiscountService.class.getName());
 			discounts = discountService.findByProjectId(projectId);
-	
+
 			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 					.lookup(SalesCommissionService.class.getName());
-	
+
 			commissions = salesCommissionService.findByProjectId(projectId);
-	
+
 			discount = new Discount();
 			commission = new SalesCommission();
-	
+
 			refreshCommissionDiscount();
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
@@ -310,12 +315,12 @@ public class ProjectSetup implements Serializable {
 					.lookup(ProjectService.class.getName());
 			project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
 			projectService.insert(project);
-	
+
 			listProject();
-	
+
 			discount = new Discount();
 			commission = new SalesCommission();
-	
+
 			refreshCommissionDiscount();
 			FacesUtil.addInfoMessage("Project", "Project Saved");
 		} catch (Throwable t) {
@@ -326,6 +331,7 @@ public class ProjectSetup implements Serializable {
 	}
 
 	public void refreshCommissionDiscount() {
+
 		DiscountService discountService = (DiscountService) SpringBeanUtil
 				.lookup(DiscountService.class.getName());
 		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
@@ -372,7 +378,8 @@ public class ProjectSetup implements Serializable {
 			commissions = salesCommissionService.findByProjectId(projectId);
 			commission = new SalesCommission();
 			refreshCommissionDiscount();
-			FacesUtil.addInfoMessage("Sales Commission", "Sales Commission Added");
+			FacesUtil.addInfoMessage("Sales Commission",
+					"Sales Commission Added");
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
@@ -380,65 +387,86 @@ public class ProjectSetup implements Serializable {
 	}
 
 	public String deleteDiscount() {
-		if (discount != null && discount.getDiscountId() != null) {
-			DiscountService discountService = (DiscountService) SpringBeanUtil
-					.lookup(DiscountService.class.getName());
-			discountService.delete(discount.getDiscountId());
-			discounts = discountService.findByProjectId(projectId);
-			discount = new Discount();
-			refreshCommissionDiscount();
+		try {
+			if (discount != null && discount.getDiscountId() != null) {
+				DiscountService discountService = (DiscountService) SpringBeanUtil
+						.lookup(DiscountService.class.getName());
+				discountService.delete(discount.getDiscountId());
+				discounts = discountService.findByProjectId(projectId);
+				discount = new Discount();
+				refreshCommissionDiscount();
+			}
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return null;
 	}
 
 	public String deleteSalesCommission() {
-		if (commission != null && commission.getCommissionId() != null) {
-			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-					.lookup(SalesCommissionService.class.getName());
-			salesCommissionService.delete(commission.getCommissionId());
-			commissions = salesCommissionService.findByProjectId(projectId);
-			commission = new SalesCommission();
-			refreshCommissionDiscount();
+		try {
+			if (commission != null && commission.getCommissionId() != null) {
+				SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
+						.lookup(SalesCommissionService.class.getName());
+				salesCommissionService.delete(commission.getCommissionId());
+				commissions = salesCommissionService.findByProjectId(projectId);
+				commission = new SalesCommission();
+				refreshCommissionDiscount();
+			}
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return null;
 	}
 
 	public String toInventoryList() {
-		if (project!=null) {
-			projectId = project.getProjectId();
+		try {
+			if (project != null) {
+				projectId = project.getProjectId();
+			}
+
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+			inventories = inventoryService.getInventories(projectId);
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
-
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getInventories(projectId);
-
 		return "inventoryList";
 	}
-	
+
 	public String addInventory() {
-		
+
 		inventory = new ProjectInventory();
-		
+
 		return "editInventory";
 	}
 
-	
 	public String editInventory() {
-		
+
 		return "editInventory";
 	}
-	
+
 	public String deleteInventory() {
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		
-		if (inventory!=null) {
-			inventoryService.delete(inventory.getInventoryId());
-			FacesUtil.addInfoMessage("Property Unit", "Property Unit Deleted");
+		try {
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+
+			if (inventory != null) {
+				inventoryService.delete(inventory.getInventoryId());
+				FacesUtil.addInfoMessage("Property Unit",
+						"Property Unit Deleted");
+			}
+		} catch (Throwable t) {
+			if (t instanceof MySQLIntegrityConstraintViolationException) {
+				FacesUtil
+						.addErrorMessage("Property Unit",
+								"This property is currently purchased. Deletion not allowed.");
+			} else {
+				FacesUtil.addErrorMessage("Property Unit", t.getMessage());
+			}
 		}
-		return  toInventoryList();
+		return toInventoryList();
 	}
-	
+
 	public String saveInventory() {
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
@@ -451,7 +479,7 @@ public class ProjectSetup implements Serializable {
 		}
 		return toInventoryList();
 	}
-	
+
 	public String saveInventoryAsNew() {
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
