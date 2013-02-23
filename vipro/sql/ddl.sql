@@ -35,4 +35,6 @@ alter table project modify account_id bigint;
 alter table discount modify discount_rate decimal(5,2);
 
       
+alter table project_inventory add discount_rate decimal(9,5);
+alter table project_inventory add dnc_date date;
       
