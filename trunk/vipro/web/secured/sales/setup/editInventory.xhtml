@@ -41,20 +41,23 @@ Project Setup
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
 
-		<p:outputLabel value="Unit No"/>
-		<p:inputText value="#{projectSetup.inventory.unitNo}" size="10" maxlength="10" autocomplete="off" required="true"/>
-		<p:outputLabel value="Type"/>
-		<p:inputText value="#{projectSetup.inventory.layoutType}" size="15" maxlength="15" autocomplete="off"/>
-		<p:outputLabel value="Discount Rate"/>
-		<p:outputLabel value=""/>
+		<p:outputLabel value="Unit No" for="unitNo"/>
+		<p:inputText id="unitNo" value="#{projectSetup.inventory.unitNo}" size="10" maxlength="10" autocomplete="off" required="true"/>
+		<p:outputLabel value="Type" for="type"/>
+		<p:inputText id="type" value="#{projectSetup.inventory.layoutType}" size="15" maxlength="15" autocomplete="off"/>
+		<p:outputLabel value="Discount Rate" for="discountRate"/>
+		<p:inputText id="discountRate" value="#{projectSetup.inventory.discountRate}" size="10" maxlength="10" autocomplete="off">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                <p:ajax update="discountRate" event="blur" process="discountRate"/>
+		</p:inputText>
 		
-		<p:outputLabel value="Build Up Area"/>
-		<p:inputText value="#{projectSetup.inventory.builtUpArea}" size="10" maxlength="10" autocomplete="off" required="true">
+		<p:outputLabel value="Build Up Area" for="buildUpArea"/>
+		<p:inputText id="buildUpArea" value="#{projectSetup.inventory.builtUpArea}" size="10" maxlength="10" autocomplete="off" required="true">
 				<f:convertNumber maxFractionDigits="0" />
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
-		<p:outputLabel value="Land Area"/>
-		<p:inputText  value="#{projectSetup.inventory.landArea}"  size="10" maxlength="10" autocomplete="off">
+		<p:outputLabel value="Land Area" for="landArea"/>
+		<p:inputText id="landArea" value="#{projectSetup.inventory.landArea}"  size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="0" />
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
@@ -64,33 +67,33 @@ Project Setup
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
-		<p:outputLabel value="HSD No"/>
-		<p:inputText value="#{projectSetup.inventory.hsdNo}" size="10" maxlength="10" autocomplete="off"/>
-		<p:outputLabel value="PT No"/>
-		<p:inputText value="#{projectSetup.inventory.ptNo}" size="10" maxlength="10" autocomplete="off"/>
-		<p:outputLabel value="Redemption Amount"/>
-		<p:inputText value="#{projectSetup.inventory.redemptionAmount}" size="10" maxlength="10" autocomplete="off">
+		<p:outputLabel value="HSD No" for="hsdNo"/>
+		<p:inputText id="hsdNo" value="#{projectSetup.inventory.hsdNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="PT No" for="ptNo"/>
+		<p:inputText id="ptNo" value="#{projectSetup.inventory.ptNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Redemption Amount" for="redemptionAmt"/>
+		<p:inputText  id="redemptionAmt" value="#{projectSetup.inventory.redemptionAmount}" size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
-		<p:outputLabel value="Orientation"/>
-		<p:inputText value="#{projectSetup.inventory.orientation}" size="10" maxlength="10" autocomplete="off"/>
-		<p:outputLabel value="Legal Fee"/>
-		<p:inputText value="#{projectSetup.inventory.legalFee}" size="10" maxlength="10" autocomplete="off">
+		<p:outputLabel value="Orientation" for="orientation"/>
+		<p:inputText id="orientation" value="#{projectSetup.inventory.orientation}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Legal Fee" for="legalFee"/>
+		<p:inputText id="legalFee" value="#{projectSetup.inventory.legalFee}" size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
-		<p:outputLabel value="Assessment Fee"/>
-		<p:inputText value="#{projectSetup.inventory.assessment}" size="10" maxlength="10" autocomplete="off">
+		<p:outputLabel value="Assessment Fee" for="assFee" />
+		<p:inputText id="assFee" value="#{projectSetup.inventory.assessment}" size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
-		<p:outputLabel value="Quit Rent"/>
-		<p:inputText value="#{projectSetup.inventory.quitRent}" size="10" maxlength="10" autocomplete="off"/>
-		<p:outputLabel value="Disbursement Fee"/>
-		<p:inputText value="#{projectSetup.inventory.disbursementFee}" size="10" maxlength="10" autocomplete="off">
+		<p:outputLabel value="Quit Rent" for="quitRent"/>
+		<p:inputText id="quitRent" value="#{projectSetup.inventory.quitRent}" size="10" maxlength="10" autocomplete="off"/>
+		<p:outputLabel value="Disbursement Fee" for="disbFee"/>
+		<p:inputText id="disbFee" value="#{projectSetup.inventory.disbursementFee}" size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
@@ -99,23 +102,23 @@ Project Setup
 			<f:selectItems value="#{projectSetup.titleTypeList}" />
 		</p:selectOneMenu>
 		
-		<p:outputLabel value="Strata Title Date"/>
-		<p:calendar value="#{projectSetup.inventory.strataTitleObtainedDate}" pattern="dd/MM/yyyy"/>
-		<p:outputLabel value="Handover Date"/>
-		<p:calendar value="#{projectSetup.inventory.keyHandoverDate}" pattern="dd/MM/yyyy"/>
-		<p:outputLabel value="DNC Date"/>
-		<p:outputLabel value=""/>
+		<p:outputLabel value="Strata Title Date" for="strataDate"/>
+		<p:calendar id="strataDate" value="#{projectSetup.inventory.strataTitleObtainedDate}" pattern="dd/MM/yyyy"/>
+		<p:outputLabel value="Handover Date" for="handoverDate"/>
+		<p:calendar id="handoverDate" value="#{projectSetup.inventory.keyHandoverDate}" pattern="dd/MM/yyyy"/>
+		<p:outputLabel value="DNC Date" for="dncDate"/>
+		<p:calendar id="dncDate" value="#{projectSetup.inventory.dncDate}" pattern="dd/MM/yyyy"/>
 	</h:panelGrid>
 	
 	<br/>
 	<h:panelGrid columns="2" style="width:100%;text-align:left;">
-		<p:outputLabel value="Address"/>
-		<p:inputTextarea value="#{projectSetup.inventory.propertyAddress}" cols="50" rows="5"/>
+		<p:outputLabel value="Address" for="addre"/>
+		<p:inputTextarea id="addre" value="#{projectSetup.inventory.propertyAddress}" cols="50" rows="5"/>
 
 	</h:panelGrid>
 	
 	<br/>
-		<p:commandButton value="Cancel" action="#{projectSetup.toInventoryList}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+		<p:commandButton value="Back" action="#{projectSetup.toInventoryList}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
 		<p:commandButton value="Save" action="#{projectSetup.saveInventory}" ajax="false" icon="ui-icon-disk" /> &nbsp;&nbsp;&nbsp;&nbsp;
 		<p:commandButton value="Save As New" action="#{projectSetup.saveInventoryAsNew}" ajax="false" icon="ui-icon-plus"/>
 </h:form> 
