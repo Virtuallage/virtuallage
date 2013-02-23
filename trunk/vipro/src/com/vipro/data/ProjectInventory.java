@@ -38,6 +38,8 @@ public class ProjectInventory implements java.io.Serializable {
 	private Date strataTitleObtainedDate;
 	private Date keyHandoverDate;
 	private Short developmentStage;
+	private BigDecimal discountRate;
+	private Date dncDate;
 	private Set accounts = new HashSet(0);
 	private Set progressiveBillings = new HashSet(0);
 
@@ -310,6 +312,23 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setProgressiveBillings(Set progressiveBillings) {
 		this.progressiveBillings = progressiveBillings;
+	}
+
+
+	public Date getDncDate() {
+		return dncDate;
+	}
+
+	public void setDncDate(Date dncDate) {
+		this.dncDate = dncDate;
+	}
+
+	public BigDecimal getDiscountRate() {
+		return discountRate;
+	}
+
+	public void setDiscountRate(BigDecimal discountRate) {
+		this.discountRate = discountRate;
 	}
 
 }
