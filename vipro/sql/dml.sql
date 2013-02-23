@@ -91,3 +91,11 @@ insert into code_det values( 'PROP_TYPE', 'BGL', 'Semi-D/Bungalow', 'ACTV');
 insert into code_det values( 'PROP_TYPE', 'SHP', 'Shop/Office', 'ACTV');
 insert into code_det values( 'PROP_TYPE', 'HTL', 'Hotel/Resort', 'ACTV');
 insert into code_det values( 'PROP_TYPE', 'FTR', 'Warehouse/Factory', 'ACTV');
+
+
+
+insert into code_header (code_header_id, name) values ('TITLE_TYPE', 'Property title type');
+insert into code_det values ('TITLE_TYPE', 'STR', 'Strata', 'ACTV');
+insert into code_det values ('TITLE_TYPE', 'MST', 'Master', 'ACTV');
+
+
