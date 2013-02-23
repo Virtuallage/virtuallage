@@ -178,6 +178,9 @@ public class SalesRegister {
 	}
 
 	public String selectInventory() {
+		customers = new ArrayList<Customer>();
+		account = new Account();
+		
 		AuthUser user = FacesUtil.getCurrentUser();
 		if (user != null)
 			attendedBy = user.getUserProfile();
@@ -212,9 +215,7 @@ public class SalesRegister {
 				customers.add(account.getCustomer5());
 		}
 
-		if (customers == null) {
-			customers = new ArrayList<Customer>();
-		}
+		
 
 		if (account == null) {
 			account = new Account();
