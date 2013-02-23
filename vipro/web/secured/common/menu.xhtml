@@ -10,8 +10,8 @@
     
     <h:form>
     <p:menubar>
-    	<p:submenu label="My Desk">
-    		<p:menuitem value="My Work Queue"  action="#{myDesk.listCases}"/>
+    	<p:submenu label="My Desk" icon="ui-icon-lightbulb">
+    		<p:menuitem value="My Work Queue"  action="#{myDesk.listCases}" icon="ui-icon-script"/>
     	</p:submenu>
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">
@@ -22,7 +22,7 @@
 	    	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES">
-    	<p:submenu label="Sales">
+    	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Project Setup" action="#{projectSetup.listProject}" />
     		<p:menuitem value="Price Adjustment" url="#" />
     		<p:menuitem value="Sales Registration" url="#" />
@@ -33,7 +33,7 @@
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
-    	<p:submenu label="Sales Admin">
+    	<p:submenu label="Sales Admin" icon="ui-icon-star">
     		<p:menuitem value="Property Unit Update" url="#" />
     		<p:menuitem value="Document Verification" url="#" />
     		<p:menuitem value="Progessive Billing" url="#" />
@@ -42,28 +42,28 @@
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_CUST_SERV">
-    	<p:submenu label="Customer Service">
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Purchaser Information" url="#" />
     		<p:menuitem value="Contact Management" url="#" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_ACCT">
-    	<p:submenu label="Account">
+    	<p:submenu label="Account" icon="ui-icon-star">
     		<p:menuitem value="Transaction Entry" url="#" />
     		<p:menuitem value="Transaction Approval" url="#" />
     		<p:menuitem value="External Transaction Upload" url="#" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
-    	<p:submenu label="MIS">
+    	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="..." url="#" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
-    	<p:submenu label="System">
-    		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" />  
-    		<p:menuitem value="Change Password" url="/secured/change_password.xhtml" />  
-    		<p:menuitem value="Logout" url="#" onclick="javascript:window.location.href='/vipro/j_spring_security_logout';"/>  
+    	<p:submenu label="System" icon="ui-icon-gear">
+    		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" icon="ui-icon-person"/>  
+    		<p:menuitem value="Change Password" url="/secured/change_password.xhtml" icon="ui-icon-key"/>  
+    		<p:menuitem value="Logout" url="#" onclick="javascript:window.location.href='/vipro/j_spring_security_logout';" icon="ui-icon-power"/>  
     	</p:submenu>
     	</sec:authorize>
     </p:menubar>
