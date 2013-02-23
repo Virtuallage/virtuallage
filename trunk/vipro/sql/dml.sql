@@ -99,3 +99,31 @@ insert into code_det values ('TITLE_TYPE', 'STR', 'Strata', 'ACTV');
 insert into code_det values ('TITLE_TYPE', 'MST', 'Master', 'ACTV');
 
 
+INSERT INTO code_header VALUES ('SEX', 'Sex');
+INSERT INTO code_det VALUES ('SEX', 'M', 'Male', 'ACTV');
+INSERT INTO code_det VALUES ('SEX', 'F', 'Female', 'ACTV');
+
+INSERT INTO code_header VALUES ('LANGUAGE', 'Language');
+INSERT INTO code_det VALUES ('LANGUAGE', 'CHI', 'Chinese', 'ACTV');
+INSERT INTO code_det VALUES ('LANGUAGE', 'MLY', 'Malay', 'ACTV');
+INSERT INTO code_det VALUES ('LANGUAGE', 'TML', 'Tamil', 'ACTV');
+
+INSERT INTO code_header VALUES ('MARITAL', 'Marital');
+INSERT INTO code_det VALUES ('MARITAL', 'M', 'Married', 'ACTV');
+INSERT INTO code_det VALUES ('MARITAL', 'S', 'Single', 'ACTV');
+
+INSERT INTO code_header VALUES ('BUMI', 'Bumi or not');
+INSERT INTO code_det VALUES ('BUMI', 'NB', 'Non Bumi', 'ACTV');
+INSERT INTO code_det VALUES ('BUMI', 'B', 'Bumi', 'ACTV');
+
+
+
+INSERT INTO code_header VALUES ('RACE', 'Race');
+INSERT INTO code_det VALUES ('RACE', 'CHI', 'Chinese', 'ACTV');
+INSERT INTO code_det VALUES ('RACE', 'MLY', 'Malay', 'ACTV');
+INSERT INTO code_det VALUES ('RACE', 'IND', 'Indian', 'ACTV');
+
+INSERT INTO code_header VALUES ('IDTYPE', 'id type');
+INSERT INTO code_det VALUES ('IDTYPE', 'ID', 'Identity Card', 'ACTV');
+INSERT INTO code_det VALUES ('IDTYPE', 'PP', 'Passport', 'ACTV');
+

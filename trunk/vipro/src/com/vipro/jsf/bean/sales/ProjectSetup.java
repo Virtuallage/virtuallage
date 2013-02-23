@@ -10,6 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
@@ -456,7 +459,7 @@ public class ProjectSetup implements Serializable {
 						"Property Unit Deleted");
 			}
 		} catch (Throwable t) {
-			if (t instanceof MySQLIntegrityConstraintViolationException) {
+			if (t instanceof DataIntegrityViolationException) {
 				FacesUtil
 						.addErrorMessage("Property Unit",
 								"This property is currently purchased. Deletion not allowed.");

@@ -34,15 +34,14 @@ public class Customer implements java.io.Serializable {
 	private Date dateCreated;
 	private Set addresses = new HashSet(0);
 	private Set accounts = new HashSet(0);
-	private Set emails = new HashSet(0);
 	private Set joinAccounts = new HashSet(0);
-	private Set mobilePhones = new HashSet(0);
 	private Set contacts = new HashSet(0);
 	private Set vouchers = new HashSet(0);
 	
 	private Long addressId;
-	private Long emailId;
-	private Long mobileId;
+
+	private String email;
+	private String mobileNo;
 
 	public Customer() {
 	}
@@ -58,8 +57,8 @@ public class Customer implements java.io.Serializable {
 			String employerName, String houseTelNo, String officeTelNo,
 			String faxNo, String communicationType, String language,
 			Date dateOfBirth, String createdBy, Date dateCreated,
-			Set addresses, Set accounts, Set emails, Set joinAccounts,
-			Set mobilePhones, Set contacts, Set vouchers) {
+			Set addresses, Set accounts, Set joinAccounts,
+		  Set contacts, Set vouchers) {
 		this.institution = institution;
 		this.customerCategory = customerCategory;
 		this.identityType = identityType;
@@ -82,11 +81,27 @@ public class Customer implements java.io.Serializable {
 		this.dateCreated = dateCreated;
 		this.addresses = addresses;
 		this.accounts = accounts;
-		this.emails = emails;
+
 		this.joinAccounts = joinAccounts;
-		this.mobilePhones = mobilePhones;
+
 		this.contacts = contacts;
 		this.vouchers = vouchers;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
 	public Long getCustomerId() {
@@ -273,13 +288,7 @@ public class Customer implements java.io.Serializable {
 		this.accounts = accounts;
 	}
 
-	public Set getEmails() {
-		return this.emails;
-	}
 
-	public void setEmails(Set emails) {
-		this.emails = emails;
-	}
 
 	public Set getJoinAccounts() {
 		return this.joinAccounts;
@@ -289,13 +298,7 @@ public class Customer implements java.io.Serializable {
 		this.joinAccounts = joinAccounts;
 	}
 
-	public Set getMobilePhones() {
-		return this.mobilePhones;
-	}
 
-	public void setMobilePhones(Set mobilePhones) {
-		this.mobilePhones = mobilePhones;
-	}
 
 	public Set getContacts() {
 		return this.contacts;
@@ -321,20 +324,6 @@ public class Customer implements java.io.Serializable {
 		this.addressId = addressId;
 	}
 
-	public Long getEmailId() {
-		return emailId;
-	}
 
-	public void setEmailId(Long emailId) {
-		this.emailId = emailId;
-	}
-
-	public Long getMobileId() {
-		return mobileId;
-	}
-
-	public void setMobileId(Long mobileId) {
-		this.mobileId = mobileId;
-	}
 
 }
