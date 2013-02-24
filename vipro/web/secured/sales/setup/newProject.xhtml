@@ -165,8 +165,9 @@ Project Setup
 		</h:panelGrid>
 		
 		<br/>
-		<p:commandButton value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}"  icon="ui-icon-disk"/>
+		<p:commandButton id="btnAdd1" value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}"  icon="ui-icon-disk"/>
 		<p:commandButton value="Close" onclick="dlgDiscount.hide();"/>
+		<p:focus id="btnAdd1" for="btnAdd1"/>
 	</p:dialog>
 </h:form>
 

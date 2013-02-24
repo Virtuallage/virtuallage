@@ -17,7 +17,7 @@ Sales Registration
 
 <p:panel id="panel" header="Registration Info. #{salesRegister.project.projectName}" style="width:95%">  
 
-<p:focus context="panel"/> 
+
       
 	<h:form id="registerForm">  
    	<h:panelGrid columns="4" style="width:70%">
@@ -60,7 +60,7 @@ Sales Registration
         </p:column> 
      </p:dataTable>
      <br/>
-     <p:commandButton value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>&nbsp;&nbsp;
+     <p:commandButton id="btnSearchCust" value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>&nbsp;&nbsp;
      <p:commandButton value="Add Invidual" immediate="true" action="#{salesRegister.toAddIndividual}"  icon="ui-icon-plus"/> &nbsp;&nbsp;
 	 <p:commandButton value="Add Company" immediate="true" action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/> 
 		
@@ -71,6 +71,8 @@ Sales Registration
     <p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
     <p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>  &nbsp;&nbsp;
 </h:form> 
+
+<p:focus id="btnSearchCust" for="btnSearchCust"/> 
 
 </p:panel>
 
