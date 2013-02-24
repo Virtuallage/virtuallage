@@ -244,46 +244,53 @@ public class MyDesk implements Serializable {
 	}
 
 	public String updateCase() {
+		try {
+			AuthUser authUser = FacesUtil.getCurrentUser();
+			UserProfile currentUserProfile = authUser.getUserProfile();
+			
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+					.lookup(UserProfileService.class.getName());
+			if (StringUtils.hasText(toUserId)) {
+				UserProfile toUserProfile = userProfileService.findById(Long
+						.parseLong(toUserId));
 		
-		AuthUser authUser = FacesUtil.getCurrentUser();
-		UserProfile currentUserProfile = authUser.getUserProfile();
-		
-		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-				.lookup(UserProfileService.class.getName());
-		if (StringUtils.hasText(toUserId)) {
-			UserProfile toUserProfile = userProfileService.findById(Long
-					.parseLong(toUserId));
-	
-			newCase.setAssignee(toUserProfile);
+				newCase.setAssignee(toUserProfile);
+			}
+			
+			caseService.update(newCase);
+			activity.setActionTime(new Date());
+			activity.setActionBy(currentUserProfile);
+			caseService.insertActivity(activity);
+			
+			toUserId=null;
+			existingCustomer=null;
+			
+			refreshMyCases();
+			FacesUtil.addInfoMessage("My Work Queue", "Case is updated.");
+		} catch (Throwable t ) {
+			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
 		}
-		
-		caseService.update(newCase);
-		activity.setActionTime(new Date());
-		activity.setActionBy(currentUserProfile);
-		caseService.insertActivity(activity);
-		
-		toUserId=null;
-		existingCustomer=null;
-		
-		refreshMyCases();
-		FacesUtil.addInfoMessage("My Work Queue", "Case is updated.");
 		return "listCase";
 	}
 
 	public String openCase() {
-		setNewCase(getSelectedCase());
-		CaseActivity act = new CaseActivity();
-		act.setCase(getSelectedCase());
-		setActivity( act );
-		
-		activity.setOldDueDate( newCase.getDueDate() );
-		
-		Case c = caseService.findById(newCase.getCaseId());
-		Set<CaseActivity> hists = c.getCaseActivities();
-		
-		histories = new ArrayList<CaseActivity>();
-		for(CaseActivity ca : hists) {
-			histories.add(ca);
+		try {
+			setNewCase(getSelectedCase());
+			CaseActivity act = new CaseActivity();
+			act.setCase(getSelectedCase());
+			setActivity( act );
+			
+			activity.setOldDueDate( newCase.getDueDate() );
+			
+			Case c = caseService.findById(newCase.getCaseId());
+			Set<CaseActivity> hists = c.getCaseActivities();
+			
+			histories = new ArrayList<CaseActivity>();
+			for(CaseActivity ca : hists) {
+				histories.add(ca);
+			}
+		} catch (Throwable t ) {
+			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
 		}
 		
 		return "openCase";
@@ -294,21 +301,25 @@ public class MyDesk implements Serializable {
 	}
 
 	public String searchCustomer() {
-		if (!StringUtils.hasText(searchIdNo)
-				&& !StringUtils.hasText(searchName)) {
-			FacesUtil.addErrorMessage("Search Customer",
-					"Please enter customer name or Id No.");
-			return null;
-		}
-
-		CustomerService customerService = (CustomerService) SpringBeanUtil
-				.lookup(CustomerService.class.getName());
-		if (StringUtils.hasText(searchIdNo)) {
-			setSearchCustList(customerService.findByIdNo(searchIdNo));
-		}
-
-		if (StringUtils.hasText(searchName)) {
-			setSearchCustList(customerService.findByName(searchName));
+		try {
+			if (!StringUtils.hasText(searchIdNo)
+					&& !StringUtils.hasText(searchName)) {
+				FacesUtil.addErrorMessage("Search Customer",
+						"Please enter customer name or Id No.");
+				return null;
+			}
+	
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			if (StringUtils.hasText(searchIdNo)) {
+				setSearchCustList(customerService.findByIdNo(searchIdNo));
+			}
+	
+			if (StringUtils.hasText(searchName)) {
+				setSearchCustList(customerService.findByName(searchName));
+			}
+		} catch (Throwable t ) {
+			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
 		}
 
 		return null;
