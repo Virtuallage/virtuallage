@@ -418,7 +418,7 @@ public class SalesRegister implements Serializable {
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage("Sales Registration", t.getMessage());
 		}
-		return listPropertyUnits();
+		return null;
 	}
 
 	public String searchCustomer() {

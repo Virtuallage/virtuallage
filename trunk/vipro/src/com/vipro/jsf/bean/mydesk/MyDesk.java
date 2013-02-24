@@ -250,7 +250,7 @@ public class MyDesk implements Serializable {
 		
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 				.lookup(UserProfileService.class.getName());
-		if (toUserId!=null) {
+		if (StringUtils.hasText(toUserId)) {
 			UserProfile toUserProfile = userProfileService.findById(Long
 					.parseLong(toUserId));
 	
