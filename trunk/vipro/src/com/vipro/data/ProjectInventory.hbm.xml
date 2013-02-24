@@ -23,8 +23,8 @@
         <property name="blockNo" type="string">
             <column name="block_no" length="8" />
         </property>
-        <property name="level" type="java.lang.Short">
-            <column name="level" precision="3" scale="0" />
+        <property name="level" type="string">
+            <column name="level" precision="5" scale="0" />
         </property>
         <property name="layoutType" type="string">
             <column name="layout_type" length="5" />

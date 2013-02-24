@@ -479,6 +479,7 @@ public class ProjectSetup implements Serializable {
 			FacesUtil.addInfoMessage("Property Unit", "Property Unit Saved");
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			return null;
 		}
 		return toInventoryList();
 	}
@@ -493,6 +494,7 @@ public class ProjectSetup implements Serializable {
 			FacesUtil.addInfoMessage("Property Unit", "Property Unit Added");
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			return null;
 		}
 		return editInventory();
 	}

@@ -22,13 +22,13 @@ Project Setup
 <h:form>  
 	<h:panelGrid columns="4" style="width:100%">
 		<p:outputLabel value="Project Name" for="projectName"/>
-		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" length="30" required="true" autocomplete="off"/>
+		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" maxlength="40" required="true" autocomplete="off"/>
 		
 		<p:outputLabel value="Project Address" for="address"/>
-		<p:inputTextarea id="address" value="#{projectSetup.project.address}" length="30" row="3" cols="50" required="true" />
+		<p:inputTextarea id="address" value="#{projectSetup.project.address}" maxlength="80" row="3" cols="50" required="true" />
 		
 		<p:outputLabel value="Project Code" for="code"/>
-		<p:inputText id="code" value="#{projectSetup.project.projectCode}" length="30" required="true" autocomplete="off"/>
+		<p:inputText id="code" value="#{projectSetup.project.projectCode}" maxlength="10" required="true" autocomplete="off"/>
 		
 
 		
@@ -46,7 +46,7 @@ Project Setup
 
 		<p:outputLabel value="Post Code" for="postcode"/>
 		<h:panelGroup>
-			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" length="30" autocomplete="off"/>
+			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" maxlength="10" autocomplete="off"/>
 			<p:selectOneMenu value="#{projectSetup.project.locationCity}">
 				<f:selectItems value="#{projectSetup.cities}"/>
 			</p:selectOneMenu>
@@ -63,7 +63,7 @@ Project Setup
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Person In Charge" for="pic"/>
-		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" length="30" autocomplete="off"/>
+		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" maxlength="30" autocomplete="off"/>
 		
 		<p:outputLabel value="Country" for="cnty"/>
 		<p:selectOneMenu id="cnty" value="#{projectSetup.project.locationCountry}">
@@ -71,23 +71,23 @@ Project Setup
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="PIC Mobile" for="picMobile"/>
-		<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" length="30" autocomplete="off"/>
+		<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" maxlength="20" autocomplete="off"/>
 		
 		<p:outputLabel value="Project Tel" for="tel"/>
 		<h:panelGroup>
-			<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" length="15" autocomplete="off"/>&nbsp;&nbsp;
+			<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" maxlength="15" autocomplete="off"/>&nbsp;&nbsp;
 			<p:outputLabel value="Fax" for="fax"/>
-			<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" length="151" autocomplete="off"/>
+		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
 		</h:panelGroup>
 		
 		<p:outputLabel value="Launch Date" for="launchDate"/>
 		<p:calendar id="launchDate" value="#{projectSetup.project.launchDate}"  pattern="dd/MM/yyyy"/>
 		
 		<p:outputLabel value="Location Search" for="locationSearch"/>
-		<p:inputText id="locationSearch" value="#{projectSetup.locationSearch}" length="20" autocomplete="off"/>
+		<p:inputText id="locationSearch" value="#{projectSetup.locationSearch}"  autocomplete="off"/>
 		
 		<p:outputLabel value="Total Units"/>
-		<p:inputText value="#{projectSetup.totalUnits}" length="10" disabled="true"/>
+		<p:inputText value="#{projectSetup.totalUnits}" maxlength="10" disabled="true"/>
 		
 		<p:outputLabel value=""/>
 		<p:outputLabel value=""/>
@@ -165,9 +165,9 @@ Project Setup
 		</h:panelGrid>
 		
 		<br/>
-		<p:commandButton id="btnAdd1" value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}"  icon="ui-icon-disk"/>
+		<p:commandButton  value="Add" update="dtDiscount, dEffDate, dExpDate, dRate" action="#{projectSetup.addDiscount}"  icon="ui-icon-disk"/>
 		<p:commandButton value="Close" onclick="dlgDiscount.hide();"/>
-		<p:focus id="btnAdd1" for="btnAdd1"/>
+	
 	</p:dialog>
 </h:form>
 
