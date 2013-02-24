@@ -32,9 +32,9 @@ Project Setup
 
 		
 		<p:outputLabel value="Block No" for="blockNo"/>
-		<p:inputText id="blockNo" value="#{projectSetup.inventory.blockNo}" size="15" maxlength="15" autocomplete="off"/>
+		<p:inputText id="blockNo" value="#{projectSetup.inventory.blockNo}"  maxlength="8" autocomplete="off"/>
 		<p:outputLabel value="Level" for="level"/>
-		<p:inputText id="level" value="#{projectSetup.inventory.level}" size="15" maxlength="15" autocomplete="off"/>
+		<p:inputText id="level" value="#{projectSetup.inventory.level}"  maxlength="5" autocomplete="off"/>
 		<p:outputLabel value="Selling Price" for="sellingPrice"/>
 		<p:inputText id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" size="10" maxlength="8" autocomplete="off" required="true">
 		 		<f:convertNumber maxFractionDigits="0" />
@@ -42,9 +42,9 @@ Project Setup
 		</p:inputText>
 
 		<p:outputLabel value="Unit No" for="unitNo"/>
-		<p:inputText id="unitNo" value="#{projectSetup.inventory.unitNo}" size="10" maxlength="10" autocomplete="off" required="true"/>
+		<p:inputText id="unitNo" value="#{projectSetup.inventory.unitNo}"  maxlength="8" autocomplete="off" required="true"/>
 		<p:outputLabel value="Type" for="type"/>
-		<p:inputText id="type" value="#{projectSetup.inventory.layoutType}" size="15" maxlength="15" autocomplete="off"/>
+		<p:inputText id="type" value="#{projectSetup.inventory.layoutType}"  maxlength="5" autocomplete="off"/>
 		<p:outputLabel value="Discount Rate" for="discountRate"/>
 		<p:inputText id="discountRate" value="#{projectSetup.inventory.discountRate}" size="10" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
@@ -52,48 +52,48 @@ Project Setup
 		</p:inputText>
 		
 		<p:outputLabel value="Build Up Area" for="buildUpArea"/>
-		<p:inputText id="buildUpArea" value="#{projectSetup.inventory.builtUpArea}" size="10" maxlength="10" autocomplete="off" required="true">
+		<p:inputText id="buildUpArea" value="#{projectSetup.inventory.builtUpArea}" maxlength="10" autocomplete="off" required="true">
 				<f:convertNumber maxFractionDigits="0" />
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
 		<p:outputLabel value="Land Area" for="landArea"/>
-		<p:inputText id="landArea" value="#{projectSetup.inventory.landArea}"  size="10" maxlength="10" autocomplete="off">
+		<p:inputText id="landArea" value="#{projectSetup.inventory.landArea}"  maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="0" />
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
 		<p:outputLabel value="Discount Amount" for="discountAmt"/>
-		<p:inputText id="discountAmt" value="#{projectSetup.inventory.discountAmount}" size="10" maxlength="10" autocomplete="off">
+		<p:inputText id="discountAmt" value="#{projectSetup.inventory.discountAmount}"  maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
 		<p:outputLabel value="HSD No" for="hsdNo"/>
-		<p:inputText id="hsdNo" value="#{projectSetup.inventory.hsdNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:inputText id="hsdNo" value="#{projectSetup.inventory.hsdNo}" maxlength="8" autocomplete="off"/>
 		<p:outputLabel value="PT No" for="ptNo"/>
-		<p:inputText id="ptNo" value="#{projectSetup.inventory.ptNo}" size="10" maxlength="10" autocomplete="off"/>
+		<p:inputText id="ptNo" value="#{projectSetup.inventory.ptNo}"  maxlength="8" autocomplete="off"/>
 		<p:outputLabel value="Redemption Amount" for="redemptionAmt"/>
-		<p:inputText  id="redemptionAmt" value="#{projectSetup.inventory.redemptionAmount}" size="10" maxlength="10" autocomplete="off">
+		<p:inputText  id="redemptionAmt" value="#{projectSetup.inventory.redemptionAmount}"  maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
 		<p:outputLabel value="Orientation" for="orientation"/>
-		<p:inputText id="orientation" value="#{projectSetup.inventory.orientation}" size="10" maxlength="10" autocomplete="off"/>
+		<p:inputText id="orientation" value="#{projectSetup.inventory.orientation}" maxlength="5" autocomplete="off"/>
 		<p:outputLabel value="Legal Fee" for="legalFee"/>
-		<p:inputText id="legalFee" value="#{projectSetup.inventory.legalFee}" size="10" maxlength="10" autocomplete="off">
+		<p:inputText id="legalFee" value="#{projectSetup.inventory.legalFee}"  maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		<p:outputLabel value="Assessment Fee" for="assFee" />
-		<p:inputText id="assFee" value="#{projectSetup.inventory.assessment}" size="10" maxlength="10" autocomplete="off">
+		<p:inputText id="assFee" value="#{projectSetup.inventory.assessment}" maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>
 		
 		<p:outputLabel value="Quit Rent" for="quitRent"/>
-		<p:inputText id="quitRent" value="#{projectSetup.inventory.quitRent}" size="10" maxlength="10" autocomplete="off"/>
+		<p:inputText id="quitRent" value="#{projectSetup.inventory.quitRent}"  maxlength="10" autocomplete="off"/>
 		<p:outputLabel value="Disbursement Fee" for="disbFee"/>
-		<p:inputText id="disbFee" value="#{projectSetup.inventory.disbursementFee}" size="10" maxlength="10" autocomplete="off">
+		<p:inputText id="disbFee" value="#{projectSetup.inventory.disbursementFee}"  maxlength="10" autocomplete="off">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 <p:ajax update="discountAmt" event="blur" process="discountAmt"/>
 		</p:inputText>

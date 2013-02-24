@@ -89,3 +89,4 @@ alter table transaction_history add payment_method varchar(110);
 alter table transaction_history add bank varchar(10);
 alter table transaction_history add card_cheque_no varchar(30);
 
+alter table project_inventory modify level varchar(5);

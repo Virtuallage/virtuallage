@@ -18,7 +18,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private String ptNo;
 	private String hsdNo;
 	private String blockNo;
-	private Short level;
+	private String level;
 	private String layoutType;
 	private String orientation;
 	private Integer landArea;
@@ -51,7 +51,7 @@ public class ProjectInventory implements java.io.Serializable {
 	}
 
 	public ProjectInventory(Project project, String unitNo, String ptNo,
-			String hsdNo, String blockNo, Short level, String layoutType,
+			String hsdNo, String blockNo, String level, String layoutType,
 			String orientation, Integer landArea, Integer builtUpArea,
 			String propertyStatus, Date statusChangeDate,
 			BigDecimal purchasePrice, BigDecimal discountAmount,
@@ -138,11 +138,13 @@ public class ProjectInventory implements java.io.Serializable {
 		this.blockNo = blockNo;
 	}
 
-	public Short getLevel() {
-		return this.level;
+
+
+	public String getLevel() {
+		return level;
 	}
 
-	public void setLevel(Short level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
