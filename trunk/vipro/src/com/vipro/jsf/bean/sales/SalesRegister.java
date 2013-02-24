@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.sales;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,17 +17,22 @@ import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.constant.TransactionCodeConst;
+import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+import com.vipro.data.TransactionCode;
+import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.service.AccountService;
 import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
+import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
@@ -46,6 +52,9 @@ public class SalesRegister implements Serializable {
 	private List<SelectItem> listBumi = null;
 	private List<SelectItem> listLanguage = null;
 	private List<SelectItem> listRace = null;
+	
+	private List<SelectItem> listBank = null;
+	private List<SelectItem> listPaymentMethod = null;
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -73,6 +82,11 @@ public class SalesRegister implements Serializable {
 	private Customer company;
 	private Address address;
 
+	/**
+	 * booking fee
+	 */
+	private TransactionHistory trx;
+
 	@PostConstruct
 	public void init() {
 		listCountry = CodeUtil.getCodes("COUNTRY");
@@ -85,6 +99,33 @@ public class SalesRegister implements Serializable {
 		listLanguage = CodeUtil.getCodes("LANGUAGE");
 		listRace = CodeUtil.getCodes("RACE");
 		listState = CodeUtil.getCodes("STATE");
+		
+		listBank = CodeUtil.getCodes("BANK");
+		listPaymentMethod = CodeUtil.getCodes("PAYM");
+	}
+
+	public List<SelectItem> getListBank() {
+		return listBank;
+	}
+
+	public void setListBank(List<SelectItem> listBank) {
+		this.listBank = listBank;
+	}
+
+	public List<SelectItem> getListPaymentMethod() {
+		return listPaymentMethod;
+	}
+
+	public void setListPaymentMethod(List<SelectItem> listPaymentMethod) {
+		this.listPaymentMethod = listPaymentMethod;
+	}
+
+	public TransactionHistory getTrx() {
+		return trx;
+	}
+
+	public void setTrx(TransactionHistory trx) {
+		this.trx = trx;
 	}
 
 	public List<SelectItem> getListState() {
@@ -406,6 +447,9 @@ public class SalesRegister implements Serializable {
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
 			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
+			
+			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
+			account.setRegistrationFee(regFee);
 			accountService.insert(account);
 
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
@@ -470,13 +514,14 @@ public class SalesRegister implements Serializable {
 					.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
 			customerService.insert(individual);
-			
-			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
 			address.setCustomer(individual);
 			addressService.insert(address);
-			
+
 			individual.setAddressId(address.getAddressId());
-			
+
 			customerService.update(company);
 		} catch (Throwable t) {
 			FacesUtil.addErrorMessage("Add Individual", t.getMessage());
@@ -491,11 +536,12 @@ public class SalesRegister implements Serializable {
 					.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.COMPANY);
 			customerService.insert(company);
-			
-			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
 			address.setCustomer(company);
 			addressService.insert(address);
-			
+
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
 		} catch (Throwable t) {
@@ -507,5 +553,59 @@ public class SalesRegister implements Serializable {
 
 	public String backToRegistration() {
 		return "registration";
+	}
+
+	public String toPay() {
+		try {
+			if (account==null || account.getAccountId()==null) {
+				FacesUtil.addErrorMessage("Booking Fee", "Please save before proceed with booking payment");
+				return null;
+			}
+			
+			trx = new TransactionHistory();
+			if (account != null && account.getAccountId() != null) {
+				TransactionHistoryService trxService = (TransactionHistoryService) SpringBeanUtil
+						.lookup(TransactionHistoryService.class.getName());
+				List<TransactionHistory> list = trxService
+						.findByAccountId(account.getAccountId());
+				if (list != null && list.size() > 0) {
+					for (TransactionHistory t : list) {
+						if (TransactionCodeConst.BOOK_FEE.equals(t
+								.getTransactionCode().getTransactionCode())) {
+							trx = t;
+							break;
+						}
+					}
+				}
+			}
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage("Booking Fee", t.getMessage());
+			return null;
+		}
+		return "pay";
+	}
+
+	public String pay() {
+		try {
+			TransactionCode code = new TransactionCode();
+			code.setTransactionCode(TransactionCodeConst.BOOK_FEE);
+
+			TransactionHistoryService trxService = (TransactionHistoryService) SpringBeanUtil
+					.lookup(TransactionHistoryService.class.getName());
+			trx.setTransactionCode(code);
+			
+			trx.setTransactionDate(new Date());
+			trx.setAccount(account);
+			trx.setTransactionDescription("Booking Fee");
+			trx.setStatus(TransactionStatusConst.PENDING);
+
+			trxService.insert(trx);
+		} catch (Throwable t) {
+			FacesUtil.addErrorMessage("Booking Fee", t.getMessage());
+			return null;
+		}
+		
+		FacesUtil.addInfoMessage("Booking Fee", "Transaction saved");
+		return listPropertyUnits();
 	}
 }

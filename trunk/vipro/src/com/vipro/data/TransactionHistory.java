@@ -2,6 +2,7 @@ package com.vipro.data;
 
 // Generated Feb 3, 2013 6:50:08 PM by Hibernate Tools 3.4.0.CR1
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -18,6 +19,11 @@ public class TransactionHistory implements java.io.Serializable {
 	private Date postingDate;
 	private Date statementDate;
 	private String status;
+	private BigDecimal amount;
+	
+	private String paymentMethod;
+	private String bank;
+	private String cardChequeNo;
 
 	public TransactionHistory() {
 	}
@@ -38,6 +44,38 @@ public class TransactionHistory implements java.io.Serializable {
 		this.postingDate = postingDate;
 		this.statementDate = statementDate;
 		this.status = status;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public String getCardChequeNo() {
+		return cardChequeNo;
+	}
+
+	public void setCardChequeNo(String cardChequeNo) {
+		this.cardChequeNo = cardChequeNo;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 	public Long getTransactionId() {

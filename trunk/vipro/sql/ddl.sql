@@ -82,3 +82,10 @@ alter table customer add email varchar(40);
 alter table customer modify institution_id bigint;
 alter table address modify customer_id bigint;
 alter table customer add contact_Person varchar(30);
+alter table transaction_history add amount decimal(9,2);
+
+
+alter table transaction_history add payment_method varchar(110);
+alter table transaction_history add bank varchar(10);
+alter table transaction_history add card_cheque_no varchar(30);
+

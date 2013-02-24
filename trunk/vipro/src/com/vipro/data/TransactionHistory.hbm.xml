@@ -32,5 +32,18 @@
         <property name="status" type="string">
             <column name="status" length="5" />
         </property>
+          <property name="amount" type="big_decimal">
+            <column name="amount" precision="9" />
+        </property>
+        
+          <property name="paymentMethod" type="string">
+            <column name="payment_method" length="10" />
+        </property>
+        <property name="bank" type="string">
+            <column name="bank" length="10" />
+        </property>
+        <property name="cardChequeNo" type="string">
+            <column name="card_cheque_no" length="30" />
+        </property>
     </class>
 </hibernate-mapping>

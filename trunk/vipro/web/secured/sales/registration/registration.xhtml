@@ -29,7 +29,7 @@ Sales Registration
    		<p:outputLabel value="Lot/Unit No"/>
    		<p:outputLabel value="#{salesRegiser.inventory.unitNo}"/>
    		<p:outputLabel value="Developer"/>
-   		<p:outputLabel value="#{project.institution.institutionName}"/>
+   		<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
    		
    		<p:outputLabel value="Purchase Price"/>
    		<p:outputLabel value="#{salesRegister.inventory.purchasePrice}"/>
@@ -76,7 +76,7 @@ Sales Registration
     
     <p:commandButton value="Print" immediate="true" icon="ui-icon-print"/> &nbsp;&nbsp;
     
-    <p:commandButton value="Pay" immediate="true" icon="ui-icon-star"/> &nbsp;&nbsp;
+    <p:commandButton value="Pay" action="#{salesRegister.toPay}" immediate="true" icon="ui-icon-star"/> &nbsp;&nbsp;
     
 </h:form> 
 

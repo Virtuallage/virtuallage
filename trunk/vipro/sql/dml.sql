@@ -127,3 +127,18 @@ INSERT INTO code_header VALUES ('IDTYPE', 'id type');
 INSERT INTO code_det VALUES ('IDTYPE', 'ID', 'Identity Card', 'ACTV');
 INSERT INTO code_det VALUES ('IDTYPE', 'PP', 'Passport', 'ACTV');
 
+insert into transaction_code values ('BOOK', 'Booking Fee', null, null, 'ACTV');
+
+
+INSERT INTO code_header VALUES ('PAYM', 'Payment Method');
+INSERT INTO code_det VALUES ('PAYM', 'CD', 'Card', 'ACTV');
+INSERT INTO code_det VALUES ('PAYM', 'CQ', 'Cheque', 'ACTV');
+INSERT INTO code_det VALUES ('PAYM', 'BD', 'Bank Draft', 'ACTV');
+
+INSERT INTO code_header VALUES ('BANK', 'Bank');
+INSERT INTO code_det VALUES ('BANK', 'HSBC', 'HSBC', 'ACTV');
+INSERT INTO code_det VALUES ('BANK', 'HLB', 'Hong Leong', 'ACTV');
+INSERT INTO code_det VALUES ('BANK', 'MBB', 'Maybank', 'ACTV');
+INSERT INTO code_det VALUES ('BANK', 'AFF', 'Affin', 'ACTV');
+INSERT INTO code_det VALUES ('BANK', 'AM', 'Am', 'ACTV');
+INSERT INTO code_det VALUES ('BANK', 'CTB', 'Citibank', 'ACTV');
