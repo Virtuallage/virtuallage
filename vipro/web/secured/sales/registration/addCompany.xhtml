@@ -22,22 +22,26 @@ Add Company
 <h:form>
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
-				<p:outputLabel value="Name" for="name"/>
-				<p:inputText id="name" value="#{salesRegister.company.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				<p:outputLabel value=""/>
+				<p:outputLabel value=""/>
 				<p:outputLabel value="Type"/>
-				<p:outputLabel value="Individual"/>
+				<p:outputLabel value="Company"/>
 				
-				<p:outputLabel value="ID Type/No." for="idtype"/>
-				<h:panelGroup>
-					<p:selectOneMenu id="idtype" value="#{salesRegister.company.identityType}" required="true">
-						<f:selectItems value="#{salesRegister.listIdType}"/>
-					</p:selectOneMenu>
-					<p:inputText value="#{salesRegister.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
-				</h:panelGroup>
+				<p:outputLabel value="Contact Person" for="contactp"/>
+				<p:inputText id="contactp" value="#{salesRegister.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
 				<p:selectOneMenu id="title" value="#{salesRegister.company.title}">
 						<f:selectItems value="#{salesRegister.listTitle}"/>
 				</p:selectOneMenu>
+				<p:outputLabel value="Company Name" for="name"/>
+				<p:inputText id="name" value="#{salesRegister.company.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				
+				
+				<p:outputLabel value="Business Reg. No." for="regno"/>
+	
+					<p:inputText id="regno" value="#{salesRegister.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+			
+				
 				
 				<p:outputLabel value="Address 1" for="addr1"/>
 				<p:inputText id="addr1" value="#{salesRegister.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
@@ -49,14 +53,14 @@ Add Company
 				<p:outputLabel value="Address 2" for="addr2"/>
 				<p:inputText id="addr2" value="#{salesRegister.address.addressLine2}" maxlength="40" autocomplete="off"/>
 				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
-				<p:selectOneMenu id="bumi" value="#{salesRegister.company.bumiIndicator}" required="true">
+				<p:selectOneMenu id="bumi" value="#{salesRegister.company.bumiIndicator}" >
 						<f:selectItems value="#{salesRegister.listBumi}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
 				<p:inputText id="addr3" value="#{salesRegister.address.addressLine3}" maxlength="40" autocomplete="off"/>
 				<p:outputLabel value="Sex" for="sex"/>
-				<p:selectOneMenu id="sex" value="#{salesRegister.company.sex}" required="true">
+				<p:selectOneMenu id="sex" value="#{salesRegister.company.sex}" >
 						<f:selectItems value="#{salesRegister.listGender}"/>
 				</p:selectOneMenu>
 				
@@ -71,7 +75,7 @@ Add Company
 				<p:selectOneMenu id="state" value="#{salesRegister.address.state}"  required="true">
 						<f:selectItems value="#{salesRegister.listState}"/>
 				</p:selectOneMenu>
-				<p:outputLabel value="Date of birth" for="dob"/>
+				<p:outputLabel value="Business Reg. Date" for="dob"/>
 				<p:calendar id="dob" value="#{salesRegister.company.dateOfBirth}" pattern="dd/MM/yyyy" required="true"/>
 				
 				<p:outputLabel value="Country" for="country"/>

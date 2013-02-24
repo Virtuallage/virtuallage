@@ -26,6 +26,9 @@
         <property name="fullName" type="string">
             <column name="full_name" length="60" />
         </property>
+         <property name="contactPerson" type="string">
+            <column name="contact_person" length="30" />
+        </property>
         <property name="specialHandling" type="string">
             <column name="special_handling" length="5" />
         </property>

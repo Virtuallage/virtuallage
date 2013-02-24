@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
@@ -467,6 +468,7 @@ public class SalesRegister implements Serializable {
 		try {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
+			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
 			customerService.insert(individual);
 			
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
@@ -487,6 +489,7 @@ public class SalesRegister implements Serializable {
 		try {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
+			individual.setCustomerCategory(CustomerTypeConst.COMPANY);
 			customerService.insert(company);
 			
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
