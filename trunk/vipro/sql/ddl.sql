@@ -81,4 +81,4 @@ alter table customer add email varchar(40);
 
 alter table customer modify institution_id bigint;
 alter table address modify customer_id bigint;
-
+alter table customer add contact_Person varchar(30);

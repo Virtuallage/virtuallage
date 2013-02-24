@@ -18,6 +18,7 @@ public class Customer implements java.io.Serializable {
 	private String identityNo;
 	private String title;
 	private String fullName;
+	private String contactPerson;
 	private String specialHandling;
 	private String race;
 	private String bumiIndicator;
@@ -37,7 +38,7 @@ public class Customer implements java.io.Serializable {
 	private Set joinAccounts = new HashSet(0);
 	private Set contacts = new HashSet(0);
 	private Set vouchers = new HashSet(0);
-	
+
 	private Long addressId;
 
 	private String email;
@@ -57,8 +58,8 @@ public class Customer implements java.io.Serializable {
 			String employerName, String houseTelNo, String officeTelNo,
 			String faxNo, String communicationType, String language,
 			Date dateOfBirth, String createdBy, Date dateCreated,
-			Set addresses, Set accounts, Set joinAccounts,
-		  Set contacts, Set vouchers) {
+			Set addresses, Set accounts, Set joinAccounts, Set contacts,
+			Set vouchers) {
 		this.institution = institution;
 		this.customerCategory = customerCategory;
 		this.identityType = identityType;
@@ -86,6 +87,14 @@ public class Customer implements java.io.Serializable {
 
 		this.contacts = contacts;
 		this.vouchers = vouchers;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
 
 	public String getEmail() {
@@ -288,8 +297,6 @@ public class Customer implements java.io.Serializable {
 		this.accounts = accounts;
 	}
 
-
-
 	public Set getJoinAccounts() {
 		return this.joinAccounts;
 	}
@@ -297,8 +304,6 @@ public class Customer implements java.io.Serializable {
 	public void setJoinAccounts(Set joinAccounts) {
 		this.joinAccounts = joinAccounts;
 	}
-
-
 
 	public Set getContacts() {
 		return this.contacts;
@@ -323,7 +328,5 @@ public class Customer implements java.io.Serializable {
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
-
-
 
 }
