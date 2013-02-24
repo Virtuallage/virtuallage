@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales  Registration
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Registration - Booking Fee " style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+<h:form>  
+    <h:panelGrid columns="4">
+    	<p:outputLabel value="Project Name"/>
+    	<p:outputLabel value="#{salesRegister.project.projectName}"/>
+    	<p:outputLabel value="Registration No"/>
+    	<p:outputLabel value="#{salesRegister.account.accountId}"/>
+    	
+    	<p:outputLabel value="Lot/Unit No"/>
+    	<p:outputLabel value="#{salesRegiser.inventory.unitNo}"/>
+    	<p:outputLabel value="Developer"/>
+    	<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
+    	
+    	<p:outputLabel value="Payment Amount" for="amount"/>
+    	<p:inputText id="amount" value="#{salesRegister.trx.amount}" required="true">
+    			<f:convertNumber maxFractionDigits="2" />
+                <p:ajax update="amount" event="blur" process="amount"/>
+    	</p:inputText>
+    	<p:outputLabel value="Registration Fee"/>
+    	<h:outputText value="#{salesRegister.account.registrationFee}">
+    		<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+    	</h:outputText>
+    	
+    	<p:outputLabel value="Payment Method" for="paym"/>
+    	<h:panelGroup>
+	    	<p:selectOneMenu id="paym" value="#{salesRegister.trx.paymentMethod}" required="true">
+	    		<f:selectItems value="#{salesRegister.listPaymentMethod}"/>
+	    	</p:selectOneMenu>
+	    	<p:selectOneMenu id="bank" value="#{salesRegister.trx.bank}" required="true">
+	    		<f:selectItems value="#{salesRegister.listBank}"/>
+	    	</p:selectOneMenu>
+    	</h:panelGroup>
+    	<p:outputLabel value="Card/Cheque No" for="cardNo"/>
+    	<p:inputText id="cardNo" value="#{salesRegister.trx.cardChequeNo}" autocomplete="off" required="true"/>
+    
+    </h:panelGrid>
+   
+    <p:commandButton value="Back" action="#{salesRegister.selectInventory}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+    <p:commandButton value="Pay" action="#{salesRegister.pay}" ajax="false" icon="ui-icon-star"/> &nbsp;&nbsp;
+   
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
