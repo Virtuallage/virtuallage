@@ -40,11 +40,11 @@ Sales  Cancellation
         </p:column>  
   
         <p:column headerText="Property Type">  
-           <h:outputText value="#{c.propertyType}"/>
+           <h:outputText value="#{salesCancel.getCodeDesc('PROP_TYPE',c.propertyType)}"/>
         </p:column>  
         
         <p:column headerText="Status">  
-           <h:outputText value="#{c.status}"/>
+           <h:outputText value="#{salesCancel.getCodeDesc('PROP_TYPE',c.status)}"/>
            &nbsp;
            <p:commandButton action="#{salesCancel.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesCancel.project}" />  
