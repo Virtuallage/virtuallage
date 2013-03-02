@@ -12,15 +12,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
-import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
@@ -34,7 +31,6 @@ import com.vipro.service.ProjectService;
 import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 

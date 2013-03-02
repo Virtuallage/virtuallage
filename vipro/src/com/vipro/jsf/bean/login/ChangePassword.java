@@ -3,7 +3,6 @@ package com.vipro.jsf.bean.login;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
@@ -12,7 +11,6 @@ import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.UserProfileService;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 /**

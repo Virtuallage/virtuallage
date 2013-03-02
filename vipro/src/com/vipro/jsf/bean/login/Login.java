@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.jsf.bean.CommonBean;
-import com.vipro.utils.spring.FacesUtil;
 
 /**
  * 

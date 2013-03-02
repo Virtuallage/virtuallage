@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
@@ -19,18 +18,13 @@ import com.vipro.constant.CaseStatus;
 import com.vipro.data.Case;
 import com.vipro.data.CaseActivity;
 import com.vipro.data.Customer;
-import com.vipro.data.Email;
-import com.vipro.data.MobilePhone;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.CaseService;
 import com.vipro.service.CustomerService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
-
-import static com.vipro.jsf.bean.PageConst.MAIN;
 
 @ManagedBean(name = "myDesk")
 @SessionScoped
