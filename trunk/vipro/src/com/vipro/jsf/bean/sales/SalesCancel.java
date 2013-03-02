@@ -1,5 +1,6 @@
 package com.vipro.jsf.bean.sales;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,7 @@ import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
@@ -35,9 +37,10 @@ import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
+
 @ManagedBean(name = "salesCancel")
 @SessionScoped
-public class SalesCancel {
+public class SalesCancel extends CommonBean implements Serializable{
 
 	private List<SelectItem> cancelReasons;
 	
@@ -174,7 +177,7 @@ public class SalesCancel {
 		
 			account = null;
 	
-			AuthUser user = FacesUtil.getCurrentUser();
+			AuthUser user = getCurrentUser();
 			if (user != null)
 				attendedBy = user.getUserProfile();
 	
@@ -230,21 +233,21 @@ public class SalesCancel {
 				}
 				
 				
-				if (!TransactionStatusConst.PENDING.equals(bookTrx.getStatus())) {
-					FacesUtil.addInfoMessage("Sales Cancellation", "Transaction is completed. Cancellation is not allowed");
+				if (bookTrx!=null && !TransactionStatusConst.PENDING.equals(bookTrx.getStatus())) {
+					addInfoMessage("Sales Cancellation", "Transaction is completed. Cancellation is not allowed");
 					return listPropertyUnits();
 				}
 			
 			}
 			
-			if (bookTrx==null || account==null) {
-				FacesUtil.addInfoMessage("Sales Cancellation", "This property Unit has no sales transaction. There is nothing to cancel.");
+			if ( account==null) {
+				addInfoMessage("Sales Cancellation", "This property Unit has no sales transaction. There is nothing to cancel.");
 				return listPropertyUnits();
 			}
 			
 		} catch (Throwable t) {
 			t.printStackTrace();
-			FacesUtil.addErrorMessage("Error opening sales", t.getMessage());
+			addErrorMessage("Error opening sales", t.getMessage());
 			return listPropertyUnits();
 		}
 		
@@ -256,7 +259,7 @@ public class SalesCancel {
 	public String cancel() {
 		try {
 //			if (AccountStatusConst.CANCEL.equals(account.getAccountStatus())) {
-//				FacesUtil.addErrorMessage("Sales Cancellation", "Sales is already cancelled");
+//				addErrorMessage("Sales Cancellation", "Sales is already cancelled");
 //				return "cancel";
 //			}
 			ProjectInventoryService inventoryService=  (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
@@ -268,13 +271,14 @@ public class SalesCancel {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 			account.setAccountStatus(AccountStatusConst.CANCEL);
 			
-			if (account.getRegistrationFee()!=null && account.getCancelFee()!=null && account.getCancelTax()!=null) {
-				BigDecimal refundAmt = account.getRegistrationFee();
-				double d = refundAmt.doubleValue();
-				d = d - (account.getCancelFee().doubleValue() + account.getCancelTax().doubleValue());
-				refundAmt = new BigDecimal(d);
-				account.setCancelNetRefundAmt(refundAmt);
-			}
+			double regFee = account.getRegistrationFee()!=null ? account.getRegistrationFee().doubleValue() : 0.0d;
+			
+			
+			double d = regFee;
+			d = d - (account.getCancelFee().doubleValue() + account.getCancelTax().doubleValue());
+			
+			account.setCancelNetRefundAmt(new BigDecimal(d));
+			
 			accountService.update(account);
 			
 			
@@ -298,10 +302,10 @@ public class SalesCancel {
 			cancelTrx.setStatus(TransactionStatusConst.COMPLETE);
 			trxService.insert(cancelTrx);
 			
-			FacesUtil.addInfoMessage("Sales Cancellation", "Sales is cancelled");
+			addInfoMessage("Sales Cancellation", "Sales is cancelled");
 		} catch (Throwable t) {
 			t.printStackTrace();
-			FacesUtil.addErrorMessage("Error cancelling sales", t.getMessage());
+			addErrorMessage("Error cancelling sales", t.getMessage());
 		}
 		return "cancel";
 	}

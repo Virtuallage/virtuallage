@@ -9,6 +9,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.data.UserProfile;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.FacesUtil;
@@ -21,7 +22,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
  */
 @ManagedBean(name = "changePassword")
 @RequestScoped
-public class ChangePassword implements PageConst {
+public class ChangePassword extends CommonBean implements PageConst {
 
 	private String username;
 	private String oldPassword;
@@ -62,7 +63,7 @@ public class ChangePassword implements PageConst {
 
 	@PostConstruct
 	public void init() {
-		AuthUser user = FacesUtil.getCurrentUser();
+		AuthUser user = getCurrentUser();
 		if (user != null) {
 			setUsername(user.getName());
 		}
@@ -73,17 +74,17 @@ public class ChangePassword implements PageConst {
 		String oldPwd = encoder.encodePassword(oldPassword,  null);
 		
 		if (!password1.equals(password2)) {
-			FacesUtil.addInfoMessage("New Password is not identical", "New Password is not identical");
+			addInfoMessage("New Password is not identical", "New Password is not identical");
 			return null;
 		}
 		
 		String pwd = encoder.encodePassword(password2, null);
 		
-		AuthUser authUser = FacesUtil.getCurrentUser();
+		AuthUser authUser = getCurrentUser();
 		if (authUser!=null) {
 			UserProfile up = authUser.getUserProfile();
 			if (!oldPwd.equals(up.getPassword())) {
-				FacesUtil.addInfoMessage("Old Password not correct", "Old Password not correct.");
+				addInfoMessage("Old Password not correct", "Old Password not correct.");
 				return null;
 			}
 			if (up!=null) {
@@ -94,7 +95,7 @@ public class ChangePassword implements PageConst {
 			}
 		}
 		
-		FacesUtil.addInfoMessage("Password Changed", "Password Changed");
+		addInfoMessage("Password Changed", "Password Changed");
 		return MAIN;
 	}
 

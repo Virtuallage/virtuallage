@@ -10,6 +10,7 @@ import javax.faces.model.SelectItem;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CodeConst;
 import com.vipro.data.Institution;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.InstitutionService;
 import com.vipro.utils.spring.CodeUtil;
@@ -18,7 +19,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean
 @RequestScoped
-public class InstitutionInfoBean implements PageConst {
+public class InstitutionInfoBean extends CommonBean implements PageConst {
 
 	private Institution institution;
 	private List<SelectItem> contactTitleList;
@@ -81,9 +82,9 @@ public class InstitutionInfoBean implements PageConst {
 		try {
 			InstitutionService service = (InstitutionService) SpringBeanUtil.lookup(InstitutionService.class.getName());
 			service.update(institution);
-			FacesUtil.addInfoMessage("Biz Param", "Institution Info is updated");
+			addInfoMessage("Biz Param", "Institution Info is updated");
 		} catch (Throwable th) {
-			FacesUtil.addErrorMessage("Biz Param", "Error saving details. " + th.getMessage());
+			addErrorMessage("Biz Param", "Error saving details. " + th.getMessage());
 			return null;
 		}
 		
@@ -94,9 +95,9 @@ public class InstitutionInfoBean implements PageConst {
 		try {
 			InstitutionService service = (InstitutionService) SpringBeanUtil.lookup(InstitutionService.class.getName());
 			service.insert(institution);
-			FacesUtil.addInfoMessage("Biz Param", "Institution Info is inserted");
+			addInfoMessage("Biz Param", "Institution Info is inserted");
 		} catch (Throwable th) {
-			FacesUtil.addErrorMessage("Biz Param", "Error saving details. " + th.getMessage());
+			addErrorMessage("Biz Param", "Error saving details. " + th.getMessage());
 			return null;
 		}
 		

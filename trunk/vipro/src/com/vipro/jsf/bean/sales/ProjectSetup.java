@@ -19,6 +19,7 @@ import com.vipro.data.Discount;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.SalesCommission;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.DiscountService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
@@ -29,7 +30,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "projectSetup")
 @SessionScoped
-public class ProjectSetup implements Serializable {
+public class ProjectSetup  extends CommonBean implements Serializable {
 	/**
 	 * project related propertiess
 	 */
@@ -276,7 +277,7 @@ public class ProjectSetup implements Serializable {
 					.lookup(ProjectService.class.getName());
 			projects = projectService.findAllProjects();
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return "project";
 	}
@@ -306,7 +307,7 @@ public class ProjectSetup implements Serializable {
 
 			refreshCommissionDiscount();
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 
 		return "newProject";
@@ -325,9 +326,9 @@ public class ProjectSetup implements Serializable {
 			commission = new SalesCommission();
 
 			refreshCommissionDiscount();
-			FacesUtil.addInfoMessage("Project", "Project Saved");
+			addInfoMessage("Project", "Project Saved");
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 
 		return "project";
@@ -364,9 +365,9 @@ public class ProjectSetup implements Serializable {
 			discounts = discountService.findByProjectId(projectId);
 			discount = new Discount();
 			refreshCommissionDiscount();
-			FacesUtil.addInfoMessage("Discount", "Discount Added");
+			addInfoMessage("Discount", "Discount Added");
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return null;
 	}
@@ -381,10 +382,10 @@ public class ProjectSetup implements Serializable {
 			commissions = salesCommissionService.findByProjectId(projectId);
 			commission = new SalesCommission();
 			refreshCommissionDiscount();
-			FacesUtil.addInfoMessage("Sales Commission",
+			addInfoMessage("Sales Commission",
 					"Sales Commission Added");
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return "newProject";
 	}
@@ -400,7 +401,7 @@ public class ProjectSetup implements Serializable {
 				refreshCommissionDiscount();
 			}
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return null;
 	}
@@ -416,7 +417,7 @@ public class ProjectSetup implements Serializable {
 				refreshCommissionDiscount();
 			}
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return null;
 	}
@@ -431,7 +432,7 @@ public class ProjectSetup implements Serializable {
 					.lookup(ProjectInventoryService.class.getName());
 			inventories = inventoryService.getInventories(projectId);
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 		return "inventoryList";
 	}
@@ -455,16 +456,15 @@ public class ProjectSetup implements Serializable {
 
 			if (inventory != null) {
 				inventoryService.delete(inventory.getInventoryId());
-				FacesUtil.addInfoMessage("Property Unit",
+				addInfoMessage("Property Unit",
 						"Property Unit Deleted");
 			}
 		} catch (Throwable t) {
 			if (t instanceof DataIntegrityViolationException) {
-				FacesUtil
-						.addErrorMessage("Property Unit",
+				addErrorMessage("Property Unit",
 								"This property is currently purchased. Deletion not allowed.");
 			} else {
-				FacesUtil.addErrorMessage("Property Unit", t.getMessage());
+				addErrorMessage("Property Unit", t.getMessage());
 			}
 		}
 		return toInventoryList();
@@ -476,9 +476,9 @@ public class ProjectSetup implements Serializable {
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setProject(project);
 			inventoryService.update(inventory);
-			FacesUtil.addInfoMessage("Property Unit", "Property Unit Saved");
+			addInfoMessage("Property Unit", "Property Unit Saved");
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 			return null;
 		}
 		return toInventoryList();
@@ -491,9 +491,9 @@ public class ProjectSetup implements Serializable {
 			inventory.setProject(project);
 			inventory.setInventoryId(null);
 			inventoryService.insert(inventory);
-			FacesUtil.addInfoMessage("Property Unit", "Property Unit Added");
+			addInfoMessage("Property Unit", "Property Unit Added");
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage(t.getClass().getName(), t.getMessage());
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 			return null;
 		}
 		return editInventory();

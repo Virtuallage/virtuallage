@@ -27,6 +27,7 @@ import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
 import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
@@ -40,7 +41,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "salesRegister")
 @SessionScoped
-public class SalesRegister implements Serializable {
+public class SalesRegister extends CommonBean implements Serializable {
 
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
@@ -361,7 +362,7 @@ public class SalesRegister implements Serializable {
 		account = new Account();
 		account.setDatePurchased(new Date());
 
-		AuthUser user = FacesUtil.getCurrentUser();
+		AuthUser user = getCurrentUser();
 		if (user != null)
 			attendedBy = user.getUserProfile();
 
@@ -406,7 +407,7 @@ public class SalesRegister implements Serializable {
 		try {
 
 			if (customers.size() <= 0) {
-				FacesUtil.addInfoMessage("Sales Registration",
+				addInfoMessage("Sales Registration",
 						"Please select a customer");
 				return null;
 			}
@@ -455,12 +456,12 @@ public class SalesRegister implements Serializable {
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
 			inventoryService.update(inventory);
 
-			FacesUtil.addInfoMessage(
+			addInfoMessage(
 					"Sales Registration",
 					"Sales Registration Saved. Registration No is "
 							+ account.getAccountId());
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage("Sales Registration", t.getMessage());
+			addErrorMessage("Sales Registration", t.getMessage());
 		}
 		return null;
 	}
@@ -468,7 +469,7 @@ public class SalesRegister implements Serializable {
 	public String searchCustomer() {
 		if (!StringUtils.hasText(searchIdNo)
 				&& !StringUtils.hasText(searchName)) {
-			FacesUtil.addErrorMessage("Search Customer",
+			addErrorMessage("Search Customer",
 					"Please enter customer name or Id No.");
 			return null;
 		}
@@ -524,7 +525,7 @@ public class SalesRegister implements Serializable {
 
 			customerService.update(company);
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage("Add Individual", t.getMessage());
+			addErrorMessage("Add Individual", t.getMessage());
 			return null;
 		}
 		return "registration";
@@ -545,7 +546,7 @@ public class SalesRegister implements Serializable {
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage("Add Company", t.getMessage());
+			addErrorMessage("Add Company", t.getMessage());
 			return null;
 		}
 		return "registration";
@@ -558,7 +559,7 @@ public class SalesRegister implements Serializable {
 	public String toPay() {
 		try {
 			if (account==null || account.getAccountId()==null) {
-				FacesUtil.addErrorMessage("Booking Fee", "Please save before proceed with booking payment");
+				addErrorMessage("Booking Fee", "Please save before proceed with booking payment");
 				return null;
 			}
 			
@@ -579,7 +580,7 @@ public class SalesRegister implements Serializable {
 				}
 			}
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage("Booking Fee", t.getMessage());
+			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
 		return "pay";
@@ -601,11 +602,11 @@ public class SalesRegister implements Serializable {
 
 			trxService.insert(trx);
 		} catch (Throwable t) {
-			FacesUtil.addErrorMessage("Booking Fee", t.getMessage());
+			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
 		
-		FacesUtil.addInfoMessage("Booking Fee", "Transaction saved");
+		addInfoMessage("Booking Fee", "Transaction saved");
 		return listPropertyUnits();
 	}
 }
