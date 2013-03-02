@@ -171,8 +171,8 @@ public class SalesCancel {
 	public String selectInventory() {
 		try {
 			customers = new ArrayList<Customer>();
-			account = new Account();
-			account.setDatePurchased(new Date());
+		
+			account = null;
 	
 			AuthUser user = FacesUtil.getCurrentUser();
 			if (user != null)
@@ -221,23 +221,27 @@ public class SalesCancel {
 			}
 			
 			
-	
-			Set<TransactionHistory> trxhist = account.getTransactionHistories();
-			for (TransactionHistory h : trxhist) {
-				if (h.getTransactionCode().getTransactionCode().equals(TransactionCodeConst.BOOK_FEE)) {
-					bookTrx =h;
+			if (account!=null) {
+				Set<TransactionHistory> trxhist = account.getTransactionHistories();
+				for (TransactionHistory h : trxhist) {
+					if (h.getTransactionCode().getTransactionCode().equals(TransactionCodeConst.BOOK_FEE)) {
+						bookTrx =h;
+					}
 				}
+				
+				
+				if (!TransactionStatusConst.PENDING.equals(bookTrx.getStatus())) {
+					FacesUtil.addInfoMessage("Sales Cancellation", "Transaction is completed. Cancellation is not allowed");
+					return listPropertyUnits();
+				}
+			
 			}
 			
-			if (bookTrx==null) {
+			if (bookTrx==null || account==null) {
 				FacesUtil.addInfoMessage("Sales Cancellation", "This property Unit has no sales transaction. There is nothing to cancel.");
 				return listPropertyUnits();
 			}
 			
-			if (!TransactionStatusConst.PENDING.equals(bookTrx.getStatus())) {
-				FacesUtil.addInfoMessage("Sales Cancellation", "Transaction is completed. Cancellation is not allowed");
-				return listPropertyUnits();
-			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 			FacesUtil.addErrorMessage("Error opening sales", t.getMessage());
