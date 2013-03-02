@@ -23,32 +23,32 @@ Project Setup
     <p:dataTable var="c" value="#{projectSetup.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="10,20,40,60,80,100" >   
-        <p:column headerText="Block">  
+        <p:column headerText="Block" sortBy="#{c.blockNo}">  
             <h:outputText value="#{c.blockNo}">
             	
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Level">  
+        <p:column headerText="Level" sortBy="#{c.level}">  
            <h:outputText value="#{c.level}"/>
         </p:column>  
   
-        <p:column headerText="Unit No.">  
+        <p:column headerText="Unit No." sortBy="#{c.unitNo}">  
             <h:outputText value="#{c.unitNo}">
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Type">  
+        <p:column headerText="Type" sortBy="#{c.layoutType}">  
            <h:outputText value="#{c.layoutType}"/>
         </p:column>  
         
-        <p:column headerText="B/U Area">  
+        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}">  
            <h:outputText value="#{c.builtUpArea}">
           	 <f:convertNumber pattern="#,##0"/>
            </h:outputText>
         </p:column>  
         
-        <p:column headerText="Price">  
+        <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
            <h:outputText value="#{c.purchasePrice}">
            		<f:convertNumber type="currency" currencySymbol="" />
            </h:outputText>

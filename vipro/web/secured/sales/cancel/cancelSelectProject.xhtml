@@ -23,28 +23,28 @@ Sales  Cancellation
     <p:dataTable var="c" value="#{salesCancel.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15" >   
-        <p:column headerText="Project Code">  
+        <p:column headerText="Project Code" sortBy="#{c.projectCode}">  
             <h:outputText value="#{c.projectCode}">
             	
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Project Name">  
+        <p:column headerText="Project Name" sortBy="#{c.projectName}">  
            <h:outputText value="#{c.projectName}"/>
         </p:column>  
   
-        <p:column headerText="Date Launched">  
+        <p:column headerText="Date Launched" sortBy="#{c.launchDate}">  
             <h:outputText value="#{c.launchDate}">
             <f:convertDateTime pattern="dd/MM/yyyy"/>  
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Property Type">  
+        <p:column headerText="Property Type" sortBy="#{salesCancel.getCodeDesc('PROP_TYPE',c.propertyType)}">  
            <h:outputText value="#{salesCancel.getCodeDesc('PROP_TYPE',c.propertyType)}"/>
         </p:column>  
         
-        <p:column headerText="Status">  
-           <h:outputText value="#{salesCancel.getCodeDesc('PROP_TYPE',c.status)}"/>
+        <p:column headerText="Status" sortBy="#{salesCancel.getCodeDesc('STATUS',c.status)}">  
+           <h:outputText value="#{salesCancel.getCodeDesc('STATUS',c.status)}"/>
            &nbsp;
            <p:commandButton action="#{salesCancel.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesCancel.project}" />  
