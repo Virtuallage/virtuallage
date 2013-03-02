@@ -40,7 +40,7 @@ Project Setup
         </p:column>  
   
         <p:column headerText="Property Type">  
-           <h:outputText value="#{c.propertyType}"/>
+           <h:outputText value="#{projectSetup.getCodeDesc('PROP_TYPE', c.propertyType)}"/>
         </p:column>  
         
         <p:column headerText="Status">  

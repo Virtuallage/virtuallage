@@ -22,6 +22,7 @@ import com.vipro.data.Customer;
 import com.vipro.data.Email;
 import com.vipro.data.MobilePhone;
 import com.vipro.data.UserProfile;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.CaseService;
 import com.vipro.service.CustomerService;
 import com.vipro.service.UserProfileService;
@@ -33,7 +34,7 @@ import static com.vipro.jsf.bean.PageConst.MAIN;
 
 @ManagedBean(name = "myDesk")
 @SessionScoped
-public class MyDesk implements Serializable {
+public class MyDesk extends CommonBean implements Serializable {
 	private CaseService caseService;
 	private List<Case> myCases;
 	private Case selectedCase;
@@ -190,7 +191,7 @@ public class MyDesk implements Serializable {
 	}
 
 	private void refreshMyCases() {
-		AuthUser user = FacesUtil.getCurrentUser();
+		AuthUser user = getCurrentUser();
 		UserProfile userProfile = user.getUserProfile();
 		myCases = caseService.findByAssigneeId(userProfile.getUserId());
 	}
@@ -205,7 +206,7 @@ public class MyDesk implements Serializable {
 
 	public String toNewCase() {
 		setNewCase(new Case());
-		getNewCase().setSender(FacesUtil.getCurrentUser().getUserProfile());
+		getNewCase().setSender(getCurrentUser().getUserProfile());
 		getNewCase().setCreationDate(new Date());
 		getNewCase().setDueDate(new Date());
 		return "newCase";
@@ -213,7 +214,7 @@ public class MyDesk implements Serializable {
 
 	public String insertCase() {
 		try {
-			AuthUser user = FacesUtil.getCurrentUser();
+			AuthUser user = getCurrentUser();
 			UserProfile currentUser = user.getUserProfile();
 			newCase.setCreator(currentUser);
 
@@ -233,10 +234,10 @@ public class MyDesk implements Serializable {
 			
 			
 			refreshMyCases();
-			FacesUtil.addInfoMessage("My Work Queue", "Case is created.");
+			addInfoMessage("My Work Queue", "Case is created.");
 
 		} catch (Throwable e) {
-			FacesUtil.addErrorMessage("My Work Queue", "Error Saving Case. "
+			addErrorMessage("My Work Queue", "Error Saving Case. "
 					+ e.getMessage());
 			return null;
 		}
@@ -245,7 +246,7 @@ public class MyDesk implements Serializable {
 
 	public String updateCase() {
 		try {
-			AuthUser authUser = FacesUtil.getCurrentUser();
+			AuthUser authUser = getCurrentUser();
 			UserProfile currentUserProfile = authUser.getUserProfile();
 			
 			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
@@ -266,9 +267,9 @@ public class MyDesk implements Serializable {
 			existingCustomer=null;
 			
 			refreshMyCases();
-			FacesUtil.addInfoMessage("My Work Queue", "Case is updated.");
+			addInfoMessage("My Work Queue", "Case is updated.");
 		} catch (Throwable t ) {
-			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
+			addErrorMessage("Work Queue", t.getMessage());
 		}
 		return "listCase";
 	}
@@ -290,7 +291,7 @@ public class MyDesk implements Serializable {
 				histories.add(ca);
 			}
 		} catch (Throwable t ) {
-			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
+			addErrorMessage("Work Queue", t.getMessage());
 		}
 		
 		return "openCase";
@@ -304,7 +305,7 @@ public class MyDesk implements Serializable {
 		try {
 			if (!StringUtils.hasText(searchIdNo)
 					&& !StringUtils.hasText(searchName)) {
-				FacesUtil.addErrorMessage("Search Customer",
+				addErrorMessage("Search Customer",
 						"Please enter customer name or Id No.");
 				return null;
 			}
@@ -319,7 +320,7 @@ public class MyDesk implements Serializable {
 				setSearchCustList(customerService.findByName(searchName));
 			}
 		} catch (Throwable t ) {
-			FacesUtil.addErrorMessage("Work Queue", t.getMessage());
+			addErrorMessage("Work Queue", t.getMessage());
 		}
 
 		return null;

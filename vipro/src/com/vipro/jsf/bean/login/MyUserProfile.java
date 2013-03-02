@@ -10,6 +10,7 @@ import javax.faces.model.SelectItem;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CodeConst;
 import com.vipro.data.UserProfile;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
@@ -18,7 +19,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean
 @RequestScoped
-public class MyUserProfile implements PageConst {
+public class MyUserProfile extends CommonBean implements PageConst {
 	private UserProfile userProfile;
 	private List<SelectItem> institutions;
 	private List<SelectItem> departments;
@@ -51,7 +52,7 @@ public class MyUserProfile implements PageConst {
 	
 	@PostConstruct
 	public void init() {
-		AuthUser user = FacesUtil.getCurrentUser();
+		AuthUser user = getCurrentUser();
 		setUserProfile(user.getUserProfile());
 		
 		
@@ -65,9 +66,9 @@ public class MyUserProfile implements PageConst {
 		try {
 			UserProfileService service = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 			service.update(userProfile);
-			FacesUtil.addInfoMessage("My Profile", "User Profile is updated");
+			addInfoMessage("My Profile", "User Profile is updated");
 		} catch (Throwable th) {
-			FacesUtil.addErrorMessage("My Profile", "Error saving details. " + th.getMessage());
+			addErrorMessage("My Profile", "Error saving details. " + th.getMessage());
 			return null;
 		}
 		

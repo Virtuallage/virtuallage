@@ -19,26 +19,4 @@ import com.vipro.dao.UserProfileDao;
  */
 public final class FacesUtil {
 
-	public static AuthUser getCurrentUser() {
-		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		UserProfileDao userService = (UserProfileDao) SpringBeanUtil.lookup(UserProfileDao.class.getName());
-		SecurityContextImpl ctx = (SecurityContextImpl) session.get("SPRING_SECURITY_CONTEXT");
-		if (ctx!=null) {
-			Authentication auth = ctx.getAuthentication();
-			if (auth!=null) {
-				AuthUser authUser = (AuthUser) auth.getPrincipal();
-				return authUser;
-			}
-		}
-		return null;
-	}
-	
-	public static void addInfoMessage(String summary, String message) {
-		FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, message));
-	}
-	
-	public static void addErrorMessage(String summary, String message) {
-		FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, message));
-		
-	}
 }

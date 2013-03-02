@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.jsf.bean.CommonBean;
 import com.vipro.utils.spring.FacesUtil;
 
 /**
@@ -20,7 +21,7 @@ import com.vipro.utils.spring.FacesUtil;
  *
  */
 @ManagedBean(name = "login")
-public class Login {
+public class Login extends CommonBean {
 	private String username;
 	private String password;
 
@@ -55,7 +56,7 @@ public class Login {
 
 		
 		
-		AuthUser user = FacesUtil.getCurrentUser();
+		AuthUser user = getCurrentUser();
 		
 		if (user!=null ) {
 			Map<String,Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
