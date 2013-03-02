@@ -10,17 +10,17 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
 <ui:define name="title">
-Sales  Registration
+Sales Update
 </ui:define>
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Registration - Select Project" style="width:95%">  
+<p:panel id="panel" header="Sales Update - Select Project" style="width:95%">  
     
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{salesRegister.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
+    <p:dataTable var="c" value="#{salesUpdate.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15" >   
         <p:column headerText="Project Code" sortBy="#{c.projectCode}">  
@@ -39,15 +39,15 @@ Sales  Registration
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Property Type" sortBy="#{salesRegister.getCodeDesc('PROP_TYPE', c.propertyType)}">  
-           <h:outputText value="#{salesRegister.getCodeDesc('PROP_TYPE', c.propertyType)}"/>
+        <p:column headerText="Property Type" sortBy="#{salesUpdate.getCodeDesc('PROP_TYPE',c.propertyType)}">  
+           <h:outputText value="#{salesUpdate.getCodeDesc('PROP_TYPE',c.propertyType)}"/>
         </p:column>  
         
-        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('STATUS',c.status)}">  
-           <h:outputText value="#{salesRegister.getCodeDesc('STATUS',c.status)}"/>
+        <p:column headerText="Status" sortBy="#{salesUpdate.getCodeDesc('STATUS',c.status)}">  
+           <h:outputText value="#{salesUpdate.getCodeDesc('STATUS',c.status)}"/>
            &nbsp;
-           <p:commandButton action="#{salesRegister.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
-           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.project}" />  
+           <p:commandButton action="#{salesUpdate.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
+           		 <f:setPropertyActionListener value="#{c}" target="#{salesUpdate.project}" />  
            </p:commandButton>
            &nbsp;
          

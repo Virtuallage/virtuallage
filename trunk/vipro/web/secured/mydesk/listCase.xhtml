@@ -23,35 +23,35 @@ My Work Queue
     <p:dataTable var="c" value="#{myDesk.myCases}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15">  
-        <p:column headerText="Date">  
+        <p:column headerText="Date" sortBy="#{c.creationDate}">  
             <h:outputText value="#{c.creationDate}">
             	<f:convertDateTime pattern="dd/MM/yyyy"/>  
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Case No">  
+        <p:column headerText="Case No" sortBy="#{c.caseId}">  
            <h:outputText value="#{c.caseId}"/>
         </p:column>  
   
-        <p:column headerText="Sender">  
+        <p:column headerText="Sender" sortBy="#{c.sender.name}">  
             <h:outputText value="#{c.sender.name}"/>
         </p:column>  
   
-        <p:column headerText="Category">  
+        <p:column headerText="Category" sortBy="#{myDesk.getCodeDesc('CASE_TYPE',c.caseType)}">  
            <h:outputText value="#{myDesk.getCodeDesc('CASE_TYPE',c.caseType)}"/>
         </p:column>  
         
-        <p:column headerText="Purchaser Name">  
+        <p:column headerText="Purchaser Name" sortBy="#{c.customer.fullName}">  
            <h:outputText value="#{c.customer.fullName}"/>
         </p:column>
         
-        <p:column headerText="Due Date">  
+        <p:column headerText="Due Date" sortBy="#{c.dueDate}">  
            <h:outputText value="#{c.dueDate}">
            		<f:convertDateTime pattern="dd/MM/yyyy"/>
            </h:outputText>
         </p:column>
         
-        <p:column headerText="Status"> 
+        <p:column headerText="Status" sortBy="#{myDesk.getCodeDesc('CASE_STATUS', c.status)}"> 
       		<h:outputText value="#{myDesk.getCodeDesc('CASE_STATUS', c.status)}"/>
         	 &nbsp;
         	<p:commandButton  action="#{myDesk.openCase}" ajax="false" icon="ui-icon-search" title="View">
