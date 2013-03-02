@@ -142,3 +142,9 @@ INSERT INTO code_det VALUES ('BANK', 'MBB', 'Maybank', 'ACTV');
 INSERT INTO code_det VALUES ('BANK', 'AFF', 'Affin', 'ACTV');
 INSERT INTO code_det VALUES ('BANK', 'AM', 'Am', 'ACTV');
 INSERT INTO code_det VALUES ('BANK', 'CTB', 'Citibank', 'ACTV');
+
+
+insert into code_header values ('CANCEL_R', 'Cancel Reason');
+insert into code_det values ( 'CANCEL_R', 'BRK', 'I am broke' , 'ACTV');
+
+insert into transaction_code values ('CANCEL', 'Cancellation Fee', null, null, 'ACTV');

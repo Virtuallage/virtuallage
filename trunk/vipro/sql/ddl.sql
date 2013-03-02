@@ -90,3 +90,10 @@ alter table transaction_history add bank varchar(10);
 alter table transaction_history add card_cheque_no varchar(30);
 
 alter table project_inventory modify level varchar(5);
+
+
+alter table account add cancel_fee decimal(9,2);
+alter table account add cancel_tax decimal(9,2);
+alter table account add cancel_refund_net_amt decimal(9,2);
+
+

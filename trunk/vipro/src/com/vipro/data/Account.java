@@ -67,6 +67,10 @@ public class Account implements java.io.Serializable {
 	private String maintenanceBilingCycle;
 	private String cancelledReason;
 	private String remark;
+	
+	private BigDecimal cancelFee;
+	private BigDecimal cancelTax;
+	private BigDecimal cancelNetRefundAmt;
 	private Set waterBillings = new HashSet(0);
 	private Set projects = new HashSet(0);
 	private Set addresses = new HashSet(0);
@@ -165,6 +169,30 @@ public class Account implements java.io.Serializable {
 		this.joinAccounts = joinAccounts;
 		this.transactionHistories = transactionHistories;
 		this.accountAgings = accountAgings;
+	}
+
+	public BigDecimal getCancelFee() {
+		return cancelFee;
+	}
+
+	public void setCancelFee(BigDecimal cancelFee) {
+		this.cancelFee = cancelFee;
+	}
+
+	public BigDecimal getCancelTax() {
+		return cancelTax;
+	}
+
+	public void setCancelTax(BigDecimal cancelTax) {
+		this.cancelTax = cancelTax;
+	}
+
+	public BigDecimal getCancelNetRefundAmt() {
+		return cancelNetRefundAmt;
+	}
+
+	public void setCancelNetRefundAmt(BigDecimal cancelNetRefundAmt) {
+		this.cancelNetRefundAmt = cancelNetRefundAmt;
 	}
 
 	public BigDecimal getAccountBalance() {

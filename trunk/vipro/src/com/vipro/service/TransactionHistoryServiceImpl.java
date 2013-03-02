@@ -41,4 +41,11 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 		return transactionHistoryDao.findByAccountId(accountId);
 	}
 
+	@Override
+	public void delete(Long trxId) {
+		TransactionHistory h = transactionHistoryDao.findById(trxId);
+		transactionHistoryDao.delete(h);
+		
+	}
+
 }
