@@ -8,6 +8,7 @@ public interface TransactionHistoryService {
 
 	public void insert(TransactionHistory t);
 	public void update(TransactionHistory t);
+	public void delete(Long trxId);
 	public List<TransactionHistory> findByAccountId(Long accountId);
 	
 }

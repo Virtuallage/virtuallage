@@ -31,6 +31,10 @@
             <from-outcome>selectProject</from-outcome>
             <to-view-id>/secured/sales/registration/selectProject.xhtml</to-view-id>
         </navigation-case>
+         <navigation-case>
+            <from-outcome>cancelSelectProject</from-outcome>
+            <to-view-id>/secured/sales/cancel/cancelSelectProject.xhtml</to-view-id>
+        </navigation-case>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>

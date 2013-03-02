@@ -16,4 +16,9 @@ public class TransactionHistoryDaoImpl extends DaoImpl<TransactionHistory> imple
 		return getHibernateTemplate().find(query, accountId);
 	}
 
+	@Override
+	public TransactionHistory findById(Long id) {
+		return getHibernateTemplate().get(TransactionHistory.class, id);
+	}
+
 }

@@ -9,4 +9,6 @@ public interface TransactionHistoryDao extends Dao<TransactionHistory>{
 
 	
 	public List<TransactionHistory> findByAccountId(Long accountId);
+	
+	public TransactionHistory findById(Long id);
 }
