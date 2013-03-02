@@ -1,7 +1,6 @@
 package com.vipro.jsf.bean.sales;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,10 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
@@ -25,7 +22,6 @@ import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "projectSetup")

@@ -7,14 +7,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
-import com.vipro.auth.AuthUser;
 import com.vipro.constant.CodeConst;
 import com.vipro.data.Institution;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.service.InstitutionService;
 import com.vipro.utils.spring.CodeUtil;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean

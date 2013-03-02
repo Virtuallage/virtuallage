@@ -36,7 +36,6 @@ import com.vipro.service.ProjectService;
 import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
-import com.vipro.utils.spring.FacesUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "salesRegister")
