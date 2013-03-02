@@ -44,7 +44,7 @@ Project Setup
         </p:column>  
         
         <p:column headerText="Status">  
-           <h:outputText value="#{c.status}"/>
+           <h:outputText value="#{projectSetup.getCodeDesc('STATUS', c.status)}"/>
            &nbsp;
            <p:commandButton action="#{projectSetup.editProject}" ajax="false" icon="ui-icon-pencil" title="Edit Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  

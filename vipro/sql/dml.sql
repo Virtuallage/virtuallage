@@ -148,3 +148,20 @@ insert into code_header values ('CANCEL_R', 'Cancel Reason');
 insert into code_det values ( 'CANCEL_R', 'BRK', 'I am broke' , 'ACTV');
 
 insert into transaction_code values ('CANCEL', 'Cancellation Fee', null, null, 'ACTV');
+
+
+
+insert into code_header values ('CASE_STATUS', 'Case Status');
+insert into code_det values ( 'CASE_STATUS', 'NEW', 'New' , 'ACTV');
+insert into code_det values ( 'CASE_STATUS', 'OPEN', 'New' , 'ACTV');
+insert into code_det values ( 'CASE_STATUS', 'CLOSED', 'New' , 'ACTV');
+insert into code_det values ( 'CASE_STATUS', 'COMPLETED', 'New' , 'ACTV');
+
+insert into code_header values ('STATUS', 'Case Status');
+insert into code_det values ( 'STATUS', 'ACTV', 'Active' , 'ACTV');
+insert into code_det values ( 'STATUS', 'DISB', 'Disabled' , 'ACTV');
+
+insert into code_header values ('PROP_STATUS', 'Property status');
+insert into code_det values( 'PROP_STATUS', 'SOLD', 'Sold', 'ACTV');
+insert into code_det values( 'PROP_STATUS', 'ACTV', 'Available', 'ACTV');
+insert into code_det values( 'PROP_STATUS', 'DISB', 'Not Available', 'ACTV');

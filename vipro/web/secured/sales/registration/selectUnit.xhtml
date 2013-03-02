@@ -49,7 +49,7 @@ Sales Registration
         </p:column>  
         
         <p:column headerText="Status">  
-        	<h:outputText value="#{c.propertyStatus}">
+        	<h:outputText value="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">
         	</h:outputText>
         </p:column>
         

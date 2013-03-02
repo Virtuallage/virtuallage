@@ -40,11 +40,11 @@ Sales  Registration
         </p:column>  
   
         <p:column headerText="Property Type">  
-           <h:outputText value="#{c.propertyType}"/>
+           <h:outputText value="#{salesRegister.getCodeDesc('PROP_TYPE', c.propertyType)}"/>
         </p:column>  
         
         <p:column headerText="Status">  
-           <h:outputText value="#{c.status}"/>
+           <h:outputText value="#{salesRegister.getCodeDesc('STATUS',c.status)}"/>
            &nbsp;
            <p:commandButton action="#{salesRegister.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.project}" />  
