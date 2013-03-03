@@ -57,6 +57,21 @@ public class CommonBean {
 		
 	}
 	
-	
+	public String getFileType(String filename) {
+		
+		if (filename==null) {
+			return null;
+		}
+		
+		if (filename.toLowerCase().endsWith(".pdf")) {
+			return "adobe/pdf";
+		} else if (filename.toLowerCase().endsWith(".doc") || filename.toLowerCase().endsWith(".docx")) {
+			return "doc";
+		} else if (filename.toLowerCase().endsWith(".jpg")) {
+			return "image/jpeg";
+		}
+		
+		return null;
+	}
 	
 }

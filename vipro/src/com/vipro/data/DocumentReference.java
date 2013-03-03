@@ -12,10 +12,19 @@ public class DocumentReference implements java.io.Serializable {
 	private Long id;
 	private String docType;
 	private byte[] fileContent;
+	private String filename;
 	private Date createdOn;
 	private String createdBy;
 
 	public DocumentReference() {
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	public DocumentReference(String docType, byte[] fileContent,

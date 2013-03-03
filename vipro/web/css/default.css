@@ -38,5 +38,6 @@
 }
 
 .ui-widget, .ui-widget .ui-widget {
+	font-family: verdana,arial;
     font-size: 10pt;
 }

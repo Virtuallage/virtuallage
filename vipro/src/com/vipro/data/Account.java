@@ -80,6 +80,11 @@ public class Account implements java.io.Serializable {
 	private Set joinAccounts = new HashSet(0);
 	private Set transactionHistories = new HashSet(0);
 	private Set accountAgings = new HashSet(0);
+	
+	private Long cancelDocId;
+	private Long loDocId;
+	private Long spaDocId;
+	private Long laDocId;
 
 	public Account() {
 	}
@@ -169,6 +174,38 @@ public class Account implements java.io.Serializable {
 		this.joinAccounts = joinAccounts;
 		this.transactionHistories = transactionHistories;
 		this.accountAgings = accountAgings;
+	}
+
+	public Long getCancelDocId() {
+		return cancelDocId;
+	}
+
+	public void setCancelDocId(Long cancelDocId) {
+		this.cancelDocId = cancelDocId;
+	}
+
+	public Long getLoDocId() {
+		return loDocId;
+	}
+
+	public void setLoDocId(Long loDocId) {
+		this.loDocId = loDocId;
+	}
+
+	public Long getSpaDocId() {
+		return spaDocId;
+	}
+
+	public void setSpaDocId(Long spaDocId) {
+		this.spaDocId = spaDocId;
+	}
+
+	public Long getLaDocId() {
+		return laDocId;
+	}
+
+	public void setLaDocId(Long laDocId) {
+		this.laDocId = laDocId;
 	}
 
 	public BigDecimal getCancelFee() {

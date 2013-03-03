@@ -1,5 +1,7 @@
 package com.vipro.jsf.bean.sales;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,17 +10,26 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.Customer;
+import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionCode;
@@ -26,6 +37,7 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
+import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.TransactionHistoryService;
@@ -53,11 +65,15 @@ public class SalesCancel extends CommonBean implements Serializable{
 	private Account account;
 	private TransactionHistory bookTrx;
 	private UserProfile attendedBy;
+	
+	private StreamedContent file;  
 
 	@PostConstruct
 	public void init() {
 		cancelReasons = CodeUtil.getCodes("CANCEL_R");
 	}
+
+
 
 	public List<SelectItem> getCancelReasons() {
 		return cancelReasons;
@@ -234,6 +250,16 @@ public class SalesCancel extends CommonBean implements Serializable{
 					return listPropertyUnits();
 				}
 			
+				if (account.getCancelDocId()!=null) {
+					DocumentReferenceService docService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+					DocumentReference doc = docService.findById(account.getCancelDocId());
+					if (doc!=null) {
+						InputStream in = new ByteArrayInputStream(doc.getFileContent());
+						
+						file = new DefaultStreamedContent(in, getFileType(doc.getFilename()), doc.getFilename());  
+					}
+					 
+				}
 			}
 			
 			if ( account==null) {
@@ -304,5 +330,49 @@ public class SalesCancel extends CommonBean implements Serializable{
 			addErrorMessage("Error cancelling sales", t.getMessage());
 		}
 		return "cancel";
+	}
+	
+	public StreamedContent getFile() {  
+        return file;  
+    }
+	
+	public void upload(FileUploadEvent event) {
+		DocumentReferenceService service = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		
+		if (account==null) {
+			addErrorMessage("Account not found", "Upload failed as account not found");
+			return;
+		}
+		
+		if (account.getCancelDocId()!=null) {
+			service.delete(account.getCancelDocId());
+		}
+		
+		AuthUser user = getCurrentUser();
+		String name = user.getName();
+
+		UploadedFile file = event.getFile();
+		if (file!=null) {
+			
+			
+			DocumentReference doc = new DocumentReference();
+			doc.setCreatedOn(new Date());
+			doc.setCreatedBy(name);
+			doc.setDocType(DocumentTypeConst.CANCEL);
+			doc.setFileContent(file.getContents());
+			
+			
+			service.insert(doc);
+			
+			if (doc.getId()!=null) {
+				account.setCancelDocId(doc.getId());
+				accountService.update(account);
+			}
+			addInfoMessage("Cancellation letter", "Cancellation letter is uploaded");
+		} else {
+			addErrorMessage("Cancellation Letter", "Upload failed");
+		}
+		
 	}
 }
