@@ -235,5 +235,21 @@
             </key>
             <one-to-many class="com.vipro.data.AccountAging" />
         </set>
+        
+        <property name="cancelDocId" type="java.lang.Long">
+            <column name="cancel_doc_id" />
+        </property>
+        
+        <property name="spaDocId" type="java.lang.Long">
+            <column name="spa_doc_id" />
+        </property>
+        
+        <property name="loDocId" type="java.lang.Long">
+            <column name="lo_doc_id" />
+        </property>
+        
+        <property name="laDocId" type="java.lang.Long">
+            <column name="la_doc_id" />
+        </property>
     </class>
 </hibernate-mapping>

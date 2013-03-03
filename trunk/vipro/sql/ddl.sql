@@ -97,3 +97,11 @@ alter table account add cancel_tax decimal(9,2);
 alter table account add cancel_refund_net_amt decimal(9,2);
 
 
+
+
+alter table account add cancel_doc_id bigint;
+alter table account add spa_doc_id bigint;
+alter table account add lo_doc_id bigint;
+alter table account add la_doc_id bigint;
+
+alter table document_reference add filename varchar(50);

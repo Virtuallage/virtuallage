@@ -12,6 +12,7 @@
 	</context-param>
 
 
+	
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
@@ -21,7 +22,16 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/ctx*.xml</param-value>
 	</context-param>
-	
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter
+		</filter-class>
+		<init-param>
+			<param-name>thresholdSize</param-name>
+			<param-value>10240</param-value> <!-- 10 Mb -->
+		</init-param>
+	</filter>
+
 	<filter>
 		<filter-name>openSessionInView</filter-name>
 		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -32,6 +42,11 @@
     	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   	</filter>
   	
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping> 
+	
 	<filter-mapping>
 		<filter-name>openSessionInView</filter-name>
 		<url-pattern>/*</url-pattern>
