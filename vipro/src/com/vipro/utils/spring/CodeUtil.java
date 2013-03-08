@@ -7,6 +7,7 @@ import javax.faces.model.SelectItem;
 
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.CodeDet;
+import com.vipro.data.CodeHeader;
 import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
 import com.vipro.service.CodeService;
@@ -14,6 +15,11 @@ import com.vipro.service.InstitutionService;
 import com.vipro.service.UserProfileService;
 
 public final class CodeUtil {
+	
+	public static CodeHeader getCodeHeader(String codeHeaderId) {
+		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
+		return codeService.findById(codeHeaderId);
+	}
 	
 	public static List<SelectItem> getCodeHeaders() {
 		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());

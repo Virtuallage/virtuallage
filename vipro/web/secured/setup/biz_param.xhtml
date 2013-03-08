@@ -172,11 +172,13 @@ Business Parameters
         	<h:form id="generalCodeForm" >
         		<h:panelGrid columns="3" style="width:50%;align:left">
 			
-					<p:outputLabel value="General Code Type" />
-					<h:selectOneMenu value="#{generalCodeBean.codeType}" style="width:200px">  
+					<p:outputLabel value="General Code Type" for="searchCodeType" />
+					<h:selectOneMenu value="#{generalCodeBean.codeType}" style="width:200px" 
+						required="true" id="searchCodeType">  
                         <f:selectItems value="#{generalCodeBean.codeHeaderList}" />
-                    </h:selectOneMenu>  
-					<p:commandButton id="searchButton" action="#{generalCodeBean.onSearch}" value="Search" ajax="false"/>
+                    </h:selectOneMenu>
+					<p:commandButton id="searchButton" action="#{generalCodeBean.onSearch}" 
+						value="Search" update="codeDetDataTable"/>
 			
 				</h:panelGrid> 
         	
@@ -250,6 +252,38 @@ Business Parameters
 			        </p:column>  
 		  
 			    </p:dataTable>
+			    
+			    <p:panelGrid id="newCodeDetTable" style="width:100%;display:none">
+			    	<p:row>
+			    		<p:column style="width:15%">
+			    			<h:outputText value="#{generalCodeBean.newCodeDet.id.codeHeaderId}" />
+			    		</p:column>
+			    		<p:column style="width:20%">
+			    			<h:outputText value="#{generalCodeBean.newCodeDet.codeHeader.name}" />
+			    		</p:column>
+			    		<p:column style="width:10%">
+			    			<p:inputText value="#{generalCodeBean.newCodeDet.id.code}" style="width:100%" />
+			    		</p:column>
+			    		<p:column style="width:30%">
+			    			<p:inputText value="#{generalCodeBean.newCodeDet.description}" style="width:100%" />
+			    		</p:column>
+			    		<p:column style="width:15%">
+			    			<h:selectOneMenu value="#{generalCodeBean.newCodeDet.status}" style="width:100%">  
+		                        <f:selectItems value="#{generalCodeBean.statusList}" />
+		                    </h:selectOneMenu>
+			    		</p:column>
+			    		<p:column style="width:10%">
+			    		
+			    		</p:column>
+			    	</p:row>	
+			    </p:panelGrid>
+			    <br/>
+			    
+			    <p:commandButton value="New" onclick="return false">
+				    <p:effect type="fade" event="click" for="newCodeDetTable">
+						<f:param name="mode" value="'show'"/>
+					</p:effect>
+				</p:commandButton>
 	        </h:form>
 	    </p:tab>
 	  
