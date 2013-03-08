@@ -11,6 +11,8 @@ import org.primefaces.event.RowEditEvent;
 
 import com.vipro.constant.CodeConst;
 import com.vipro.data.CodeDet;
+import com.vipro.data.CodeDetId;
+import com.vipro.data.CodeHeader;
 import com.vipro.jsf.bean.PageConst;
 import com.vipro.utils.spring.CodeUtil;
 
@@ -21,6 +23,7 @@ public class GeneralCodeBean implements PageConst {
 
 	private String codeType;
 	private CodeDet selectedCodeDet;
+	private CodeDet newCodeDet;
 	
 	private List<SelectItem> codeHeaderList;
 	private List<SelectItem> statusList;
@@ -67,6 +70,17 @@ public class GeneralCodeBean implements PageConst {
 		this.selectedCodeDet = selectedCodeDet;
 	}
 
+	public CodeDet getNewCodeDet() {
+		if (newCodeDet == null) {
+			newCodeDet = new CodeDet(new CodeDetId(), new CodeHeader());
+		}
+		return newCodeDet;
+	}
+
+	public void setNewCodeDet(CodeDet newCodeDet) {
+		this.newCodeDet = newCodeDet;
+	}
+
 	@PostConstruct
 	public void init() {
 		codeHeaderList = CodeUtil.getCodeHeaders();
@@ -75,6 +89,11 @@ public class GeneralCodeBean implements PageConst {
 	
     public void onSearch() {
     	codeDetList = CodeUtil.getCodeDetailList(codeType);
+    	CodeHeader codeHeader = CodeUtil.getCodeHeader(codeType);
+    	if (codeHeader != null) {
+	    	CodeDetId codeDetId = new CodeDetId(codeHeader.getCodeHeaderId(), "");
+	    	newCodeDet = new CodeDet(codeDetId, codeHeader);
+    	}
     }
 	
     public void onEdit(RowEditEvent event) {  
@@ -94,6 +113,18 @@ public class GeneralCodeBean implements PageConst {
 	
     public void onDelete() {
     	System.out.println("ONDELETE");
+//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
+//  
+//        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    } 
+    
+    public void onAdd() {
+    	System.out.println("ONADD");
+    	CodeHeader codeHeader = CodeUtil.getCodeHeader(codeType);
+    	if (codeHeader != null) {
+	    	CodeDetId codeDetId = new CodeDetId(codeHeader.getCodeHeaderId(), "");
+	    	newCodeDet = new CodeDet(codeDetId, codeHeader);
+    	}
 //        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
 //  
 //        FacesContext.getCurrentInstance().addMessage(null, msg);  
