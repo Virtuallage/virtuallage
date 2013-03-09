@@ -13,34 +13,32 @@ Login
 </ui:define>
 
 <ui:define name="content">	
-	
-	<p:panel id="panel" header="Login" style="width:60%">  
-      
-        <p:focus context="panel"/>  
-        
+	<br/>
+	<p:panel id="panel" header="Virtuallage Property Management System" style="width:50%;cellpadding:5px">  
+    <p:focus context="panel"/>  
 	<h:form id="loginForm" prependId="false"  >
-    
-    
-      	  <h:panelGrid columns="2" style="width:50%"> 
-			
-               <p:outputLabel value="User Name" for="j_username"/>
-               <p:inputText id="j_username" required="true" value="#{login.username}" autocomplete="off"/>
-          
+		<table width="100%">
+    		<tr>
+	    		<td width="35%" align="center">
+	    			<img height="150px" width="150px" alt="Logo for Virtuallage" src="images/VirtuallageLogo.jpg" />
+	    		</td>
+	    		<td width="65%" align="center">
+    				<p:panel>
+      					<h:panelGrid columns="2" style="width:100%" cellpadding="3"> 
+			               <p:outputLabel value="User Name" for="j_username"/>
+			               <p:inputText id="j_username" required="true" value="#{login.username}" autocomplete="off"/>
            
-               <p:outputLabel value="Password" for="j_password"/>
-               <p:password id="j_password" required="true" value="#{login.password}" autocomplete="off"/> 
-               
-               
-         </h:panelGrid>
-
-
-         <p:commandButton id="saveButton" action="#{login.login}" value="Sign On" update="@form"  ajax="false" icon="ui-icon-key"/>
-
-               
-     </h:form>
-     
-     </p:panel>
-     
+			               <p:outputLabel value="Password" for="j_password"/>
+			               <p:password id="j_password" required="true" value="#{login.password}" autocomplete="off"/> 
+				        </h:panelGrid>
+         			</p:panel>
+         		</td>
+			</tr>
+		</table>
+        <p:commandButton id="saveButton" action="#{login.login}" value="Sign On" update="@form"  ajax="false" icon="ui-icon-key"/>
+	</h:form>
+    </p:panel>
+    <br/>
 </ui:define>
 
 </ui:composition>
