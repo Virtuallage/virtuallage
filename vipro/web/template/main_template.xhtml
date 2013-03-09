@@ -11,18 +11,40 @@
     </h:head>
     <h:body>
         <div id="header"><p:growl showDetail="true" showSummary="true"/></div>
-        <div id="menu"><ui:include src="/secured/common/menu.xhtml"/></div>
-        <div id="content" style="width:100%">
-        	<table border="0" width="100%">
+        <p:panel style='background-image: url(../images/background.jpg) !important;
+        	background-repeat:no-repeat;'>
+        	<table width="100%" style="padding:0px">
         		<tr>
-        			<td  align="center">
-        				<ui:insert name="content">Welcome</ui:insert>
+        			<td>
+        				<h:outputLabel style="font-family:Helvetica; font-size:20px; 
+        					font-weight:bold; color:white;" 
+        					value="B &amp; G Concept Engineering Sdn Bhd"/>
         			</td>
+        			<td>
+        				<img border="1px" align="right" alt="Logo for B &amp; G" src="../images/BnGLogo.jpg" />
+        			</td>	
         		</tr>
         	</table>
-        </div>
+        </p:panel>
+        
+        <p:panel style='background-color:#CC0000; padding:0px; border:0px'>
+        </p:panel>
+        <div id="menu"><ui:include src="/secured/common/menu.xhtml"/></div>
+        
+        <p:panel>
+	        <p:outputPanel id="content" style="width:100%">
+	        	<table border="0" width="100%">
+	        		<tr>
+	        			<td  align="center">
+	        				<ui:insert name="content">Welcome</ui:insert>
+	        			</td>
+	        		</tr>
+	        	</table>
+	        </p:outputPanel>
+	    </p:panel>    
+	        
         <div id="footer">
-        	<p>Vipro - Virtuallage Property Development System <br/> Copyright(C) 2013 Virtuallage Team  <a href="http://www.virtuallage.com">http://www.virtuallage.com</a></p>
+        	<p style="font-size:8px">Vipro - Virtuallage Property Development System <br/> Copyright(C) 2013 Virtuallage Team  <a href="http://www.virtuallage.com">http://www.virtuallage.com</a></p>
         </div>
     </h:body>
 </html>
