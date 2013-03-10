@@ -181,7 +181,7 @@ public class MyDesk extends CommonBean implements Serializable {
 
 	public String listCases() {
 		refreshMyCases();
-		return "listCase";
+		return "/secured/mydesk/listCase";
 	}
 
 	private void refreshMyCases() {
@@ -203,7 +203,7 @@ public class MyDesk extends CommonBean implements Serializable {
 		getNewCase().setSender(getCurrentUser().getUserProfile());
 		getNewCase().setCreationDate(new Date());
 		getNewCase().setDueDate(new Date());
-		return "newCase";
+		return "/secured/mydesk/newCase";
 	}
 
 	public String insertCase() {
@@ -235,7 +235,7 @@ public class MyDesk extends CommonBean implements Serializable {
 					+ e.getMessage());
 			return null;
 		}
-		return "listCase";
+		return "/secured/mydesk/listCase";
 	}
 
 	public String updateCase() {
@@ -265,7 +265,7 @@ public class MyDesk extends CommonBean implements Serializable {
 		} catch (Throwable t ) {
 			addErrorMessage("Work Queue", t.getMessage());
 		}
-		return "listCase";
+		return "/secured/mydesk/listCase";
 	}
 
 	public String openCase() {
@@ -288,11 +288,11 @@ public class MyDesk extends CommonBean implements Serializable {
 			addErrorMessage("Work Queue", t.getMessage());
 		}
 		
-		return "openCase";
+		return "/secured/mydesk/openCase";
 	}
 
 	public String cancel() {
-		return "listCase";
+		return "/secured/mydesk/listCase";
 	}
 
 	public String searchCustomer() {
