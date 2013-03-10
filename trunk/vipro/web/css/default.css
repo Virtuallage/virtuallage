@@ -41,3 +41,8 @@
 	font-family: verdana,arial;
     font-size: 10pt;
 }
+
+.banner {
+	background-image: url("../images/background.jpg") !important;
+    background-repeat:no-repeat;
+}
