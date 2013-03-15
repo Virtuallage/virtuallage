@@ -13,12 +13,28 @@ Purchaser Information
 </ui:define>
 
 <ui:define name="content">	
-<p:tabMenu activeIndex="1">  
-    <p:menuitem value="Purchaser Search" url="/ui/tabMenu.jsf" icon="ui-icon-star"/>  
-    <p:menuitem value="Purchaser Information" url="/ui/tabMenuDemos.jsf" icon="ui-icon-search" />  
-    <p:menuitem value="Unit Information" url="/ui/tabMenuDocumentation.jsf" icon="ui-icon-document"/>  
-    <p:menuitem value="Transaction Information" url="/ui/tabMenuSupport.jsf" icon="ui-icon-wrench"/>    
-</p:tabMenu>  
+<p:panel id="panel" header="Purchaser Information" style="width:95%"> 
+<p:focus context="panel"/> 
+      
+<h:form>  
+	<p:tabView id="tabView" dynamic="true" cache="true">  
+        <p:tab id="tab1" title="Purchaser Search">
+        	<h:outputText value="Search By: " />  
+	        <p:selectOneMenu value="#{buttonBean.number}">  
+    	        <f:selectItem itemLabel="Name" itemValue="Name" />  
+            	<f:selectItem itemLabel="ID Number" itemValue="ID" />  
+        	</p:selectOneMenu>  
+        </p:tab> 
+        <p:tab id="tab2" title="Purchaser Information">
+        </p:tab> 
+        <p:tab id="tab3" title="Unit Information">
+        </p:tab> 
+        <p:tab id="tab4" title="Transaction Information">  
+        </p:tab> 
+	</p:tabView>  
+</h:form> 
+
+</p:panel>
 	
 </ui:define>
 </ui:composition>
