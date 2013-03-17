@@ -11,7 +11,7 @@
     <h:form>
     <p:menubar>
     	<p:submenu label="My Desk" icon="ui-icon-lightbulb">
-    		<p:menuitem value="My Work Queue"  action="#{myDesk.listCases}" icon="ui-icon-script"/>
+    		<p:menuitem value="My Work Queue" url="/secured/mydesk/listCase.xhtml" action="#{myDesk.listCases}" icon="ui-icon-script"/>
     	</p:submenu>
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">
@@ -23,9 +23,9 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales" icon="ui-icon-star">
-    		<p:menuitem value="Project Setup" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
     		<p:menuitem value="Price Adjustment" url="#" />
-    		<p:menuitem value="Sales Registration" action="#{salesRegister.listProject}" />
+    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/selectProject.xhtml" action="#{salesRegister.listProject}" />
     		<p:menuitem value="Sales Update" action="#{salesUpdate.listProject}" />
     		<p:menuitem value="Sales Cancellation" action="#{salesCancel.listProject}" />
     		<p:menuitem value="Sales Commission" url="#" />
