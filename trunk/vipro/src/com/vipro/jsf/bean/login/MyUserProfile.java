@@ -9,9 +9,11 @@ import javax.faces.model.SelectItem;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CodeConst;
+import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
+import com.vipro.service.InstitutionService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -20,15 +22,15 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @RequestScoped
 public class MyUserProfile extends CommonBean implements PageConst {
 	private UserProfile userProfile;
-	private List<SelectItem> institutions;
+	private List<Institution> institutions;
 	private List<SelectItem> departments;
 
 
-	public List<SelectItem> getInstitutions() {
+	public List<Institution> getInstitutions() {
 		return institutions;
 	}
 
-	public void setInstitutions(List<SelectItem> institutions) {
+	public void setInstitutions(List<Institution> institutions) {
 		this.institutions = institutions;
 	}
 
@@ -55,7 +57,7 @@ public class MyUserProfile extends CommonBean implements PageConst {
 		setUserProfile(user.getUserProfile());
 		
 		
-		setInstitutions( CodeUtil.getInstitutionAsItems() );
+		setInstitutions( getInstitutionList() );
 		setDepartments( CodeUtil.getCodes(CodeConst.DEPARTMENT) );
 	}
 
@@ -72,6 +74,12 @@ public class MyUserProfile extends CommonBean implements PageConst {
 		}
 		
 		return MAIN;
+	}
+	
+	private List<Institution> getInstitutionList() {
+		InstitutionService institutionService = (InstitutionService) SpringBeanUtil.lookup(InstitutionService.class.getName());
+		List<Institution> ins = institutionService.findAllActive();
+		return ins;
 	}
 
 }
