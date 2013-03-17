@@ -53,4 +53,10 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 		
 	}
 
+	@Override
+	public ProjectInventory findByCompositeKey(String blockNo, String unit,
+			String level) {
+		return projectInventoryDao.findByCompositeKey(blockNo, unit, level);
+	}
+
 }
