@@ -21,4 +21,14 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory> implement
 		return getHibernateTemplate().get(ProjectInventory.class, id);
 	}
 
+	@Override
+	public ProjectInventory findByCompositeKey(String blockNo, String unit, String level) {
+		String query = "select o from ProjectInventory o where o.blockNo=? and o.unitNo=? and o.level=?";
+		List<ProjectInventory> list = getHibernateTemplate().find(query, blockNo, unit, level);
+		if (list != null) {
+			return list.get(0);
+		}
+		return null;
+	}
+
 }

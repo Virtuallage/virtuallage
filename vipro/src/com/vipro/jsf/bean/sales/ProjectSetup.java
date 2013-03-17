@@ -26,7 +26,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "projectSetup")
 @SessionScoped
-public class ProjectSetup  extends CommonBean implements Serializable {
+public class ProjectSetup extends CommonBean implements Serializable {
 	/**
 	 * project related propertiess
 	 */
@@ -40,6 +40,7 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 	private List<SelectItem> cities;
 	private List<SelectItem> propertyTypes;
 	private List<SelectItem> institutions;
+	private List<SelectItem> statusList;
 	private String locationSearch;
 
 	private int totalUnits;
@@ -48,6 +49,7 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 	private double currentDiscount;
 	private Date discountExpiry;
 	private double salesCommission;
+	private String commisionType;
 	private Date commisionEffective;
 	private Discount discount;
 	private SalesCommission commission;
@@ -72,7 +74,9 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
 		propertyStatusList = CodeUtil.getPropertyStatusAsItems();
 		titleTypeList = CodeUtil.getCodes("TITLE_TYPE");
+		statusList = CodeUtil.getCodes("STATUS");
 		institutions = CodeUtil.getInstitutionAsItems();
+		listProject();
 	}
 
 	public List<SelectItem> getPropertyStatusList() {
@@ -267,6 +271,22 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 		this.projects = projects;
 	}
 
+	public List<SelectItem> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<SelectItem> statusList) {
+		this.statusList = statusList;
+	}
+
+	public String getCommisionType() {
+		return commisionType;
+	}
+
+	public void setCommisionType(String commisionType) {
+		this.commisionType = commisionType;
+	}
+
 	public String listProject() {
 		try {
 			ProjectService projectService = (ProjectService) SpringBeanUtil
@@ -344,15 +364,25 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 		if (d != null) {
 			this.currentDiscount = d.getDiscountRate().doubleValue();
 			this.discountExpiry = d.getExpiryDate();
+		} else {
+			this.currentDiscount = 0;
+			this.discountExpiry = null;
 		}
+
 		if (s != null) {
 			this.commisionEffective = s.getEffectiveDate();
 			this.salesCommission = s.getAmountOrRate().doubleValue();
+			this.commisionType = s.getType();
+		} else {
+			this.commisionEffective = null;
+			this.salesCommission = 0;
+			this.commisionType = null;
 		}
 	}
 
 	public String addDiscount() {
 		try {
+			validateDiscount();
 			DiscountService discountService = (DiscountService) SpringBeanUtil
 					.lookup(DiscountService.class.getName());
 			discount.setProject(project);
@@ -368,6 +398,33 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 		return null;
 	}
 
+	public void validateDiscount() throws Throwable {
+		Date effDate = discount.getEffectiveDate();
+		Date expDate = discount.getExpiryDate();
+
+		if (effDate.after(expDate)) {
+			throw new Throwable("Invalid Date Range selected");
+		}
+
+		for (Discount iter : discounts) {
+			if (effDate != null) {
+				if (effDate.after(iter.getEffectiveDate())
+						&& effDate.before(iter.getExpiryDate())) {
+					throw new Throwable(
+							"Effective Date overlap with existing Discounts");
+				}
+			}
+
+			if (expDate != null) {
+				if (expDate.after(iter.getEffectiveDate())
+						&& expDate.before(iter.getExpiryDate())) {
+					throw new Throwable(
+							"Expiry Date overlap with existing Discounts");
+				}
+			}
+		}
+	}
+
 	public String addSalesCommission() {
 		try {
 			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
@@ -378,8 +435,7 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 			commissions = salesCommissionService.findByProjectId(projectId);
 			commission = new SalesCommission();
 			refreshCommissionDiscount();
-			addInfoMessage("Sales Commission",
-					"Sales Commission Added");
+			addInfoMessage("Sales Commission", "Sales Commission Added");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
@@ -395,6 +451,7 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 				discounts = discountService.findByProjectId(projectId);
 				discount = new Discount();
 				refreshCommissionDiscount();
+				addInfoMessage("Discount", "Discount Deleted");
 			}
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
@@ -452,13 +509,12 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 
 			if (inventory != null) {
 				inventoryService.delete(inventory.getInventoryId());
-				addInfoMessage("Property Unit",
-						"Property Unit Deleted");
+				addInfoMessage("Property Unit", "Property Unit Deleted");
 			}
 		} catch (Throwable t) {
 			if (t instanceof DataIntegrityViolationException) {
 				addErrorMessage("Property Unit",
-								"This property is currently purchased. Deletion not allowed.");
+						"This property is currently purchased. Deletion not allowed.");
 			} else {
 				addErrorMessage("Property Unit", t.getMessage());
 			}
@@ -481,17 +537,32 @@ public class ProjectSetup  extends CommonBean implements Serializable {
 	}
 
 	public String saveInventoryAsNew() {
+		Long inventoryId = inventory.getInventoryId();
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
-			inventory.setProject(project);
 			inventory.setInventoryId(null);
+			inventory.setProject(project);
 			inventoryService.insert(inventory);
 			addInfoMessage("Property Unit", "Property Unit Added");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
+			inventory.setInventoryId(inventoryId);
 			return null;
 		}
 		return editInventory();
+	}
+
+	public void validateInventoryKey(ProjectInventoryService inventoryService) throws Throwable {
+		ProjectInventory inventoryDb = inventoryService.findByCompositeKey(
+				inventory.getBlockNo(), inventory.getUnitNo(),
+				inventory.getLevel());
+		if (inventoryDb != null) {
+			if ((!inventoryDb.getInventoryId().equals(inventory.getInventoryId())) ||
+				inventory.getInventoryId() == null) {
+				throw new Throwable(
+						"Inventory of given Block No, Unit No and Level has already been created for Project");
+			}
+		}
 	}
 }
