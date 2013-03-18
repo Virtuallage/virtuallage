@@ -102,6 +102,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		listBank = CodeUtil.getCodes("BANK");
 		listPaymentMethod = CodeUtil.getCodes("PAYM");
+		listProject();
 	}
 
 	public List<SelectItem> getListBank() {
