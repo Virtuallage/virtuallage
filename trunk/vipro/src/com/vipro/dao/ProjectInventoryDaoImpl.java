@@ -8,7 +8,8 @@ import com.vipro.common.DaoImpl;
 import com.vipro.data.ProjectInventory;
 
 @Repository("com.vipro.dao.ProjectInventoryDao")
-public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory> implements ProjectInventoryDao {
+public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
+		implements ProjectInventoryDao {
 
 	@Override
 	public List<ProjectInventory> findByProjectId(Long projectId) {
@@ -22,10 +23,13 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory> implement
 	}
 
 	@Override
-	public ProjectInventory findByCompositeKey(String blockNo, String unit, String level) {
-		String query = "select o from ProjectInventory o where o.blockNo=? and o.unitNo=? and o.level=?";
-		List<ProjectInventory> list = getHibernateTemplate().find(query, blockNo, unit, level);
-		if (list != null) {
+	public ProjectInventory findByCompositeKey(Long projectId, String blockNo,
+			String unit, String level) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? "
+				+ "and blockNo=? and o.unitNo=? and o.level=?";
+		List<ProjectInventory> list = getHibernateTemplate().find(query,
+				projectId, blockNo, unit, level);
+		if (list != null && list.size()>0) {
 			return list.get(0);
 		}
 		return null;
