@@ -10,11 +10,9 @@ import com.vipro.data.ProjectInventory;
 
 @Service("com.vipro.service.ProjectInventoryService")
 public class ProjectInventoryServiceImpl implements ProjectInventoryService {
-	
+
 	@Autowired
 	private ProjectInventoryDao projectInventoryDao;
-	
-	
 
 	public ProjectInventoryDao getProjectInventoryDao() {
 		return projectInventoryDao;
@@ -37,26 +35,27 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	@Override
 	public void insert(ProjectInventory p) {
 		projectInventoryDao.insert(p);
-		
+
 	}
 
 	@Override
 	public void update(ProjectInventory p) {
 		projectInventoryDao.update(p);
-		
+
 	}
 
 	@Override
 	public void delete(Long inventoryId) {
 		ProjectInventory o = projectInventoryDao.findById(inventoryId);
 		projectInventoryDao.delete(o);
-		
+
 	}
 
 	@Override
-	public ProjectInventory findByCompositeKey(String blockNo, String unit,
-			String level) {
-		return projectInventoryDao.findByCompositeKey(blockNo, unit, level);
+	public ProjectInventory findByCompositeKey(Long projectId, String blockNo,
+			String unit, String level) {
+		return projectInventoryDao.findByCompositeKey(projectId, blockNo, unit,
+				level);
 	}
 
 }

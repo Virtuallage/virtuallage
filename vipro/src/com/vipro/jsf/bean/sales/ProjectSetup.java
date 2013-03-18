@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.vipro.constant.ProjectStatusConst;
@@ -526,6 +527,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
+			validateInventoryKey(inventoryService);
 			inventory.setProject(project);
 			inventoryService.update(inventory);
 			addInfoMessage("Property Unit", "Property Unit Saved");
@@ -542,6 +544,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setInventoryId(null);
+			validateInventoryKey(inventoryService);
 			inventory.setProject(project);
 			inventoryService.insert(inventory);
 			addInfoMessage("Property Unit", "Property Unit Added");
@@ -554,7 +557,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	}
 
 	public void validateInventoryKey(ProjectInventoryService inventoryService) throws Throwable {
-		ProjectInventory inventoryDb = inventoryService.findByCompositeKey(
+		ProjectInventory inventoryDb = inventoryService.findByCompositeKey(inventory.getProject().getProjectId(),
 				inventory.getBlockNo(), inventory.getUnitNo(),
 				inventory.getLevel());
 		if (inventoryDb != null) {
@@ -562,6 +565,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 				inventory.getInventoryId() == null) {
 				throw new Throwable(
 						"Inventory of given Block No, Unit No and Level has already been created for Project");
+			} else {
+				BeanUtils.copyProperties(inventory, inventoryDb);
+				inventory = inventoryDb;
 			}
 		}
 	}
