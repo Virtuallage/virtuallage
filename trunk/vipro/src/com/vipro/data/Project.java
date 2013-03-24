@@ -19,7 +19,10 @@ public class Project implements java.io.Serializable {
 	private String projectCode;
 	private String propertyType;
 	private String reportGroup;
-	private String address;
+	private String address1;
+	private String address2;
+	private String address3;
+	private String address4;
 	private String postcode;
 	private String projectOfficeTelNo;
 	private String projectOfficeFaxNo;
@@ -51,7 +54,8 @@ public class Project implements java.io.Serializable {
 
 	public Project(Account account, Institution institution,
 			String projectName, String projectCode, String propertyType,
-			String reportGroup, String address, String projectOfficeTelNo,
+			String reportGroup, String address1, String address2, 
+			String address3, String address4, String projectOfficeTelNo,
 			String projectOfficeFaxNo, String personInCharge,
 			String picMobileNo, String locationLongtitude,
 			String locationLatitude, String locationCity, String locationState,
@@ -65,7 +69,10 @@ public class Project implements java.io.Serializable {
 		this.projectCode = projectCode;
 		this.propertyType = propertyType;
 		this.reportGroup = reportGroup;
-		this.address = address;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.address3 = address3;
+		this.address4 = address4;
 		this.projectOfficeTelNo = projectOfficeTelNo;
 		this.projectOfficeFaxNo = projectOfficeFaxNo;
 		this.personInCharge = personInCharge;
@@ -140,12 +147,36 @@ public class Project implements java.io.Serializable {
 		this.reportGroup = reportGroup;
 	}
 
-	public String getAddress() {
-		return this.address;
+	public String getAddress1() {
+		return address1;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getAddress3() {
+		return address3;
+	}
+
+	public void setAddress3(String address3) {
+		this.address3 = address3;
+	}
+
+	public String getAddress4() {
+		return address4;
+	}
+
+	public void setAddress4(String address4) {
+		this.address4 = address4;
 	}
 
 	public String getProjectOfficeTelNo() {

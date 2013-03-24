@@ -165,3 +165,12 @@ insert into code_header values ('PROP_STATUS', 'Property status');
 insert into code_det values( 'PROP_STATUS', 'SOLD', 'Sold', 'ACTV');
 insert into code_det values( 'PROP_STATUS', 'ACTV', 'Available', 'ACTV');
 insert into code_det values( 'PROP_STATUS', 'DISB', 'Not Available', 'ACTV');
+
+-- 20130324
+insert into code_header (code_header_id, name) values ('BOOK_STATUS', 'Booking Status');
+insert into code_det values ('BOOK_STATUS', 'AVLB', 'Available', 'ACTV');
+insert into code_det values ('BOOK_STATUS', 'PROC', 'Processing', 'ACTV');
+insert into code_det values ('BOOK_STATUS', 'BOOK', 'Book', 'ACTV');
+insert into code_det values ('BOOK_STATUS', 'RESV', 'Reserved', 'ACTV');
+insert into code_det values ('BOOK_STATUS', 'SOLD', 'Sold', 'ACTV');
+
