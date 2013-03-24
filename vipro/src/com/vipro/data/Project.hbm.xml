@@ -29,8 +29,17 @@
         <property name="reportGroup" type="string">
             <column name="report_group" length="20" />
         </property>
-        <property name="address" type="string">
-            <column name="address" length="80" />
+        <property name="address1" type="string">
+            <column name="address1" length="80" />
+        </property>
+        <property name="address2" type="string">
+            <column name="address2" length="80" />
+        </property>
+        <property name="address3" type="string">
+            <column name="address3" length="80" />
+        </property>
+        <property name="address4" type="string">
+            <column name="address4" length="80" />
         </property>
         <property name="projectOfficeTelNo" type="string">
             <column name="project_office_tel_no" length="20" />

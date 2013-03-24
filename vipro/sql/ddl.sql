@@ -105,3 +105,10 @@ alter table account add lo_doc_id bigint;
 alter table account add la_doc_id bigint;
 
 alter table document_reference add filename varchar(50);
+
+-- 20130324
+alter table project change address address1 varchar(80);
+
+alter table project add address2 varchar(80);
+alter table project add address3 varchar(80);
+alter table project add address4 varchar(80);

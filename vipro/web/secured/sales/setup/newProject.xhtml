@@ -100,20 +100,23 @@ Project Setup
 		</h:panelGroup>
 
 		<p:outputLabel value="Address Line 1" for="address1"/>
-		<p:inputText id="address1" value="#{projectSetup.project.address}" maxlength="20" required="true" />
+		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
 		
 		<p:outputLabel value="Address Line 2" for="address2"/>
-		<p:inputText id="address2" value="#{projectSetup.project.address}" maxlength="20" />
+		<p:inputText id="address2" value="#{projectSetup.project.address2}" maxlength="20" />
 		
 		
 		<p:outputLabel value="Address Line 3" for="address3"/>
-		<p:inputText id="address3" value="#{projectSetup.project.address}" maxlength="20" />
+		<p:inputText id="address3" value="#{projectSetup.project.address3}" maxlength="20" />
+		
+		<p:outputLabel value="Address Line 4" for="address4"/>
+		<p:inputText id="address4" value="#{projectSetup.project.address4}" maxlength="20" />
+		
 		
 		<p:outputLabel value="Post Code" for="postcode"/>
 		<h:panelGroup>
 			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" maxlength="10" autocomplete="off"/>
 		</h:panelGroup>
-		
 		
 		<p:outputLabel value="City" for="city"/>
 		<h:panelGroup>
@@ -121,23 +124,24 @@ Project Setup
 				<f:selectItems value="#{projectSetup.cities}"/>
 			</p:selectOneMenu>
 		</h:panelGroup>
+
 		
 		<p:outputLabel value="State" for="state"/>
 		<p:selectOneMenu id="state" value="#{projectSetup.project.locationState}">
 			<f:selectItems value="#{projectSetup.states}"/>
 		</p:selectOneMenu>
 		
-		
 		<p:outputLabel value="Project Office Tel" for="tel"/>
 		<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" maxlength="15" autocomplete="off"/>
 		
+
 		<p:outputLabel value="Project Office Fax" for="fax"/>
 		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
 
-		
 		<p:outputLabel value="Location Longtitude" for="locationLongtitude"/>
 		<p:inputText id="locationLongtitude" autocomplete="off"/>
 		
+
 		<p:outputLabel value="Location Latitude" for="locationLatitude"/>
 		<p:inputText id="locationLatitude" autocomplete="off"/>
 		
