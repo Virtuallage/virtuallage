@@ -24,7 +24,7 @@
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
-    		<p:menuitem value="Price Adjustment" url="#" />
+    		<p:menuitem value="Price Adjustment" url="/secured/sales/price/adjustment.xhtml" icon="ui-icon-note" />
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/selectProject.xhtml" action="#{salesRegister.listProject}" />
     		<p:menuitem value="Sales Update" action="#{salesUpdate.listProject}" />
     		<p:menuitem value="Sales Cancellation" action="#{salesCancel.listProject}" />
@@ -60,6 +60,11 @@
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
+    	<p:submenu label="Customer Service" icon="ui-icon-document">
+    		<p:menuitem value="Purchaser Information" url="/secured/customer_service/purchaser_main.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Contact Management" url="/secured/contact_management.xhtml" icon="ui-icon-note" />
+    	</p:submenu>
+    	</sec:authorize>    	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System" icon="ui-icon-gear">
     		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" icon="ui-icon-person"/>  
     		<p:menuitem value="Change Password" url="/secured/change_password.xhtml" icon="ui-icon-key"/>  
