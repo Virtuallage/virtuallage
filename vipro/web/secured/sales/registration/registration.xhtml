@@ -37,14 +37,22 @@ Sales Registration
    		<p:outputLabel value="#{salesRegister.inventory.layoutType}"/>
    		
    		<p:outputLabel value="Purchase Date"/>
-   		<p:calendar value="#{salesRegister.account.datePurchased}" pattern="dd/MM/yyyy" required="true"/>
+   		<h:outputText value="#{salesRegister.account.datePurchased}">
+   			<f:convertDateTime pattern="dd/MM/yyyy"/>
+   		</h:outputText>
    		<p:outputLabel value="Attended By"/>
    		<p:outputLabel value="#{salesRegister.attendedBy.name}"/>
    	</h:panelGrid>
+   	<br/>
    	
-   	<h4>Purchaser Information</h4>
-   	
-   	 <p:dataTable id="customerList" var="c" value="#{salesRegister.customers}" paginator="false">   
+   	<p:panelGrid styleClass="no-borders" style="width:100%">
+     	<p:row>
+     		<p:column style="align:left">
+			    <h:outputLabel style="font-weight:bold;">Purchaser Information</h:outputLabel>
+     		</p:column>
+     	</p:row>
+     </p:panelGrid>
+   	<p:dataTable id="customerList" var="c" value="#{salesRegister.customers}" paginator="false">   
         <p:column headerText="Name">  
             <h:outputText value="#{c.fullName}">
             </h:outputText>
@@ -59,25 +67,22 @@ Sales Registration
            </p:commandButton>
         </p:column> 
      </p:dataTable>
-     <br/>
-     <p:commandButton id="btnSearchCust" value="Search Customer" immediate="true" onclick="dlgSearchCust.show();"/>&nbsp;&nbsp;
-     <p:commandButton value="Add Invidual" immediate="true" action="#{salesRegister.toAddIndividual}"  icon="ui-icon-plus"/> &nbsp;&nbsp;
-	 <p:commandButton value="Add Company" immediate="true" action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/> 
-		
+     <p:panelGrid styleClass="no-borders" style="width:100%">
+     	<p:row>
+     		<p:column style="align:left">
+     			<a id="btnSearchCust" onclick="dlgSearchCust.show();" 
+     				style="cursor:pointer;text-decoration:underline">
+     				+ Add Purchaser
+     			</a>
+     		</p:column>
+     	</p:row>
+     </p:panelGrid>
+
+	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
+	&nbsp;
+	<p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>
 				
     <br/>
-    <br/>
-    <br/>
-    <p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
-    
-
-    
-    <p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>  &nbsp;&nbsp;
-    
-    <p:commandButton value="Print" immediate="true" icon="ui-icon-print"/> &nbsp;&nbsp;
-    
-    <p:commandButton value="Pay" action="#{salesRegister.toPay}" immediate="true" icon="ui-icon-star"/> &nbsp;&nbsp;
-    
 </h:form> 
 
 <p:focus id="btnSearchCust" for="btnSearchCust"/> 
@@ -95,29 +100,35 @@ Sales Registration
 				<p:outputLabel value="Name" for="searchName"/>
 				<h:panelGroup>
 					<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+					&nbsp;
 					<p:commandButton  value="Search" action="#{salesRegister.searchCustomer}" update=":searchCustForm:custs"/>
 				</h:panelGroup>
 			</h:panelGrid>
-			<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:500px;">  
-		        <p:column headerText="Id No." style="width:24%">  
+			
+			<br/>
+			
+			<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:90%;">  
+		        <p:column headerText="Id No." style="width:30%">  
 		            <h:outputText value="#{c.identityNo}" />  
 		        </p:column>  
-		        <p:column headerText="Name" style="width:24%">  
+		        <p:column headerText="Name" style="width:55%">  
 		            <h:outputText value="#{c.fullName}" />  
 		        </p:column>  
 		     
-		        <p:column style="width:4%">  
+		        <p:column headerText="Action" style="width:15%">  
 		           <p:commandButton id="selectButton" update=":registerForm:customerList" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
 		                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
 		            </p:commandButton>  
 		        </p:column>  
-		  
 			</p:dataTable>  
-			
+
 			<br/>
-			<br/>
-			
-			
+			<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
+				action="#{salesRegister.toAddIndividual}" icon="ui-icon-plus"/>
+			&nbsp;
+			<p:commandButton value="Add Company" ajax="false" immediate="true" 
+				action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/>
+			&nbsp; 
 			<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
 		
 		</p:dialog>				

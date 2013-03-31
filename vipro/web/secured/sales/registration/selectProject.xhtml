@@ -15,53 +15,76 @@ Sales  Registration
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Registration - Select Project" style="width:95%">  
-    
-<p:focus context="panel"/> 
-      
-	<h:form>  
-    <p:dataTable var="c" value="#{salesRegister.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                 rowsPerPageTemplate="5,10,15" >   
-        <p:column headerText="Project Code" sortBy="#{c.projectCode}">  
-            <h:outputText value="#{c.projectCode}">
-            	
-            </h:outputText>
-        </p:column>  
-  
-        <p:column headerText="Project Name" sortBy="#{c.projectName}">  
-           <h:outputText value="#{c.projectName}"/>
-        </p:column>  
-  
-        <p:column headerText="Date Launched" sortBy="#{c.launchDate}">  
-            <h:outputText value="#{c.launchDate}">
-            <f:convertDateTime pattern="dd/MM/yyyy"/>  
-            </h:outputText>
-        </p:column>  
-  
-        <p:column headerText="Property Type" sortBy="#{salesRegister.getCodeDesc('PROP_TYPE', c.propertyType)}">  
-           <h:outputText value="#{salesRegister.getCodeDesc('PROP_TYPE', c.propertyType)}"/>
-        </p:column>  
-        
-        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('STATUS',c.status)}">  
-           <h:outputText value="#{salesRegister.getCodeDesc('STATUS',c.status)}"/>
-           &nbsp;
-           <p:commandButton action="#{salesRegister.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
-           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.project}" />  
-           </p:commandButton>
-           &nbsp;
-         
-        </p:column>
-        
-
-  
-    </p:dataTable>  
-    
-    <br/>
-    
-   
-</h:form> 
-
+<p:panel id="panel" header="Sales Registration" style="width:95%">  
+	<p:focus context="panel"/> 
+    <p:tabView>
+    <p:tab title="Project Selection">
+	<h:form>
+		<p:panelGrid style="width:100%;" styleClass="no-borders">
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Project Name"/>
+				</p:column>
+				<p:column style="width:80%">
+					<p:selectOneMenu id="projectList" value="#{salesRegister.projectId}" 
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{salesRegister.listProject}"/>
+						<f:ajax listener="#{salesRegister.listPropertyUnits}" render="inventoriesDataTable" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<br/>
+		
+	    <p:dataTable var="c" value="#{salesRegister.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
+	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+	                 rowsPerPageTemplate="10,20,40,60,80,100" id="inventoriesDataTable">   
+	        <p:column headerText="Block" sortBy="#{c.blockNo}">  
+	            <h:outputText value="#{c.blockNo}">
+	            	
+	            </h:outputText>
+	        </p:column>  
+	  
+	        <p:column headerText="Level" sortBy="#{c.level}">  
+	           <h:outputText value="#{c.level}"/>
+	        </p:column>  
+	  
+	        <p:column headerText="Unit No." sortBy="#{c.unitNo}">  
+	            <h:outputText value="#{c.unitNo}">
+	            </h:outputText>
+	        </p:column>  
+	  
+	        <p:column headerText="Type" sortBy="#{c.layoutType}">  
+	           <h:outputText value="#{c.layoutType}"/>
+	        </p:column>  
+	        
+	        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}">  
+	           <h:outputText value="#{c.builtUpArea}">
+	          	 <f:convertNumber pattern="#,##0"/>
+	           </h:outputText>
+	        </p:column>  
+	        
+	        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">  
+	        	<h:outputText value="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">
+	        	</h:outputText>
+	        </p:column>
+	        
+	        <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
+	           <h:outputText value="#{c.purchasePrice}">
+	           		<f:convertNumber type="currency" currencySymbol="" />
+	           </h:outputText>
+	           &nbsp;&nbsp;
+	           <p:commandButton action="#{salesRegister.selectInventory}" ajax="false" icon="ui-icon-check" title="Select Property Unit">
+	           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.inventory}" />  
+	           </p:commandButton>
+	         
+	        </p:column>
+	    </p:dataTable>  
+	   <br/>
+	</h:form> 
+	
+	</p:tab>
+	</p:tabView>
 </p:panel>
 
 </ui:define>

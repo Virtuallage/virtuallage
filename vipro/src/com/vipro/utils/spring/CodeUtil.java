@@ -9,9 +9,11 @@ import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.CodeDet;
 import com.vipro.data.CodeHeader;
 import com.vipro.data.Institution;
+import com.vipro.data.Project;
 import com.vipro.data.UserProfile;
 import com.vipro.service.CodeService;
 import com.vipro.service.InstitutionService;
+import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
 
 public final class CodeUtil {
@@ -46,6 +48,18 @@ public final class CodeUtil {
 		}
 		
 		return insItems;
+	}
+	
+	public static List<SelectItem> getProjectAsItems() {
+		ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+		List<Project> project = projectService.findAllProjects();
+		List<SelectItem> projItems = new ArrayList<SelectItem>();
+		projItems.add( new SelectItem(null, "Select One"));
+		for (Project p : project) {
+			projItems.add( new SelectItem(p.getProjectId(), p.getProjectName()) );
+		}
+		
+		return projItems;
 	}
 	
 	

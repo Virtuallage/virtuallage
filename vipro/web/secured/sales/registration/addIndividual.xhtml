@@ -99,7 +99,9 @@ Add Individuals
 				<p:inputText id="mobile" value="#{salesRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
 			</h:panelGrid>
 			
-			<p:commandButton value="Back" action="#{salesRegister.backToRegistration}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{salesRegister.backToRegistration}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
 			
 			<p:commandButton value="Save" ajax="false" action="#{salesRegister.saveIndividual}" icon="ui-icon-disk"/>
 			
