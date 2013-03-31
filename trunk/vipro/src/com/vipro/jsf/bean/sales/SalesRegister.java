@@ -52,6 +52,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listBumi = null;
 	private List<SelectItem> listLanguage = null;
 	private List<SelectItem> listRace = null;
+	private List<SelectItem> listProject = null;
 	
 	private List<SelectItem> listBank = null;
 	private List<SelectItem> listPaymentMethod = null;
@@ -99,10 +100,18 @@ public class SalesRegister extends CommonBean implements Serializable {
 		listLanguage = CodeUtil.getCodes("LANGUAGE");
 		listRace = CodeUtil.getCodes("RACE");
 		listState = CodeUtil.getCodes("STATE");
+		listProject = CodeUtil.getProjectAsItems();
 		
 		listBank = CodeUtil.getCodes("BANK");
 		listPaymentMethod = CodeUtil.getCodes("PAYM");
-		listProject();
+	}
+
+	public List<SelectItem> getListProject() {
+		return listProject;
+	}
+
+	public void setListProject(List<SelectItem> listProject) {
+		this.listProject = listProject;
 	}
 
 	public List<SelectItem> getListBank() {
@@ -353,8 +362,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 		inventories = inventoryService.getInventories(projectId);
-
-		return "selectUnit";
+		
+		return "selectProject";
 	}
 
 	public String selectInventory() {

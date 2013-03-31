@@ -46,3 +46,8 @@
 	background-image: url("../images/background.jpg") !important;
     background-repeat:no-repeat;
 }
+
+.no-borders tr, .no-borders td {
+    background: none !important;
+    border: none !important;
+}
