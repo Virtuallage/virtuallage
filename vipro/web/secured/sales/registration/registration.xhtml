@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/template/main_template.xhtml" 
+<ui:composition
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/tags">
-	
-<ui:define name="title">
-Sales Registration
-</ui:define>
 
-<ui:define name="content">	
-
-<p:panel id="panel" header="Registration Info. #{salesRegister.project.projectName}" style="width:95%">  
-
-
-      
 	<h:form id="registerForm">  
    	<h:panelGrid columns="4" style="width:70%">
    		<p:outputLabel value="Project Name"/>
@@ -87,55 +77,49 @@ Sales Registration
 
 <p:focus id="btnSearchCust" for="btnSearchCust"/> 
 
-</p:panel>
-
-
 <!-- Search customer dialog -->
-	<h:form id="searchCustForm">
-		<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
-			<h:panelGrid columns="2">
-				<p:outputLabel value="ID No." for="searchIdNo"/>
-				<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>
-				
-				<p:outputLabel value="Name" for="searchName"/>
-				<h:panelGroup>
-					<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
-					&nbsp;
-					<p:commandButton  value="Search" action="#{salesRegister.searchCustomer}" update=":searchCustForm:custs"/>
-				</h:panelGroup>
-			</h:panelGrid>
+<h:form id="searchCustForm">
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
+		<h:panelGrid columns="2">
+			<p:outputLabel value="ID No." for="searchIdNo"/>
+			<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>
 			
-			<br/>
-			
-			<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:90%;">  
-		        <p:column headerText="Id No." style="width:30%">  
-		            <h:outputText value="#{c.identityNo}" />  
-		        </p:column>  
-		        <p:column headerText="Name" style="width:55%">  
-		            <h:outputText value="#{c.fullName}" />  
-		        </p:column>  
-		     
-		        <p:column headerText="Action" style="width:15%">  
-		           <p:commandButton id="selectButton" update=":registerForm:customerList" oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
-		                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
-		            </p:commandButton>  
-		        </p:column>  
-			</p:dataTable>  
-
-			<br/>
-			<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
-				action="#{salesRegister.toAddIndividual}" icon="ui-icon-plus"/>
-			&nbsp;
-			<p:commandButton value="Add Company" ajax="false" immediate="true" 
-				action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/>
-			&nbsp; 
-			<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
+			<p:outputLabel value="Name" for="searchName"/>
+			<h:panelGroup>
+				<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+				&nbsp;
+				<p:commandButton  value="Search" action="#{salesRegister.searchCustomer}" update="searchCustForm:custs"/>
+			</h:panelGroup>
+		</h:panelGrid>
 		
-		</p:dialog>				
-	</h:form>	
-	
-	
+		<br/>
+		
+		<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:90%;">  
+	        <p:column headerText="Id No." style="width:30%">  
+	            <h:outputText value="#{c.identityNo}" />  
+	        </p:column>  
+	        <p:column headerText="Name" style="width:55%">  
+	            <h:outputText value="#{c.fullName}" />  
+	        </p:column>  
+	     
+	        <p:column headerText="Action" style="width:15%">  
+	           <p:commandButton id="selectButton" update=":registerForm:customerList" 
+	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
+	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
+	            </p:commandButton>  
+	        </p:column>  
+		</p:dataTable>  
 
-</ui:define>
+		<br/>
+		<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
+			action="#{salesRegister.toAddIndividual}" icon="ui-icon-plus"/>
+		&nbsp;
+		<p:commandButton value="Add Company" ajax="false" immediate="true" 
+			action="#{salesRegister.toAddCompany}" icon="ui-icon-plus"/>
+		&nbsp; 
+		<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
+	
+	</p:dialog>				
+</h:form>	
 
 </ui:composition>
