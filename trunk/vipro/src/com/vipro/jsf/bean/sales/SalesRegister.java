@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.tabview.Tab;
+import org.primefaces.component.tabview.TabView;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
@@ -66,6 +68,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private Account account;
 	private UserProfile attendedBy;
 
+	private TabView salesRegTabView;
+	private Tab registrationTab;
+	
 	/**
 	 * search customer dialog
 	 */
@@ -104,6 +109,22 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		listBank = CodeUtil.getCodes("BANK");
 		listPaymentMethod = CodeUtil.getCodes("PAYM");
+	}
+
+	public Tab getRegistrationTab() {
+		return registrationTab;
+	}
+
+	public void setRegistrationTab(Tab registrationTab) {
+		this.registrationTab = registrationTab;
+	}
+
+	public TabView getSalesRegTabView() {
+		return salesRegTabView;
+	}
+
+	public void setSalesRegTabView(TabView salesRegTabView) {
+		this.salesRegTabView = salesRegTabView;
 	}
 
 	public List<SelectItem> getListProject() {
@@ -363,7 +384,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 				.lookup(ProjectInventoryService.class.getName());
 		inventories = inventoryService.getInventories(projectId);
 		
-		return "selectProject";
+		salesRegTabView.setActiveIndex(0);
+		
+		return "salesRegistration";
 	}
 
 	public String selectInventory() {
@@ -408,8 +431,11 @@ public class SalesRegister extends CommonBean implements Serializable {
 		individual = new Customer();
 		company = new Customer();
 		address = new Address();
-
-		return "registration";
+		
+		salesRegTabView.setActiveIndex(1);
+		registrationTab.setDisabled(false);
+		
+		return "salesRegistration";
 	}
 
 	public String saveRegister() {
