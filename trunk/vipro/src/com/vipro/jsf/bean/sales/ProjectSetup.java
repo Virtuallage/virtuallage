@@ -527,8 +527,8 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		try {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
-			validateInventoryKey(inventoryService);
 			inventory.setProject(project);
+			validateInventoryKey(inventoryService);
 			inventoryService.update(inventory);
 			addInfoMessage("Property Unit", "Property Unit Saved");
 		} catch (Throwable t) {
@@ -544,8 +544,8 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setInventoryId(null);
-			validateInventoryKey(inventoryService);
 			inventory.setProject(project);
+			validateInventoryKey(inventoryService);
 			inventoryService.insert(inventory);
 			addInfoMessage("Property Unit", "Property Unit Added");
 		} catch (Throwable t) {
