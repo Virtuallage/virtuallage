@@ -89,6 +89,15 @@
         <property name="developmentStage" type="java.lang.Short">
             <column name="development_stage" precision="3" scale="0" />
         </property>
+         <property name="source" type="string">
+            <column name="source" length="5" />
+        </property>
+         <property name="salesPerson" type="string">
+            <column name="sales_person" length="20" />
+        </property>
+         <property name="remarks" type="string">
+            <column name="remarks" length="300" />
+        </property>
         <set name="accounts" table="account" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="inventory_id" not-null="true" />
