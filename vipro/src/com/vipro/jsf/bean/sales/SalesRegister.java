@@ -58,6 +58,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	
 	private List<SelectItem> listBank = null;
 	private List<SelectItem> listPaymentMethod = null;
+	private List<SelectItem> listMediaSource = null;
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -105,6 +106,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		listLanguage = CodeUtil.getCodes("LANGUAGE");
 		listRace = CodeUtil.getCodes("RACE");
 		listState = CodeUtil.getCodes("STATE");
+		listMediaSource = CodeUtil.getCodes("MEDIA_SOURCE");
 		listProject = CodeUtil.getProjectAsItems();
 		
 		listBank = CodeUtil.getCodes("BANK");
@@ -367,6 +369,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+	
+	public List<SelectItem> getListMediaSource() {
+		return listMediaSource;
+	}
+
+	public void setListMediaSource(List<SelectItem> listMediaSource) {
+		this.listMediaSource = listMediaSource;
+	}
 
 	public String listProject() {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
@@ -376,10 +386,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 	}
 
 	public String listPropertyUnits() {
-		if (project != null) {
-			projectId = project.getProjectId();
-		}
-
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
+		
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 		inventories = inventoryService.getInventories(projectId);

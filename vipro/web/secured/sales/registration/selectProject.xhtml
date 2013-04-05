@@ -12,15 +12,16 @@
 	<h:form>
 		<p:panelGrid style="width:100%;" styleClass="no-borders">
 			<p:row>
-				<p:column style="width:20%">
+				<p:column style="width:20%;text-align:left">
 					<h:outputText value="Project Name"/>
 				</p:column>
-				<p:column style="width:80%">
+				<p:column style="width:80%;text-align:left">
 					<p:selectOneMenu id="projectList" value="#{salesRegister.projectId}" 
 						 required="true" style="width:200px">  
 						<f:selectItems value="#{salesRegister.listProject}"/>
-						<f:ajax listener="#{salesRegister.listPropertyUnits}" render="inventoriesDataTable" />
 					</p:selectOneMenu>
+					&nbsp;
+					<p:commandButton value="Search" action="#{salesRegister.listPropertyUnits}" update="inventoriesDataTable" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
@@ -29,16 +30,7 @@
 	    <p:dataTable var="c" value="#{salesRegister.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
 	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 	                 rowsPerPageTemplate="10,20,40,60,80,100" id="inventoriesDataTable">   
-	        <p:column headerText="Block" sortBy="#{c.blockNo}">  
-	            <h:outputText value="#{c.blockNo}">
-	            	
-	            </h:outputText>
-	        </p:column>  
-	  
-	        <p:column headerText="Level" sortBy="#{c.level}">  
-	           <h:outputText value="#{c.level}"/>
-	        </p:column>  
-	  
+
 	        <p:column headerText="Unit No." sortBy="#{c.unitNo}">  
 	            <h:outputText value="#{c.unitNo}">
 	            </h:outputText>
@@ -54,16 +46,28 @@
 	           </h:outputText>
 	        </p:column>  
 	        
+	         <p:column headerText="Orientation" sortBy="#{c.builtUpArea}">  
+	           <h:outputText value="#{c.orientation}"/>
+	        </p:column>  
+	        
+	        <p:column headerText="Price (RM)" sortBy="#{c.purchasePrice}">  
+	           <h:outputText value="#{c.purchasePrice}">
+	           		<f:convertNumber type="currency" currencySymbol="" />
+	           </h:outputText>
+	        </p:column>
+	        
+	        <p:column headerText="Nett Price" sortBy="#{c.nettPrice}">  
+	           <h:outputText value="#{c.nettPrice}">
+	           		<f:convertNumber type="currency" currencySymbol="" />
+	           </h:outputText>
+	        </p:column>
+	       
 	        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">  
 	        	<h:outputText value="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">
 	        	</h:outputText>
 	        </p:column>
 	        
-	        <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
-	           <h:outputText value="#{c.purchasePrice}">
-	           		<f:convertNumber type="currency" currencySymbol="" />
-	           </h:outputText>
-	           &nbsp;&nbsp;
+	        <p:column headerText="Actions">
 	           <p:commandButton action="#{salesRegister.selectInventory}" ajax="false"
 	           		icon="ui-icon-check" title="Select Property Unit">
 	           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.inventory}" />  

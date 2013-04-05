@@ -112,3 +112,9 @@ alter table project change address address1 varchar(80);
 alter table project add address2 varchar(80);
 alter table project add address3 varchar(80);
 alter table project add address4 varchar(80);
+
+-- 20130405
+alter table project_inventory add source varchar(5);
+alter table project_inventory add sales_person varchar(20);
+alter table project_inventory add remarks varchar(300);
+

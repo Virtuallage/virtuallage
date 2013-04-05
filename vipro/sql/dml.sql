@@ -174,3 +174,10 @@ insert into code_det values ('BOOK_STATUS', 'BOOK', 'Book', 'ACTV');
 insert into code_det values ('BOOK_STATUS', 'RESV', 'Reserved', 'ACTV');
 insert into code_det values ('BOOK_STATUS', 'SOLD', 'Sold', 'ACTV');
 
+-- 20130405
+insert into code_header (code_header_id, name) values ('MEDIA_SOURCE', 'Media Source');
+insert into code_det values ('MEDIA_SOURCE', 'NEWS', 'Newspaper', 'ACTV');
+insert into code_det values ('MEDIA_SOURCE', 'TV', 'Television', 'ACTV');
+insert into code_det values ('MEDIA_SOURCE', 'RAD', 'Radio', 'ACTV');
+
+
