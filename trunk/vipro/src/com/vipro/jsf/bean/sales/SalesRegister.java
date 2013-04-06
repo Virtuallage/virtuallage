@@ -568,12 +568,15 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 			individual.setAddressId(address.getAddressId());
 
-			customerService.update(company);
+			customerService.update(individual);
 		} catch (Throwable t) {
 			addErrorMessage("Add Individual", t.getMessage());
 			return null;
 		}
-		return "registration";
+		salesRegTabView.setActiveIndex(1);
+		registrationTab.setDisabled(false);
+		
+		return "salesRegistration";
 	}
 
 	public String saveCompany() {

@@ -36,7 +36,7 @@
             <column name="race" length="5" />
         </property>
         <property name="bumiIndicator" type="string">
-            <column name="bumi_indicator" length="1" />
+            <column name="bumi_indicator" length="5" />
         </property>
         <property name="sex" type="string">
             <column name="sex" length="4" />
@@ -79,6 +79,12 @@
         </property>
         <property name="email" type="string">
             <column name="email" length="30" />
+        </property>
+        <property name="remarks" type="string">
+            <column name="remarks" length="300" />
+        </property>
+        <property name="citizenship" type="string">
+            <column name="citizenship" length="5" />
         </property>
         
         <set name="addresses" table="address" inverse="true" lazy="false" fetch="select">

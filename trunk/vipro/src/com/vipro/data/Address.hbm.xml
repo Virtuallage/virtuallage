@@ -26,6 +26,9 @@
         <property name="addressLine3" type="string">
             <column name="address_line_3" length="40" />
         </property>
+        <property name="addressLine4" type="string">
+            <column name="address_line_4" length="40" />
+        </property>
         <property name="postcode" type="string">
             <column name="postcode" length="10" />
         </property>

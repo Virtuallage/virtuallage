@@ -118,3 +118,9 @@ alter table project_inventory add source varchar(5);
 alter table project_inventory add sales_person varchar(20);
 alter table project_inventory add remarks varchar(300);
 
+--20130406
+alter table customer add citizenship varchar(5);
+alter table customer add remarks varchar(300);
+alter table customer change bumi_indicator bumi_indicator varchar(5);
+alter table address add address_line_4 varchar(80);
+
