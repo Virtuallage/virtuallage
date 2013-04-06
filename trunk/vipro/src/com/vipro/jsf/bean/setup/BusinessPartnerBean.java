@@ -8,7 +8,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
 //import com.vipro.constant.CodeConst;
-import com.vipro.constant.BusinessPartnerConst;
+//import com.vipro.constant.BusinessPartnerConst;
 //import com.vipro.data.Institution;
 import com.vipro.data.BusinessPartner;
 import com.vipro.data.BusinessPartnerId;
@@ -17,11 +17,11 @@ import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.PageConst;
 
 //import com.vipro.service.InstitutionService;
-import com.vipro.service.BusinessPartnerService;
+//import com.vipro.service.BusinessPartnerService;
 
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
-import com.vipro.service.BusinessPartnerService;
+//import com.vipro.service.BusinessPartnerService;
 
 
 @ManagedBean
@@ -54,7 +54,7 @@ public class BusinessPartnerBean extends CommonBean implements PageConst {
 	@PostConstruct
 	public void init() {
 		BusinessPartnerId = new BusinessPartnerId();
-		partnerTypeList = CodeUtil.getCodes(BusinessPartnerConst.BUSINESS_TYPE);
+		//partnerTypeList = CodeUtil.getCodes(BusinessPartnerConst.BUSINESS_TYPE);
 	}
 	
 /*	public String onEdit() {
