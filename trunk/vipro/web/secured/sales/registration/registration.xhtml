@@ -121,7 +121,7 @@
 	        </p:column>  
 	     
 	        <p:column headerText="Action" style="width:15%">  
-	           <p:commandButton id="selectButton" update=":registerForm:customerList" 
+	           <p:commandButton id="selectButton" ajax="false" 
 	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
 	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
 	            </p:commandButton>  

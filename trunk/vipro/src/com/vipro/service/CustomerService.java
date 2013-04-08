@@ -8,7 +8,7 @@ public interface CustomerService {
 
 	public List<Customer> findByIdNo(String idNo);
 	
-	public List<Customer> findByName(String name);
+	public List<Customer> findByIdNoName(String idNo, String name);
 	
 	public void insert(Customer c);
 	

@@ -28,8 +28,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> findByName(String name) {
-		return customerDao.findByName(name);
+	public List<Customer> findByIdNoName(String idNo, String name) {
+		return customerDao.findByIdNoName(idNo, name);
 	}
 
 	@Override
