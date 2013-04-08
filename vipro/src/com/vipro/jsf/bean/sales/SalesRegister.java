@@ -29,6 +29,7 @@ import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
+import com.vipro.datamodel.CustomerDataModel;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
 import com.vipro.service.AddressService;
@@ -66,6 +67,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private Long projectId;
 	private Project project;
 	private List<Customer> customers;
+	private CustomerDataModel customerDataModel;
 	private Account account;
 	private UserProfile attendedBy;
 
@@ -303,7 +305,12 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setSelectedCustomer(Customer selectedCustomer) {
 		this.selectedCustomer = selectedCustomer;
-		customers.add(selectedCustomer);
+		if (!customers.contains(selectedCustomer)) {
+			customers.add(selectedCustomer);
+		} else {
+			addInfoMessage("Select Purchaser",
+					"Purchaser has already been selected.");	
+		}
 	}
 
 	public UserProfile getAttendedBy() {
@@ -514,6 +521,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	public String searchCustomer() {
 		if (!StringUtils.hasText(searchIdNo)
 				&& !StringUtils.hasText(searchName)) {
+			setSearchCustList(null);
 			addErrorMessage("Search Customer",
 					"Please enter customer name or Id No.");
 			return null;
@@ -539,7 +547,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 	public String deleteCustomer() {
 
 		customers.remove(delCustomer);
-		return "registration";
+		salesRegTabView.setActiveIndex(1);
+		registrationTab.setDisabled(false);
+		
+		return "salesRegistration";
 	}
 
 	public String toAddIndividual() {
@@ -597,7 +608,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 			addErrorMessage("Add Company", t.getMessage());
 			return null;
 		}
-		return "registration";
+		salesRegTabView.setActiveIndex(1);
+		registrationTab.setDisabled(false);
+		
+		return "salesRegistration";
 	}
 
 	public String backToRegistration() {

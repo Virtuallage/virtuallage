@@ -14,7 +14,7 @@ public class CustomerDaoImpl extends DaoImpl<Customer> implements CustomerDao {
 	
 	@Override
 	public List<Customer> findByIdNoName(String idNo, String name) {
-		String query = "select o from Customer o where o.fullName like ? or o.identityNo like ?";
+		String query = "select o from Customer o where o.identityNo like ? and o.fullName like ?";
 		List<Customer> list = getHibernateTemplate().find(query, "%" + idNo + "%", "%" + name + "%");
 		return list;
 	}

@@ -68,7 +68,8 @@
         <p:column headerText="ID. No">  
             <h:outputText value="#{c.identityNo}">
             </h:outputText>
-        </p:column> 
+        </p:column>
+          
         <p:column headerText="Action">  
             <p:commandButton action="#{salesRegister.deleteCustomer}" ajax="false" icon="ui-icon-trash" title="Delete Customer">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.delCustomer}" />  
@@ -113,14 +114,19 @@
 		<br/>
 		
 		<p:dataTable id="custs" var="c" value="#{salesRegister.searchCustList}" style="width:90%;">  
-	        <p:column headerText="Id No." style="width:30%">  
-	            <h:outputText value="#{c.identityNo}" />  
-	        </p:column>  
-	        <p:column headerText="Name" style="width:55%">  
+	        <p:column headerText="Purchaser Name" style="width:50%">  
 	            <h:outputText value="#{c.fullName}" />  
 	        </p:column>  
+	        <p:column headerText="Id Type" style="width:15%">  
+	            <p:selectOneMenu value="#{c.identityType}" required="true">
+					<f:selectItems value="#{salesRegister.listIdType}"/>
+				</p:selectOneMenu> 
+	        </p:column>  
+	        <p:column headerText="Id No." style="width:25%">  
+	            <h:outputText value="#{c.identityNo}" />  
+	        </p:column>  
 	     
-	        <p:column headerText="Action" style="width:15%">  
+	        <p:column headerText="Action" style="width:10%">  
 	           <p:commandButton id="selectButton" ajax="false" 
 	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
 	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
