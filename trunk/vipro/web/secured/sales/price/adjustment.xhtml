@@ -14,32 +14,32 @@ Price Adjustment
 </ui:define>
 
 <ui:define name="content">	
-<h:form>
-	<p:tabView id="tabView" dynamic="true"  cache="true">  
-        <p:tab id="tab1" title="Price Adjustment">
+<h:form id="PriceAdjustmentForm">
+	<p:tabView id="tabView" dynamic="true" cache="true">  
+        <p:tab id="PriceAdjustmentTab" title="Price Adjustment">
 			          
-			<p:panelGrid style="margin-top:20px">  
-		        <p:row>  
-        		    <p:column style="text-align: right">
-        		    	<h:outputLabel for="ProjectName" value="*Project Name: " />
+			<p:panelGrid style="margin-top:10px">  
+		        <p:row>   
+        		    <p:column style="text-align: right; color: blue">
+        		    	<h:outputLabel for="projectId" value="*Project Name: " />
         		    </p:column>  
         		    <p:column style="text-align: left">
-						<p:selectOneMenu id="caseType"  value="#{myDesk.newCase.caseType}" required="true">
-							<f:selectItems value="#{myDesk.caseType}"/>
+						<p:selectOneMenu id="projectId" value="#{priceAdjustment.listProject}" required="true">
+							<f:selectItems value="#{priceAdjustment.listProject}"/>
 						</p:selectOneMenu>
         		    </p:column>  
         		</p:row>  
         		<p:row>  
             		<p:column style="text-align: right">
-            			<h:outputLabel for="GDVBeforeAdjustment2" value="*GDV Before Adjustment: " />
+            			<h:outputLabel for="GDVBeforeAdjustment" value="*GDV Before Adjustment: " />
             		</p:column>  
             		<p:column style="text-align: left">
-            			<p:inputText id="GDVBeforeAdjustment2" value="" required="true" label="Surname"/>
+            			<p:inputText id="GDVBeforeAdjustment" value="" required="true" label="Surname"/>
             		</p:column>  
 		        </p:row>  
         		<p:row>  
             		<p:column style="text-align: right">
-            			<h:outputLabel for="TotalUnitAdjusted" value="Total Unit Adjusted: " align="right" />
+            			<h:outputLabel for="TotalUnitAdjusted" value="Total Unit Adjusted: " />
             		</p:column>  
             		<p:column style="text-align: left">
             			<p:inputText id="TotalUnitAdjusted" value="" required="true" label="Surname"/>
@@ -47,7 +47,7 @@ Price Adjustment
 		        </p:row>  
         		<p:row>  
             		<p:column style="text-align: right">
-            			<h:outputLabel for="AdjustedAmount" value="Adjusted Amount: " align="right" />
+            			<h:outputLabel for="AdjustedAmount" value="Adjusted Amount: " />
             		</p:column>  
             		<p:column style="text-align: left">
             			<p:inputText id="AdjustedAmount" value="" required="true" label="Surname"/>
@@ -55,18 +55,13 @@ Price Adjustment
 		        </p:row>  
         		<p:row>  
             		<p:column style="text-align: right">
-            			<h:outputLabel for="EffectiveDate" value="Effective Date: " align="right" />
+            			<h:outputLabel for="EffectiveDate" value="Effective Date: " />
             		</p:column>  
             		<p:column style="text-align: left">
-            			<p:inputText id="EffectiveDate" value="" required="true" label="Surname"/>
-            		</p:column>  
-		        </p:row>  
-        		<p:row>  
-            		<p:column style="text-align: right">
-            			<h:outputLabel for="test1" value="Test List: " align="right" />
-            		</p:column>  
+            			<p:calendar id="EffectiveDate" value="#{priceAdjustment.effectiveDate}"  pattern="dd/MM/yyyy"/>	
+            		</p:column>
             		<p:column style="text-align: left">
-            			<p:inputText id="test1" value="" required="true" label="Surname"/>
+      					<h:outputText id="something" value="#{priceAdjustment.something}"/>
             		</p:column>  
 		        </p:row>  
 
