@@ -306,12 +306,8 @@ public class MyDesk extends CommonBean implements Serializable {
 	
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
-			if (StringUtils.hasText(searchIdNo)) {
-				setSearchCustList(customerService.findByIdNo(searchIdNo));
-			}
-	
-			if (StringUtils.hasText(searchName)) {
-				setSearchCustList(customerService.findByName(searchName));
+			if (StringUtils.hasText(searchName) || StringUtils.hasText(searchIdNo)) {
+				setSearchCustList(customerService.findByIdNoName(searchIdNo, searchName));
 			}
 		} catch (Throwable t ) {
 			addErrorMessage("Work Queue", t.getMessage());
