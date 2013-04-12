@@ -50,5 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDao.update(c);
 	}
 	
+	@Override
+	public Customer findByCustId(Long custId) {
+		return customerDao.findById(custId);
+	}
 	
 }

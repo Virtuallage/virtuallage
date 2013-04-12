@@ -124,3 +124,9 @@ alter table customer add remarks varchar(300);
 alter table customer change bumi_indicator bumi_indicator varchar(5);
 alter table address add address_line_4 varchar(80);
 
+--20130408
+alter table account add corr_addr_cust_id bigint;
+alter table account add book_pymt_amount decimal(9,2);
+alter table account add book_pymt_method varchar(5);
+alter table account add book_pymt_card_chq_no varchar(50);
+alter table account add book_pymt_bank varchar(5);

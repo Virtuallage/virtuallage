@@ -73,6 +73,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	private TabView salesRegTabView;
 	private Tab registrationTab;
+	private Tab payBookingTab;
 	
 	/**
 	 * search customer dialog
@@ -305,6 +306,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setSelectedCustomer(Customer selectedCustomer) {
 		this.selectedCustomer = selectedCustomer;
+	}
+	
+	public void addSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
 		if (!customers.contains(selectedCustomer)) {
 			customers.add(selectedCustomer);
 		} else {
@@ -335,6 +340,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
+	}
+	
+	public CustomerDataModel getCustomerDataModel() {
+		return customerDataModel;
+	}
+
+	public void setCustomerDataModel(CustomerDataModel customerDataModel) {
+		this.customerDataModel = customerDataModel;
 	}
 
 	public List<Project> getProjects() {
@@ -383,6 +396,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setListMediaSource(List<SelectItem> listMediaSource) {
 		this.listMediaSource = listMediaSource;
+	}
+	
+	public Tab getPayBookingTab() {
+		return payBookingTab;
+	}
+
+	public void setPayBookingTab(Tab payBookingTab) {
+		this.payBookingTab = payBookingTab;
 	}
 
 	public String listProject() {
@@ -443,8 +464,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 				customers.add(account.getCustomer4());
 			if (account.getCustomer5() != null)
 				customers.add(account.getCustomer5());
+			
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			selectedCustomer = customerService.findByCustId(account.getCorrAddrCustId());
 		}
 
+		customerDataModel = new CustomerDataModel(customers);
 		individual = new Customer();
 		company = new Customer();
 		address = new Address();
@@ -500,6 +526,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
 			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
+			
+			// corresponding address
+			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
 			
 			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
 			account.setRegistrationFee(regFee);
@@ -645,10 +674,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
-		return "pay";
+		salesRegTabView.setActiveIndex(2);
+		payBookingTab.setDisabled(false);
+		
+		return "salesRegistration";
 	}
 
-	public String pay() {
+	public String payBooking() {
 		try {
 			TransactionCode code = new TransactionCode();
 			code.setTransactionCode(TransactionCodeConst.BOOK_FEE);
@@ -663,6 +695,12 @@ public class SalesRegister extends CommonBean implements Serializable {
 			trx.setStatus(TransactionStatusConst.PENDING);
 
 			trxService.insert(trx);
+			
+			// for payBooking details
+			AccountService accountService = (AccountService) SpringBeanUtil
+					.lookup(AccountService.class.getName());
+			accountService.insert(account);
+			
 		} catch (Throwable t) {
 			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
