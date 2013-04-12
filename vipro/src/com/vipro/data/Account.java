@@ -67,6 +67,11 @@ public class Account implements java.io.Serializable {
 	private String maintenanceBilingCycle;
 	private String cancelledReason;
 	private String remark;
+	private Long corrAddrCustId;
+	private BigDecimal bookPymtAmount;
+	private String bookPymtMethod;
+	private String bookPymtCardChqNo;
+	private String bookPymtBank;
 	
 	private BigDecimal cancelFee;
 	private BigDecimal cancelTax;
@@ -742,6 +747,46 @@ public class Account implements java.io.Serializable {
 
 	public void setAccountAgings(Set accountAgings) {
 		this.accountAgings = accountAgings;
+	}
+
+	public Long getCorrAddrCustId() {
+		return corrAddrCustId;
+	}
+
+	public void setCorrAddrCustId(Long corrAddrCustId) {
+		this.corrAddrCustId = corrAddrCustId;
+	}
+
+	public BigDecimal getBookPymtAmount() {
+		return bookPymtAmount;
+	}
+
+	public void setBookPymtAmount(BigDecimal bookPymtAmount) {
+		this.bookPymtAmount = bookPymtAmount;
+	}
+
+	public String getBookPymtMethod() {
+		return bookPymtMethod;
+	}
+
+	public void setBookPymtMethod(String bookPymtMethod) {
+		this.bookPymtMethod = bookPymtMethod;
+	}
+
+	public String getBookPymtCardChqNo() {
+		return bookPymtCardChqNo;
+	}
+
+	public void setBookPymtCardChqNo(String bookPymtCardChqNo) {
+		this.bookPymtCardChqNo = bookPymtCardChqNo;
+	}
+
+	public String getBookPymtBank() {
+		return bookPymtBank;
+	}
+
+	public void setBookPymtBank(String bookPymtBank) {
+		this.bookPymtBank = bookPymtBank;
 	}
 
 }

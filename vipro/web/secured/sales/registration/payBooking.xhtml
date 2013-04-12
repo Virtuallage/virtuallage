@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<h:form id="payBookForm">  
+   	<h:panelGrid columns="4" style="width:70%">
+   		<p:outputLabel value="Project Name"/>
+   		<p:outputLabel value="#{salesRegister.project.projectName}"/>
+   		<p:outputLabel value="Registration No"/>
+   		<p:outputLabel value="#{salesRegister.account.accountId}"/>
+   		
+   		<p:outputLabel value="Lot/Unit No"/>
+   		<p:outputLabel value="#{salesRegister.inventory.unitNo}"/>
+   		<p:outputLabel value="Developer"/>
+   		<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
+   		
+   		<p:outputLabel value="Payment Amount"/>
+   		<p:inputText value="#{salesRegister.account.bookPymtAmount}"/>
+   		<p:outputLabel value="Registration Fee"/>
+   		<p:outputLabel value="#{salesRegister.account.registrationFee}"/>
+   		
+   		<p:outputLabel value="Payment Method"/>
+   		<p:selectOneMenu value="#{salesRegister.account.bookPymtMethod}"> 
+			<f:selectItems value="#{salesRegister.listPaymentMethod}" />
+		</p:selectOneMenu>
+   		<p:outputLabel value="Card / Cheque No"/>
+   		<p:inputText value="#{salesRegister.account.bookPymtCardChqNo}"/>
+   		
+   		<p:outputLabel value="Bank Name"/>
+   		<p:selectOneMenu value="#{salesRegister.account.bookPymtBank}"> 
+			<f:selectItems value="#{salesRegister.listBank}" />
+		</p:selectOneMenu>
+   		
+   	</h:panelGrid>
+	
+	<br/>
+	<p:commandButton value="Back" action="#{salesRegister.selectInventory}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
+	&nbsp;
+	<p:commandButton value="Submit" action="#{salesRegister.payBooking}" ajax="false"  icon="ui-icon-disk"/>
+				
+    <br/>
+</h:form> 
+
+
+</ui:composition>

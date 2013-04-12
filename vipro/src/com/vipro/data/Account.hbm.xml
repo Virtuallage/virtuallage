@@ -180,6 +180,22 @@
         <property name="cancelNetRefundAmt" type="big_decimal">
             <column name="cancel_refund_net_amt" precision="9" />
         </property>
+        <property name="corrAddrCustId" type="java.lang.Long">
+            <column name="corr_addr_cust_id" />
+        </property>
+        
+        <property name="bookPymtAmount" type="big_decimal">
+            <column name="book_pymt_amount" precision="9" />
+        </property>
+        <property name="bookPymtMethod" type="string">
+            <column name="book_pymt_method" length="5" />
+        </property>
+        <property name="bookPymtCardChqNo" type="string">
+            <column name="book_pymt_card_chq_no" length="50" />
+        </property>
+        <property name="bookPymtBank" type="string">
+            <column name="book_pymt_bank" length="5" />
+        </property>
         
         <set name="waterBillings" table="water_billing" inverse="true" lazy="true" fetch="select">
             <key>
