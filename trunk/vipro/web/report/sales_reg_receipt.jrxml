@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.1"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="280"/>
+	<property name="ireport.y" value="341"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,PI.*,P.PROJECT_NAME,I.INSTITUTION_NAME FROM ACCOUNT A
-INNER JOIN PROJECT_INVENTORY PI ON A.INVENTORY_ID = PI.INVENTORY_ID
-INNER JOIN PROJECT P ON P.PROJECT_ID = PI.PROJECT_ID
-INNER JOIN INSTITUTION I ON P.INSTITUTION_ID = I.INSTITUTION_ID
+		<![CDATA[SELECT A.*,PI.*,P.PROJECT_NAME,I.INSTITUTION_NAME FROM account A
+INNER JOIN project_inventory PI ON A.INVENTORY_ID = PI.INVENTORY_ID
+INNER JOIN project P ON P.PROJECT_ID = PI.PROJECT_ID
+INNER JOIN institution I ON P.INSTITUTION_ID = I.INSTITUTION_ID
 WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	</queryString>
 	<field name="account_id" class="java.lang.Long"/>
@@ -117,14 +117,14 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<title>
 		<band height="99" splitType="Stretch">
 			<staticText>
-				<reportElement x="167" y="10" width="226" height="29"/>
+				<reportElement x="157" y="10" width="236" height="29"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="403" y="10" width="152" height="20"/>
+				<reportElement x="407" y="10" width="148" height="20"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>
@@ -150,7 +150,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="155" height="51"/>
-				<imageExpression class="java.lang.String"><![CDATA["C:\\eric\\vipro\\workspace\\vipro\\web\\images\\BnGLogo.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["/home/eric/workspace/vipro/web/images/BnGLogo.gif"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -312,26 +312,26 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<text><![CDATA[- If you do not receive an Official Receipt, please contact us at the above number.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="385" y="1" width="22" height="20"/>
+				<reportElement x="371" y="1" width="22" height="20"/>
 				<textElement>
 					<font isItalic="true"/>
 				</textElement>
 				<text><![CDATA[for]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="407" y="1" width="148" height="20"/>
+				<reportElement x="393" y="1" width="148" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{INSTITUTION_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="393" y="21" width="162" height="40"/>
+				<reportElement x="371" y="21" width="184" height="40"/>
 				<textElement/>
 				<text><![CDATA[This is computer printed receipt,
 signature is not required.
 ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="385" y="60" width="170" height="1"/>
+				<reportElement x="371" y="60" width="184" height="1"/>
 			</line>
 		</band>
 	</summary>
