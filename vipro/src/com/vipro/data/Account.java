@@ -3,6 +3,7 @@ package com.vipro.data;
 // Generated Feb 3, 2013 6:50:08 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -334,7 +335,9 @@ public class Account implements java.io.Serializable {
 	}
 
 	public BigDecimal getRegistrationFee() {
-		return this.registrationFee;
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+		return new BigDecimal(df.format(this.registrationFee));
 	}
 
 	public void setRegistrationFee(BigDecimal registrationFee) {
