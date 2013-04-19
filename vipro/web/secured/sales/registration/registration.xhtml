@@ -127,9 +127,9 @@
 	        </p:column>  
 	     
 	        <p:column headerText="Action" style="width:10%">  
-	           <p:commandButton id="selectButton" ajax="false" 
+	           <p:commandButton id="selectButton" ajax="false" action="#{salesRegister.addSelectedCustomer}"
 	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
-	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.addSelectedCustomer}" />  
+	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
 	            </p:commandButton>  
 	        </p:column>  
 		</p:dataTable>  
