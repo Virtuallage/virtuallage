@@ -308,8 +308,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		this.selectedCustomer = selectedCustomer;
 	}
 	
-	public void addSelectedCustomer(Customer selectedCustomer) {
-		this.selectedCustomer = selectedCustomer;
+	public void addSelectedCustomer() {
+//		this.selectedCustomer = selectedCustomer;
 		if (!customers.contains(selectedCustomer)) {
 			customers.add(selectedCustomer);
 		} else {
