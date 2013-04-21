@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.6105100000000008"/>
-	<property name="ireport.x" value="280"/>
-	<property name="ireport.y" value="341"/>
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="137"/>
+	<property name="ireport.y" value="211"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,PI.*,P.PROJECT_NAME,I.INSTITUTION_NAME FROM account A
+		<![CDATA[SELECT A.*,PI.*,P.PROJECT_NAME,I.INSTITUTION_NAME,PM.description as pm_description,BB.description as bb_description
+FROM account A
 INNER JOIN project_inventory PI ON A.INVENTORY_ID = PI.INVENTORY_ID
 INNER JOIN project P ON P.PROJECT_ID = PI.PROJECT_ID
 INNER JOIN institution I ON P.INSTITUTION_ID = I.INSTITUTION_ID
-WHERE A.ACCOUNT_ID = $P{account_id}]]>
+LEFT OUTER JOIN code_det PM on PM.code = A.book_pymt_method
+LEFT OUTER JOIN code_det BB on BB.code = A.book_pymt_bank
+WHERE A.ACCOUNT_ID = $P{account_id}
+AND PM.code_header_id = 'PAYM']]>
 	</queryString>
 	<field name="account_id" class="java.lang.Long"/>
 	<field name="customer_id" class="java.lang.Long"/>
@@ -111,6 +115,8 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="remarks" class="java.lang.String"/>
 	<field name="PROJECT_NAME" class="java.lang.String"/>
 	<field name="INSTITUTION_NAME" class="java.lang.String"/>
+	<field name="pm_description" class="java.lang.String"/>
+	<field name="bb_description" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -247,8 +253,51 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="57" splitType="Stretch">
+	<summary>
+		<band height="135" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="58" width="360" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[- If payment is made by cheque, this receipt is valid only upon clearance of cheque.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="78" width="360" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[- An Official Receipt will be issued within 2 weeks from clearance of cheque.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="98" width="360" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[- If you do not receive an Official Receipt, please contact us at the above number.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="58" width="22" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[for]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="393" y="58" width="148" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INSTITUTION_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="78" width="184" height="40"/>
+				<textElement/>
+				<text><![CDATA[This is computer printed receipt,
+signature is not required.
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="371" y="117" width="184" height="1"/>
+			</line>
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20"/>
 				<textElement>
@@ -269,7 +318,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 			<textField>
 				<reportElement x="100" y="27" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_method}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pm_description}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="220" y="27" width="100" height="20"/>
@@ -284,55 +333,8 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 			<textField>
 				<reportElement x="444" y="27" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_bank}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bb_description}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="97" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="1" width="360" height="20"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[- If payment is made by cheque, this receipt is valid only upon clearance of cheque.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="21" width="360" height="20"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[- An Official Receipt will be issued within 2 weeks from clearance of cheque.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="41" width="360" height="20"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[- If you do not receive an Official Receipt, please contact us at the above number.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="371" y="1" width="22" height="20"/>
-				<textElement>
-					<font isItalic="true"/>
-				</textElement>
-				<text><![CDATA[for]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="393" y="1" width="148" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{INSTITUTION_NAME}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="371" y="21" width="184" height="40"/>
-				<textElement/>
-				<text><![CDATA[This is computer printed receipt,
-signature is not required.
-]]></text>
-			</staticText>
-			<line>
-				<reportElement x="371" y="60" width="184" height="1"/>
-			</line>
 		</band>
 	</summary>
 </jasperReport>
