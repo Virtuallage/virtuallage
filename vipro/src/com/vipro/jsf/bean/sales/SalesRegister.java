@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
 import org.springframework.util.StringUtils;
@@ -18,6 +20,7 @@ import org.springframework.util.StringUtils;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.CustomerTypeConst;
+import com.vipro.constant.JasperConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -39,6 +42,7 @@ import com.vipro.service.ProjectService;
 import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
+import com.vipro.utils.spring.JasperUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "salesRegister")
@@ -74,6 +78,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private TabView salesRegTabView;
 	private Tab registrationTab;
 	private Tab payBookingTab;
+	private CommandButton payButton;
+	private CommandButton previewButton;
 	
 	/**
 	 * search customer dialog
@@ -114,10 +120,27 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		listBank = CodeUtil.getCodes("BANK");
 		listPaymentMethod = CodeUtil.getCodes("PAYM");
+		
 	}
 
 	public Tab getRegistrationTab() {
 		return registrationTab;
+	}
+
+	public CommandButton getPayButton() {
+		return payButton;
+	}
+
+	public void setPayButton(CommandButton payButton) {
+		this.payButton = payButton;
+	}
+
+	public CommandButton getPreviewButton() {
+		return previewButton;
+	}
+
+	public void setPreviewButton(CommandButton previewButton) {
+		this.previewButton = previewButton;
 	}
 
 	public void setRegistrationTab(Tab registrationTab) {
@@ -478,6 +501,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 		salesRegTabView.setActiveIndex(1);
 		registrationTab.setDisabled(false);
 		
+		previewButton.setStyle("display: none");
+		payButton.setStyle("");
+		
 		return "salesRegistration";
 	}
 
@@ -542,6 +568,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 					"Sales Registration Saved. Registration No is "
 							+ account.getAccountId());
 		} catch (Throwable t) {
+			t.printStackTrace();
 			addErrorMessage("Sales Registration", t.getMessage());
 		}
 		return null;
@@ -610,6 +637,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 			customerService.update(individual);
 		} catch (Throwable t) {
+			t.printStackTrace();
 			addErrorMessage("Add Individual", t.getMessage());
 			return null;
 		}
@@ -634,6 +662,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
 		} catch (Throwable t) {
+			t.printStackTrace();
 			addErrorMessage("Add Company", t.getMessage());
 			return null;
 		}
@@ -671,11 +700,25 @@ public class SalesRegister extends CommonBean implements Serializable {
 				}
 			}
 		} catch (Throwable t) {
+			t.printStackTrace();
 			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
 		salesRegTabView.setActiveIndex(2);
 		payBookingTab.setDisabled(false);
+		
+		return "salesRegistration";
+	}
+	
+	public String toPreview() {
+		// generate receipt
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("account_id", Long.toString(account.getAccountId()));
+		
+		String report = JasperConst.SALES_REG_FORM;
+		JasperUtil.generateReport(hm, report);
+		
+		salesRegTabView.setActiveIndex(1);
 		
 		return "salesRegistration";
 	}
@@ -701,12 +744,26 @@ public class SalesRegister extends CommonBean implements Serializable {
 					.lookup(AccountService.class.getName());
 			accountService.insert(account);
 			
+			// generate receipt
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("account_id", Long.toString(account.getAccountId()));
+			
+			String report = JasperConst.SALES_REG_RECEIPT;
+			JasperUtil.generateReport(hm, report);
+			
+			// show/hide buttons
+			payButton.setStyle("display: none");
+			previewButton.setStyle("");
+			
 		} catch (Throwable t) {
+			t.printStackTrace();
 			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
 		
 		addInfoMessage("Booking Fee", "Transaction saved");
-		return listPropertyUnits();
+		salesRegTabView.setActiveIndex(1);
+		
+		return "salesRegistration";
 	}
 }
