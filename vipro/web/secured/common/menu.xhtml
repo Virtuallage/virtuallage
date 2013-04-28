@@ -24,12 +24,12 @@
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
-    		<p:menuitem value="Price Adjustment" url="/secured/sales/price/adjustment.xhtml" icon="ui-icon-note" />
+<!--     		<p:menuitem value="Price Adjustment" url="/secured/sales/price/adjustment.xhtml" icon="ui-icon-note" /> -->
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
-    		<p:menuitem value="Sales Update" action="#{salesUpdate.listProject}" />
-    		<p:menuitem value="Sales Cancellation" action="#{salesCancel.listProject}" />
-    		<p:menuitem value="Sales Commission" url="#" />
-    		<p:menuitem value="Potential Purchaser Entry" url="#" />        
+<!--     		<p:menuitem value="Sales Update" action="#{salesUpdate.listProject}" /> -->
+<!--     		<p:menuitem value="Sales Cancellation" action="#{salesCancel.listProject}" /> -->
+<!--     		<p:menuitem value="Sales Commission" url="#" /> -->
+<!--     		<p:menuitem value="Potential Purchaser Entry" url="#" />         -->
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
@@ -56,7 +56,8 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="MIS" icon="ui-icon-document">
-    		<p:menuitem value="..." url="#" />
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+<!--     		<p:menuitem value="..." url="#" /> -->
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
