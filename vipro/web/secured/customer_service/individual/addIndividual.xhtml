@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Add Individuals
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Add Individual" style="width:95%">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="4" style="width:100%;text-align:left;">
+				<p:outputLabel value="Purchaser ID"/>
+				<p:outputLabel value="#{customerRegister.individual.customerId}"/>
+				<p:outputLabel value="Type"/>
+				<p:outputLabel value="Individual"/>
+				
+				<p:outputLabel value="Purchaser Name" for="name"/>
+				<p:inputText id="name" value="#{customerRegister.individual.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				<p:outputLabel value="Title" for="title"/>
+				<p:selectOneMenu id="title" value="#{customerRegister.individual.title}">
+						<f:selectItems value="#{customerRegister.listTitle}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="ID Type" for="idtype"/>
+				<p:selectOneMenu id="idtype" value="#{customerRegister.individual.identityType}" required="true">
+					<f:selectItems value="#{customerRegister.listIdType}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="ID No" for="idno"/>
+				<p:inputText id="idno" value="#{customerRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+
+				<p:outputLabel value="Race" for="race"/>
+				<p:selectOneMenu id="race" value="#{customerRegister.individual.race}" required="true">
+						<f:selectItems value="#{customerRegister.listRace}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
+				<p:selectOneMenu id="bumi" value="#{customerRegister.individual.bumiIndicator}" required="true">
+						<f:selectItems value="#{customerRegister.listBumi}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Marital Status" for="marital"/>
+				<p:selectOneMenu id="marital" value="#{customerRegister.individual.maritalStatus}">
+						<f:selectItems value="#{customerRegister.listMaritalStatus}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Sex" for="sex"/>
+				<p:selectOneMenu id="sex" value="#{customerRegister.individual.sex}" required="true">
+						<f:selectItems value="#{customerRegister.listGender}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Date of birth" for="dob"/>
+				<p:calendar id="dob" value="#{customerRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="true"/>
+				<p:outputLabel value="Citizenship" for="citizenship"/>
+				<p:selectOneMenu id="citizenship" value="citizenship" required="true">
+						<f:selectItems value="#{customerRegister.listCountry}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Address 1" for="addr1"/>
+				<p:inputText id="addr1" value="#{customerRegister.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
+				<p:outputLabel value="Address 2" for="addr2"/>
+				<p:inputText id="addr2" value="#{customerRegister.address.addressLine2}" maxlength="40" autocomplete="off"/>
+				
+				<p:outputLabel value="Address 3" for="addr3"/>
+				<p:inputText id="addr3" value="#{customerRegister.address.addressLine3}" maxlength="40" autocomplete="off"/>
+				<p:outputLabel value="Address 4" for="addr4"/>
+				<p:inputText id="addr4" value="#{customerRegister.address.addressLine4}" maxlength="40" autocomplete="off"/>
+				
+				<p:outputLabel value="Post Code" for="postcode" required="true"/>
+				<p:inputText id="postcode" value="#{customerRegister.address.postcode}" maxlength="10" autocomplete="off"/>
+				<p:outputLabel value="City" for="city" required="true"/>
+				<p:selectOneMenu id="city" value="#{customerRegister.address.city}"  required="true">
+						<f:selectItems value="#{customerRegister.listCity}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="State" for="state" required="true"/>
+				<p:selectOneMenu id="state" value="#{customerRegister.address.state}"  required="true">
+						<f:selectItems value="#{customerRegister.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Country" for="country"/>
+				<p:selectOneMenu id="country" value="#{customerRegister.address.country}"  required="true">
+						<f:selectItems value="#{customerRegister.listCountry}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="House Tel No" for="tel"/>
+				<p:inputText  id="tel" value="#{customerRegister.individual.houseTelNo}" maxlength="15" autocomplete="off"/>
+				<p:outputLabel value="Mobile No" for="mobile"/>
+				<p:inputText  id="mobile" value="#{customerRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+
+				<p:outputLabel value="Office Tel No" for="offtel"/>
+				<p:inputText id="offtel" value="#{customerRegister.individual.officeTelNo}" maxlength="15" autocomplete="off"/>
+				<p:outputLabel value="Fax No" for="fax"/>
+				<p:inputText id="fax" value="#{customerRegister.individual.faxNo}" maxlength="15" autocomplete="off"/>
+				
+				<p:outputLabel value="Email Address" for="email"/>
+				<p:inputText id="email" value="#{customerRegister.individual.email}" maxlength="30" autocomplete="off"/>
+			</h:panelGrid>
+			<h:panelGrid style="width:100%">
+		   		<p:row>
+		   			<p:column style="width:30%;text-align:center">
+			   			<p:outputLabel value="Remarks"/>
+			   		</p:column>
+			   		<p:column style="width:70%;text-align:center">
+			   			<h:inputTextarea value="#{customerRegister.individual.remarks}" cols="80" rows="3" />
+			   		</p:column>
+		   		</p:row>
+		   	</h:panelGrid>
+			
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{customerRegister.backIndividual}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+			<p:commandButton value="Save" ajax="false" action="#{customerRegister.saveIndividual}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		
