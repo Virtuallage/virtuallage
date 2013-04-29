@@ -9,6 +9,8 @@ public interface CustomerService {
 	public List<Customer> findByIdNo(String idNo);
 	
 	public List<Customer> findByIdNoName(String idNo, String name);
+
+	public List<Customer> findByIdNoNameCategory(String idNo, String name, String category);
 	
 	public void insert(Customer c);
 	
