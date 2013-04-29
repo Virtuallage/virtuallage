@@ -62,6 +62,8 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="Customer Service" icon="ui-icon-document">
+    		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Purchaser Information" url="/secured/customer_service/purchaser_main.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Contact Management" url="/secured/contact_management.xhtml" icon="ui-icon-note" />
     	</p:submenu>
