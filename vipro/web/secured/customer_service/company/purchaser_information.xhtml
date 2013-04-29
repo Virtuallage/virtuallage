@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Purchaser Information - Company
+</ui:define>
+	<ui:define name="content">
+		<h:form id="searchCustForm">
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="text-align:left">
+						<h:outputLabel style="font-weight:bold;">Purchaser Information - Company</h:outputLabel>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column style="text-align:left">
+						<p:outputLabel value="Search by Name" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:inputText id="name" size="50" value="#{customerRegister.searchName}" required="false" autocomplete="off" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:commandButton value="Search" action="#{customerRegister.searchCompany}" update="searchCustForm:custs" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column style="text-align:left">
+						<p:outputLabel value="Search by ID Number" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:inputText id="idNumber" size="50" value="#{customerRegister.searchIdNo}" required="false" autocomplete="off" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:commandButton value="Search" action="#{customerRegister.searchCompany}" update="searchCustForm:custs" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable id="custs" var="c" value="#{customerRegister.searchCustList}">
+				<p:column headerText="Name" style="width:35%">
+					<h:outputText value="#{c.fullName}" />
+				</p:column>
+				
+				<p:column headerText="ID Number" style="width:25%">
+					<h:outputText value="#{c.identityNo}" />
+				</p:column>
+				
+				<p:column headerText="ID Type" style="width:20%">
+					<h:outputText value="#{c.identityType}" />
+				</p:column>
+				
+				<p:column headerText="Status" style="width:20%">
+					<h:outputText value="#{c.identityType}" />
+				</p:column>
+
+				<p:column headerText="Action" style="width:20%">
+
+				</p:column>
+			</p:dataTable>
+
+			<br/>
+
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="text-align:left">
+						<p:commandButton value="Add Company" ajax="false" immediate="true"
+							action="#{customerRegister.toAddCompany}" icon="ui-icon-plus" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
