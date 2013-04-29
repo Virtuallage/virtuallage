@@ -57,5 +57,37 @@
             <to-view-id>/secured/mydesk/openCase.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/individual/purchaser_information.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addIndividual</from-outcome>
+            <to-view-id>/secured/customer_service/individual/addIndividual.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/individual/addIndividual.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>individualRegistration</from-outcome>
+            <to-view-id>/secured/customer_service/individual/purchaser_information.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/company/purchaser_information.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addCompany</from-outcome>
+            <to-view-id>/secured/customer_service/company/addCompany.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/company/addCompany.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>companyRegistration</from-outcome>
+            <to-view-id>/secured/customer_service/company/purchaser_information.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>
