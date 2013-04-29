@@ -33,6 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	public List<Customer> findByIdNoNameCategory(String idNo, String name, String category) {
+		return customerDao.findByIdNoNameCategory(idNo, name, category);
+	}
+
+	@Override
 	public void insert(Customer c) {
 		customerDao.insert(c);
 		
