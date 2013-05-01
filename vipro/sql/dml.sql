@@ -76,9 +76,9 @@ INSERT INTO code_det VALUES ('COUNTRY', 'MAS', 'Malaysia', 'ACTV');
 INSERT INTO code_det VALUES ('COUNTRY', 'IND', 'Indonesia', 'ACTV');
 
 -- Status
-INSERT INTO code_header VALUES ('STATUS', 'Status');
-INSERT INTO code_det VALUES ('STATUS', 'ACTV', 'Active', 'ACTV');
-INSERT INTO code_det VALUES ('STATUS', 'INACT', 'Inactive', 'ACTV');
+-- INSERT INTO code_header VALUES ('STATUS', 'Status');
+-- INSERT INTO code_det VALUES ('STATUS', 'ACTV', 'Active', 'ACTV');
+-- INSERT INTO code_det VALUES ('STATUS', 'INACT', 'Inactive', 'ACTV');
 
 
 
