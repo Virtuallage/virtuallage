@@ -27,9 +27,6 @@ Purchaser Information - Company
 					<p:column style="text-align:left">
 						<p:inputText id="name" size="50" value="#{customerRegister.searchName}" required="false" autocomplete="off" />
 					</p:column>
-					<p:column style="text-align:left">
-						<p:commandButton value="Search" action="#{customerRegister.searchCompany}" update="searchCustForm:custs" />
-					</p:column>
 				</p:row>
 
 				<p:row>
@@ -65,7 +62,9 @@ Purchaser Information - Company
 				</p:column>
 
 				<p:column headerText="Action" style="width:20%">
-
+					<p:commandButton action="#{customerRegister.toEditCompany}" ajax="false" icon="ui-icon-pencil" title="Edit Company">
+           		 	<f:setPropertyActionListener value="#{c}" target="#{customerRegister.company}" />  
+           			</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
