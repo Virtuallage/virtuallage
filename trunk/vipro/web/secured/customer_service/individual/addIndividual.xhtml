@@ -62,7 +62,7 @@ Add Individuals
 				<p:outputLabel value="Date of birth" for="dob"/>
 				<p:calendar id="dob" value="#{customerRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="true"/>
 				<p:outputLabel value="Citizenship" for="citizenship"/>
-				<p:selectOneMenu id="citizenship" value="citizenship" required="true">
+				<p:selectOneMenu id="citizenship" value="#{customerRegister.individual.citizenship}" required="true">
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</p:selectOneMenu>
 
