@@ -18,10 +18,15 @@ import com.vipro.constant.JasperConst;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
+import com.vipro.data.Discount;
+import com.vipro.data.SalesCommission;
 import com.vipro.datamodel.CustomerDataModel;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
+import com.vipro.service.DiscountService;
+import com.vipro.service.ProjectService;
+import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.JasperUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -55,7 +60,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private String searchIdNo;
 	private String searchName;
 	private List<Customer> searchCustList;
-	private Customer selectedCustomer;
+	private Customer customer;
+	private long customerId;
 	private Customer delCustomer;
 
 	/**
@@ -215,13 +221,22 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		this.searchCustList = searchCustList;
 	}
 	
-	public Customer getSelectedCustomer() {
-		return selectedCustomer;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setSelectedCustomer(Customer selectedCustomer) {
-		this.selectedCustomer = selectedCustomer;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
+	
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setProjectId(Long customerId) {
+		this.customerId = customerId;
+	}
+
 
 	public Account getAccount() {
 		return account;
@@ -362,6 +377,80 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		return "companyRegistration";
 	}
 	
+	public String toEditIndividual() {
+		try {
+			customerId = individual.getCustomerId();
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address = addressService.findByCustomerId(customerId);
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		return "editIndividual";
+	}
+
+	public String toEditCompany() {
+		try {
+			customerId = company.getCustomerId();
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address = addressService.findByCustomerId(customerId);
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		return "editCompany";
+	}
+	
+	public String editIndividual() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
+			customerService.update(individual);
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address.setCustomer(individual);
+			addressService.update(address);
+
+			individual.setAddressId(address.getAddressId());
+
+			customerService.update(individual);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Add Individual", t.getMessage());
+			return null;
+		}
+
+		return "individualRegistration";
+	}
+
+	public String editCompany() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			company.setCustomerCategory(CustomerTypeConst.COMPANY);
+			company.setIdentityType("");
+			customerService.update(company);
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address.setCustomer(company);
+			addressService.update(address);
+
+			company.setAddressId(address.getAddressId());
+			customerService.update(company);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Add Company", t.getMessage());
+			return null;
+		}
+
+		return "companyRegistration";
+	}
+
 	public String backIndividual() {
 		return "individualRegistration";
 	}
