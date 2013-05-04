@@ -13,4 +13,8 @@ public class AddressDaoImpl extends DaoImpl<Address> implements AddressDao {
 		return getHibernateTemplate().get(Address.class, addressId);
 	}
 
+	@Override
+	public Address findByCustomerId(Long customerId) {
+		return getHibernateTemplate().get(Address.class, customerId);
+	}
 }
