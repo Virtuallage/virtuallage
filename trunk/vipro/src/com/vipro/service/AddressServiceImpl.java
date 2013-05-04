@@ -25,24 +25,26 @@ public class AddressServiceImpl implements AddressService {
 	public Address findById(Long addressId) {
 		return addressDao.findById(addressId);
 	}
+	
+	@Override
+	public Address findByCustomerId(Long customerId) {
+		return addressDao.findById(customerId);
+	}
 
 	@Override
 	public void insert(Address a) {
 		addressDao.insert(a);
-		
 	}
 
 	@Override
 	public void update(Address a) {
 		addressDao.update(a);
-		
 	}
 
 	@Override
 	public void delete(Long addrId) {
 		Address a =addressDao.findById(addrId);
 		addressDao.delete(a);
-		
 	}
-
+	
 }
