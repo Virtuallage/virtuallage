@@ -139,11 +139,11 @@ Project Setup
 		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
 
 		<p:outputLabel value="Location Longtitude" for="locationLongtitude"/>
-		<p:inputText id="locationLongtitude" autocomplete="off"/>
+		<p:inputText id="locationLongtitude" value="#{projectSetup.project.locationLongtitude}" autocomplete="off"/>
 		
 
 		<p:outputLabel value="Location Latitude" for="locationLatitude"/>
-		<p:inputText id="locationLatitude" autocomplete="off"/>
+		<p:inputText id="locationLatitude" value="#{projectSetup.project.locationLatitude}" autocomplete="off"/>
 		
 		
 	</h:panelGrid>
