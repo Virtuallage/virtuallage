@@ -130,3 +130,10 @@ alter table account add book_pymt_amount decimal(9,2);
 alter table account add book_pymt_method varchar(5);
 alter table account add book_pymt_card_chq_no varchar(50);
 alter table account add book_pymt_bank varchar(5);
+
+-- 20130505
+alter table project add current_discount decimal(11,2);
+alter table project add sales_commission decimal(11,2);
+alter table project_inventory modify column purchase_price decimal(11,2);
+alter table account modify column registration_fee decimal(9,2);
+
