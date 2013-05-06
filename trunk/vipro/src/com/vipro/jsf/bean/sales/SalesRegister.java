@@ -78,6 +78,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private TabView salesRegTabView;
 	private Tab registrationTab;
 	private Tab payBookingTab;
+	private CommandButton saveButton;
 	private CommandButton payButton;
 	private CommandButton previewButton;
 	
@@ -120,7 +121,6 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		listBank = CodeUtil.getCodes("BANK");
 		listPaymentMethod = CodeUtil.getCodes("PAYM");
-		
 	}
 
 	public Tab getRegistrationTab() {
@@ -446,6 +446,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		inventories = inventoryService.getInventories(projectId);
 		
 		salesRegTabView.setActiveIndex(0);
+		registrationTab.setDisabled(true);
+		payBookingTab.setDisabled(true);
 		
 		return "salesRegistration";
 	}
@@ -498,11 +500,29 @@ public class SalesRegister extends CommonBean implements Serializable {
 		company = new Customer();
 		address = new Address();
 		
-		salesRegTabView.setActiveIndex(1);
-		registrationTab.setDisabled(false);
+		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_ACTIVE)) {
+			salesRegTabView.setActiveIndex(1);
+			registrationTab.setDisabled(false);
+			previewButton.setStyle("display: none");
+			payButton.setStyle("display: none");
+			saveButton.setStyle("");
+		}
 		
-		previewButton.setStyle("display: none");
-		payButton.setStyle("");
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
+			salesRegTabView.setActiveIndex(1);
+			registrationTab.setDisabled(false);
+			previewButton.setStyle("display: none");
+			payButton.setStyle("");
+			saveButton.setStyle("display: none");
+		}
+
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
+			salesRegTabView.setActiveIndex(1);
+			registrationTab.setDisabled(false);
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
+			saveButton.setStyle("display: none");
+		}
 		
 		return "salesRegistration";
 	}
@@ -529,6 +549,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setCustomer3(null);
 			account.setCustomer4(null);
 			account.setCustomer5(null);
+			
 			for (int i = 0; i < customers.size(); i++) {
 				Customer c = customers.get(i);
 				switch (i) {
@@ -557,12 +578,15 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
 			
 			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
+			regFee = regFee.setScale(2, BigDecimal.ROUND_HALF_UP);
+			
 			account.setRegistrationFee(regFee);
 			accountService.insert(account);
 
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_IN_PROGRESS);
 			inventoryService.update(inventory);
-
+			payButton.setStyle("");
+			
 			addInfoMessage(
 					"Sales Registration",
 					"Sales Registration Saved. Registration No is "
@@ -744,6 +768,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 					.lookup(AccountService.class.getName());
 			accountService.insert(account);
 			
+			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_BOOKED);
+			inventoryService.update(inventory);
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
+			
 			// generate receipt
 			HashMap<String, Object> hm = new HashMap<String, Object>();
 			hm.put("account_id", Long.toString(account.getAccountId()));
@@ -766,4 +797,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		return "salesRegistration";
 	}
+
+	public CommandButton getSaveButton() {
+		return saveButton;
+	}
+
+	public void setSaveButton(CommandButton saveButton) {
+		this.saveButton = saveButton;
+	}
+	
 }
