@@ -335,13 +335,15 @@ public class Account implements java.io.Serializable {
 	}
 
 	public BigDecimal getRegistrationFee() {
-		if (registrationFee != null) {
-			DecimalFormat df = new DecimalFormat();
-			df.setMaximumFractionDigits(2);
-			return new BigDecimal(df.format(this.registrationFee));
-		} else {
-			return new BigDecimal(0.00);
-		}
+		return this.registrationFee;
+//		if (registrationFee != null) {
+//			System.out.println("not null");
+//			DecimalFormat df = new DecimalFormat();
+//			df.setMaximumFractionDigits(2);
+//			return new BigDecimal(df.format(this.registrationFee));
+//		} else {
+//			return new BigDecimal(0.00);
+//		}
 	}
 
 	public void setRegistrationFee(BigDecimal registrationFee) {
