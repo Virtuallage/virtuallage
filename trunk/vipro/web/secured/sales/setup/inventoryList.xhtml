@@ -43,28 +43,39 @@ Project Setup
         </p:column>  
         
         <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}">  
-           <h:outputText value="#{c.builtUpArea}">
-          	 <f:convertNumber pattern="#,##0"/>
-           </h:outputText>
+           	<h:outputText value="#{c.builtUpArea}">
+          	 	<f:convertNumber pattern="#,##0"/>
+           	</h:outputText>
         </p:column>  
         
         <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
-           <h:outputText value="#{c.purchasePrice}">
+           	<h:outputText value="#{c.purchasePrice}">
            		<f:convertNumber type="currency" currencySymbol="" />
-           </h:outputText>
-           &nbsp;&nbsp;
-           <p:commandButton action="#{projectSetup.editInventory}" ajax="false" icon="ui-icon-pencil" title="Edit Property Unit">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
-           </p:commandButton>
-           &nbsp;
-           <p:commandButton action="#{projectSetup.deleteInventory}" ajax="false" icon="ui-icon-trash" title="Delete Property Unit">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
-           </p:commandButton>
-           
+           	</h:outputText>
+           	&nbsp;&nbsp;
+           	<p:commandButton action="#{projectSetup.editInventory}" ajax="false" icon="ui-icon-pencil" title="Edit Property Unit">
+           		<f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
+           	</p:commandButton>
+ 			&nbsp;
+           	<p:commandButton id="showDialogButton" ajax="false" icon="ui-icon-trash" title="Delete Property Unit" onclick="confirmation.show()" type="button"/>  
+      
+    		<p:confirmDialog id="confirmDialog" message="Do you want to delete this property?"  
+                header="Confirmation" severity="alert" widgetVar="confirmation">  
+                <p:panelGrid styleClass="no-borders" style="width:100%">
+                <p:row>
+                <p:column style="text-align:center">
+					<p:commandButton action="#{projectSetup.deleteInventory}" ajax="false" value="Yes" oncomplete="confirmation.hide()">
+	       		 		<f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" /> 
+	       			</p:commandButton>
+	       		</p:column>
+	       		<p:column style="text-align:center">
+	       			<p:commandButton value="Cancel" onclick="confirmation.hide()"/>  
+                </p:column>
+                </p:row>
+                </p:panelGrid>
+    		</p:confirmDialog>  
         </p:column>
-        
 
-  
     </p:dataTable>  
     
     <br/>
