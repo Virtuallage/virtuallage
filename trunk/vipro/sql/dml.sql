@@ -180,4 +180,6 @@ insert into code_det values ('MEDIA_SOURCE', 'NEWS', 'Newspaper', 'ACTV');
 insert into code_det values ('MEDIA_SOURCE', 'TV', 'Television', 'ACTV');
 insert into code_det values ('MEDIA_SOURCE', 'RAD', 'Radio', 'ACTV');
 
-
+-- 20130505
+insert into vipro.code_det values ('PROP_STATUS','PROG','In Progress','ACTV');
+insert into vipro.code_det values ('PROP_STATUS','BOOK','Booked','ACTV');
