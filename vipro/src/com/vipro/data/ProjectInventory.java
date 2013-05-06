@@ -347,6 +347,10 @@ public class ProjectInventory implements java.io.Serializable {
 		}
 		return nettPrice;
 	}
+	
+	public void setNettPrice(BigDecimal nettPrice) {
+		
+	}
 
 	public String getSource() {
 		return source;
