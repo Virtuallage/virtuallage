@@ -29,7 +29,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class ProjectSetup extends CommonBean implements Serializable {
 	/**
-	 * project related propertiess
+	 * project related properties
 	 */
 	private List<Project> projects;
 	private List<Discount> discounts;
@@ -306,14 +306,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	public String editProject() {
 		try {
-			ProjectService projectService = (ProjectService) SpringBeanUtil
-					.lookup(ProjectService.class.getName());
 			projectId = project.getProjectId();
 
 			DiscountService discountService = (DiscountService) SpringBeanUtil
 					.lookup(DiscountService.class.getName());
 			discounts = discountService.findByProjectId(projectId);
-
+			
 			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
 					.lookup(SalesCommissionService.class.getName());
 
@@ -334,7 +332,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		try {
 			ProjectService projectService = (ProjectService) SpringBeanUtil
 					.lookup(ProjectService.class.getName());
-			project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
+			if(project.getStatus() == null) {
+				project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
+			}
 			projectService.insert(project);
 
 			listProject();
@@ -492,14 +492,13 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	}
 
 	public String addInventory() {
-
 		inventory = new ProjectInventory();
-
+		inventory.setDiscountAmount(project.getCurrentDiscount());
 		return "editInventory";
 	}
 
 	public String editInventory() {
-
+		inventory.setDiscountAmount(project.getCurrentDiscount());
 		return "editInventory";
 	}
 
@@ -571,4 +570,5 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			}
 		}
 	}
+
 }
