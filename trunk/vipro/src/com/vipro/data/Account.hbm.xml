@@ -36,7 +36,7 @@
             <column name="attended_by" />
         </property>
         <property name="registrationFee" type="big_decimal">
-            <column name="registration_fee" precision="7" />
+            <column name="registration_fee" precision="9" scale="2" />
         </property>
         <property name="registrationNo" type="string">
             <column name="registration_no" length="20" />
