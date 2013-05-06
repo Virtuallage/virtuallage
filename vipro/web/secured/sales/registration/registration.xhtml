@@ -90,7 +90,7 @@
 
 	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
 	&nbsp;
-	<p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk"/>
+	<p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.saveButton}"/>
 	&nbsp;
 	<p:commandButton value="Pay" action="#{salesRegister.toPay}" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.payButton}"/>
 	&nbsp;
@@ -130,7 +130,7 @@
 	     
 	        <p:column headerText="Action" style="width:10%">  
 	           <p:commandButton id="selectButton" ajax="false" action="#{salesRegister.addSelectedCustomer}"
-	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-search" title="View">  
+	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-check" title="Select Customer">  
 	                <f:setPropertyActionListener value="#{c}" target="#{salesRegister.selectedCustomer}" />  
 	            </p:commandButton>  
 	        </p:column>  
