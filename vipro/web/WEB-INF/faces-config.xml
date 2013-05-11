@@ -27,11 +27,11 @@
             <from-outcome>project</from-outcome>
             <to-view-id>/secured/sales/setup/project.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>selectProject</from-outcome>
             <to-view-id>/secured/sales/registration/selectProject.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>cancelSelectProject</from-outcome>
             <to-view-id>/secured/sales/cancel/cancelSelectProject.xhtml</to-view-id>
         </navigation-case>

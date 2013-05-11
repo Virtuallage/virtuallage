@@ -37,8 +37,9 @@ public class CodeServiceImpl implements CodeService {
 		CodeHeader header = findById(codeId);
 		List<SelectItem> items = new ArrayList<SelectItem>();
 
+		items.add( new SelectItem(null, "Select One"));
 		if (header != null) {
-			items.add( new SelectItem(null, "Select One"));
+			//items.add( new SelectItem(null, "Select One"));
 
 			Set<CodeDet> cds = header.getCodeDets();
 			for (CodeDet cd : cds) {

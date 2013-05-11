@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.TransactionCodeConst;
@@ -23,6 +25,7 @@ import com.vipro.service.AccountService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
+import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name="salesUpdate")
@@ -31,6 +34,12 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
+	private List<Account> accounts;
+	private List<SelectItem> listProject;
+	private List<SelectItem> purchaseTypes;
+	private List<SelectItem> bankNames;
+	private List<SelectItem> spaSolicitorId;
+	private List<SelectItem> laSolicitorId;
 
 	private ProjectInventory inventory;
 	private Long projectId;
@@ -39,13 +48,58 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private String customerNames;
 	private List<Customer> customers;
 	private Account account;
+	private Long accountId;
 	private UserProfile attendedBy;
 	
 	@PostConstruct
 	public void init() {
+		purchaseTypes = CodeUtil.getCodes("PCTY");
+		bankNames = CodeUtil.getCodes("BANK");
+		spaSolicitorId = CodeUtil.getCodes("SPSL");
+		laSolicitorId = CodeUtil.getCodes("LASL");
 		
 	}
 	
+	public List<SelectItem> getPurchaseTypes() {
+		return purchaseTypes;
+	}
+
+	public void setPurchaseTypes(List<SelectItem> purchaseTypes) {
+		this.purchaseTypes = purchaseTypes;
+	}
+	
+	public List<SelectItem> getBankNames() {
+		return bankNames;
+	}
+
+	public void setBankNames(List<SelectItem> bankNames) {
+		this.bankNames = bankNames;
+	}
+	
+	public List<SelectItem> getSpaSolicitorId() {
+		return spaSolicitorId;
+	}
+
+	public void setSpaSolicitorId(List<SelectItem> spaSolicitorId) {
+		this.spaSolicitorId = spaSolicitorId;
+	}
+	
+	public List<SelectItem> getLaSolicitorId() {
+		return laSolicitorId;
+	}
+
+	public void setLaSolicitorId(List<SelectItem> laSolicitorId) {
+		this.laSolicitorId = laSolicitorId;
+	}
+	
+	public List<SelectItem> getListProject() {
+		listProject = CodeUtil.getProjectAsItems();
+		return listProject;
+	}
+
+	public void setListProject(List<SelectItem> listProject) {
+		this.listProject = listProject;
+	}
 	
 	public List<Project> getProjects() {
 		return projects;
@@ -115,10 +169,30 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
+	
+	
+	public List<Account> getAccounts() {
+		return this.accounts;
+	}
 
 
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	
 	public Account getAccount() {
 		return account;
+	}
+	
+	
+	public Long getAccountId() {
+		return accountId;
+	}
+
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 
@@ -145,17 +219,58 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	}
 
 	public String listPropertyUnits() {
-		if (project != null) {
-			projectId = project.getProjectId();
-		}
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
 
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 		inventories = inventoryService.getInventories(projectId);
 
-		return "updateSelectUnit";
+		//return "updateSelectUnit";
+		return "updatePropertyList";
 	}
 	
+	public String listAccounts(){
+		listProject = CodeUtil.getProjectAsItems();
+		
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+		inventories = inventoryService.getInventories(projectId);
+		
+		AccountService accountService = (AccountService) SpringBeanUtil
+				.lookup(AccountService.class.getName());
+
+		accounts = new ArrayList<Account>();
+		
+		for(ProjectInventory projectInventory: inventories)
+		{
+			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
+			if(dataList != null && dataList.size() > 0) {
+				accounts.addAll(dataList);
+			}
+		}
+		
+		return "updatePropertyList";
+	}
+	
+	public String selectAcount() {
+		
+		return "salesProgressUpdate";
+	}
+	
+	public String update() {
+		
+		if (account != null) {
+			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			accountService.update(account);
+			addInfoMessage("Sales Update", "Updated Successfully.");
+			return listAccounts();
+		} else {
+			addInfoMessage("Sales Update", "Failed to update.");
+			return "salesProgressUpdate";
+		}
+	}
 
 	public String selectInventory() {
 		try {
@@ -208,9 +323,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 				}
 				customerNames = names.toString();
 			}
-			
-			
-			
+
 			
 			if ( account==null) {
 				addInfoMessage("Sales Update", "This property Unit has no sales transaction. There is nothing to update.");
@@ -222,10 +335,10 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			addErrorMessage("Error opening sales", t.getMessage());
 			return listPropertyUnits();
 		}
-		
-		
-		return "update";
+
+		//return "update";
+		return "salesProgressUpdate";
 	}
-	
+
 	
 }

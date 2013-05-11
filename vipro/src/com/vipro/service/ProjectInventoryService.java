@@ -9,6 +9,8 @@ public interface ProjectInventoryService {
 	
 	public List<ProjectInventory> getInventories(Long projectId);
 	
+	public List<ProjectInventory> getAvailableInventories(Long projectId);
+	
 	public ProjectInventory getInventoryById(Long inventoryId);
 	
 	public void insert(ProjectInventory p);

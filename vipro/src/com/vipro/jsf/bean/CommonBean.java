@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextImpl;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.dao.UserProfileDao;
+import com.vipro.data.Account;
 import com.vipro.data.CodeDet;
+import com.vipro.service.AccountService;
 import com.vipro.service.CodeService;
 import com.vipro.utils.spring.SpringBeanUtil;
 
@@ -31,8 +33,7 @@ public class CommonBean {
 		
 		return code;
 	}
-	
-	
+
 
 	public static AuthUser getCurrentUser() {
 		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();

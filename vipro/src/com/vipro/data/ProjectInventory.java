@@ -43,6 +43,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private String source;
 	private String salesPerson;
 	private String remarks;
+	private String customerName;
 	private Set accounts = new HashSet(0);
 	private Set progressiveBillings = new HashSet(0);
 
@@ -374,6 +375,14 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 	
 }

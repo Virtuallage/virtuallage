@@ -26,6 +26,11 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	public List<ProjectInventory> getInventories(Long projectId) {
 		return projectInventoryDao.findByProjectId(projectId);
 	}
+	
+	@Override
+	public List<ProjectInventory> getAvailableInventories(Long projectId) {
+		return projectInventoryDao.findByAvailableProjectId(projectId);
+	}
 
 	@Override
 	public ProjectInventory getInventoryById(Long inventoryId) {

@@ -21,10 +21,20 @@ public class AccountServiceImpl implements AccountService {
 	public void setAccountDao(AccountDao accountDao) {
 		this.accountDao = accountDao;
 	}
+	
+	@Override
+	public List<Account> findAll() {
+		return accountDao.findAll();
+	}
 
 	@Override
 	public List<Account> findByProjectInventoryId(Long inventoryId) {
 		return accountDao.findByProjectInventoryId(inventoryId);
+	}
+	
+	@Override
+	public List<Account> findByAvailableProjectInventoryId(Long inventoryId) {
+		return accountDao.findByAvailableProjectInventoryId(inventoryId);
 	}
 
 	@Override
