@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Cancellation
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Cancellation" style="width:95%">  
+    
+<p:focus context="panel"/> 
+   <h:form >
+   		<h:panelGrid columns="4" style="width:100%;">
+   			<p:outputLabel value="Project Name"/>
+			<h:inputText value="#{salesCancel.project.projectName}" style="width:200px" disabled="true"/>
+			<p:outputLabel value="Registration Ref."/>
+			<h:inputText value="#{salesCancel.account.registrationNo}" style="width:200px" disabled="true"/>
+			
+   			<p:outputLabel value="Unit No."/>
+   			<h:inputText value="#{salesCancel.inventory.unitNo}"  style="width:200px" disabled="true"/>
+   			<p:outputLabel value="Block No."/>
+   			<h:inputText value="#{salesCancel.inventory.blockNo}" style="width:200px" disabled="true"/>
+   			
+   			<p:outputLabel value="Purchaser Name"/>
+   			<h:inputText value="#{salesCancel.customerNames}" style="width:200px" disabled="true"/>
+   			<p:outputLabel value="Date Registered"/>
+   			<h:inputText value="#{salesCancel.account.datePurchased}" style="width:200px" disabled="true">
+   				<f:convertDateTime pattern="dd/MM/yyyy"/>
+   			</h:inputText>
+   			
+   			<p:outputLabel value="Registration Fee Paid"/>
+   			<h:inputText value="#{salesCancel.account.registrationFee}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<h:outputLabel value="Payment Method" disabled="true"/>
+   			<h:inputText value="" style="width:200px" disabled="true"/>
+   			
+   			<p:outputLabel value="Reason for Cancellation" for="reasonForCancellation"/>
+   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancel.account.cancelledReason}" required="true" style="width:200px">  
+				<f:selectItems value="#{salesCancel.cancelReasons}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Cancellation Letter"/>
+			<p:commandButton value="Upload" ajax="false" immediate="true" disabled="true" icon="ui-icon-arrowstop-1-n"/>
+
+   			<p:outputLabel value="Admin charges" for="cancelFee"/>
+   			<p:inputText id="cancelFee" value="#{salesCancel.account.cancelFee}" style="width:200px" autocomplete="off" 
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   				<p:ajax event="keyup" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
+                <!--<f:convertNumber maxFractionDigits="2" />
+                <p:ajax update="cancelFee" event="blur" process="cancelFee"/>-->
+   			</p:inputText>
+			<p:outputLabel value=""/>
+			<p:outputLabel value=""/>
+   			
+   			
+   			<p:outputLabel value="Tax" for="cancelTax"/>
+   			<p:inputText id="cancelTax" value="#{salesCancel.account.cancelTax}" style="width:200px" autocomplete="off">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   				<p:ajax event="keyup" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
+                <!--<f:convertNumber maxFractionDigits="2" />
+                <p:ajax update="cancelTax" event="blur" process="cancelTax"/>-->
+   			</p:inputText>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			
+   			<p:outputLabel value="Net Refund Amount"/>
+   			<h:inputText id="netRefund" value="#{salesCancel.account.cancelNetRefundAmt}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			   			
+   		</h:panelGrid>
+   		
+   		<p:commandButton value="Back" action="#{salesCancel.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Submit" action="#{salesCancel.cancel}" ajax="false" icon="ui-icon-check"/>  &nbsp;&nbsp;
+   
+	</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

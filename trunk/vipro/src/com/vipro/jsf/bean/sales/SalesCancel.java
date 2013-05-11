@@ -28,6 +28,7 @@ import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
+import com.vipro.data.SalesCancellationHistory;
 import com.vipro.data.Customer;
 import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
@@ -37,6 +38,7 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
+import com.vipro.service.SalesCancellationService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
@@ -55,12 +57,14 @@ public class SalesCancel extends CommonBean implements Serializable{
 	
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
+	private List<SelectItem> listProject;
 
 	private ProjectInventory inventory;
 	private Long projectId;
 	private Project project;
 
 	private String customerNames;
+	private String cancelReason;
 	private List<Customer> customers;
 	private Account account;
 	private TransactionHistory bookTrx;
@@ -73,7 +77,14 @@ public class SalesCancel extends CommonBean implements Serializable{
 		cancelReasons = CodeUtil.getCodes("CANCEL_R");
 	}
 
+	public List<SelectItem> getListProject() {
+		listProject = CodeUtil.getProjectAsItems();
+		return listProject;
+	}
 
+	public void setListProject(List<SelectItem> listProject) {
+		this.listProject = listProject;
+	}
 
 	public List<SelectItem> getCancelReasons() {
 		return cancelReasons;
@@ -90,7 +101,15 @@ public class SalesCancel extends CommonBean implements Serializable{
 	public void setCustomerNames(String customerNames) {
 		this.customerNames = customerNames;
 	}
+	
+	public String getCancelReason() {
+		return cancelReason;
+	}
 
+	public void setCancelReason(String cancelReason) {
+		this.cancelReason = cancelReason;
+	}
+	
 	public List<Project> getProjects() {
 		return projects;
 	}
@@ -132,10 +151,17 @@ public class SalesCancel extends CommonBean implements Serializable{
 	}
 
 	public String listProject() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
+		try
+		{		
+			ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
-		projects = projectService.findAllProjects();
-		return "cancelSelectProject";
+			projects = projectService.findAllProjects();
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		
+		//return "cancelSelectProject";
+		return "cancelPropertyList";
 	}
 
 	public List<Customer> getCustomers() {
@@ -169,20 +195,41 @@ public class SalesCancel extends CommonBean implements Serializable{
 	public void setBookTrx(TransactionHistory bookTrx) {
 		this.bookTrx = bookTrx;
 	}
-
-
+	
 	public String listPropertyUnits() {
-		if (project != null) {
-			projectId = project.getProjectId();
-		}
+		listProject = CodeUtil.getProjectAsItems();
+		
+		ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
 
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getInventories(projectId);
-
-		return "cancelSelectUnit";
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
+		inventories = inventoryService.getAvailableInventories(projectId);
+		
+		//return "cancelSelectUnit";
+		return "cancelPropertyList";
 	}
-
+	
+	public String GetCustomerNameByInventoryId(Long id){
+		String customerName = "";
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		List<Account> accounts = accountService.findByAvailableProjectInventoryId(id);
+		for (Account account : accounts) {
+			customerName = account.getCustomer().getFullName();
+		}
+		return customerName;
+	}
+	
+	public String updateNetRefund() {
+		
+		double regFee = account.getRegistrationFee()!=null ? account.getRegistrationFee().doubleValue() : 0.0d;
+		double cancelFee = account.getCancelFee()!=null ? account.getCancelFee().doubleValue() : 0.0d;
+		double cancelTax = account.getCancelTax()!=null ? account.getCancelTax().doubleValue() : 0.0d;
+		double netAmount = regFee - (cancelFee + cancelTax);
+		account.setCancelNetRefundAmt(new BigDecimal(netAmount));
+		
+		return "salesCancellation";
+	}
+	
 	public String selectInventory() {
 		try {
 			customers = new ArrayList<Customer>();
@@ -193,50 +240,50 @@ public class SalesCancel extends CommonBean implements Serializable{
 			if (user != null)
 				attendedBy = user.getUserProfile();
 	
-			AccountService accountService = (AccountService) SpringBeanUtil
-					.lookup(AccountService.class.getName());
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-					.lookup(UserProfileService.class.getName());
+			AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 	
-			List<Account> accounts = accountService
-					.findByProjectInventoryId(inventory.getInventoryId());
-			/**
-			 * support only one account as per one property unit.
-			 */
+			List<Account> accounts = accountService.findByAvailableProjectInventoryId(inventory.getInventoryId());
+			
+			 //support only one account as per one property unit.
+			   
 			for (Account a : accounts) {
 				account = a;
 				if (account.getAttendedBy() != null) {
-					UserProfile up = userProfileService.findById(account
-							.getAttendedBy());
+					UserProfile up = userProfileService.findById(account.getAttendedBy());
 					attendedBy = up;
 				}
 				customers = new ArrayList<Customer>();
 				StringBuffer names = new StringBuffer();
 				if (account.getCustomer() != null) {
 					customers.add(account.getCustomer());
-					names.append(account.getCustomer().getFullName()).append(", ");
+					names.append(account.getCustomer().getFullName());
 				}
 				if (account.getCustomer2() != null) {
 					customers.add(account.getCustomer2());
-					names.append(account.getCustomer().getFullName()).append(", ");
+					names.append(", ");
+					names.append(account.getCustomer2().getFullName());
 				}
 				if (account.getCustomer3() != null) {
 					customers.add(account.getCustomer3());
-					names.append(account.getCustomer3().getFullName()).append(", ");
+					names.append(", ");
+					names.append(account.getCustomer3().getFullName());
 				}
 				if (account.getCustomer4() != null) {
 					customers.add(account.getCustomer4());
-					names.append(account.getCustomer4().getFullName()).append(", ");
+					names.append(", ");
+					names.append(account.getCustomer4().getFullName());
 				}
 				if (account.getCustomer5() != null) {
 					customers.add(account.getCustomer5());
-					names.append(account.getCustomer5().getFullName()).append(", ");
+					names.append(", ");
+					names.append(account.getCustomer5().getFullName());
 				}
 				customerNames = names.toString();
 			}
 			
 			
-			if (account!=null) {
+			/*if (account!=null) {
 				Set<TransactionHistory> trxhist = account.getTransactionHistories();
 				for (TransactionHistory h : trxhist) {
 					if (h.getTransactionCode().getTransactionCode().equals(TransactionCodeConst.BOOK_FEE)) {
@@ -260,25 +307,58 @@ public class SalesCancel extends CommonBean implements Serializable{
 					}
 					 
 				}
-			}
+			}*/
 			
 			if ( account==null) {
 				addInfoMessage("Sales Cancellation", "This property Unit has no sales transaction. There is nothing to cancel.");
 				return listPropertyUnits();
 			}
 			
+			updateNetRefund();
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Error opening sales", t.getMessage());
 			return listPropertyUnits();
 		}
-		
-		
-		return "cancel";
+			
+		//return "cancel";	
+		return "salesCancellation";
+
 	}
 	
+	public String submit() {
+		
+		return "salesCancellation";
+	}
 	
 	public String cancel() {
+		
+		if (account != null) {
+			SalesCancellationService salesCancellationService=  (SalesCancellationService) SpringBeanUtil.lookup(SalesCancellationService.class.getName());
+			SalesCancellationHistory salesCancellationHistory = new SalesCancellationHistory();
+			salesCancellationHistory.setProjectInventory(account.getProjectInventory());
+			salesCancellationHistory.setRegistrationFee(account.getRegistrationFee());
+			salesCancellationHistory.setCancelledReason(account.getCancelledReason());
+			salesCancellationHistory.setCancelFee(account.getCancelFee());
+			salesCancellationHistory.setCancelTax(account.getCancelTax());
+			salesCancellationHistory.setCancelNetRefundAmt(account.getCancelNetRefundAmt());
+			
+			ProjectInventoryService inventoryService=  (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
+			inventory.setAccounts(null);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_ACTIVE);
+			inventoryService.update(inventory);
+
+			salesCancellationService.update(salesCancellationHistory);
+			addInfoMessage("Sales Cancellation", "Cancelled Successfully.");
+			return listPropertyUnits();
+		} else {
+			addInfoMessage("Sales Cancellation", "Failed to cancel.");
+			return "salesCancellation";
+		}
+	}
+	
+	/*public String cancel() {
 		try {
 //			if (AccountStatusConst.CANCEL.equals(account.getAccountStatus())) {
 //				addErrorMessage("Sales Cancellation", "Sales is already cancelled");
@@ -329,7 +409,9 @@ public class SalesCancel extends CommonBean implements Serializable{
 			t.printStackTrace();
 			addErrorMessage("Error cancelling sales", t.getMessage());
 		}
-		return "cancel";
+		
+		//return "cancel";
+		return "salesCancellation";
 	}
 	
 	public StreamedContent getFile() {  
@@ -374,5 +456,5 @@ public class SalesCancel extends CommonBean implements Serializable{
 			addErrorMessage("Cancellation Letter", "Upload failed");
 		}
 		
-	}
+	}*/
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Commission
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Commission Claim Confirmation" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:dataTable var="c" value="#{salesCommission.salesCommissionAccounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15"> 
+        
+        <p:column headerText="Purchaser&lt;br/&gt;Unit/Lot No" sortBy="#{c.customer.fullName}">  
+	    	<h:outputText value="#{c.customer.fullName}" /><br />
+	    	<h:outputText value="#{c.projectInventory.unitNo}" />
+		</p:column>
+		
+		<p:column headerText="Selling Price&lt;br/&gt;SPA Amount" sortBy="#{c.purchasePrice}">  
+	    	<h:outputText value="#{c.purchasePrice}" /><br />
+		</p:column>
+		   
+        <p:column headerText="Disc Rate" sortBy="">  
+	 		<h:outputText value="" />
+	    </p:column> 
+	    
+	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}">  
+	    	<h:outputText value="#{c.discountedAmount}" />
+		</p:column>
+		
+		<p:column headerText="Net Selling Price" sortBy="#{c.netPrice}">  
+	    	<h:outputText value="#{c.netPrice}" />
+		</p:column>
+		
+		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaSignedDate}">
+	    	<h:outputText value="#{c.spaSignedDate}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    	</h:outputText><br />
+	    	<h:outputText value="#{c.laSignedDate}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Collection&lt;br/&gt;Up to Date" sortBy="#{c.totalPaymentTodate}">  
+	    	<h:outputText value="#{c.totalPaymentTodate}" />
+		</p:column>
+		
+		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}">  
+	    	<h:outputText value="#{c.commissionAmount}" />
+		</p:column>
+		
+		<p:column headerText="Claim Percent" sortBy="">  
+	    	<h:outputText value="" />
+		</p:column>
+		
+		<p:column headerText="Claim Amount" sortBy="">  
+	    	<h:outputText value="" />
+		</p:column>
+		
+	</p:dataTable>
+	<br/>
+	<h:panelGrid columns="1" style="width:100%;text-align:right;" >
+		<p:outputLabel value="Total">
+			&nbsp;<p:inputText value="#{salesCommission.totalClaimAmount}" style="width:120px;" readonly="true" />
+		</p:outputLabel>
+	</h:panelGrid>
+	<br />
+	<p:commandButton value="Cancel" action="#{salesCommission.listAccounts}" ajax="false" immediate="true" icon="ui-icon-cancel"/>  &nbsp;&nbsp;
+    <p:commandButton value="Confirm" action="#{salesCommission.confirm}" ajax="false" icon="ui-icon-circle-check"/>
+    	
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

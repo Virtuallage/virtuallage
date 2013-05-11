@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Commission
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Commission Claim List" style="width:95%">  
+    
+<p:focus context="panel" /> 
+      
+	<h:form>  
+	<p:dataTable var="c" value="#{salesCommission.accounts}" paginator="true" rows="10"  paginatorPosition="bottom" listener="#{salesCommission.listAccounts}"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15"> 
+        
+        <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
+	    	<h:outputText value="#{c.customer.fullName}" />
+		</p:column>
+		
+		<p:column headerText="Project Code" sortBy="#{c.projectInventory.project.projectCode}">  
+	    	<h:outputText value="#{c.projectInventory.unitNo}" />
+		</p:column>
+		   
+        <p:column headerText="Unit No" sortBy="#{c.projectInventory.unitNo}">  
+	 		<h:outputText value="#{c.projectInventory.unitNo}" />
+	    </p:column> 
+	    
+	 	<p:column headerText="SPA Amount" sortBy="">  
+	    	<h:outputText value="" />
+		</p:column>
+		
+		<p:column headerText="SPA Date" sortBy="#{c.spaSignedDate}">  
+	    	<h:outputText value="#{c.spaSignedDate}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="LA Date" sortBy="#{c.laSignedDate}">  
+	    	<h:outputText value="#{c.laSignedDate}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Commission" sortBy="#{c.commissionAmount}">  
+	    	<h:outputText value="#{c.commissionAmount}" />
+		</p:column>
+ 
+	 	<p:column headerText="Status" sortBy="#{c.accountStatus}">  
+	  		<h:outputText value="#{c.accountStatus}">
+	    	</h:outputText>
+		</p:column>
+
+	</p:dataTable>
+	<br/>
+    <p:commandButton value="Submit" action="#{salesCommission.submit}" ajax="false" icon="ui-icon-check">
+    </p:commandButton>	
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Progress Update" style="width:95%;">  
+    
+<p:focus context="panel"/> 
+   	<h:form>
+   		<h:panelGrid columns="4" style="width:100%;">
+
+			<p:outputLabel value="Purchaser Name"/>
+			<h:inputText value="#{salesUpdate.account.customer.fullName}" style="width:400px" disabled="true"/>
+			<p:outputLabel value="Property Type"/>
+			<h:inputText value="" style="width:200px" disabled="true"/>
+
+			<p:outputLabel value="Selling Price"/>
+			<h:panelGroup>
+				<h:inputText value="#{salesUpdate.account.purchasePrice}" style="width:200px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+   				</h:inputText>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser" ajax="false" immediate="true" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value="Sales Person"/>
+			<h:inputText value="#{salesUpdate.account.projectInventory.salesPerson}" style="width:400px" disabled="true" />
+				 			
+   			<p:outputLabel value="Discount Price"/>
+   			<h:inputText value="#{salesUpdate.account.discountedAmount}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Purchase Type"/>
+   			<p:selectOneMenu id="purchaseType" value="#{salesUpdate.account.purchaseType}" style="width:200px">
+						<f:selectItems value="#{salesUpdate.purchaseTypes}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Net Price"/>
+   			<h:inputText value="#{salesUpdate.account.netPrice}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Bank Name"/>
+   			<p:selectOneMenu id="bankName" value="#{salesUpdate.account.bookPymtBank}" style="width:200px">  
+						<f:selectItems value="#{salesUpdate.bankNames}" />
+			</p:selectOneMenu>
+   			
+   			<p:outputLabel value="SPA Signed Date"/>
+   			<p:calendar id="spaSignedDate" value="#{salesUpdate.account.spaSignedDate}" pattern="dd/MM/yyyy" showOn="button"/> 
+   			<p:outputLabel value="Loan Amount"/>
+			<h:inputText value="#{salesUpdate.account.loanAmount}" style="width:200px"/>
+			
+			<p:outputLabel value="Solicitor"/>
+   			<p:selectOneMenu id="spaSolicitorId" value="#{salesUpdate.account.spaSolicitorId}" style="width:200px">  
+						<f:selectItems value="#{salesUpdate.spaSolicitorId}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="SPA Stamped Date"/>
+			<h:panelGroup>
+				<p:calendar id="stampedDate" value="#{salesUpdate.account.spaStampedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
+				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Verified by"/>
+			<h:inputText value="#{salesUpdate.account.spaVerifiedBy}" style="width:400px" disabled="true"/>
+			
+			<p:outputLabel value="LO Date"/>
+   			<p:calendar id="loDate" value="#{salesUpdate.account.loSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+			<p:outputLabel value="LO Accepted Date"/>
+			<h:panelGroup>
+				<p:calendar id="loAcceptedDate" value="#{salesUpdate.account.loVerifiedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
+				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Verified by"/>
+			<h:inputText value="#{salesUpdate.account.loVerifiedBy}" style="width:400px" disabled="true"/>
+			
+			<p:outputLabel value="LA Signed Date"/>
+   			<p:calendar id="laSignedDate" value="#{salesUpdate.account.laSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+			<p:outputLabel value="LA Stamped Date"/>
+			<h:panelGroup>
+				<p:calendar id="laStampedDate" value="#{salesUpdate.account.laStampedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
+				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value="Solicitor"/>
+   			<p:selectOneMenu id="laSolicitorId" value="#{salesUpdate.account.laSolicitorId}" style="width:200px">  
+						<f:selectItems value="#{salesUpdate.laSolicitorId}" />
+			</p:selectOneMenu>
+   			<p:outputLabel value="Verified by"/>
+			<h:inputText value="#{salesUpdate.account.laVerifiedBy}" style="width:400px" disabled="true"/>
+   			
+   		</h:panelGrid>
+   		
+   		<p:commandButton value="Back" action="#{salesUpdate.listAccounts}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Save" action="#{salesUpdate.update}" ajax="false" icon="ui-icon-disk"/>  &nbsp;&nbsp;
+	</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

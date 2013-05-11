@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.ProjectInventory;
 
 @Repository("com.vipro.dao.ProjectInventoryDao")
@@ -14,6 +15,13 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 	@Override
 	public List<ProjectInventory> findByProjectId(Long projectId) {
 		String query = "select o from ProjectInventory o where o.project.projectId=?";
+		return getHibernateTemplate().find(query, projectId);
+	}
+	
+	@Override
+	public List<ProjectInventory> findByAvailableProjectId(Long projectId) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? and o.propertyStatus='" 
+				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
 		return getHibernateTemplate().find(query, projectId);
 	}
 

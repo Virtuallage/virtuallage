@@ -698,6 +698,37 @@ ALTER TABLE vipro.case_activity
 
 alter table vipro.case add message varchar(300);
 
+
+-- 100513 Max
+CREATE  TABLE `vipro`.`sales_cancellation_history` (
+  `cancellation_id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `inventory_id` BIGINT(20) NOT NULL ,
+  `registration_fee` DECIMAL(7,2) NULL ,
+  `cancelled_reason` VARCHAR(5) NULL DEFAULT NULL ,
+  `cancel_fee` DECIMAL(9,2) NULL DEFAULT NULL ,
+  `cancel_tax` DECIMAL(9,2) NULL DEFAULT NULL ,
+  `cancel_refund_net_amt` DECIMAL(9,2) NULL DEFAULT NULL ,
+  `cancel_doc_id` BIGINT(20) NULL DEFAULT NULL ,
+  PRIMARY KEY (`cancellation_id`) ,
+  INDEX `FK_sales_cancellation_history_1_idx` (`inventory_id` ASC) ,
+  CONSTRAINT `FK_sales_cancellation_history_1`
+    FOREIGN KEY (`inventory_id` )
+    REFERENCES `vipro`.`project_inventory` (`inventory_id` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE  TABLE `vipro`.`sales_commission_history` (
+  `commission_id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `account_id` BIGINT(20) NOT NULL ,
+  PRIMARY KEY (`commission_id`) ,
+  INDEX `FK_commission_1_idx` (`account_id` ASC) ,
+  CONSTRAINT `FK_sales_commission_history_1`
+    FOREIGN KEY (`account_id` )
+    REFERENCES `vipro`.`account` (`account_id` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT);
       
       
       

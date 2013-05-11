@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Property List - Sold" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:panelGrid style="width:100%" styleClass="no-borders" >
+		<p:row>
+			<p:column style="width:20%;text-align:left;">
+				<h:outputText value="Project Name" />
+			</p:column>
+			<p:column style="width:20%;text-align:left;">
+					<p:selectOneMenu id="projectList" value="#{salesUpdate.projectId}" 
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{salesUpdate.listProject}" />
+					</p:selectOneMenu>
+			</p:column>
+			<p:column style="width:60%;text-align:left;">
+				<p:commandButton value="Search" action="#{salesUpdate.listAccounts}" update="accountsDataTable" icon="ui-icon-search"/>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<br />
+	<p:dataTable var="c" value="#{salesUpdate.accounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15" id="accountsDataTable"> 
+              
+        <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
+	 		<h:outputText value="#{c.customer.fullName}" />
+	    </p:column> 
+	        
+        <p:column headerText="Unit No." sortBy="#{c.projectInventory.unitNo}">  
+	 		<h:outputText value="#{c.projectInventory.unitNo}" />
+	    </p:column> 
+	    
+	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}">  
+	    	<h:outputText value="#{c.purchasePrice}" />
+		</p:column>  
+	        
+	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}">  
+	  		<h:outputText value="#{c.datePurchased}"/>
+	 	</p:column>  
+	        
+	  	<p:column headerText="SPA Date" sortBy="#{c.spaSignedDate}">  
+	  		<h:outputText value="#{c.spaSignedDate}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy"/>
+	  		</h:outputText>
+		</p:column>
+	        
+	 	<p:column headerText="LO Date" sortBy="#{c.loSignedDate}">  
+	  		<h:outputText value="#{c.loSignedDate}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy"/>
+	  		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="LA Date" sortBy="#{c.laSignedDate}">  
+	  		<h:outputText value="#{c.laSignedDate}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy"/>
+	  		</h:outputText>
+		</p:column>
+	        
+	  	<p:column headerText="Actions">
+			<p:commandButton action="#{salesUpdate.selectAcount}" ajax="false" icon="ui-icon-pencil" title="Edit">
+	  			<f:setPropertyActionListener value="#{c}" target="#{salesUpdate.account}" />  
+			</p:commandButton>  
+	    </p:column>	
+
+	</p:dataTable>
+      
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
