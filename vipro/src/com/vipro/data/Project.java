@@ -37,7 +37,7 @@ public class Project implements java.io.Serializable {
 	private BigDecimal staffBookingFee;
 	private BigDecimal publicBookingFee;
 	private BigDecimal maintenanceFeeRate;
-	private BigDecimal currentDiscount;
+	private BigDecimal discountRate;
 	private BigDecimal salesCommission;
 	private Date launchDate;
 	private BigDecimal taxPercentage;
@@ -341,12 +341,12 @@ public class Project implements java.io.Serializable {
 		this.postcode = postcode;
 	}
 
-	public BigDecimal getCurrentDiscount() {
-		return currentDiscount;
+	public BigDecimal getDiscountRate() {
+		return discountRate;
 	}
 
-	public void setCurrentDiscount(BigDecimal currentDiscount) {
-		this.currentDiscount = currentDiscount;
+	public void setDiscountRate(BigDecimal discountRate) {
+		this.discountRate = discountRate;
 	}
 
 	public BigDecimal getSalesCommission() {
