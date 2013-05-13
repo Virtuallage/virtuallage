@@ -89,6 +89,11 @@ Add Company
 				<p:inputText id="mobile" value="#{salesRegister.company.mobileNo}" maxlength="15" autocomplete="off"/>
 				
 			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="Remarks"/>
+			   	<h:inputTextarea value="#{salesRegister.company.remarks}" cols="100" rows="3" />
+		   	</h:panelGrid>
 			
 			<br/>
 			
