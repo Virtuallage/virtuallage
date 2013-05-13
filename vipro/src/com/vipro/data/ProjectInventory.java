@@ -209,7 +209,17 @@ public class ProjectInventory implements java.io.Serializable {
 	}
 
 	public BigDecimal getDiscountAmount() {
-		return this.discountAmount;
+		discountAmount = null;
+		if (purchasePrice != null) {
+			if (discountRate != null) {
+				discountAmount = 
+						purchasePrice.multiply(
+								discountRate.divide(new BigDecimal(100.00)));
+			} else {
+				discountAmount = new BigDecimal(0.0d);
+			}
+		}
+		return discountAmount;
 	}
 
 	public void setDiscountAmount(BigDecimal discountAmount) {
