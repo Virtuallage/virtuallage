@@ -56,6 +56,7 @@ Project Setup
 		<p:outputLabel value="Selling Price" for="sellingPrice"/>
 		<p:inputText id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" maxlength="12" autocomplete="off" required="true">
 		 		<f:convertNumber maxIntegerDigits="9" maxFractionDigits="2" minFractionDigits="2"/>
+		 		<p:ajax update="discountAmt" event="blur" process="sellingPrice"/>
                 <p:ajax update="nettAmt" event="blur" process="sellingPrice"/>
 		</p:inputText>
 		<p:outputLabel value="Orientation" for="orientation"/>
