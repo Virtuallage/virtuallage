@@ -137,3 +137,6 @@ alter table project add sales_commission decimal(11,2);
 alter table project_inventory modify column purchase_price decimal(11,2);
 alter table account modify column registration_fee decimal(9,2);
 
+-- 20130510
+alter table project change current_discount discount_rate decimal(11,2);
+alter table project_inventory modify column discount_amount decimal(11,2);
