@@ -493,12 +493,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	public String addInventory() {
 		inventory = new ProjectInventory();
-		inventory.setDiscountAmount(project.getCurrentDiscount());
+		inventory.setDiscountRate(project.getDiscountRate());
 		return "editInventory";
 	}
 
 	public String editInventory() {
-		inventory.setDiscountAmount(project.getCurrentDiscount());
+		inventory.setDiscountRate(project.getDiscountRate());
 		return "editInventory";
 	}
 
