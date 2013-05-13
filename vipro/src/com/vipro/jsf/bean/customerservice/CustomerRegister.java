@@ -358,7 +358,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
-			company.setIdentityType("");
+			company.setIdentityType("BR");
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -432,7 +432,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
-			company.setIdentityType("");
+			company.setIdentityType("BR");
 			customerService.update(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
