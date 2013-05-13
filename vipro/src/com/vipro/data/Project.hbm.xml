@@ -80,8 +80,8 @@
         <property name="maintenanceFeeRate" type="big_decimal">
             <column name="maintenance_fee_rate" precision="9" scale="2"/>
         </property>
-        <property name="currentDiscount" type="big_decimal">
-            <column name="current_discount" precision="9" scale="2" />
+        <property name="discountRate" type="big_decimal">
+            <column name="discount_rate" precision="9" scale="2" />
         </property>
         <property name="salesCommission" type="big_decimal">
             <column name="sales_commission" precision="9" scale="2" />
