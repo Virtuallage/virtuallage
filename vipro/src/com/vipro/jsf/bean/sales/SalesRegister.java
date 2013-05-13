@@ -156,6 +156,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	}
 
 	public List<SelectItem> getListProject() {
+		listProject = CodeUtil.getProjectAsItems();
 		return listProject;
 	}
 
