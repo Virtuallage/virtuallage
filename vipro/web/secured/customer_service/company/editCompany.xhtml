@@ -90,6 +90,11 @@ Add Company
 				
 			</h:panelGrid>
 			
+			<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="Remarks"/>
+			   	<h:inputTextarea value="#{customerRegister.company.remarks}" cols="100" rows="3" />
+		   	</h:panelGrid>
+			
 			<br/>
 			
 			<p:commandButton value="Back" ajax="false" action="#{customerRegister.backCompany}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
