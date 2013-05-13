@@ -45,7 +45,9 @@ Project Setup
         
         <p:column headerText="Status" sortBy="#{projectSetup.getCodeDesc('STATUS', c.status)}">  
            <h:outputText value="#{projectSetup.getCodeDesc('STATUS', c.status)}"/>
-           &nbsp;
+        </p:column>
+        
+        <p:column headerText="Action">  
            <p:commandButton action="#{projectSetup.editProject}" ajax="false" icon="ui-icon-pencil" title="Edit Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  
            </p:commandButton>
@@ -54,7 +56,6 @@ Project Setup
            		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  
            </p:commandButton>
         </p:column>
-        
 
   
     </p:dataTable>  

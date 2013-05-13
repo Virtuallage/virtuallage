@@ -52,7 +52,9 @@ Project Setup
            	<h:outputText value="#{c.purchasePrice}">
            		<f:convertNumber type="currency" currencySymbol="" />
            	</h:outputText>
-           	&nbsp;&nbsp;
+        </p:column>
+        
+        <p:column headerText="Action">  
            	<p:commandButton action="#{projectSetup.editInventory}" ajax="false" icon="ui-icon-pencil" title="Edit Property Unit">
            		<f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
            	</p:commandButton>

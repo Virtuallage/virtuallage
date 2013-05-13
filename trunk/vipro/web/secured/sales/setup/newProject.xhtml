@@ -67,27 +67,11 @@ Project Setup
 		</p:selectOneMenu>
 
 
-		<p:outputLabel value="Current Discount"/>
-		<p:inputText value="#{projectSetup.project.currentDiscount}"/>
-
-		<p:outputLabel value="Expired Date"/>
-		<h:panelGroup id="discountExpiry">
-			<h:outputText value="#{projectSetup.discountExpiry}">
-				<f:convertDateTime pattern="dd/MM/yyyy"/>  
-			</h:outputText>
-			&nbsp;&nbsp;<p:commandButton value="Add" onclick="dlgDiscount.show();"/>
-		</h:panelGroup>
+		<p:outputLabel value="Discount Rate"/>
+		<p:inputText value="#{projectSetup.project.discountRate}"/> 
 		
 		<p:outputLabel value="Sales Commission"/>
 		<p:inputText value="#{projectSetup.project.salesCommission}"/>
-		
-		<p:outputLabel value="Effective Date"/>
-		<h:panelGroup id="commisionEffective">
-			<h:outputText value="#{projectSetup.commisionEffective}" >
-				<f:convertDateTime pattern="dd/MM/yyyy"/>
-			</h:outputText>
-			&nbsp;&nbsp;<p:commandButton value="Add" onclick="dlgCommission.show();"/>
-		</h:panelGroup>
 
 		<p:outputLabel value="Address Line 1" for="address1"/>
 		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
