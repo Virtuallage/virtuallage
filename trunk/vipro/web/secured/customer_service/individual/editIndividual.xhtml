@@ -105,15 +105,10 @@ Add Individuals
 				<p:outputLabel value="Email Address" for="email"/>
 				<p:inputText id="email" value="#{customerRegister.individual.email}" maxlength="30" autocomplete="off"/>
 			</h:panelGrid>
-			<h:panelGrid style="width:100%">
-		   		<p:row>
-		   			<p:column style="width:30%;text-align:center">
-			   			<p:outputLabel value="Remarks"/>
-			   		</p:column>
-			   		<p:column style="width:70%;text-align:center">
-			   			<h:inputTextarea value="#{customerRegister.individual.remarks}" cols="80" rows="3" />
-			   		</p:column>
-		   		</p:row>
+
+		   	<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="Remarks"/>
+			   	<h:inputTextarea value="#{customerRegister.individual.remarks}" cols="100" rows="3" />
 		   	</h:panelGrid>
 			
 			<br/>
