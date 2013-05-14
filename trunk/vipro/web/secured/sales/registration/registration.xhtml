@@ -24,7 +24,7 @@
    		<p:outputLabel value="Purchase Price"/>
    		<p:outputLabel value="#{salesRegister.inventory.purchasePrice}"/>
    		<p:outputLabel value="Property Type"/>
-   		<p:outputLabel value="#{salesRegister.inventory.layoutType}"/>
+   		<p:outputLabel value="#{salesRegister.getCodeDesc('PROP_TYPE', salesRegister.project.propertyType)}"/>
    		
    		<p:outputLabel value="Purchase Date"/>
    		<h:outputText value="#{salesRegister.account.datePurchased}">
