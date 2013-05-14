@@ -38,7 +38,7 @@
         <property name="status" type="string">
             <column name="status" length="5" />
         </property>
-        <set name="projects" table="project" inverse="true" lazy="true" fetch="select">
+        <set name="projects" table="project" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="institution_id" not-null="true" />
             </key>
