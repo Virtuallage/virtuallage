@@ -183,3 +183,8 @@ insert into code_det values ('MEDIA_SOURCE', 'RAD', 'Radio', 'ACTV');
 -- 20130505
 insert into vipro.code_det values ('PROP_STATUS','PROG','In Progress','ACTV');
 insert into vipro.code_det values ('PROP_STATUS','BOOK','Booked','ACTV');
+
+-- 20130516
+insert into vipro.user_group values ('SALES_PIC', 'Sales Person-in-Charge', 'ACTV');
+insert into vipro.user_profile (username, password, name, staff_no, status, institution_id, group_id)
+values ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'sales person-in-charge', 000, 'ACTV', 1, 'SALES_PIC');
