@@ -61,6 +61,20 @@
     		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	</sec:authorize> 	
+    	<sec:authorize ifAnyGranted="ROLE_SALES_PIC">
+    	<p:submenu label="Sales" icon="ui-icon-star">
+    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
+			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
+    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
+    		<p:menuitem id="salesCommission" value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
+    		<p:menuitem value="Potential Purchaser Entry" url="#" />
+    	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System" icon="ui-icon-gear">
     		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" icon="ui-icon-person"/>  
