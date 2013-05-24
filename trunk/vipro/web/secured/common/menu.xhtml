@@ -23,11 +23,8 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales" icon="ui-icon-star">
-    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
-<!--     		<p:menuitem value="Price Adjustment" url="/secured/sales/price/adjustment.xhtml" icon="ui-icon-note" /> -->
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
 			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
-    		<!--<p:menuitem value="Sales Cancellation" action="#{salesCancel.listProject}"/>-->
     		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
     		<p:menuitem id="salesCommission" value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
     		<p:menuitem value="Potential Purchaser Entry" url="#" />
