@@ -43,4 +43,9 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 		return null;
 	}
 
+	@Override
+	public int countTotalUnits(Long projectId) {
+		String query = "select o from ProjectInventory o where o.project.projectId=?";
+		return getHibernateTemplate().find(query, projectId).size();
+	}
 }
