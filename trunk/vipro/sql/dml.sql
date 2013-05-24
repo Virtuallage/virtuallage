@@ -188,3 +188,11 @@ insert into vipro.code_det values ('PROP_STATUS','BOOK','Booked','ACTV');
 insert into vipro.user_group values ('SALES_PIC', 'Sales Person-in-Charge', 'ACTV');
 insert into vipro.user_profile (username, password, name, staff_no, status, institution_id, group_id)
 values ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'sales person-in-charge', 000, 'ACTV', 1, 'SALES_PIC');
+
+-- 20130520
+insert into vipro.code_header values ('REPORT_GROUP', 'Report Group');
+insert into vipro.code_header values ('ORIENTATION', 'Orientation');
+insert into vipro.code_det values ('ORIENTATION', 'EAST', 'East', 'ACTV');
+insert into vipro.code_det values ('ORIENTATION', 'WEST', 'West', 'ACTV');
+insert into vipro.code_det values ('ORIENTATION', 'NORTH', 'North', 'ACTV');
+insert into vipro.code_det values ('ORIENTATION', 'SOUTH', 'South', 'ACTV');
