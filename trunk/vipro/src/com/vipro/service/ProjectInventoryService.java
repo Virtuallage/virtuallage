@@ -20,5 +20,7 @@ public interface ProjectInventoryService {
 	public void delete(Long inventoryId);
 	
 	public ProjectInventory findByCompositeKey(Long projectId, String blockNo, String unit, String level);
+
+	public int countTotalUnits(Long projectId);
 	
 }
