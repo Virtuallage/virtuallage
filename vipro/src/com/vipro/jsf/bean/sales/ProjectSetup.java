@@ -41,9 +41,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> cities;
 	private List<SelectItem> propertyTypes;
 	private List<SelectItem> institutions;
+	private List<SelectItem> reportGroups;
 	private List<SelectItem> statusList;
 	private String locationSearch;
-
 	private int totalUnits;
 	private double priceRangeFrom;
 	private double priceRangeTo;
@@ -62,6 +62,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private ProjectInventory inventory;
 	private List<SelectItem> propertyStatusList;
 	private List<SelectItem> titleTypeList;
+	private List<SelectItem> orientationList;
 
 	public ProjectSetup() {
 
@@ -73,8 +74,10 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		cities = CodeUtil.getCodes("CITY");
 		states = CodeUtil.getCodes("STATE");
 		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
+		setReportGroups(CodeUtil.getCodes("REPORT_GROUP"));
 		propertyStatusList = CodeUtil.getPropertyStatusAsItems();
 		titleTypeList = CodeUtil.getCodes("TITLE_TYPE");
+		orientationList = CodeUtil.getCodes("ORIENTATION");
 		statusList = CodeUtil.getCodes("STATUS");
 		institutions = CodeUtil.getInstitutionAsItems();
 		listProject();
@@ -153,6 +156,14 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	}
 
 	public int getTotalUnits() {
+		try {
+			ProjectInventoryService projectInventoryService = 
+					(ProjectInventoryService) SpringBeanUtil
+					.lookup(ProjectInventoryService.class.getName());
+			setTotalUnits(projectInventoryService.countTotalUnits(projectId));
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
 		return totalUnits;
 	}
 
@@ -569,6 +580,22 @@ public class ProjectSetup extends CommonBean implements Serializable {
 				inventory = inventoryDb;
 			}
 		}
+	}
+
+	public List<SelectItem> getReportGroups() {
+		return reportGroups;
+	}
+
+	public void setReportGroups(List<SelectItem> reportGroups) {
+		this.reportGroups = reportGroups;
+	}
+
+	public List<SelectItem> getOrientationList() {
+		return orientationList;
+	}
+
+	public void setOrientationList(List<SelectItem> orientationList) {
+		this.orientationList = orientationList;
 	}
 
 }
