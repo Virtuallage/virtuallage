@@ -81,6 +81,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton saveButton;
 	private CommandButton payButton;
 	private CommandButton previewButton;
+	private CommandButton submitButton;
 	
 	/**
 	 * search customer dialog
@@ -333,8 +334,18 @@ public class SalesRegister extends CommonBean implements Serializable {
 	}
 	
 	public void addSelectedCustomer() {
-//		this.selectedCustomer = selectedCustomer;
-		if (!customers.contains(selectedCustomer)) {
+		boolean duplicate = false;
+		String identity = selectedCustomer.getIdentityNo();
+		String type = selectedCustomer.getIdentityType();
+		for(int i = 0; i < customers.size(); i++) {
+			if(identity.equalsIgnoreCase(customers.get(i).getIdentityNo()) 
+					&& type.equalsIgnoreCase(customers.get(i).getIdentityType())) {
+				duplicate = true;
+				i = customers.size();
+			}
+		}
+		
+		if (!duplicate) {
 			customers.add(selectedCustomer);
 		} else {
 			addInfoMessage("Select Purchaser",
@@ -507,6 +518,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			previewButton.setStyle("display: none");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("");
+			submitButton.setStyle("");
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
@@ -515,14 +527,17 @@ public class SalesRegister extends CommonBean implements Serializable {
 			previewButton.setStyle("display: none");
 			payButton.setStyle("");
 			saveButton.setStyle("display: none");
+			submitButton.setStyle("");
 		}
 
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
 			salesRegTabView.setActiveIndex(1);
 			registrationTab.setDisabled(false);
+			payBookingTab.setDisabled(false);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
+			submitButton.setStyle("display: none");
 		}
 		
 		return "salesRegistration";
@@ -574,6 +589,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
 			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
+			account.setPurchasePrice(inventory.getPurchasePrice());
 			
 			// corresponding address
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
@@ -669,6 +685,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 		salesRegTabView.setActiveIndex(1);
 		registrationTab.setDisabled(false);
 		
+		setSelectedCustomer(individual);
+		addSelectedCustomer();
+		
 		return "salesRegistration";
 	}
 
@@ -676,7 +695,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		try {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
-			individual.setCustomerCategory(CustomerTypeConst.COMPANY);
+			company.setCustomerCategory(CustomerTypeConst.COMPANY);
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -693,6 +712,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 		}
 		salesRegTabView.setActiveIndex(1);
 		registrationTab.setDisabled(false);
+		
+		setSelectedCustomer(company);
+		addSelectedCustomer();
 		
 		return "salesRegistration";
 	}
@@ -785,6 +807,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			
 			// show/hide buttons
 			payButton.setStyle("display: none");
+			submitButton.setStyle("display: none");
 			previewButton.setStyle("");
 			
 		} catch (Throwable t) {
@@ -805,6 +828,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setSaveButton(CommandButton saveButton) {
 		this.saveButton = saveButton;
+	}
+
+	public CommandButton getSubmitButton() {
+		return submitButton;
+	}
+
+	public void setSubmitButton(CommandButton submitButton) {
+		this.submitButton = submitButton;
 	}
 	
 }
