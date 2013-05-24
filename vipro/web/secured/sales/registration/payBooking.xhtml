@@ -10,7 +10,7 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<h:form id="payBookForm">  
-   	<h:panelGrid columns="4" style="width:70%">
+   	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Project Name"/>
    		<p:outputLabel value="#{salesRegister.project.projectName}"/>
    		<p:outputLabel value="Registration No"/>
@@ -43,7 +43,7 @@
 	<br/>
 	<p:commandButton value="Back" action="#{salesRegister.selectInventory}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
 	&nbsp;
-	<p:commandButton value="Submit" action="#{salesRegister.payBooking}" ajax="false"  icon="ui-icon-disk"/>
+	<p:commandButton value="Submit" action="#{salesRegister.payBooking}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.submitButton}"/>
 				
     <br/>
 </h:form> 
