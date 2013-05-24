@@ -7,6 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
 <ui:define name="title">
@@ -45,7 +46,7 @@ Project Setup
 		<p:outputLabel value="PIC Mobile" for="picMobile"/>
 		<h:panelGroup>
 			<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" maxlength="20" autocomplete="off"/>
-			<p:outputLabel value=" ie.+0129876543" />
+			<p:outputLabel value=" ie.+60129876543" />
 		</h:panelGroup>
 		
 		
@@ -58,7 +59,7 @@ Project Setup
 		
 		<p:outputLabel value="Report Group" for="rptGroup"/>
 		<p:selectOneMenu id="rptGroup" value="#{projectSetup.project.reportGroup}" >
-			<f:selectItems value="#{projectSetup.propertyTypes}"/>
+			<f:selectItems value="#{projectSetup.reportGroups}"/>
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Status" for="status"/>
@@ -68,10 +69,10 @@ Project Setup
 
 
 		<p:outputLabel value="Discount Rate"/>
-		<p:inputText value="#{projectSetup.project.discountRate}"/> 
+		<pe:inputNumber value="#{projectSetup.project.discountRate}" minValue="0" maxValue="100" emptyValue="0" decimalPlaces="2"/> 
 		
 		<p:outputLabel value="Sales Commission"/>
-		<p:inputText value="#{projectSetup.project.salesCommission}"/>
+		<pe:inputNumber value="#{projectSetup.project.salesCommission}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2"/>
 
 		<p:outputLabel value="Address Line 1" for="address1"/>
 		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
