@@ -91,7 +91,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="155" height="51"/>
-				<imageExpression class="java.lang.String"><![CDATA["/home/eric/workspace/vipro/web/images/BnGLogo.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="93" width="555" height="1"/>
