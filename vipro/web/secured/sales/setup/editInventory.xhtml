@@ -7,6 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
 <ui:define name="title">
@@ -47,31 +48,28 @@ Project Setup
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</p:inputText>
 		<p:outputLabel value="Land Area" for="landArea"/>
-		<p:inputText id="landArea" value="#{projectSetup.inventory.landArea}"  maxlength="10" autocomplete="off">
-				<f:convertNumber maxFractionDigits="0" />
+		<pe:inputNumber id="landArea" value="#{projectSetup.inventory.landArea}" decimalPlaces="0" autocomplete="off">
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
-		</p:inputText>
+		</pe:inputNumber>
 		
 		
 		<p:outputLabel value="Selling Price" for="sellingPrice"/>
-		<p:inputText id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" maxlength="12" autocomplete="off" required="true">
-		 		<f:convertNumber maxIntegerDigits="9" maxFractionDigits="2" minFractionDigits="2"/>
+		<pe:inputNumber id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" autocomplete="off" required="true">
 		 		<p:ajax update="discountAmt" event="blur" process="sellingPrice"/>
                 <p:ajax update="nettAmt" event="blur" process="sellingPrice"/>
-		</p:inputText>
+		</pe:inputNumber>
 		<p:outputLabel value="Orientation" for="orientation"/>
-		<p:inputText id="orientation" value="#{projectSetup.inventory.orientation}" maxlength="5" autocomplete="off"/>
+		<p:selectOneMenu id="orientation" value="#{projectSetup.inventory.orientation}"> 
+			<f:selectItems value="#{projectSetup.orientationList}" />
+		</p:selectOneMenu>
 
 
 		<p:outputLabel value="Discount Amount" for="discountAmt"/>
-		<p:inputText id="discountAmt" value="#{projectSetup.inventory.discountAmount}"  maxlength="12" autocomplete="off">
-				<f:convertNumber maxIntegerDigits="9" maxFractionDigits="2" minFractionDigits="2"/>
+		<pe:inputNumber id="discountAmt" value="#{projectSetup.inventory.discountAmount}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" autocomplete="off">
                 <p:ajax update="nettAmt" event="blur" process="discountAmt"/>
-		</p:inputText>
+		</pe:inputNumber>
 		<p:outputLabel value="Nett Amount" for="nettAmt"/>
-		<p:inputText id="nettAmt" value="#{projectSetup.inventory.nettPrice}"  maxlength="12" autocomplete="off">
-				<f:convertNumber maxIntegerDigits="9" maxFractionDigits="2" minFractionDigits="2"/>
-		</p:inputText>
+		<pe:inputNumber id="nettAmt" value="#{projectSetup.inventory.nettPrice}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" maxlength="12" autocomplete="off" />
 		
 		<!-- 
 		<p:outputLabel value="Redemption Amount" for="redemptionAmt"/>
