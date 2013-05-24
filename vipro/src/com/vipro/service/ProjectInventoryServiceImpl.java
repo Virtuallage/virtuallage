@@ -62,5 +62,9 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 		return projectInventoryDao.findByCompositeKey(projectId, blockNo, unit,
 				level);
 	}
-
+	
+	@Override
+	public int countTotalUnits(Long projectId) {
+		return projectInventoryDao.countTotalUnits(projectId);
+	}
 }
