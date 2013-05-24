@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/eric/workspace/vipro/web/report/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT A.*,PI.*,P.*,I.*,
@@ -414,7 +414,7 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 			</textField>
 			<image>
 				<reportElement x="1" y="0" width="155" height="51"/>
-				<imageExpression class="java.lang.String"><![CDATA["/home/eric/workspace/vipro/web/images/BnGLogo.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="1" y="263" width="552" height="1"/>
