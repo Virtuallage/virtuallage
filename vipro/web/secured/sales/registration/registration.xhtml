@@ -22,7 +22,9 @@
    		<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
    		
    		<p:outputLabel value="Purchase Price"/>
-   		<p:outputLabel value="#{salesRegister.inventory.purchasePrice}"/>
+   		<h:outputLabel value="#{salesRegister.inventory.purchasePrice}">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+   		</h:outputLabel>
    		<p:outputLabel value="Property Type"/>
    		<p:outputLabel value="#{salesRegister.getCodeDesc('PROP_TYPE', salesRegister.project.propertyType)}"/>
    		
@@ -56,14 +58,16 @@
            </p:commandButton>
         </p:column> 
      </p:dataTable>
-     <p:panelGrid styleClass="no-borders" style="width:95%">
+     
+     <br/>
+     
+     <p:panelGrid styleClass="no-borders" style="width:96%">
      	<p:row>
      		<p:column style="text-align:left">
-     			<a id="btnSearchCust" onclick="dlgSearchCust.show();" 
-     				style="cursor:pointer;text-decoration:underline">
-     				+ Add Purchaser
-     			</a>
+     			<p:commandButton value="Add Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-plus"/>  
      		</p:column>
+	       	<p:column style="text-align:left">
+            </p:column>
      	</p:row>
      </p:panelGrid>
      
