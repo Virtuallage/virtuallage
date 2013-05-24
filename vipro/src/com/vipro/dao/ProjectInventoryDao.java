@@ -15,5 +15,6 @@ public interface ProjectInventoryDao extends Dao<ProjectInventory>{
 	public ProjectInventory findById(Long id);
 	
 	public ProjectInventory findByCompositeKey(Long projectId, String blockNo, String unit, String level);
-	
+
+	public int countTotalUnits(Long projectId);
 }
