@@ -50,11 +50,15 @@ Sales Update
 	    </p:column> 
 	    
 	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}">  
-	    	<h:outputText value="#{c.purchasePrice}" />
+	    	<h:outputText value="#{c.purchasePrice}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>  
 	        
 	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}">  
-	  		<h:outputText value="#{c.datePurchased}"/>
+	  		<h:outputText value="#{c.datePurchased}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" />
+	  		</h:outputText>
 	 	</p:column>  
 	        
 	  	<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}">  
