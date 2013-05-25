@@ -24,28 +24,30 @@ Sales Commission
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15"> 
         
-        <p:column headerText="Purchaser&lt;br/&gt;Unit/Lot No" sortBy="#{c.customer.fullName}">  
+        <p:column headerText="Purchaser&lt;br/&gt;Unit No" sortBy="#{c.customer.fullName}">  
 	    	<h:outputText value="#{c.customer.fullName}" /><br />
 	    	<h:outputText value="#{c.projectInventory.unitNo}" />
 		</p:column>
 		
-		<p:column headerText="Selling Price&lt;br/&gt;SPA Amount" sortBy="#{c.purchasePrice}">  
-	    	<h:outputText value="#{c.purchasePrice}" /><br />
+		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}">  
+	    	<h:outputText value="#{c.purchasePrice}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
-		   
-        <p:column headerText="Disc Rate" sortBy="">  
-	 		<h:outputText value="" />
-	    </p:column> 
-	    
+
 	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}">  
-	    	<h:outputText value="#{c.discountedAmount}" />
+	    	<h:outputText value="#{c.discountedAmount}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Net Selling Price" sortBy="#{c.netPrice}">  
-	    	<h:outputText value="#{c.netPrice}" />
+	    	<h:outputText value="#{c.netPrice}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaSignedDate}">
+		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
 	    	<h:outputText value="#{c.spaStampedDate}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    	</h:outputText><br />
@@ -59,7 +61,9 @@ Sales Commission
 		</p:column>
 		
 		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}">  
-	    	<h:outputText value="#{c.commissionAmount}" />
+	    	<h:outputText value="#{c.commissionAmount}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Claim Percent" sortBy="">  
@@ -67,7 +71,9 @@ Sales Commission
 		</p:column>
 		
 		<p:column headerText="Claim Amount" sortBy="">  
-	    	<h:outputText value="" />
+	    	<h:outputText value="">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
 		
 	</p:dataTable>
