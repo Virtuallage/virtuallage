@@ -182,8 +182,8 @@ public class SalesCommission extends CommonBean implements Serializable{
 
 		salesCommissionAccounts = new ArrayList<Account>();
 		for(Account account: accounts) {
-			if(account.getSpaSignedDate() !=null) {
-				if(account.getLaSignedDate() !=null) {
+			if(account.getSpaStampedDate() !=null) {
+				if(account.getLaStampedDate() !=null) {
 					salesCommissionAccounts.add(account);
 				} else {
 					Date dateBilled = null;

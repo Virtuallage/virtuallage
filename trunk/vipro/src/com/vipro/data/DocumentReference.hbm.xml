@@ -23,5 +23,8 @@
          <property name="filename" type="string">
             <column name="filename" length="50" />
         </property>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

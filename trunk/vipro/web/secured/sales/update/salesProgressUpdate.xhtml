@@ -66,10 +66,10 @@ Sales Update
 			</p:selectOneMenu>
 			<p:outputLabel value="SPA Stamped Date"/>
 			<h:panelGroup>
-				<p:calendar id="stampedDate" value="#{salesUpdate.account.spaStampedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				<p:calendar id="stampedDate" value="#{salesUpdate.account.spaStampedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 				&nbsp;&nbsp;
-				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
-				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+				<p:commandButton id="spaUploadDialogButton" value="Upload" actionListener="#{salesUpdate.setSPADocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="spaViewDialogButton" value="View" actionListener="#{salesUpdate.listSPADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
    			
    			<p:outputLabel value=""/>
@@ -81,12 +81,12 @@ Sales Update
    			<p:calendar id="loDate" value="#{salesUpdate.account.loSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 			<p:outputLabel value="LO Accepted Date"/>
 			<h:panelGroup>
-				<p:calendar id="loAcceptedDate" value="#{salesUpdate.account.loVerifiedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				<p:calendar id="loAcceptedDate" value="#{salesUpdate.account.loVerifiedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 				&nbsp;&nbsp;
-				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
-				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+  				<p:commandButton id="loUploadDialogButton" value="Upload" actionListener="#{salesUpdate.setLODocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="loViewDialogButton" value="View" actionListener="#{salesUpdate.listLODocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
-   			
+
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Verified by"/>
@@ -96,10 +96,10 @@ Sales Update
    			<p:calendar id="laSignedDate" value="#{salesUpdate.account.laSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 			<p:outputLabel value="LA Stamped Date"/>
 			<h:panelGroup>
-				<p:calendar id="laStampedDate" value="#{salesUpdate.account.laStampedDate}" pattern="dd/MM/yyyy" showOn="button" disabled="true"/>
+				<p:calendar id="laStampedDate" value="#{salesUpdate.account.laStampedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 				&nbsp;&nbsp;
-				<p:commandButton value="Upload" ajax="false" immediate="true" icon="ui-icon-arrowstop-1-n" disabled="true"/>
-				<p:commandButton value="View" ajax="false" immediate="true" icon="ui-icon-document" disabled="true"/>
+				<p:commandButton id="laUploadDialogButton" value="Upload" actionListener="#{salesUpdate.setLADocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="laViewDialogButton" value="View" actionListener="#{salesUpdate.listLADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
    			
    			<p:outputLabel value="Solicitor"/>
@@ -111,6 +111,24 @@ Sales Update
    			
    		</h:panelGrid>
    		
+   		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesUpdate.upload}" />
+		</p:dialog>
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
+			<p:dataTable id="documentReferenceTable" var="d" value="#{salesUpdate.documentReferences}">  
+            	<p:column headerText="File">  
+                	<h:outputText value="#{d.filename}" />  
+            	</p:column>  
+            	<p:column headerText="Action">
+  					<p:commandButton id="downloadLink" value="Download" ajax="false"  icon="ui-icon-arrowstop-1-s"> 
+  						<f:setPropertyActionListener value="#{d}" target="#{salesUpdate.documentReference}" /> 
+    					<p:fileDownload value="#{salesUpdate.file}" />  
+    				</p:commandButton>
+            	</p:column>   
+        	</p:dataTable>  
+		</p:dialog>
+		<p:growl id="messages" showDetail="true"/>
+				
    		<p:commandButton value="Back" action="#{salesUpdate.listAccounts}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
    		<p:commandButton value="Save" action="#{salesUpdate.update}" ajax="false" icon="ui-icon-disk"/>  &nbsp;&nbsp;
 	</h:form> 

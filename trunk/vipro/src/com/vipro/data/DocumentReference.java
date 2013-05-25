@@ -15,6 +15,7 @@ public class DocumentReference implements java.io.Serializable {
 	private String filename;
 	private Date createdOn;
 	private String createdBy;
+	private Account account;
 
 	public DocumentReference() {
 	}
@@ -28,11 +29,12 @@ public class DocumentReference implements java.io.Serializable {
 	}
 
 	public DocumentReference(String docType, byte[] fileContent,
-			Date createdOn, String createdBy) {
+			Date createdOn, String createdBy, Account account) {
 		this.docType = docType;
 		this.fileContent = fileContent;
 		this.createdOn = createdOn;
 		this.createdBy = createdBy;
+		this.account = account;
 	}
 
 	public Long getId() {
@@ -73,6 +75,14 @@ public class DocumentReference implements java.io.Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+	
+	public Account getAccount() {
+		return this.account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 }

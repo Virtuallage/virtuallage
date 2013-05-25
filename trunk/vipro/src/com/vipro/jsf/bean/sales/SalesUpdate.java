@@ -11,22 +11,48 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.model.StreamedContent;
+
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.Customer;
+import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
+import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.text.SimpleDateFormat; 
+import javax.servlet.ServletContext;  
+import javax.servlet.http.HttpServletResponse;
+
 
 @ManagedBean(name="salesUpdate")
 @SessionScoped
@@ -35,6 +61,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
 	private List<Account> accounts;
+	private List<DocumentReference> documentReferences;
 	private List<SelectItem> listProject;
 	private List<SelectItem> purchaseTypes;
 	private List<SelectItem> bankNames;
@@ -50,16 +77,20 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private Account account;
 	private Long accountId;
 	private UserProfile attendedBy;
+	private String documentType;
+	private DocumentReference documentReference;
 	
+	private StreamedContent file;
+		
 	@PostConstruct
 	public void init() {
-		purchaseTypes = CodeUtil.getCodes("PCTY");
+		purchaseTypes = CodeUtil.getCodes("PT");
 		bankNames = CodeUtil.getCodes("BANK");
-		spaSolicitorId = CodeUtil.getCodes("SPSL");
-		laSolicitorId = CodeUtil.getCodes("LASL");
-		
+		spaSolicitorId = CodeUtil.getCodes("SOLI");
+		laSolicitorId = CodeUtil.getCodes("SOLI");
+
 	}
-	
+
 	public List<SelectItem> getPurchaseTypes() {
 		return purchaseTypes;
 	}
@@ -205,12 +236,73 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return attendedBy;
 	}
 
-
 	public void setAttendedBy(UserProfile attendedBy) {
 		this.attendedBy = attendedBy;
 	}
+	
+	public StreamedContent getFile() {  
+		
+		String path ="/accounts/" + account.getAccountId() + "/" + documentReference.getDocType() + "/" + documentReference.getFilename();
+		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(path);  
+        file = new DefaultStreamedContent(stream, documentReference.getFilename(), documentReference.getFilename()); 
+        
+        return file;  
+    } 
 
+	public List<DocumentReference> getDocumentReferences() {
+		return this.documentReferences;
+	}
 
+	public void setDocumentReferences(List<DocumentReference> documentReferences) {
+		this.documentReferences = documentReferences;
+	}
+	
+	public DocumentReference getDocumentReference() {
+		return this.documentReference;
+	}
+
+	public void setDocumentReference(DocumentReference documentReference) {
+		this.documentReference = documentReference;
+	}
+	
+	public String getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+	
+	public void setSPADocumentType() {
+		this.documentType = DocumentTypeConst.SPA;
+		//RequestContext.getCurrentInstance().execute("uploadDialog.show()");
+	}
+	
+	public void setLODocumentType() {
+		this.documentType = DocumentTypeConst.LO;
+		//RequestContext.getCurrentInstance().execute("uploadDialog.show()");
+	}
+	
+	public void setLADocumentType() {
+		this.documentType = DocumentTypeConst.LA;
+		//RequestContext.getCurrentInstance().execute("uploadDialog.show()");
+	}
+	
+	public void listSPADocumentType() {
+		DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.SPA);
+	}
+	
+	public void listLODocumentType() {
+		DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.LO);
+	}
+	
+	public void listLADocumentType() {
+		DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.LA);
+	}
+	
 	public String listProject() {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
@@ -255,7 +347,6 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	}
 	
 	public String selectAcount() {
-		
 		return "salesProgressUpdate";
 	}
 	
@@ -339,6 +430,78 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		//return "update";
 		return "salesProgressUpdate";
 	}
+		
+	public void upload(FileUploadEvent event){
+		
+		if (account==null) {
+			addErrorMessage("Upload failed", "Account not found");
+			return;
+		}
+		
+		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+	    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
+	    String filename = event.getFile().getFileName().substring(0, event.getFile().getFileName().lastIndexOf('.')) + 
+	    					"_" + fmt.format(new Date()) + event.getFile().getFileName().substring(event.getFile().getFileName().lastIndexOf('.'));
+ 
+	    if (filename.length() >= 50) {
+			addErrorMessage("Upload failed", "Filename is too long");
+			return;
+		}
+	    
+	    AuthUser user = getCurrentUser();
+		String userName = user.getName();
+		Long accId = account.getAccountId();
+		String docType = documentType;
+	    
+	    path += "accounts/";
+	    File fileAccountDir = new File(path);
+	    if (!fileAccountDir.exists())
+	    {
+	    	fileAccountDir.mkdir();
+	    }
+	    path += accId + "/";
+	    File fileIdDir = new File(path);
+	    if (!fileIdDir.exists())
+	    {
+	    	fileIdDir.mkdir();
+	    }
+	    path += docType + "/";
+	    File fileTypeDir = new File(path);
+	    if (!fileTypeDir.exists())
+	    {
+	    	fileTypeDir.mkdir();
+	    }
+	    
+	    File fileDir = new File(path + filename);
 
-	
+	    try
+	    {
+	    	InputStream is = event.getFile().getInputstream();
+	    	OutputStream out = new FileOutputStream(fileDir);
+	    	byte buf[] = new byte[1024];
+	    	int len;
+	    	while ((len = is.read(buf)) > 0)
+	    		out.write(buf, 0, len);
+	    	is.close();
+	    	out.close();
+	    }
+	    catch(IOException ex)
+	    {
+	    	addErrorMessage("Upload failed", "Uploading file(s) error");
+			return;
+	    }
+
+		DocumentReferenceService service = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		DocumentReference doc = new DocumentReference();
+		doc.setCreatedOn(new Date());
+		doc.setCreatedBy(userName);
+		doc.setDocType(docType);
+		doc.setFilename(filename);
+		doc.setAccount(account);
+		service.insert(doc);
+
+	    addInfoMessage("Upload Successful", "File(s) is uploaded");
+	    
+	}
+
 }

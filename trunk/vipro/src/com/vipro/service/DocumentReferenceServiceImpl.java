@@ -1,5 +1,7 @@
 package com.vipro.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,11 @@ public class DocumentReferenceServiceImpl implements DocumentReferenceService {
 	@Override
 	public DocumentReference findById(Long id) {
 		return documentReferenceDao.findById(id);
+	}
+	
+	@Override
+	public List<DocumentReference> findByAccountIdAndDocType(Long accountId, String docType) {
+		return documentReferenceDao.findByAccountIdAndDocType(accountId, docType);
 	}
 
 	@Override

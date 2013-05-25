@@ -49,7 +49,10 @@ Sales Cancellation
 				<f:selectItems value="#{salesCancel.cancelReasons}" />
 			</p:selectOneMenu>
 			<p:outputLabel value="Cancellation Letter"/>
-			<p:commandButton value="Upload" ajax="false" immediate="true" disabled="true" icon="ui-icon-arrowstop-1-n"/>
+			<h:panelGroup>
+				<p:commandButton id="uploadDialogButton" value="Upload" onclick="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="viewDialogButton" value="View" actionListener="#{salesCancel.listCANCDocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
 
    			<p:outputLabel value="Admin charges" for="cancelFee"/>
    			<p:inputText id="cancelFee" value="#{salesCancel.account.cancelFee}" style="width:200px" autocomplete="off" 
@@ -64,7 +67,8 @@ Sales Cancellation
    			
    			
    			<p:outputLabel value="Tax" for="cancelTax"/>
-   			<p:inputText id="cancelTax" value="#{salesCancel.account.cancelTax}" style="width:200px" autocomplete="off">
+   			<p:inputText id="cancelTax" value="#{salesCancel.account.cancelTax}" style="width:200px" autocomplete="off"
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    				<f:convertNumber type="currency" currencySymbol="" />
    				<p:ajax event="keyup" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
                 <!--<f:convertNumber maxFractionDigits="2" />
@@ -82,6 +86,24 @@ Sales Cancellation
    			   			
    		</h:panelGrid>
    		
+   		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesCancel.upload}" />
+		</p:dialog>
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
+			<p:dataTable id="documentReferenceTable" var="d" value="#{salesCancel.documentReferences}">  
+            	<p:column headerText="File">  
+                	<h:outputText value="#{d.filename}" />  
+            	</p:column>  
+            	<p:column headerText="Action">
+  					<p:commandButton id="downloadLink" value="Download" ajax="false"  icon="ui-icon-arrowstop-1-s"> 
+  						<f:setPropertyActionListener value="#{d}" target="#{salesCancel.documentReference}" /> 
+    					<p:fileDownload value="#{salesCancel.file}" />  
+    				</p:commandButton>
+            	</p:column>   
+        	</p:dataTable>  
+		</p:dialog>
+		<p:growl id="messages" showDetail="true"/>
+		
    		<p:commandButton value="Back" action="#{salesCancel.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
    		<p:commandButton value="Submit" action="#{salesCancel.cancel}" ajax="false" icon="ui-icon-check"/>  &nbsp;&nbsp;
    
