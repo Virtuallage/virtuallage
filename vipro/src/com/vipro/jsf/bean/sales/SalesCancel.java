@@ -76,7 +76,6 @@ public class SalesCancel extends CommonBean implements Serializable{
 	private Account account;
 	private TransactionHistory bookTrx;
 	private UserProfile attendedBy;
-	private String documentType;
 	private DocumentReference documentReference;
 
 	private StreamedContent file;  
@@ -222,15 +221,14 @@ public class SalesCancel extends CommonBean implements Serializable{
 		this.documentReference = documentReference;
 	}
 	
-	public String getDocumentType() {
-		return documentType;
-	}
-
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
-	
 	public void listCANCDocumentType() {
+		documentReferences = null;
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		List<Account> accs = accountService.findByAvailableProjectInventoryId(inventory.getInventoryId());
+		for (Account acc : accs) {
+			account = acc;
+		}
+		
 		DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
 		documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.CANCEL);
 	}
@@ -254,6 +252,18 @@ public class SalesCancel extends CommonBean implements Serializable{
 		
 		//return "cancelSelectUnit";
 		return "cancelPropertyList";
+	}
+		
+	public String GetCustomerNameByInventoryId(String idStr){
+		String customerName = "";
+		try
+		{
+			Long id = Long.valueOf(idStr);
+			customerName = GetCustomerNameByInventoryId(id);
+		} catch (Exception ex)
+		{
+		}
+		return customerName;
 	}
 	
 	public String GetCustomerNameByInventoryId(Long id){
@@ -408,14 +418,22 @@ public class SalesCancel extends CommonBean implements Serializable{
 	public void upload(FileUploadEvent event) {
 		
 		DocumentReferenceService service = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		List<Account> accs = accountService.findByAvailableProjectInventoryId(inventory.getInventoryId());
+		for (Account acc : accs) {
+			account = acc;
+		}
 	    
 		if (account==null) {
 			addErrorMessage("Upload failed", "Account not found");
 			return;
 		}
 		
-		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-	    String filename = event.getFile().getFileName();
+	    String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+	    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
+	    String filename = event.getFile().getFileName().substring(0, event.getFile().getFileName().lastIndexOf('.')) + 
+	    					"_" + fmt.format(new Date()) + event.getFile().getFileName().substring(event.getFile().getFileName().lastIndexOf('.'));
  
 	    if (filename.length() >= 50) {
 			addErrorMessage("Upload failed", "Filename is too long");

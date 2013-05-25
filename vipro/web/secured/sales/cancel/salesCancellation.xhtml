@@ -51,7 +51,6 @@ Sales Cancellation
 			<p:outputLabel value="Cancellation Letter"/>
 			<h:panelGroup>
 				<p:commandButton id="uploadDialogButton" value="Upload" onclick="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
-				<p:commandButton id="viewDialogButton" value="View" actionListener="#{salesCancel.listCANCDocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
 
    			<p:outputLabel value="Admin charges" for="cancelFee"/>
@@ -71,8 +70,6 @@ Sales Cancellation
    				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    				<f:convertNumber type="currency" currencySymbol="" />
    				<p:ajax event="keyup" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
-                <!--<f:convertNumber maxFractionDigits="2" />
-                <p:ajax update="cancelTax" event="blur" process="cancelTax"/>-->
    			</p:inputText>
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
