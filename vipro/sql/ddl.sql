@@ -140,3 +140,12 @@ alter table account modify column registration_fee decimal(9,2);
 -- 20130510
 alter table project change current_discount discount_rate decimal(11,2);
 alter table project_inventory modify column discount_amount decimal(11,2);
+
+-- 20130525
+ALTER TABLE `vipro`.`document_reference` ADD COLUMN `account_id` BIGINT(20) NULL DEFAULT NULL  AFTER `created_by` , 
+  ADD CONSTRAINT `FK_document_reference_1`
+  FOREIGN KEY (`account_id` )
+  REFERENCES `vipro`.`account` (`account_id` )
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT
+, ADD INDEX `FK_document_reference_1_idx` (`account_id` ASC) ;

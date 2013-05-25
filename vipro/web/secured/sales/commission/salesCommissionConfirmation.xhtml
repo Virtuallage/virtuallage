@@ -46,10 +46,10 @@ Sales Commission
 		</p:column>
 		
 		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaSignedDate}">
-	    	<h:outputText value="#{c.spaSignedDate}">
+	    	<h:outputText value="#{c.spaStampedDate}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    	</h:outputText><br />
-	    	<h:outputText value="#{c.laSignedDate}">
+	    	<h:outputText value="#{c.laStampedDate}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    	</h:outputText>
 		</p:column>

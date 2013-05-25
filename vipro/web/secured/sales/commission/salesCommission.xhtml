@@ -29,25 +29,25 @@ Sales Commission
 		</p:column>
 		
 		<p:column headerText="Project Code" sortBy="#{c.projectInventory.project.projectCode}">  
-	    	<h:outputText value="#{c.projectInventory.unitNo}" />
+	    	<h:outputText value="#{c.projectInventory.project.projectCode}" />
 		</p:column>
 		   
         <p:column headerText="Unit No" sortBy="#{c.projectInventory.unitNo}">  
 	 		<h:outputText value="#{c.projectInventory.unitNo}" />
 	    </p:column> 
 	    
-	 	<p:column headerText="SPA Amount" sortBy="">  
-	    	<h:outputText value="" />
+	 	<p:column headerText="SPA Amount" sortBy="#{c.purchasePrice}">  
+	    	<h:outputText value="#{c.purchasePrice}" />
 		</p:column>
 		
-		<p:column headerText="SPA Date" sortBy="#{c.spaSignedDate}">  
-	    	<h:outputText value="#{c.spaSignedDate}">
+		<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}">  
+	    	<h:outputText value="#{c.spaStampedDate}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="LA Date" sortBy="#{c.laSignedDate}">  
-	    	<h:outputText value="#{c.laSignedDate}">
+		<p:column headerText="LA Date" sortBy="#{c.laStampedDate}">  
+	    	<h:outputText value="#{c.laStampedDate}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    	</h:outputText>
 		</p:column>
