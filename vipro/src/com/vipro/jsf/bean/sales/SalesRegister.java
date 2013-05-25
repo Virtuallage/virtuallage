@@ -82,6 +82,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton payButton;
 	private CommandButton previewButton;
 	private CommandButton submitButton;
+	private CommandButton receiptButton;
 	
 	/**
 	 * search customer dialog
@@ -519,6 +520,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payButton.setStyle("display: none");
 			saveButton.setStyle("");
 			submitButton.setStyle("");
+			receiptButton.setStyle("display: none");
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
@@ -528,6 +530,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payButton.setStyle("");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("");
+			receiptButton.setStyle("display: none");
 		}
 
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
@@ -538,6 +541,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
+			receiptButton.setStyle("");
 		}
 		
 		return "salesRegistration";
@@ -809,6 +813,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
 			previewButton.setStyle("");
+			receiptButton.setStyle("");
 			
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -822,6 +827,20 @@ public class SalesRegister extends CommonBean implements Serializable {
 		return "salesRegistration";
 	}
 
+	public void showReceipt() {
+		try {		
+			// generate receipt
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("account_id", Long.toString(account.getAccountId()));
+			
+			String report = JasperConst.SALES_REG_RECEIPT;
+			JasperUtil.generateReport(hm, report);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Booking Fee", t.getMessage());
+		}
+	}
+	
 	public CommandButton getSaveButton() {
 		return saveButton;
 	}
@@ -836,6 +855,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setSubmitButton(CommandButton submitButton) {
 		this.submitButton = submitButton;
+	}
+
+	public CommandButton getReceiptButton() {
+		return receiptButton;
+	}
+
+	public void setReceiptButton(CommandButton receiptButton) {
+		this.receiptButton = receiptButton;
 	}
 	
 }
