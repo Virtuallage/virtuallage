@@ -23,9 +23,7 @@
    		
    		<p:outputLabel value="Payment Amount"/>
    		<p:inputText value="#{salesRegister.account.bookPymtAmount}"/>
-   		<p:outputLabel value="Registration Fee"/>
-   		<p:outputLabel style="##.##" value="#{salesRegister.account.registrationFee}"/>
-   		
+
    		<p:outputLabel value="Payment Method"/>
    		<p:selectOneMenu value="#{salesRegister.account.bookPymtMethod}"> 
 			<f:selectItems value="#{salesRegister.listPaymentMethod}" />
