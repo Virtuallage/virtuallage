@@ -17,6 +17,12 @@ public class BusinessPartnerDaoImpl extends DaoImpl<BusinessPartner> implements 
 	}
 	
 	@Override
+	public List<BusinessPartner> findByPartnerType(String partnerType) {
+		String query = "select o from BusinessPartner o where o.partnerType=?";
+		return getHibernateTemplate().find(query, partnerType);
+	}
+	
+	@Override
 	public List<BusinessPartner> findAllBusinessPartner() {
 		return getHibernateTemplate().loadAll(BusinessPartner.class);
 	}
