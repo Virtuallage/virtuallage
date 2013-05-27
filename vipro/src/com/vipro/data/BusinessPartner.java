@@ -1,5 +1,7 @@
 package com.vipro.data;
 
+import java.util.Date;
+
 // Generated Feb 3, 2013 6:50:08 PM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -7,31 +9,135 @@ package com.vipro.data;
  */
 public class BusinessPartner implements java.io.Serializable {
 
-	private BusinessPartnerId id;
+	private long partnerId;
+	private String partnerType;
+	private String businessRegistrationNo;
+	private Date registrationDate;
+	private String companyName;
+	private String address;
+	private String contactPersonTitle;
+	private String contactPersonName;
+	private String officeTel;
+	private String faxNo;
+	private String mobileNo;
+	private String emailAddress;
+	private String status;
 	private Institution institution;
 
 	public BusinessPartner() {
 	}
 
-	public BusinessPartner(BusinessPartnerId id, Institution institution) {
-		this.id = id;
-		this.institution = institution;
+	public long getPartnerId() {
+		return partnerId;
 	}
 
-	public BusinessPartnerId getId() {
-		return this.id;
+	public void setPartnerId(long partnerId) {
+		this.partnerId = partnerId;
 	}
 
-	public void setId(BusinessPartnerId id) {
-		this.id = id;
+	public String getPartnerType() {
+		return partnerType;
+	}
+
+	public void setPartnerType(String partnerType) {
+		this.partnerType = partnerType;
+	}
+
+	public String getBusinessRegistrationNo() {
+		return businessRegistrationNo;
+	}
+
+	public void setBusinessRegistrationNo(String businessRegistrationNo) {
+		this.businessRegistrationNo = businessRegistrationNo;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getContactPersonTitle() {
+		return contactPersonTitle;
+	}
+
+	public void setContactPersonTitle(String contactPersonTitle) {
+		this.contactPersonTitle = contactPersonTitle;
+	}
+
+	public String getContactPersonName() {
+		return contactPersonName;
+	}
+
+	public void setContactPersonName(String contactPersonName) {
+		this.contactPersonName = contactPersonName;
+	}
+
+	public String getOfficeTel() {
+		return officeTel;
+	}
+
+	public void setOfficeTel(String officeTel) {
+		this.officeTel = officeTel;
+	}
+
+	public String getFaxNo() {
+		return faxNo;
+	}
+
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Institution getInstitution() {
-		return this.institution;
+		return institution;
 	}
 
 	public void setInstitution(Institution institution) {
 		this.institution = institution;
 	}
 
+	
 }
