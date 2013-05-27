@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
@@ -41,6 +42,8 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> cities;
 	private List<SelectItem> propertyTypes;
 	private List<SelectItem> institutions;
+	private List<SelectItem> developers;
+	private List<SelectItem> landProprietors;
 	private List<SelectItem> reportGroups;
 	private List<SelectItem> statusList;
 	private String locationSearch;
@@ -80,6 +83,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		orientationList = CodeUtil.getCodes("ORIENTATION");
 		statusList = CodeUtil.getCodes("STATUS");
 		institutions = CodeUtil.getInstitutionAsItems();
+		developers = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.DEVELOPER);
+		landProprietors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.LAND_PROPRIETOR);
+		
 		listProject();
 	}
 
@@ -596,6 +602,22 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	public void setOrientationList(List<SelectItem> orientationList) {
 		this.orientationList = orientationList;
+	}
+	
+	public List<SelectItem> getLandProprietors() {
+		return landProprietors;
+	}
+
+	public void setLandProprietors(List<SelectItem> landProprietors) {
+		this.landProprietors = landProprietors;
+	}
+
+	public List<SelectItem> getDevelopers() {
+		return developers;
+	}
+
+	public void setDevelopers(List<SelectItem> developers) {
+		this.developers = developers;
 	}
 
 }
