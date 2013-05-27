@@ -18,11 +18,11 @@ Sales Update
 <p:panel id="panel" header="Sales Progress Update" style="width:95%;">  
     
 <p:focus context="panel"/> 
-   	<h:form>
+   	<h:form id="custAccountForm">
    		<h:panelGrid columns="4" style="width:100%;">
 
 			<p:outputLabel value="Purchaser Name"/>
-			<h:inputText value="#{salesUpdate.account.customer.fullName}" style="width:400px" disabled="true"/>
+			<h:inputText value="#{salesUpdate.customerName}" style="width:400px" disabled="true"/>
 			<p:outputLabel value="Property Type"/>
 			<h:inputText value="" style="width:200px" disabled="true"/>
 
@@ -32,7 +32,7 @@ Sales Update
 					<f:convertNumber type="currency" currencySymbol="" />
    				</h:inputText>
 				&nbsp;&nbsp;
-				<!--<p:commandButton value="Change Purchaser" ajax="false" immediate="true" icon="ui-icon-contact"/>-->
+				<p:commandButton value="Change Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-contact"/>
 			</h:panelGroup>
 			<p:outputLabel value="Sales Person"/>
 			<h:inputText value="#{salesUpdate.account.projectInventory.salesPerson}" style="width:400px" disabled="true" />
@@ -115,7 +115,7 @@ Sales Update
    		</h:panelGrid>
    		
    		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
-   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesUpdate.upload}" />
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesUpdate.upload}" oncomplete="uploadDialog.hide()"/>
 		</p:dialog>
 		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
 			<p:dataTable id="documentReferenceTable" var="d" value="#{salesUpdate.documentReferences}">  
@@ -135,6 +135,48 @@ Sales Update
    		<p:commandButton value="Back" action="#{salesUpdate.listAccounts}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
    		<p:commandButton value="Save" action="#{salesUpdate.update}" ajax="false" icon="ui-icon-disk"/>  &nbsp;&nbsp;
 	</h:form> 
+	
+<p:focus id="btnSearchCust" for="btnSearchCust"/> 
+<h:form id="searchCustForm">
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" showEffect="fade" hideEffect="fade"> 
+		<h:panelGrid columns="2">
+			<p:outputLabel value="ID No." for="searchIdNo"/>
+			<p:inputText id="searchIdNo" length="15" size="30" value="#{salesUpdate.searchIdNo}" autocomplete="off"/>
+			
+			<p:outputLabel value="Name" for="searchName"/>
+			<h:panelGroup>
+				<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
+				&nbsp;
+				<p:commandButton  value="Search" action="#{salesUpdate.searchCustomer}" update="searchCustForm:custs"/>
+			</h:panelGroup>
+		</h:panelGrid>
+		<br/>
+		<p:dataTable id="custs" var="c" value="#{salesUpdate.searchCustList}" style="width:90%;">  
+	        <p:column headerText="Purchaser Name" style="width:50%">  
+	            <h:outputText value="#{c.fullName}" />  
+	        </p:column>  
+	        <p:column headerText="Id Type" style="width:15%">  
+	            <h:outputText value="#{c.identityType}" />
+	        </p:column>  
+	        <p:column headerText="Id No." style="width:25%">  
+	            <h:outputText value="#{c.identityNo}" />  
+	        </p:column>
+	        <p:column headerText="Action" style="width:10%">  
+	           <p:commandButton id="selectButton" ajax="false" action="#{salesUpdate.changeSelectedCustomer}" oncomplete="dlgSearchCust.hide()" update="custAccountForm" icon="ui-icon-check" title="Select Customer">  
+	                <f:setPropertyActionListener value="#{c}" target="#{salesUpdate.selectedCustomer}" />  
+	            </p:commandButton>  
+	        </p:column>  
+		</p:dataTable>
+		<br/>
+		<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
+			action="#{salesUpdate.toAddIndividual}" icon="ui-icon-plus"/>
+		&nbsp;
+		<p:commandButton value="Add Company" ajax="false" immediate="true" 
+			action="#{salesUpdate.toAddCompany}" icon="ui-icon-plus"/>
+		&nbsp; 
+		<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
+	</p:dialog>				
+</h:form>	
 
 </p:panel>
 

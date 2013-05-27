@@ -44,13 +44,14 @@ Sales Cancellation
    			<h:outputLabel value="Payment Method" disabled="true"/>
    			<h:inputText value="" style="width:200px" disabled="true"/>
    			
-   			<p:outputLabel value="Reason for Cancellation" for="reasonForCancellation"/>
-   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancel.account.cancelledReason}" required="true" style="width:200px">  
+   			<p:outputLabel value="Reason for Cancellation *" for="reasonForCancellation"/>
+   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancel.account.cancelledReason}" style="width:200px">  
 				<f:selectItems value="#{salesCancel.cancelReasons}" />
 			</p:selectOneMenu>
 			<p:outputLabel value="Cancellation Letter"/>
 			<h:panelGroup>
 				<p:commandButton id="uploadDialogButton" value="Upload" onclick="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="viewDialogButton" value="View" actionListener="#{salesCancel.listCANCDocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
 
    			<p:outputLabel value="Admin charges" for="cancelFee"/>
@@ -100,7 +101,7 @@ Sales Cancellation
         	</p:dataTable>  
 		</p:dialog>
 		<p:growl id="messages" showDetail="true"/>
-		
+
    		<p:commandButton value="Back" action="#{salesCancel.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
    		<p:commandButton value="Submit" action="#{salesCancel.cancel}" ajax="false" icon="ui-icon-check"/>  &nbsp;&nbsp;
    
