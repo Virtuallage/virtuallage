@@ -14,10 +14,12 @@ import javax.faces.model.SelectItem;
 import org.primefaces.model.StreamedContent;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.data.Account;
+import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
@@ -26,6 +28,8 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
+import com.vipro.service.AddressService;
+import com.vipro.service.CustomerService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
@@ -41,6 +45,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.springframework.util.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -61,26 +66,44 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
 	private List<Account> accounts;
-	private List<DocumentReference> documentReferences;
 	private List<SelectItem> listProject;
 	private List<SelectItem> purchaseTypes;
 	private List<SelectItem> bankNames;
 	private List<SelectItem> spaSolicitorId;
 	private List<SelectItem> laSolicitorId;
-
+	private List<SelectItem> listCountry = null;
+	private List<SelectItem> listCity = null;
+	private List<SelectItem> listState = null;
+	private List<SelectItem> listIdType = null;
+	private List<SelectItem> listTitle = null;
+	private List<SelectItem> listGender = null;
+	private List<SelectItem> listMaritalStatus = null;
+	private List<SelectItem> listBumi = null;
+	private List<SelectItem> listRace = null;
+	
 	private ProjectInventory inventory;
 	private Long projectId;
 	private Project project;
-
-	private String customerNames;
+	private String customerName;
 	private List<Customer> customers;
 	private Account account;
 	private Long accountId;
 	private UserProfile attendedBy;
-	private String documentType;
-	private DocumentReference documentReference;
 	
+	private List<DocumentReference> documentReferences;
+	private DocumentReference documentReference;
+	private String documentType;
 	private StreamedContent file;
+	
+	private String searchIdNo;
+	private String searchName;
+	private List<Customer> searchCustList;
+	private Customer selectedCustomer;
+	private Customer delCustomer;
+
+	private Customer individual;
+	private Customer company;
+	private Address address;
 		
 	@PostConstruct
 	public void init() {
@@ -88,6 +111,15 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		bankNames = CodeUtil.getCodes("BANK");
 		spaSolicitorId = CodeUtil.getCodes("SOLI");
 		laSolicitorId = CodeUtil.getCodes("SOLI");
+		listCountry = CodeUtil.getCodes("COUNTRY");
+		listCity = CodeUtil.getCodes("CITY");
+		listIdType = CodeUtil.getCodes("IDTYPE");
+		listTitle = CodeUtil.getCodes("CONTACT_TITLE");
+		listGender = CodeUtil.getCodes("SEX");
+		listMaritalStatus = CodeUtil.getCodes("MARITAL");
+		listBumi = CodeUtil.getCodes("BUMI");
+		listRace = CodeUtil.getCodes("RACE");
+		listState = CodeUtil.getCodes("STATE");
 
 	}
 
@@ -121,6 +153,78 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setLaSolicitorId(List<SelectItem> laSolicitorId) {
 		this.laSolicitorId = laSolicitorId;
+	}
+	
+	public List<SelectItem> getListState() {
+		return listState;
+	}
+
+	public void setListState(List<SelectItem> listState) {
+		this.listState = listState;
+	}
+
+	public List<SelectItem> getListRace() {
+		return listRace;
+	}
+
+	public void setListRace(List<SelectItem> listRace) {
+		this.listRace = listRace;
+	}
+
+	public List<SelectItem> getListCountry() {
+		return listCountry;
+	}
+
+	public void setListCountry(List<SelectItem> listCountry) {
+		this.listCountry = listCountry;
+	}
+
+	public List<SelectItem> getListCity() {
+		return listCity;
+	}
+
+	public void setListCity(List<SelectItem> listCity) {
+		this.listCity = listCity;
+	}
+
+	public List<SelectItem> getListIdType() {
+		return listIdType;
+	}
+
+	public void setListIdType(List<SelectItem> listIdType) {
+		this.listIdType = listIdType;
+	}
+
+	public List<SelectItem> getListTitle() {
+		return listTitle;
+	}
+
+	public void setListTitle(List<SelectItem> listTitle) {
+		this.listTitle = listTitle;
+	}
+
+	public List<SelectItem> getListGender() {
+		return listGender;
+	}
+
+	public void setListGender(List<SelectItem> listGender) {
+		this.listGender = listGender;
+	}
+
+	public List<SelectItem> getListMaritalStatus() {
+		return listMaritalStatus;
+	}
+
+	public void setListMaritalStatus(List<SelectItem> listMaritalStatus) {
+		this.listMaritalStatus = listMaritalStatus;
+	}
+
+	public List<SelectItem> getListBumi() {
+		return listBumi;
+	}
+
+	public void setListBumi(List<SelectItem> listBumi) {
+		this.listBumi = listBumi;
 	}
 	
 	public List<SelectItem> getListProject() {
@@ -182,13 +286,13 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	}
 
 
-	public String getCustomerNames() {
-		return customerNames;
+	public String getCustomerName() {
+		return customerName;
 	}
 
 
-	public void setCustomerNames(String customerNames) {
-		this.customerNames = customerNames;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 
@@ -238,6 +342,62 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setAttendedBy(UserProfile attendedBy) {
 		this.attendedBy = attendedBy;
+	}
+	
+	public String getSearchIdNo() {
+		return searchIdNo;
+	}
+
+	public void setSearchIdNo(String searchIdNo) {
+		this.searchIdNo = searchIdNo;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
+	public List<Customer> getSearchCustList() {
+		return searchCustList;
+	}
+
+	public void setSearchCustList(List<Customer> searchCustList) {
+		this.searchCustList = searchCustList;
+	}
+	
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Customer getIndividual() {
+		return individual;
+	}
+
+	public void setIndividual(Customer individual) {
+		this.individual = individual;
+	}
+
+	public Customer getCompany() {
+		return company;
+	}
+
+	public void setCompany(Customer company) {
+		this.company = company;
 	}
 	
 	public StreamedContent getFile() {  
@@ -307,22 +467,10 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
 		projects = projectService.findAllProjects();
+		
 		return "updateSelectProject";
 	}
 
-	public String listPropertyUnits() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		project = projectService.findById(projectId);
-
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getInventories(projectId);
-
-		//return "updateSelectUnit";
-		return "updatePropertyList";
-	}
-	
 	public String listAccounts(){
 		listProject = CodeUtil.getProjectAsItems();
 		
@@ -346,7 +494,9 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return "updatePropertyList";
 	}
 	
-	public String selectAcount() {
+	public String selectAccount() {
+		setSelectedCustomer(account.getCustomer());
+		setCustomerName(account.getCustomer().getFullName());
 		return "salesProgressUpdate";
 	}
 	
@@ -354,6 +504,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		
 		if (account != null) {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			account.setCustomer(selectedCustomer);
 			accountService.update(account);
 			addInfoMessage("Sales Update", "Updated Successfully.");
 			return listAccounts();
@@ -362,75 +513,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			return "salesProgressUpdate";
 		}
 	}
-
-	public String selectInventory() {
-		try {
-			customers = new ArrayList<Customer>();
-		
-			account = null;
 	
-			AuthUser user = getCurrentUser();
-			if (user != null)
-				attendedBy = user.getUserProfile();
-	
-			AccountService accountService = (AccountService) SpringBeanUtil
-					.lookup(AccountService.class.getName());
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-					.lookup(UserProfileService.class.getName());
-	
-			List<Account> accounts = accountService
-					.findByProjectInventoryId(inventory.getInventoryId());
-			/**
-			 * support only one account as per one property unit.
-			 */
-			for (Account a : accounts) {
-				account = a;
-				if (account.getAttendedBy() != null) {
-					UserProfile up = userProfileService.findById(account
-							.getAttendedBy());
-					attendedBy = up;
-				}
-				customers = new ArrayList<Customer>();
-				StringBuffer names = new StringBuffer();
-				if (account.getCustomer() != null) {
-					customers.add(account.getCustomer());
-					names.append(account.getCustomer().getFullName()).append(", ");
-				}
-				if (account.getCustomer2() != null) {
-					customers.add(account.getCustomer2());
-					names.append(account.getCustomer().getFullName()).append(", ");
-				}
-				if (account.getCustomer3() != null) {
-					customers.add(account.getCustomer3());
-					names.append(account.getCustomer3().getFullName()).append(", ");
-				}
-				if (account.getCustomer4() != null) {
-					customers.add(account.getCustomer4());
-					names.append(account.getCustomer4().getFullName()).append(", ");
-				}
-				if (account.getCustomer5() != null) {
-					customers.add(account.getCustomer5());
-					names.append(account.getCustomer5().getFullName()).append(", ");
-				}
-				customerNames = names.toString();
-			}
-
-			
-			if ( account==null) {
-				addInfoMessage("Sales Update", "This property Unit has no sales transaction. There is nothing to update.");
-				return listPropertyUnits();
-			}
-			
-		} catch (Throwable t) {
-			t.printStackTrace();
-			addErrorMessage("Error opening sales", t.getMessage());
-			return listPropertyUnits();
-		}
-
-		//return "update";
-		return "salesProgressUpdate";
-	}
-		
 	public void upload(FileUploadEvent event){
 		
 		if (account==null) {
@@ -502,6 +585,92 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	    addInfoMessage("Upload Successful", "File(s) is uploaded");
 	    
+	}
+	
+	public String searchCustomer() {
+		if (!StringUtils.hasText(searchIdNo)
+				&& !StringUtils.hasText(searchName)) {
+			setSearchCustList(null);
+			addErrorMessage("Search Customer", "Please enter customer name or Id No.");
+			return null;
+		}
+
+		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+
+		if (StringUtils.hasText(searchName) || StringUtils.hasText(searchIdNo)) {
+			setSearchCustList(customerService.findByIdNoName(searchIdNo, searchName));
+		}
+
+		individual = new Customer();
+		company = new Customer();
+		address = new Address();
+
+		return null;
+	}
+	
+	public void changeSelectedCustomer() {
+		setCustomerName(selectedCustomer.getFullName());
+	}
+	
+	public String toAddIndividual() {
+		individual = new Customer();
+		address = new Address();
+		return "addIndividual";
+	}
+
+	public String toAddCompany() {
+		company = new Customer();
+		address = new Address();
+		return "addCompany";
+	}
+	
+	public String saveIndividual() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
+			customerService.insert(individual);
+
+			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+			address.setCustomer(individual);
+			addressService.insert(address);
+
+			individual.setAddressId(address.getAddressId());
+
+			customerService.update(individual);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Add Individual", t.getMessage());
+			return null;
+		}
+		
+		setSelectedCustomer(individual);
+		setCustomerName(individual.getFullName());
+		
+		return "salesProgressUpdate";
+	}
+
+	public String saveCompany() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+			company.setCustomerCategory(CustomerTypeConst.COMPANY);
+			customerService.insert(company);
+
+			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+			address.setCustomer(company);
+			addressService.insert(address);
+
+			company.setAddressId(address.getAddressId());
+			customerService.update(company);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Add Company", t.getMessage());
+			return null;
+		}
+		
+		setSelectedCustomer(company);
+		setCustomerName(company.getFullName());
+		
+		return "salesProgressUpdate";
 	}
 
 }

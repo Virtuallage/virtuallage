@@ -22,10 +22,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
@@ -161,8 +163,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 	public String listProject() {
 		try
 		{		
-			ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
+			ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
 			projects = projectService.findAllProjects();
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
@@ -222,15 +223,11 @@ public class SalesCancel extends CommonBean implements Serializable{
 	}
 	
 	public void listCANCDocumentType() {
-		documentReferences = null;
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-		List<Account> accs = accountService.findByAvailableProjectInventoryId(inventory.getInventoryId());
-		for (Account acc : accs) {
-			account = acc;
+		documentReferences = new ArrayList<DocumentReference>();
+		if(account != null) {
+			DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+			documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.CANCEL);
 		}
-		
-		DocumentReferenceService documentReferenceService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
-		documentReferences = documentReferenceService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.CANCEL);
 	}
 
 	public TransactionHistory getBookTrx() {
@@ -378,7 +375,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			addErrorMessage("Error opening sales", t.getMessage());
 			return listPropertyUnits();
 		}
-			
+
 		//return "cancel";	
 		return "salesCancellation";
 
@@ -390,8 +387,12 @@ public class SalesCancel extends CommonBean implements Serializable{
 	}
 	
 	public String cancel() {
-		
 		if (account != null) {
+			if (!StringUtils.hasText(account.getCancelledReason())) {
+				addErrorMessage("Failed to cancel", "Please select a reason for cancellation.");
+				return "salesCancellation";
+			}
+			
 			SalesCancellationService salesCancellationService=  (SalesCancellationService) SpringBeanUtil.lookup(SalesCancellationService.class.getName());
 			SalesCancellationHistory salesCancellationHistory = new SalesCancellationHistory();
 			salesCancellationHistory.setProjectInventory(account.getProjectInventory());
@@ -410,21 +411,13 @@ public class SalesCancel extends CommonBean implements Serializable{
 			addInfoMessage("Sales Cancellation", "Cancelled Successfully.");
 			return listPropertyUnits();
 		} else {
-			addInfoMessage("Sales Cancellation", "Failed to cancel.");
+			addErrorMessage("Sales Cancellation", "Failed to cancel.");
 			return "salesCancellation";
 		}
 	}
 	
 	public void upload(FileUploadEvent event) {
-		
-		DocumentReferenceService service = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
-		
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-		List<Account> accs = accountService.findByAvailableProjectInventoryId(inventory.getInventoryId());
-		for (Account acc : accs) {
-			account = acc;
-		}
-	    
+
 		if (account==null) {
 			addErrorMessage("Upload failed", "Account not found");
 			return;
@@ -483,6 +476,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			return;
 	    }
 
+	    DocumentReferenceService service = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
 		DocumentReference doc = new DocumentReference();
 		doc.setCreatedOn(new Date());
 		doc.setCreatedBy(userName);
