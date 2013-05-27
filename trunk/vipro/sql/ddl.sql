@@ -149,3 +149,18 @@ ALTER TABLE `vipro`.`document_reference` ADD COLUMN `account_id` BIGINT(20) NULL
   ON DELETE RESTRICT
   ON UPDATE RESTRICT
 , ADD INDEX `FK_document_reference_1_idx` (`account_id` ASC) ;
+
+-- 20130527
+alter table project add column developer_id bigint null default null;
+alter table project add column land_proprietor_id bigint null default null;
+alter table vipro.business_partner modify column partner_id bigint auto_increment;
+
+ALTER TABLE vipro.project
+  ADD CONSTRAINT FK_project_developer_id
+      FOREIGN KEY (developer_id)
+      REFERENCES vipro.business_partner (partner_id);
+
+ALTER TABLE vipro.project
+  ADD CONSTRAINT FK_project_land_proprietor_id
+      FOREIGN KEY (land_proprietor_id)
+      REFERENCES vipro.business_partner (partner_id);
