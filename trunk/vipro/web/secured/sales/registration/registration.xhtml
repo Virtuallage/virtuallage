@@ -19,7 +19,7 @@
    		<p:outputLabel value="Lot/Unit No"/>
    		<p:outputLabel value="#{salesRegister.inventory.unitNo}"/>
    		<p:outputLabel value="Developer"/>
-   		<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
+   		<p:outputLabel value="#{salesRegister.project.developer.companyName}"/>
    		
    		<p:outputLabel value="Purchase Price"/>
    		<h:outputLabel value="#{salesRegister.inventory.purchasePrice}">
@@ -66,8 +66,6 @@
      		<p:column style="text-align:left">
      			<p:commandButton value="Add Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-plus"/>  
      		</p:column>
-	       	<p:column style="text-align:left">
-            </p:column>
      	</p:row>
      </p:panelGrid>
      
