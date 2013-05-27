@@ -15,6 +15,8 @@ public class Project implements java.io.Serializable {
 	private Long projectId;
 	private Account account;
 	private Institution institution;
+	private BusinessPartner developer;
+	private BusinessPartner landProprietor;
 	private String projectName;
 	private String projectCode;
 	private String propertyType;
@@ -355,6 +357,22 @@ public class Project implements java.io.Serializable {
 
 	public void setSalesCommission(BigDecimal salesCommission) {
 		this.salesCommission = salesCommission;
+	}
+
+	public BusinessPartner getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(BusinessPartner developer) {
+		this.developer = developer;
+	}
+
+	public BusinessPartner getLandProprietor() {
+		return landProprietor;
+	}
+
+	public void setLandProprietor(BusinessPartner landProprietor) {
+		this.landProprietor = landProprietor;
 	}
 	
 	
