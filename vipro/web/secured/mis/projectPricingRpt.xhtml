@@ -29,7 +29,9 @@ MIS - Project Pricing
 						<f:selectItems value="#{reportBean.listProject}"/>
 					</p:selectOneMenu>
 					&nbsp;
-					<p:commandButton value="Generate Report" action="#{reportBean.genProjectPricingRpt}" ajax="false" />
+					<p:commandButton value="Generate Report" ajax="false">
+						<p:fileDownload value="#{reportBean.MISReport}" />  
+					</p:commandButton>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
