@@ -1,12 +1,13 @@
 package com.vipro.utils.spring;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+
+import javax.faces.context.FacesContext;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -16,6 +17,7 @@ import net.sf.jasperreports.engine.JasperReport;
 
 import com.vipro.constant.DataSourceConst;
 import com.vipro.constant.JasperConst;
+import com.vipro.data.Account;
 
 public class JasperUtil {
 
@@ -30,6 +32,32 @@ public class JasperUtil {
 		System.out.println(JasperConst.TOMCAT_HOME + "[aaa]");
 		String pdf = JasperConst.TMP_PATH + JasperConst.TMP_FILENAME
 				+ randomGenerator.nextLong() + ".pdf";
+		return generateReport(hm, report, pdf);
+	}
+	
+	public static boolean generateReport(HashMap<String, Object> hm,
+			String report, Account account, String reportType) {
+		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+
+		System.out.println(path);
+		
+	    path = path.concat("reports/");
+	    File reportDirectory = new File(path);
+	    if (!reportDirectory.exists())
+	    {
+	    	reportDirectory.mkdir();
+	    }
+	    
+	    System.out.println(path);
+	    path = path.concat(account.getAccountId() + "/");
+	    File accountDirectory = new File(path);
+	    if (!accountDirectory.exists())
+	    {
+	    	accountDirectory.mkdir();
+	    }
+	    
+		String pdf = path + reportType;
+		System.out.println(pdf);
 		return generateReport(hm, report, pdf);
 	}
 
@@ -63,8 +91,9 @@ public class JasperUtil {
 			System.out.println("Done exporting reports to pdf");
 
 			File myFile = new File(pdf);
-			Desktop.getDesktop().open(myFile);
-			System.out.println("Done opening pdf");
+			
+			//Desktop.getDesktop().open(myFile);
+			//System.out.println("Done opening pdf");
 
 			result = true;
 		} catch (Exception e) {
