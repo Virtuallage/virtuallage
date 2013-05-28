@@ -1,5 +1,6 @@
 package com.vipro.jsf.bean.sales;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,17 +11,22 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.JasperConst;
+import com.vipro.constant.JasperReportTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -105,6 +111,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 	 * booking fee
 	 */
 	private TransactionHistory trx;
+	
+	private StreamedContent registrationForm;
+	private StreamedContent receipt;
 
 	@PostConstruct
 	public void init() {
@@ -606,6 +615,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_IN_PROGRESS);
 			inventoryService.update(inventory);
+			saveButton.setStyle("display: none");
 			payButton.setStyle("");
 			
 			addInfoMessage(
@@ -750,6 +760,12 @@ public class SalesRegister extends CommonBean implements Serializable {
 					}
 				}
 			}
+			
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("account_id", Long.toString(account.getAccountId()));
+			
+			String report = JasperConst.SALES_REG_FORM;
+			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Booking Fee", t.getMessage());
@@ -757,19 +773,6 @@ public class SalesRegister extends CommonBean implements Serializable {
 		}
 		salesRegTabView.setActiveIndex(2);
 		payBookingTab.setDisabled(false);
-		
-		return "salesRegistration";
-	}
-	
-	public String toPreview() {
-		// generate receipt
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		hm.put("account_id", Long.toString(account.getAccountId()));
-		
-		String report = JasperConst.SALES_REG_FORM;
-		JasperUtil.generateReport(hm, report);
-		
-		salesRegTabView.setActiveIndex(1);
 		
 		return "salesRegistration";
 	}
@@ -807,7 +810,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			hm.put("account_id", Long.toString(account.getAccountId()));
 			
 			String report = JasperConst.SALES_REG_RECEIPT;
-			JasperUtil.generateReport(hm, report);
+			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
 			
 			// show/hide buttons
 			payButton.setStyle("display: none");
@@ -825,20 +828,6 @@ public class SalesRegister extends CommonBean implements Serializable {
 		salesRegTabView.setActiveIndex(1);
 		
 		return "salesRegistration";
-	}
-
-	public void showReceipt() {
-		try {		
-			// generate receipt
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("account_id", Long.toString(account.getAccountId()));
-			
-			String report = JasperConst.SALES_REG_RECEIPT;
-			JasperUtil.generateReport(hm, report);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			addErrorMessage("Booking Fee", t.getMessage());
-		}
 	}
 	
 	public CommandButton getSaveButton() {
@@ -865,4 +854,21 @@ public class SalesRegister extends CommonBean implements Serializable {
 		this.receiptButton = receiptButton;
 	}
 	
+	public StreamedContent getRegistrationForm() {  
+		String fileName = JasperReportTypeConst.REGISTRATION_FILE;
+		String path ="/reports/" + account.getAccountId() + "/" + fileName;
+		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(path);  
+        registrationForm = new DefaultStreamedContent(stream, fileName, fileName); 
+        
+        return registrationForm;  
+    } 
+	
+	public StreamedContent getReceipt() {  
+		String fileName = JasperReportTypeConst.RECEIPT_FILE;
+		String path ="/reports/" + account.getAccountId() + "/" + fileName;
+		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(path);  
+        receipt = new DefaultStreamedContent(stream, fileName, fileName); 
+        
+        return receipt;  
+    } 
 }
