@@ -29,17 +29,20 @@ public class JasperUtil {
 
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report) {
-		System.out.println(JasperConst.TOMCAT_HOME + "[aaa]");
-		String pdf = JasperConst.TMP_PATH + JasperConst.TMP_FILENAME
-				+ randomGenerator.nextLong() + ".pdf";
+		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+	    path = path.concat("MISReport/");
+	    File reportDirectory = new File(path);
+	    if (!reportDirectory.exists())
+	    {
+	    	reportDirectory.mkdir();
+	    }
+		String pdf = path + "MISReport.pdf";
 		return generateReport(hm, report, pdf);
 	}
 	
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report, Account account, String reportType) {
 		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-
-		System.out.println(path);
 		
 	    path = path.concat("reports/");
 	    File reportDirectory = new File(path);
@@ -48,7 +51,6 @@ public class JasperUtil {
 	    	reportDirectory.mkdir();
 	    }
 	    
-	    System.out.println(path);
 	    path = path.concat(account.getAccountId() + "/");
 	    File accountDirectory = new File(path);
 	    if (!accountDirectory.exists())
@@ -57,7 +59,6 @@ public class JasperUtil {
 	    }
 	    
 		String pdf = path + reportType;
-		System.out.println(pdf);
 		return generateReport(hm, report, pdf);
 	}
 
