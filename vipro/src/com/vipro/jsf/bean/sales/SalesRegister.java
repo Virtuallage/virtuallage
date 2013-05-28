@@ -622,6 +622,12 @@ public class SalesRegister extends CommonBean implements Serializable {
 					"Sales Registration",
 					"Sales Registration Saved. Registration No is "
 							+ account.getAccountId());
+			
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("account_id", Long.toString(account.getAccountId()));
+			
+			String report = JasperConst.SALES_REG_FORM;
+			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Sales Registration", t.getMessage());
@@ -760,12 +766,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 					}
 				}
 			}
-			
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("account_id", Long.toString(account.getAccountId()));
-			
-			String report = JasperConst.SALES_REG_FORM;
-			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Booking Fee", t.getMessage());
