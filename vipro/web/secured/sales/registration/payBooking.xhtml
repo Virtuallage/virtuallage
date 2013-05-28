@@ -43,7 +43,9 @@
 	&nbsp;
 	<p:commandButton value="Submit" action="#{salesRegister.payBooking}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.submitButton}"/>
 	&nbsp;
-	<p:commandButton value="Receipt" action="#{salesRegister.showReceipt}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.receiptButton}"/>			
+	<p:commandButton value="Receipt" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.receiptButton}">
+		<p:fileDownload value="#{salesRegister.receipt}" />  
+	</p:commandButton>			
     <br/>
 </h:form> 
 

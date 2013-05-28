@@ -95,7 +95,9 @@
 	&nbsp;
 	<p:commandButton value="Pay" action="#{salesRegister.toPay}" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.payButton}"/>
 	&nbsp;
-	<p:commandButton value="Preview" action="#{salesRegister.toPreview}" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.previewButton}"/>
+	<p:commandButton value="Preview" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.previewButton}">
+		<p:fileDownload value="#{salesRegister.registrationForm}" />  
+	</p:commandButton>
     <br/>
 </h:form> 
 
