@@ -14,12 +14,12 @@
         <many-to-one name="institution" class="com.vipro.data.Institution" lazy="false" fetch="join">
             <column name="institution_id"  />
         </many-to-one>
-        <many-to-one name="developer" class="com.vipro.data.BusinessPartner" lazy="false" fetch="join">
-            <column name="developer_id"  />
-        </many-to-one>
-        <many-to-one name="landProprietor" class="com.vipro.data.BusinessPartner" lazy="false" fetch="join">
-            <column name="land_proprietor_id"  />
-        </many-to-one>
+        <property name="developerId" type="java.lang.Long">
+            <column name="developer_id" />
+        </property>
+        <property name="landProprietorId" type="java.lang.Long">
+            <column name="land_proprietor_id" />
+        </property>
         <property name="projectName" type="string">
             <column name="project_name" length="40" />
         </property>
