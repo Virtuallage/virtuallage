@@ -91,11 +91,7 @@ Project Setup
 		</h:panelGroup>
 		
 		<p:outputLabel value="City" for="city"/>
-		<h:panelGroup>
-			<p:selectOneMenu id="city" value="#{projectSetup.project.locationCity}">
-				<f:selectItems value="#{projectSetup.cities}"/>
-			</p:selectOneMenu>
-		</h:panelGroup>
+		<p:inputText id="city" value="#{projectSetup.project.locationCity}" maxlength="20" />
 
 		<p:outputLabel value="State" for="state"/>
 		<p:selectOneMenu id="state" value="#{projectSetup.project.locationState}">
