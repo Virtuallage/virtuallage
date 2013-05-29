@@ -30,12 +30,12 @@ Project Setup
 		
 		
 		<p:outputLabel value="Developer Name" for="developerName"/>
-		<p:selectOneMenu id="developerName" value="#{projectSetup.project.developer.partnerId}" converter="businessPartner"> 
+		<p:selectOneMenu id="developerName" value="#{projectSetup.project.developerId}"> 
 			<f:selectItems value="#{projectSetup.developers}" />
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Land Proprietor" for="developerName"/>
-		<p:selectOneMenu id="landProprietor" value="#{projectSetup.project.landProprietor.partnerId}" converter="businessPartner"> 
+		<p:selectOneMenu id="landProprietor" value="#{projectSetup.project.landProprietorId}"> 
 			<f:selectItems value="#{projectSetup.landProprietors}" />
 		</p:selectOneMenu>
 
