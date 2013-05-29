@@ -42,7 +42,7 @@ Add Individuals
 				<p:inputText id="idno" value="#{salesRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
 
 				<p:outputLabel value="Race" for="race"/>
-				<p:selectOneMenu id="race" value="#{salesRegister.individual.race}" required="true">
+				<p:selectOneMenu id="race" value="#{salesRegister.individual.race}" required="false">
 						<f:selectItems value="#{salesRegister.listRace}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
@@ -55,14 +55,14 @@ Add Individuals
 						<f:selectItems value="#{salesRegister.listMaritalStatus}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Sex" for="sex"/>
-				<p:selectOneMenu id="sex" value="#{salesRegister.individual.sex}" required="true">
+				<p:selectOneMenu id="sex" value="#{salesRegister.individual.sex}" required="false">
 						<f:selectItems value="#{salesRegister.listGender}"/>
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Date of birth" for="dob"/>
-				<p:calendar id="dob" value="#{salesRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="true"/>
+				<p:calendar id="dob" value="#{salesRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="false"/>
 				<p:outputLabel value="Citizenship" for="citizenship"/>
-				<p:selectOneMenu id="citizenship" value="citizenship" required="true">
+				<p:selectOneMenu id="citizenship" value="citizenship" required="false">
 						<f:selectItems value="#{salesRegister.listCountry}"/>
 				</p:selectOneMenu>
 
@@ -79,16 +79,15 @@ Add Individuals
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{salesRegister.address.postcode}" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:selectOneMenu id="city" value="#{salesRegister.address.city}"  required="true">
-						<f:selectItems value="#{salesRegister.listCity}"/>
-				</p:selectOneMenu>
+				<p:inputText id="city" value="#{salesRegister.address.city}" maxlength="20" autocomplete="off"/>
 				
-				<p:outputLabel value="State" for="state" required="true"/>
+				
+				<p:outputLabel value="State" for="state" required="false"/>
 				<p:selectOneMenu id="state" value="#{salesRegister.address.state}"  required="true">
 						<f:selectItems value="#{salesRegister.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>
-				<p:selectOneMenu id="country" value="#{salesRegister.address.country}"  required="true">
+				<p:selectOneMenu id="country" value="#{salesRegister.address.country}"  required="false">
 						<f:selectItems value="#{salesRegister.listCountry}"/>
 				</p:selectOneMenu>
 
