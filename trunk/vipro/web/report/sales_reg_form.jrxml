@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
-	<property name="ireport.x" value="143"/>
-	<property name="ireport.y" value="626"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,PI.*,P.*,I.*,
+		<![CDATA[SELECT A.*,PI.*,P.*,
 c1.full_name as c1_fn, c1.email as c1_e, c1.mobile_no as c1_mn, c1.house_tel_no as c1_htn,
 c1.title as c1_t, c1.identity_type as c1_it, c1.sex as c1_s, c1.office_tel_no as c1_otn,
 c1.date_of_birth as c1_dob, c1.identity_no as c1_in, c1.marital_status as c1_ms, c1.fax_no as c1_fn,
@@ -30,7 +30,6 @@ PM.description as pm_desc, BB.description as bb_desc
 FROM account A
 INNER JOIN project_inventory PI ON A.INVENTORY_ID = PI.INVENTORY_ID
 INNER JOIN project P ON P.PROJECT_ID = PI.PROJECT_ID
-INNER JOIN institution I ON P.INSTITUTION_ID = I.INSTITUTION_ID
 LEFT OUTER JOIN customer c1 on A.customer_id = c1.customer_id
 LEFT OUTER JOIN customer c2 on A.customer_id2 = c2.customer_id
 LEFT OUTER JOIN customer c3 on A.customer_id3 = c3.customer_id
@@ -162,15 +161,6 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="address2" class="java.lang.String"/>
 	<field name="address3" class="java.lang.String"/>
 	<field name="address4" class="java.lang.String"/>
-	<field name="institution_name" class="java.lang.String"/>
-	<field name="initial" class="java.lang.String"/>
-	<field name="office_tel" class="java.lang.String"/>
-	<field name="contact_person" class="java.lang.String"/>
-	<field name="contact_person_title" class="java.lang.String"/>
-	<field name="contact_person_mobile" class="java.lang.String"/>
-	<field name="contact_person_email" class="java.lang.String"/>
-	<field name="currency_symbol" class="java.lang.String"/>
-	<field name="decimal_points" class="java.math.BigDecimal"/>
 	<field name="c1_fn" class="java.lang.String"/>
 	<field name="c1_e" class="java.lang.String"/>
 	<field name="c1_mn" class="java.lang.String"/>
@@ -286,11 +276,6 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 				<reportElement x="101" y="95" width="186" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="386" y="95" width="150" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="386" y="135" width="150" height="20"/>
