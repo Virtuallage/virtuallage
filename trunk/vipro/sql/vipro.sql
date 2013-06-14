@@ -197,11 +197,11 @@ CREATE TABLE vipro.project (
 
 CREATE TABLE vipro.project_inventory (
        inventory_id BIGINT NOT NULL AUTO_INCREMENT
-     , unit_no VARCHAR(8)
+     , unit_no VARCHAR(12)
      , pt_no VARCHAR(8)
      , hsd_no VARCHAR(8)
      , block_no VARCHAR(8)
-     , level DEC(3)
+     , level VARCHAR(5)
      , layout_type VARCHAR(5)
      , orientation VARCHAR(5)
      , land_area INT

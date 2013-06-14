@@ -53,7 +53,7 @@ Add Company
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
 				<p:inputText id="addr3" value="#{salesRegister.address.addressLine3}" maxlength="40" autocomplete="off"/>
-				<p:outputLabel value="Address 4" for="addr3"/>
+				<p:outputLabel value="Address 4" for="addr4"/>
 				<p:inputText id="addr4" value="#{salesRegister.address.addressLine4}" maxlength="40" autocomplete="off"/>
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
@@ -61,8 +61,8 @@ Add Company
 				<p:outputLabel value="" />
 				<p:outputLabel value="" />
 				
-				<p:outputLabel value="City" for="city" required="true"/>
-				<p:selectOneMenu id="city" value="#{salesRegister.address.city}"  required="true">
+				<p:outputLabel value="City" for="city" required="false"/>
+				<p:selectOneMenu id="city" value="#{salesRegister.address.city}"  required="false">
 						<f:selectItems value="#{salesRegister.listCity}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="State" for="state" required="true"/>
