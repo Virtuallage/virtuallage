@@ -12,7 +12,7 @@
             <column name="project_id" not-null="true" />
         </many-to-one>
         <property name="unitNo" type="string">
-            <column name="unit_no" length="8" />
+            <column name="unit_no" length="12" />
         </property>
         <property name="ptNo" type="string">
             <column name="pt_no" length="8" />
