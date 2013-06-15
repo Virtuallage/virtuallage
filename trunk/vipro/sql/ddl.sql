@@ -167,3 +167,9 @@ ALTER TABLE vipro.project
 
 -- 20130530
 insert into business_partner (partner_id, institution_id) values (0, 1);
+
+-- 150613 Max
+ALTER TABLE `vipro`.`sales_commission_history` ADD COLUMN `claim_percent` BIGINT(20) NULL  AFTER `account_id` , ADD COLUMN `claim_amount` DECIMAL(9,2) NULL  AFTER `claim_percent` , ADD COLUMN `claim_status` VARCHAR(5) NULL  AFTER `claim_amount` , ADD COLUMN `attended_by` BIGINT(20) NULL  AFTER `claim_status` , ADD COLUMN `date_submitted` DATE NULL  AFTER `attended_by` ;
+
+
+

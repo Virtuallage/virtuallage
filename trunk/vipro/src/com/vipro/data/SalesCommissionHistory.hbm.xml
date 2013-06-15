@@ -11,5 +11,20 @@
         <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
             <column name="account_id" not-null="true" />
         </many-to-one>
+        <property name="claimPercent" type="java.lang.Long">
+            <column name="claim_percent" />
+        </property>
+        <property name="claimAmount" type="big_decimal">
+            <column name="claim_amount" precision="7" />
+        </property>
+        <property name="claimStatus" type="string">
+            <column name="claim_status" length="5" />
+        </property>
+        <property name="attendedBy" type="java.lang.Long">
+            <column name="attended_by" />
+        </property>
+        <property name="dateSubmitted" type="date">
+            <column name="date_submitted" length="10" />
+        </property>
     </class>
 </hibernate-mapping>

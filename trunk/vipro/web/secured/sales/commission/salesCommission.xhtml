@@ -54,8 +54,8 @@ Sales Commission
 	    	</h:outputText>
 		</p:column>
 		
-	 	<p:column headerText="Status" sortBy="#{c.accountStatus}">  
-	  		<h:outputText value="#{c.accountStatus}">
+	 	<p:column headerText="Status" sortBy="">  
+	  		<h:outputText value="#{salesCommission.GetClaimStatusByAccountId(c.accountId)}">
 	    	</h:outputText>
 		</p:column>
 
