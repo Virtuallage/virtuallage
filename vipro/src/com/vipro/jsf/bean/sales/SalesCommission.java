@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Calendar;
+import java.text.DecimalFormat;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -63,7 +65,9 @@ public class SalesCommission extends CommonBean implements Serializable{
 	private List<ProjectInventory> inventories;
 	private List<Account> accounts;
 	private List<Account> salesCommissionAccounts;
+	private List<Account> claim50PercentAccounts;
 	private List<ProgressiveBilling> progressiveBillings;
+	private List<SalesCommissionHistory> salesCommissionHistorys;
 
 	private ProjectInventory inventory;
 	private Long projectId;
@@ -167,42 +171,145 @@ public class SalesCommission extends CommonBean implements Serializable{
 	}
 
 	public String listAccounts(){
-		AccountService accountService = (AccountService) SpringBeanUtil
-				.lookup(AccountService.class.getName());
-
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+		
 		accounts = accountService.findAll();
+		salesCommissionHistorys = salesCommissionHistoryService.findAll();
 				
 		return "salesCommission";
 	}
 	
+	public String GetClaimPercentByAccountId(String idStr){
+		String percent = "100";
+		try
+		{
+			Long id = Long.valueOf(idStr.trim());
+			for (Account claim50PercentAccount : claim50PercentAccounts) {
+				if(claim50PercentAccount.getAccountId().equals(id))
+				{
+					percent = "50";
+					break;
+				}
+			}
+		} 
+		catch (Exception ex)
+		{
+		}
+		return percent;
+	}
+
+	public String GetClaimAmountByPercent(String idStr, String totalCommission)
+	{
+		String output = "0.00";
+		float amount = 0;
+		try
+		{
+			String claimPercent = GetClaimPercentByAccountId(idStr);
+			if(claimPercent != null && claimPercent.length() > 0) {
+				float percent = Float.valueOf(claimPercent);
+				float total = Float.valueOf(totalCommission);
+				amount = total * percent / 100;
+			} else {
+				amount = Integer.valueOf(totalCommission);
+			}
+
+			output = amount + "";
+			//DecimalFormat myFormatter = new DecimalFormat("###,###,###,###.00");
+			//output = myFormatter.format(amount);
+			
+			float totalAmount = Float.valueOf(totalClaimAmount.toString());
+			totalAmount += amount;
+			totalClaimAmount = new BigDecimal(totalAmount);
+			
+		} 
+		catch (Exception ex)
+		{
+		}
+		
+		return output;
+	}
+	
+	public String GetClaimStatusByAccountId(String idStr) {
+		String status = "New";
+
+		Long id = Long.valueOf(idStr.trim());
+		for(SalesCommissionHistory salesCommissionHistory: salesCommissionHistorys) {
+			if(salesCommissionHistory.getAccount().getAccountId().equals(id)) {
+				if(salesCommissionHistory.getClaimStatus().equals("12")) {
+					status = "Submitted";
+				}
+				break;
+			}
+		}
+		
+		return status;
+	}
+	
+	public String PriceDecimalFormat(String value) {
+		String output = "";
+		try
+		{
+			float fValue = Float.valueOf(value);
+			DecimalFormat myFormatter = new DecimalFormat("###,###,###,###.00");
+			output = myFormatter.format(fValue);
+		} 
+		catch (Exception ex)
+		{
+		}
+		return output;
+	}
+	
+	public int DaysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+	
 	public String submit() {
 		
-		ProgressiveBillingService progressiveBillingService = (ProgressiveBillingService) SpringBeanUtil
-				.lookup(ProgressiveBillingService.class.getName());
-
+		ProgressiveBillingService progressiveBillingService = (ProgressiveBillingService) SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		
 		salesCommissionAccounts = new ArrayList<Account>();
+		claim50PercentAccounts = new ArrayList<Account>();
+		totalClaimAmount = new BigDecimal(0);
+		
 		for(Account account: accounts) {
-			if(account.getSpaStampedDate() !=null) {
-				if(account.getLaStampedDate() !=null) {
-					salesCommissionAccounts.add(account);
-				} else {
-					Date dateBilled = null;
-					List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getProjectInventory().getInventoryId());
-					for (ProgressiveBilling record : records) {
-						dateBilled = record.getDateBilled();
-					}
-					if(dateBilled != null) {
+			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
+			if(status.equalsIgnoreCase("New")) {
+				if(account.getSpaStampedDate() !=null) {
+					if(account.getLaStampedDate() !=null) {
 						salesCommissionAccounts.add(account);
+					} else {
+						Date dateBilled = null;
+						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getProjectInventory().getInventoryId());
+						for (ProgressiveBilling record : records) {
+							dateBilled = record.getDateBilled();
+						}
+						if(dateBilled != null) {
+							salesCommissionAccounts.add(account);
+						}
 					}
 				}
 			}
 		}
-		
+
+		for(Account salesCommissionAccount: salesCommissionAccounts) {
+			Date currentDate = new Date();
+			Date purchasedDate = salesCommissionAccount.getDatePurchased();
+			Calendar currentCal = Calendar.getInstance();
+			currentCal.setTime(currentDate);
+	        Calendar purchasedCal = Calendar.getInstance();
+	        purchasedCal.setTime(purchasedDate);
+	        
+			if(DaysBetween(purchasedCal.getTime(), currentCal.getTime()) > 180) {
+				claim50PercentAccounts.add(salesCommissionAccount);
+			}
+		}
+
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
 			addInfoMessage("Sales Commission", "There is nothing to claim.");
 			return listAccounts();
 		}
-		
+
 		return "salesCommissionConfirmation";
 	}
 	
@@ -214,11 +321,37 @@ public class SalesCommission extends CommonBean implements Serializable{
 			for(Account account: salesCommissionAccounts) {
 				SalesCommissionHistory salesCommissionHistory = new SalesCommissionHistory();
 				salesCommissionHistory.setAccount(account);
-			
+				salesCommissionHistory.setClaimStatus("12");
+				salesCommissionHistory.setDateSubmitted(new Date());
+				
+				long claimPercent = 100;
+				String percent = GetClaimPercentByAccountId(account.getAccountId().toString());
+				if(percent.equals("50")) {
+					claimPercent = 50;
+				}
+				salesCommissionHistory.setClaimPercent(claimPercent);
+				
+				BigDecimal claimAmount = new BigDecimal(0);
+				String amount = GetClaimAmountByPercent(account.getAccountId().toString(), account.getCommissionAmount().toString());
+				try
+				{
+					if(amount != null && amount.length() > 0) {
+						claimAmount = new BigDecimal(amount);
+					}
+				}
+				catch (Exception ex)
+				{
+				}
+				salesCommissionHistory.setClaimAmount(claimAmount);
+
+				AuthUser user = getCurrentUser();
+				if (user != null)
+					salesCommissionHistory.setAttendedBy(user.getUserProfile().getUserId());
+
 				salesCommissionHistoryService.update(salesCommissionHistory);
 			}
 			
-			addInfoMessage("Sales Commission", "Claim submited.");
+			addInfoMessage("Sales Commission", "Submitted Successful.");
 			return listAccounts();
 		} else {
 			addInfoMessage("Sales Commission", "Failed to submit.");

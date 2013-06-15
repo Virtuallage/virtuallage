@@ -56,8 +56,10 @@ Sales Commission
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="Collection&lt;br/&gt;Up to Date" sortBy="#{c.totalPaymentTodate}">  
-	    	<h:outputText value="#{c.totalPaymentTodate}" />
+		<p:column headerText="Collection Up to Date" sortBy="#{c.totalPaymentTodate}">  
+	    	<h:outputText value="#{c.totalPaymentTodate}" >
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}">  
@@ -67,20 +69,21 @@ Sales Commission
 		</p:column>
 		
 		<p:column headerText="Claim Percent" sortBy="">  
-	    	<h:outputText value="" />
+	    	<h:outputText value="#{salesCommission.GetClaimPercentByAccountId(c.accountId)}" />
 		</p:column>
 		
 		<p:column headerText="Claim Amount" sortBy="">  
-	    	<h:outputText value="">
-	    		<f:convertNumber type="currency" currencySymbol="" />
-	    	</h:outputText>
+	    	<h:outputText value="#{salesCommission.PriceDecimalFormat(salesCommission.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" />
 		</p:column>
 		
 	</p:dataTable>
 	<br/>
 	<h:panelGrid columns="1" style="width:100%;text-align:right;" >
 		<p:outputLabel value="Total">
-			&nbsp;<p:inputText value="#{salesCommission.totalClaimAmount}" style="width:120px;" readonly="true" />
+			&nbsp;
+			<p:inputText value="#{salesCommission.totalClaimAmount}" style="width:120px;" readonly="true">
+				<f:convertNumber type="currency" currencySymbol="" />
+			</p:inputText>
 		</p:outputLabel>
 	</h:panelGrid>
 	<br />
