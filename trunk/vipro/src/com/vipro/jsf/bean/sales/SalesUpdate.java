@@ -107,19 +107,19 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		
 	@PostConstruct
 	public void init() {
-		purchaseTypes = CodeUtil.getCodes("PT");
-		bankNames = CodeUtil.getCodes("BANK");
-		spaSolicitorId = CodeUtil.getCodes("SOLI");
-		laSolicitorId = CodeUtil.getCodes("SOLI");
-		listCountry = CodeUtil.getCodes("COUNTRY");
-		listCity = CodeUtil.getCodes("CITY");
-		listIdType = CodeUtil.getCodes("IDTYPE");
-		listTitle = CodeUtil.getCodes("CONTACT_TITLE");
-		listGender = CodeUtil.getCodes("SEX");
-		listMaritalStatus = CodeUtil.getCodes("MARITAL");
-		listBumi = CodeUtil.getCodes("BUMI");
-		listRace = CodeUtil.getCodes("RACE");
-		listState = CodeUtil.getCodes("STATE");
+		purchaseTypes = CodeUtil.getCodes("PU");
+		bankNames = CodeUtil.getCodes("BK");
+		spaSolicitorId = CodeUtil.getCodes("SL");
+		laSolicitorId = CodeUtil.getCodes("SL");
+		listCountry = CodeUtil.getCodes("CT");
+		listCity = CodeUtil.getCodes("CI");
+		listIdType = CodeUtil.getCodes("ID");
+		listTitle = CodeUtil.getCodes("TT");
+		listGender = CodeUtil.getCodes("SX");
+		listMaritalStatus = CodeUtil.getCodes("MS");
+		listBumi = CodeUtil.getCodes("BM");
+		listRace = CodeUtil.getCodes("RC");
+		listState = CodeUtil.getCodes("ST");
 
 	}
 

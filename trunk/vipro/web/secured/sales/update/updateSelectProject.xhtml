@@ -39,12 +39,12 @@ Sales Update
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Property Type" sortBy="#{salesUpdate.getCodeDesc('PROP_TYPE',c.propertyType)}">  
-           <h:outputText value="#{salesUpdate.getCodeDesc('PROP_TYPE',c.propertyType)}"/>
+        <p:column headerText="Property Type" sortBy="#{salesUpdate.getCodeDesc('PT',c.propertyType)}">  
+           <h:outputText value="#{salesUpdate.getCodeDesc('PT',c.propertyType)}"/>
         </p:column>  
         
-        <p:column headerText="Status" sortBy="#{salesUpdate.getCodeDesc('STATUS',c.status)}">  
-           <h:outputText value="#{salesUpdate.getCodeDesc('STATUS',c.status)}"/>
+        <p:column headerText="Status" sortBy="#{salesUpdate.getCodeDesc('SS',c.status)}">  
+           <h:outputText value="#{salesUpdate.getCodeDesc('SS',c.status)}"/>
            &nbsp;
            <p:commandButton action="#{salesUpdate.listPropertyUnits}" ajax="false" icon="ui-icon-check" title="Select Project">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesUpdate.project}" />  

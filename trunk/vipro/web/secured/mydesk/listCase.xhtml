@@ -37,8 +37,8 @@ My Work Queue
             <h:outputText value="#{c.sender.name}"/>
         </p:column>  
   
-        <p:column headerText="Category" sortBy="#{myDesk.getCodeDesc('CASE_TYPE',c.caseType)}">  
-           <h:outputText value="#{myDesk.getCodeDesc('CASE_TYPE',c.caseType)}"/>
+        <p:column headerText="Category" sortBy="#{myDesk.getCodeDesc('CY',c.caseType)}">  
+           <h:outputText value="#{myDesk.getCodeDesc('CY',c.caseType)}"/>
         </p:column>  
         
         <p:column headerText="Purchaser Name" sortBy="#{c.customer.fullName}">  
@@ -51,8 +51,8 @@ My Work Queue
            </h:outputText>
         </p:column>
         
-        <p:column headerText="Status" sortBy="#{myDesk.getCodeDesc('CASE_STATUS', c.status)}"> 
-      		<h:outputText value="#{myDesk.getCodeDesc('CASE_STATUS', c.status)}"/>
+        <p:column headerText="Status" sortBy="#{myDesk.getCodeDesc('CS', c.status)}"> 
+      		<h:outputText value="#{myDesk.getCodeDesc('CS', c.status)}"/>
         	 &nbsp;
         	<p:commandButton  action="#{myDesk.openCase}" ajax="false" icon="ui-icon-search" title="View">
            		 <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCase}" />  

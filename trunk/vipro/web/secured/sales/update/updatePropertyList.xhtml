@@ -15,7 +15,7 @@ Sales Update
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Property List - Sold" style="width:95%">  
+<p:panel id="panel" header="Sales Update Selection List" style="width:95%">  
     
 <p:focus context="panel"/> 
       
@@ -49,31 +49,31 @@ Sales Update
 	 		<h:outputText value="#{c.projectInventory.unitNo}" />
 	    </p:column> 
 	    
-	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}">  
+	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}" style="text-align:right">  
 	    	<h:outputText value="#{c.purchasePrice}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>  
 	        
-	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}">  
+	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}" style="text-align:center">  
 	  		<h:outputText value="#{c.datePurchased}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" />
 	  		</h:outputText>
 	 	</p:column>  
 	        
-	  	<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}">  
+	  	<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}" style="text-align:center">  
 	  		<h:outputText value="#{c.spaStampedDate}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" />
 	  		</h:outputText>
 		</p:column>
 	        
-	 	<p:column headerText="LO Date" sortBy="#{c.loVerifiedDate}">  
+	 	<p:column headerText="LO Date" sortBy="#{c.loVerifiedDate}" style="text-align:center">  
 	  		<h:outputText value="#{c.loVerifiedDate}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy"/>
 	  		</h:outputText>
 		</p:column>
 		
-		<p:column headerText="LA Date" sortBy="#{c.laStampedDate}">  
+		<p:column headerText="LA Date" sortBy="#{c.laStampedDate}" style="text-align:center">  
 	  		<h:outputText value="#{c.laStampedDate}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy"/>
 	  		</h:outputText>

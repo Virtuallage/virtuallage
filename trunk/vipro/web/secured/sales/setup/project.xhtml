@@ -15,7 +15,7 @@ Project Setup
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Project Summary" style="width:95%">  
+<p:panel id="panel" header="Project Setup - Summary Project List" style="width:95%">  
     
 <p:focus context="panel"/> 
       
@@ -39,12 +39,12 @@ Project Setup
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Property Type" sortBy="#{projectSetup.getCodeDesc('PROP_TYPE', c.propertyType)}">  
-           <h:outputText value="#{projectSetup.getCodeDesc('PROP_TYPE', c.propertyType)}"/>
+        <p:column headerText="Property Type" sortBy="#{projectSetup.getCodeDesc('PT', c.propertyType)}">  
+           <h:outputText value="#{projectSetup.getCodeDesc('PT', c.propertyType)}"/>
         </p:column>  
         
-        <p:column headerText="Status" sortBy="#{projectSetup.getCodeDesc('STATUS', c.status)}">  
-           <h:outputText value="#{projectSetup.getCodeDesc('STATUS', c.status)}"/>
+        <p:column headerText="Status" sortBy="#{projectSetup.getCodeDesc('SS', c.status)}">  
+           <h:outputText value="#{projectSetup.getCodeDesc('SS', c.status)}"/>
         </p:column>
         
         <p:column headerText="Action">  

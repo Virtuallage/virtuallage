@@ -42,18 +42,18 @@ Sales Cancellation
            <h:outputText value="#{c.layoutType}"/>
         </p:column>  
         
-        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}">  
+        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}" style="text-align:right">  
            <h:outputText value="#{c.builtUpArea}">
           	 <f:convertNumber pattern="#,##0"/>
            </h:outputText>
         </p:column>  
         
-        <p:column headerText="Status" sortBy="#{salesCancel.getCodeDesc('PROP_STATUS', c.propertyStatus)}">  
-        	<h:outputText value="#{salesCancel.getCodeDesc('PROP_STATUS', c.propertyStatus)}">
+        <p:column headerText="Status" sortBy="#{salesCancel.getCodeDesc('PS', c.propertyStatus)}">  
+        	<h:outputText value="#{salesCancel.getCodeDesc('PS', c.propertyStatus)}">
         	</h:outputText>
         </p:column>
         
-        <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
+        <p:column headerText="Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
            <h:outputText value="#{c.purchasePrice}">
            		<f:convertNumber type="currency" currencySymbol="" />
            </h:outputText>

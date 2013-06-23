@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,PI.*,P.PROJECT_NAME,PM.description as pm_description,BB.description as bb_description
-FROM account A
-INNER JOIN project_inventory PI ON A.INVENTORY_ID = PI.INVENTORY_ID
-INNER JOIN project P ON P.PROJECT_ID = PI.PROJECT_ID
-LEFT OUTER JOIN code_det PM on PM.code = A.book_pymt_method
-LEFT OUTER JOIN code_det BB on BB.code = A.book_pymt_bank
-WHERE A.ACCOUNT_ID = $P{account_id}
-AND PM.code_header_id = 'PAYM']]>
+		<![CDATA[SELECT
+     A.*,
+     PI.*,
+     P.`PROJECT_NAME`,
+     PM.`description` AS pm_description,
+     customer.`full_name` AS cname,
+     code_det.`description` AS title,
+     business_partner.`company_name` AS developer,
+     user_profile.`name` AS attendedby
+FROM
+     `account` A INNER JOIN `project_inventory` PI ON A.`INVENTORY_ID` = PI.`INVENTORY_ID`
+     INNER JOIN `project` P ON PI.`PROJECT_ID` = P.`PROJECT_ID`
+     INNER JOIN `business_partner` business_partner ON P.`developer_id` = business_partner.`partner_id`
+     RIGHT OUTER JOIN `code_det` PM ON A.`book_pymt_method` = PM.`code`
+     INNER JOIN `customer` customer ON A.`customer_id` = customer.`customer_id`
+     INNER JOIN `user_profile` user_profile ON A.`attended_by` = user_profile.`user_id`
+     INNER JOIN `code_det` code_det ON customer.`title` = code_det.`code`
+WHERE
+     A.ACCOUNT_ID = $P{account_id}
+ AND PM.code_header_id = 'PM']]>
 	</queryString>
 	<field name="account_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -28,10 +40,13 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="account_type" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="account_status" class="java.lang.String">
+	<field name="attended_by" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="attended_by" class="java.lang.Long">
+	<field name="sales_person" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="corr_addr_cust_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="registration_fee" class="java.math.BigDecimal">
@@ -49,13 +64,16 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="discounted_amount" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="net_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="commission_amount" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="commission_paid_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="net_price" class="java.math.BigDecimal">
+	<field name="source" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="purchase_type" class="java.lang.String">
@@ -70,6 +88,9 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="total_payment_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="account_balance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="redemption_bank_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -77,6 +98,21 @@ AND PM.code_header_id = 'PAYM']]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="bank_redemption_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_refund_net_amt" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_doc_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancelled_reason" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="spa_signed_date" class="java.sql.Date">
@@ -94,6 +130,9 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="spa_solicitor_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="spa_doc_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="LO_signed_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -101,6 +140,9 @@ AND PM.code_header_id = 'PAYM']]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LO_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lo_doc_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LA_signed_date" class="java.sql.Date">
@@ -116,6 +158,9 @@ AND PM.code_header_id = 'PAYM']]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LA_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="la_doc_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="advise_signed_date" class="java.sql.Date">
@@ -160,7 +205,16 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="maintenance_biling_cycle" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancelled_reason" class="java.lang.String">
+	<field name="book_pymt_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_method" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_card_chq_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_bank" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="customer_id2" class="java.lang.Long">
@@ -175,46 +229,13 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="customer_id5" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="account_balance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="remark" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancel_fee" class="java.math.BigDecimal">
+	<field name="account_status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancel_tax" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="cancel_refund_net_amt" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="cancel_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="spa_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="lo_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="la_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="corr_addr_cust_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_amount" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_method" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_card_chq_no" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_bank" class="java.lang.String">
+	<field name="project_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="unit_no" class="java.lang.String">
@@ -244,13 +265,10 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="built_up_area" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="property_status" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="status_change_date" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="discount_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_rate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="redemption_amount" class="java.math.BigDecimal">
@@ -283,53 +301,33 @@ AND PM.code_header_id = 'PAYM']]>
 	<field name="key_handover_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="development_stage" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="discount_rate" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="dnc_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="source" class="java.lang.String">
+	<field name="development_stage" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="sales_person" class="java.lang.String">
+	<field name="status_change_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="remarks" class="java.lang.String">
+	<field name="property_status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="PROJECT_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="pm_description" class="java.lang.String"/>
-	<field name="bb_description" class="java.lang.String"/>
+	<field name="cname" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="developer" class="java.lang.String"/>
+	<field name="attendedby" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="99" splitType="Stretch">
+		<band height="88" splitType="Stretch">
 			<staticText>
-				<reportElement x="157" y="10" width="236" height="29"/>
-				<textElement>
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="407" y="10" width="148" height="20"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<text><![CDATA[TEMPORARY RECEIPT]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="61" width="371" height="29"/>
+				<reportElement x="2" y="40" width="371" height="29"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -337,19 +335,33 @@ AND PM.code_header_id = 'PAYM']]>
 Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="403" y="61" width="22" height="20"/>
+				<reportElement x="400" y="66" width="50" height="16"/>
 				<textElement/>
 				<text><![CDATA[No:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="435" y="61" width="100" height="20"/>
+				<reportElement x="452" y="66" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="0" width="155" height="51"/>
+				<reportElement x="2" y="2" width="120" height="38"/>
 				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="120" y="6" width="305" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="312" y="39" width="239" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[TEMPORARY RECEIPT]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -359,81 +371,144 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="149" splitType="Stretch">
+		<band height="139" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="555" height="132"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20"/>
+				<reportElement x="2" y="4" width="120" height="16"/>
 				<textElement/>
-				<text><![CDATA[Unit / Lot No:]]></text>
+				<text><![CDATA[Unit No:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="100" height="20"/>
+				<reportElement x="2" y="22" width="120" height="16"/>
 				<textElement/>
 				<text><![CDATA[Received From:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="40" width="100" height="20"/>
+				<reportElement x="2" y="40" width="213" height="16"/>
 				<textElement/>
 				<text><![CDATA[The sum of RM:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="60" width="100" height="20"/>
+				<reportElement x="2" y="58" width="120" height="16"/>
 				<textElement/>
 				<text><![CDATA[Project:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="80" width="100" height="20"/>
+				<reportElement x="2" y="76" width="120" height="16"/>
 				<textElement/>
 				<text><![CDATA[Developer:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="100" width="100" height="20"/>
+				<reportElement x="2" y="94" width="120" height="16"/>
 				<textElement/>
 				<text><![CDATA[Attended By:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="120" width="100" height="20"/>
+				<reportElement x="2" y="112" width="120" height="16"/>
 				<textElement/>
 				<text><![CDATA[Being Payment of:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="403" y="0" width="32" height="20"/>
+				<reportElement x="400" y="4" width="50" height="16"/>
 				<textElement/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="435" y="0" width="100" height="20"/>
+				<reportElement x="452" y="4" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="260" height="20"/>
+				<reportElement x="122" y="4" width="152" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{unit_no}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="100" y="20" width="260" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="100" y="40" width="260" height="20"/>
+			<textField pattern="#,##0.00">
+				<reportElement x="122" y="40" width="430" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="60" width="260" height="20"/>
+				<reportElement x="122" y="58" width="430" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROJECT_NAME}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="452" y="18" width="100" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="122" y="112" width="430" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Booking Fee Only]]></text>
+			</staticText>
+			<line>
+				<reportElement x="122" y="126" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="122" y="108" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 			<textField>
-				<reportElement x="100" y="100" width="260" height="20"/>
+				<reportElement x="122" y="22" width="76" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{attended_by}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="122" y="18" width="152" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="122" y="36" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="122" y="76" width="430" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{developer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="120" width="260" height="20"/>
+				<reportElement x="122" y="94" width="430" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{remark}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{attendedby}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="122" y="92" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="122" y="72" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="122" y="54" width="430" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="197" y="22" width="354" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cname}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -443,79 +518,73 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 	<summary>
 		<band height="135" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="58" width="360" height="20"/>
+				<reportElement x="2" y="58" width="360" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[- If payment is made by cheque, this receipt is valid only upon clearance of cheque.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="78" width="360" height="20"/>
+				<reportElement x="2" y="78" width="360" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[- An Official Receipt will be issued within 2 weeks from clearance of cheque.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="98" width="360" height="20"/>
+				<reportElement x="2" y="98" width="360" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[- If you do not receive an Official Receipt, please contact us at the above number.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="371" y="58" width="22" height="20"/>
+				<reportElement x="363" y="58" width="181" height="16"/>
 				<textElement>
 					<font isItalic="true"/>
 				</textElement>
-				<text><![CDATA[for]]></text>
+				<text><![CDATA[for   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="371" y="78" width="184" height="40"/>
-				<textElement/>
+				<reportElement x="366" y="78" width="181" height="39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[This is computer printed receipt,
 signature is not required.
 ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="371" y="117" width="184" height="1"/>
+				<reportElement x="363" y="117" width="184" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20"/>
+				<reportElement x="2" y="6" width="99" height="16"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL: RM]]></text>
+				<text><![CDATA[TOTAL:   RM]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="0" width="100" height="20"/>
+				<reportElement x="101" y="6" width="154" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="27" width="100" height="20"/>
+				<reportElement x="2" y="24" width="99" height="16"/>
 				<textElement/>
 				<text><![CDATA[Payment Method:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="27" width="100" height="20"/>
+				<reportElement x="101" y="24" width="114" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pm_description}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="220" y="27" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Card / Cheque No:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="325" y="27" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_card_chq_no}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="444" y="27" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{bb_description}]]></textFieldExpression>
+				<reportElement x="388" y="58" width="161" height="16"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{developer}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

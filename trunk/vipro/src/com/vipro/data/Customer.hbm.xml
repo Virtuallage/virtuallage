@@ -39,10 +39,10 @@
             <column name="bumi_indicator" length="5" />
         </property>
         <property name="sex" type="string">
-            <column name="sex" length="4" />
+            <column name="sex" length="5" />
         </property>
         <property name="maritalStatus" type="string">
-            <column name="marital_status" length="4" />
+            <column name="marital_status" length="5" />
         </property>
         <property name="employerName" type="string">
             <column name="employer_name" length="60" />

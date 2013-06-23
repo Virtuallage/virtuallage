@@ -26,9 +26,6 @@
         <property name="projectCode" type="string">
             <column name="project_code" length="10" />
         </property>
-         <property name="postcode" type="string">
-            <column name="postcode" length="10" />
-        </property>
         <property name="propertyType" type="string">
             <column name="property_type" length="20" />
         </property>
@@ -36,16 +33,28 @@
             <column name="report_group" length="20" />
         </property>
         <property name="address1" type="string">
-            <column name="address1" length="80" />
+            <column name="address1" length="40" />
         </property>
         <property name="address2" type="string">
-            <column name="address2" length="80" />
+            <column name="address2" length="40" />
         </property>
         <property name="address3" type="string">
-            <column name="address3" length="80" />
+            <column name="address3" length="40" />
         </property>
         <property name="address4" type="string">
-            <column name="address4" length="80" />
+            <column name="address4" length="40" />
+        </property>
+        <property name="postcode" type="string">
+            <column name="postcode" length="10" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="20" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="5" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="5" />
         </property>
         <property name="projectOfficeTelNo" type="string">
             <column name="project_office_tel_no" length="20" />
@@ -64,15 +73,6 @@
         </property>
         <property name="locationLatitude" type="string">
             <column name="location_latitude" length="15" />
-        </property>
-        <property name="locationCity" type="string">
-            <column name="location_city" length="20" />
-        </property>
-        <property name="locationState" type="string">
-            <column name="location_state" length="20" />
-        </property>
-        <property name="locationCountry" type="string">
-            <column name="location_country" length="5" />
         </property>
         <property name="collectionInterestRate" type="big_decimal">
             <column name="collection_interest_rate" precision="3" />

@@ -23,7 +23,7 @@
    		
    		
    		<p:outputLabel value="Payment Amount"/>
-   		<p:inputText value="#{salesRegister.account.bookPymtAmount}"/>
+   		<p:inputText value="#{salesRegister.account.bookPymtAmount}" binding="#{salesRegister.payAmountField}"/>
 
    		<p:outputLabel value="Payment Method"/>
    		<p:selectOneMenu value="#{salesRegister.account.bookPymtMethod}"> 

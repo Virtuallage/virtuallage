@@ -68,6 +68,8 @@ public class Account implements java.io.Serializable {
 	private String maintenanceBilingCycle;
 	private String cancelledReason;
 	private String remark;
+	private String source;
+	private String salesPerson;
 	private Long corrAddrCustId;
 	private BigDecimal bookPymtAmount;
 	private String bookPymtMethod;
@@ -796,6 +798,22 @@ public class Account implements java.io.Serializable {
 
 	public void setBookPymtBank(String bookPymtBank) {
 		this.bookPymtBank = bookPymtBank;
+	}
+
+	public String getSalesPerson() {
+		return salesPerson;
+	}
+
+	public void setSalesPerson(String salesPerson) {
+		this.salesPerson = salesPerson;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }

@@ -18,12 +18,15 @@ import javax.servlet.ServletContext;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CodeConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.JasperConst;
 import com.vipro.constant.JasperReportTypeConst;
@@ -55,6 +58,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class SalesRegister extends CommonBean implements Serializable {
 
+	private static final Object arg0 = null;
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
 	private List<SelectItem> listState = null;
@@ -89,7 +93,16 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton previewButton;
 	private CommandButton submitButton;
 	private CommandButton receiptButton;
+	private InputText payAmountField;
 	
+	public InputText getPayAmountField() {
+		return payAmountField;
+	}
+
+	public void setPayAmountField(InputText payAmountField) {
+		this.payAmountField = payAmountField;
+	}
+
 	/**
 	 * search customer dialog
 	 */
@@ -117,21 +130,21 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		listCountry = CodeUtil.getCodes("COUNTRY");
-		listCity = CodeUtil.getCodes("CITY");
-		listIdType = CodeUtil.getCodes("IDTYPE");
-		listTitle = CodeUtil.getCodes("CONTACT_TITLE");
-		listGender = CodeUtil.getCodes("SEX");
-		listMaritalStatus = CodeUtil.getCodes("MARITAL");
-		listBumi = CodeUtil.getCodes("BUMI");
-		listLanguage = CodeUtil.getCodes("LANGUAGE");
-		listRace = CodeUtil.getCodes("RACE");
-		listState = CodeUtil.getCodes("STATE");
-		listMediaSource = CodeUtil.getCodes("MEDIA_SOURCE");
+		listCountry = CodeUtil.getCodes("CT");
+		listCity = CodeUtil.getCodes("CI");
+		listIdType = CodeUtil.getCodes("ID");
+		listTitle = CodeUtil.getCodes("TT");
+		listGender = CodeUtil.getCodes("SX");
+		listMaritalStatus = CodeUtil.getCodes("MS");
+		listBumi = CodeUtil.getCodes("BM");
+		listLanguage = CodeUtil.getCodes("LG");
+		listRace = CodeUtil.getCodes("RC");
+		listState = CodeUtil.getCodes("ST");
+		listMediaSource = CodeUtil.getCodes("ME");
 		listProject = CodeUtil.getProjectAsItems();
 		
-		listBank = CodeUtil.getCodes("BANK");
-		listPaymentMethod = CodeUtil.getCodes("PAYM");
+		listBank = CodeUtil.getCodes("BK");
+		listPaymentMethod = CodeUtil.getCodes("PM");
 	}
 
 	public Tab getRegistrationTab() {
@@ -480,8 +493,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 		account.setDatePurchased(new Date());
 
 		AuthUser user = getCurrentUser();
-		if (user != null)
+		if (user != null) {
 			attendedBy = user.getUserProfile();
+		}
 
 		AccountService accountService = (AccountService) SpringBeanUtil
 				.lookup(AccountService.class.getName());
@@ -522,7 +536,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		company = new Customer();
 		address = new Address();
 		
-		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_ACTIVE)) {
+		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
 			salesRegTabView.setActiveIndex(1);
 			registrationTab.setDisabled(false);
 			previewButton.setStyle("display: none");
@@ -530,6 +544,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			saveButton.setStyle("");
 			submitButton.setStyle("");
 			receiptButton.setStyle("display: none");
+
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
@@ -551,6 +566,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
 			receiptButton.setStyle("");
+			payAmountField.setDisabled(true);
 		}
 		
 		return "salesRegistration";
@@ -604,13 +620,18 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
 			account.setPurchasePrice(inventory.getPurchasePrice());
 			
+			// ***  default account type to individual first. Should check for 1st purchaser type for this.
+			account.setAccountType(CommonConst.INDIVIDUAL);
+			
 			// corresponding address
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
 			
-			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
-			regFee = regFee.setScale(2, BigDecimal.ROUND_HALF_UP);
-			
-			account.setRegistrationFee(regFee);
+// BILL Removed	the calculation and replace with fee from Project Table		
+//			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
+//			regFee = regFee.setScale(2, BigDecimal.ROUND_HALF_UP);
+//			
+//			account.setRegistrationFee(regFee);
+
 			accountService.insert(account);
 
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_IN_PROGRESS);
@@ -623,15 +644,17 @@ public class SalesRegister extends CommonBean implements Serializable {
 					"Sales Registration Saved. Registration No is "
 							+ account.getAccountId());
 			
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("account_id", Long.toString(account.getAccountId()));
+//BILL 18/6/13 Move this to after paying the booking fee.		
+//BILL		HashMap<String, Object> hm = new HashMap<String, Object>();
+//BILL		hm.put("account_id", Long.toString(account.getAccountId()));
 			
-			String report = JasperConst.SALES_REG_FORM;
-			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+//BILL		String report = JasperConst.SALES_REG_FORM;
+//BILL		JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Sales Registration", t.getMessage());
 		}
+		
 		return null;
 	}
 
@@ -716,6 +739,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
+			company.setIdentityType(CustomerTypeConst.BUSINESSREGISTRATION);
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -801,6 +825,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 			// for payBooking details
 			AccountService accountService = (AccountService) SpringBeanUtil
 					.lookup(AccountService.class.getName());
+			
+			// new update disc & nett amount into account
+			account.setDiscountedAmount(inventory.getDiscountAmount());
+			account.setNetPrice(account.getPurchasePrice().subtract(account.getDiscountedAmount()));
 			accountService.insert(account);
 			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
@@ -809,13 +837,59 @@ public class SalesRegister extends CommonBean implements Serializable {
 			inventoryService.update(inventory);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
-			
+						
 			// generate receipt
 			HashMap<String, Object> hm = new HashMap<String, Object>();
 			hm.put("account_id", Long.toString(account.getAccountId()));
 			
-			String report = JasperConst.SALES_REG_RECEIPT;
-			JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+			// check to print which receipt format
+			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
+				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+					String report = JasperConst.SALES_REG_RECEIPT;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+				} else {
+					String report = JasperConst.SALES_REG_RECEIPT2;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+				}
+			} else {
+				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+					String report = JasperConst.SALES_REG_RECEIPT3;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+				} else {
+					String report = JasperConst.SALES_REG_RECEIPT4;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+				}
+			}
+						
+			// BILL Check if there is 2nd purchaser, cash payment or company, all use different form.
+			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
+				if (account.getCustomer2()==null) {
+					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+						String report2 = JasperConst.SALES_REG_FORM3;
+						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					} else {
+						String report2 = JasperConst.SALES_REG_FORM;
+						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					} 
+				}
+				if (account.getCustomer2()!=null) {
+					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+						String report2 = JasperConst.SALES_REG_FORM4;
+						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					} else {
+						String report2 = JasperConst.SALES_REG_FORM2;
+						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					}			
+				}
+			} else {
+				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+					String report2 = JasperConst.SALES_REG_FORM6;
+					JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+				} else {
+					String report2 = JasperConst.SALES_REG_FORM5;
+					JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+				} 
+			}
 			
 			// show/hide buttons
 			payButton.setStyle("display: none");

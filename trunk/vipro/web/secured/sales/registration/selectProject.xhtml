@@ -15,12 +15,13 @@
 				<p:column style="width:20%;text-align:left">
 					<h:outputText value="Project Name"/>
 				</p:column>
-				<p:column style="width:80%;text-align:left">
+				<p:column style="width:20%;text-align:left">
 					<p:selectOneMenu id="projectList" value="#{salesRegister.projectId}" 
 						 required="true" style="width:200px">  
 						<f:selectItems value="#{salesRegister.listProject}"/>
 					</p:selectOneMenu>
-					&nbsp;
+				</p:column>
+				<p:column style="width:60%;text-align:left;">
 					<p:commandButton value="Search" action="#{salesRegister.listPropertyUnits}" update="inventoriesDataTable" />
 				</p:column>
 			</p:row>
@@ -50,20 +51,20 @@
 	           <h:outputText value="#{c.orientation}"/>
 	        </p:column>  
 	        
-	        <p:column headerText="Price (RM)" sortBy="#{c.purchasePrice}">  
+	        <p:column headerText="Price (RM)" sortBy="#{c.purchasePrice}" style="text-align:right">  
 	           <h:outputText value="#{c.purchasePrice}">
 	           		<f:convertNumber type="currency" currencySymbol="" />
 	           </h:outputText>
 	        </p:column>
 	        
-	        <p:column headerText="Nett Price" sortBy="#{c.nettPrice}">  
+	        <p:column headerText="Nett Price" sortBy="#{c.nettPrice}" style="text-align:right">  
 	           <h:outputText value="#{c.nettPrice}">
 	           		<f:convertNumber type="currency" currencySymbol="" />
 	           </h:outputText>
 	        </p:column>
 	       
-	        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">  
-	        	<h:outputText value="#{salesRegister.getCodeDesc('PROP_STATUS', c.propertyStatus)}">
+	        <p:column headerText="Status" sortBy="#{salesRegister.getCodeDesc('PS', c.propertyStatus)}">  
+	        	<h:outputText value="#{salesRegister.getCodeDesc('PS', c.propertyStatus)}">
 	        	</h:outputText>
 	        </p:column>
 	        

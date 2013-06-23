@@ -63,7 +63,7 @@ public class AuthService extends HibernateDaoSupport implements UserDetailsServi
 			
 	
 			
-			if (UserStatusConst.STATUS_ACTIVE.equals(u.getStatus())) {
+			if (UserStatusConst.USER_ACTIVE.equals(u.getStatus())) {
 				enabled=true;
 			} else {
 				enabled=false;

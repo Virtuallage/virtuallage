@@ -73,16 +73,16 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		listCountry = CodeUtil.getCodes("COUNTRY");
-		listCity = CodeUtil.getCodes("CITY");
-		listIdType = CodeUtil.getCodes("IDTYPE");
-		listTitle = CodeUtil.getCodes("CONTACT_TITLE");
-		listGender = CodeUtil.getCodes("SEX");
-		listMaritalStatus = CodeUtil.getCodes("MARITAL");
-		listBumi = CodeUtil.getCodes("BUMI");
-		listLanguage = CodeUtil.getCodes("LANGUAGE");
-		listRace = CodeUtil.getCodes("RACE");
-		listState = CodeUtil.getCodes("STATE");
+		listCountry = CodeUtil.getCodes("CT");
+		listCity = CodeUtil.getCodes("CI");
+		listIdType = CodeUtil.getCodes("ID");
+		listTitle = CodeUtil.getCodes("TT");
+		listGender = CodeUtil.getCodes("SX");
+		listMaritalStatus = CodeUtil.getCodes("MS");
+		listBumi = CodeUtil.getCodes("BM");
+		listLanguage = CodeUtil.getCodes("LG");
+		listRace = CodeUtil.getCodes("RC");
+		listState = CodeUtil.getCodes("ST");
 	}
 
 	public List<SelectItem> getListState() {
@@ -358,7 +358,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
-			company.setIdentityType("BR");
+			company.setIdentityType(CustomerTypeConst.BUSINESSREGISTRATION);
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -432,7 +432,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
-			company.setIdentityType("BR");
+			company.setIdentityType(CustomerTypeConst.BUSINESSREGISTRATION);
 			customerService.update(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil

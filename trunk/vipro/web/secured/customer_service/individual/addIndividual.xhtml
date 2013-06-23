@@ -39,7 +39,11 @@ Add Individuals
 					<f:selectItems value="#{customerRegister.listIdType}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="ID No" for="idno"/>
-				<p:inputText id="idno" value="#{customerRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+				<h:panelGroup>
+					<p:inputText id="idno" value="#{customerRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+					<p:outputLabel value=" ie. 880808-08-8888" />
+				</h:panelGroup>
+
 
 				<p:outputLabel value="Race" for="race"/>
 				<p:selectOneMenu id="race" value="#{customerRegister.individual.race}" required="false">

@@ -15,7 +15,7 @@ Sales Update
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Progress Update" style="width:95%;">  
+<p:panel id="panel" header="Sales Update" style="width:95%;">  
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
@@ -35,7 +35,7 @@ Sales Update
 				<p:commandButton value="Change Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-contact"/>
 			</h:panelGroup>
 			<p:outputLabel value="Sales Person"/>
-			<h:inputText value="#{salesUpdate.account.projectInventory.salesPerson}" style="width:400px" disabled="true" />
+			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:400px" disabled="true" />
 				 			
    			<p:outputLabel value="Discount Price"/>
    			<h:inputText value="#{salesUpdate.account.discountedAmount}" style="width:200px" disabled="true">
