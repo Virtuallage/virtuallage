@@ -1,43 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["../report/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,PI.*,P.*,
-c1.full_name as c1_fn, c1.email as c1_e, c1.mobile_no as c1_mn, c1.house_tel_no as c1_htn,
-c1.title as c1_t, c1.identity_type as c1_it, c1.sex as c1_s, c1.office_tel_no as c1_otn,
-c1.date_of_birth as c1_dob, c1.identity_no as c1_in, c1.marital_status as c1_ms, c1.fax_no as c1_fn,
-c2.full_name as c2_fn, c2.email as c2_e, c2.mobile_no as c2_mn, c2.house_tel_no as c2_htn,
-c2.title as c2_t, c2.identity_type as c2_it, c2.sex as c2_s, c2.office_tel_no as c2_otn,
-c2.date_of_birth as c2_dob, c2.identity_no as c2_in, c2.marital_status as c2_ms, c2.fax_no as c2_fn,
-c3.full_name as c3_fn, c3.email as c3_e, c3.mobile_no as c3_mn, c3.house_tel_no as c3_htn,
-c3.title as c3_t, c3.identity_type as c3_it, c3.sex as c3_s, c3.office_tel_no as c3_otn,
-c3.date_of_birth as c3_dob, c3.identity_no as c3_in, c3.marital_status as c3_ms, c3.fax_no as c3_fn,
-c4.full_name as c4_fn, c4.email as c4_e, c4.mobile_no as c4_mn, c4.house_tel_no as c4_htn,
-c4.title as c4_t, c4.identity_type as c4_it, c4.sex as c4_s, c4.office_tel_no as c4_otn,
-c4.date_of_birth as c4_dob, c4.identity_no as c4_in, c4.marital_status as c4_ms, c4.fax_no as c4_fn,
-c5.full_name as c5_fn, c5.email as c5_e, c5.mobile_no as c5_mn, c5.house_tel_no as c5_htn,
-c5.title as c5_t, c5.identity_type as c5_it, c5.sex as c5_s, c5.office_tel_no as c5_otn,
-c5.date_of_birth as c5_dob, c5.identity_no as c5_in, c5.marital_status as c5_ms, c5.fax_no as c5_fn,
-PM.description as pm_desc, BB.description as bb_desc
-FROM account A
-INNER JOIN project_inventory PI ON A.INVENTORY_ID = PI.INVENTORY_ID
-INNER JOIN project P ON P.PROJECT_ID = PI.PROJECT_ID
-LEFT OUTER JOIN customer c1 on A.customer_id = c1.customer_id
-LEFT OUTER JOIN customer c2 on A.customer_id2 = c2.customer_id
-LEFT OUTER JOIN customer c3 on A.customer_id3 = c3.customer_id
-LEFT OUTER JOIN customer c4 on A.customer_id4 = c4.customer_id
-LEFT OUTER JOIN customer c5 on A.customer_id5 = c5.customer_id
-LEFT OUTER JOIN code_det PM on PM.code = A.book_pymt_method
-LEFT OUTER JOIN code_det BB on BB.code = A.book_pymt_bank
-WHERE A.ACCOUNT_ID = $P{account_id}]]>
+		<![CDATA[SELECT
+     A.*,
+     PI.*,
+     P.*,
+     c1.`full_name` AS c1_fn,
+     c1.`email` AS c1_e,
+     c1.`mobile_no` AS c1_mn,
+     c1.`house_tel_no` AS c1_htn,
+     c1.`title` AS c1_t,
+     c1.`identity_type` AS c1_it,
+     c1.`sex` AS c1_s,
+     c1.`office_tel_no` AS c1_otn,
+     c1.`date_of_birth` AS c1_dob,
+     c1.`identity_no` AS c1_in,
+     c1.`marital_status` AS c1_ms,
+     c1.`fax_no` AS c1_fax,
+     c2.`full_name` AS c2_fn,
+     c2.`email` AS c2_e,
+     c2.`mobile_no` AS c2_mn,
+     c2.`house_tel_no` AS c2_htn,
+     c2.`title` AS c2_t,
+     c2.`identity_type` AS c2_it,
+     c2.`sex` AS c2_s,
+     c2.`office_tel_no` AS c2_otn,
+     c2.`date_of_birth` AS c2_dob,
+     c2.`identity_no` AS c2_in,
+     c2.`marital_status` AS c2_ms,
+     c2.`fax_no` AS c2_fax,
+     PM.`description` AS pm_desc,
+     BB.`description` AS bb_desc,
+     BP.`company_name` AS BP_name,
+     proptype.`description` AS proptype_desc,
+     addr.`address_line_1` AS c1_l1,
+     addr.`address_line_2` AS c1_l2,
+     addr.`address_line_3` AS c1_l3,
+     addr.`address_line_4` AS c1_l4,
+     addr.`postcode` AS c1_pc,
+     addr.`city` AS c1_city,
+     addr.`state` AS c1_state,
+     addr.`country` AS c1_country,
+     code_det.`description` AS c1title,
+     code_det_A.`description` AS c1state,
+     code_det_B.`description` AS c1country,
+     code_det_C.`description` AS c1sex,
+     code_det_D.`description` AS c1marital
+FROM
+     `account` A INNER JOIN `project_inventory` PI ON A.`INVENTORY_ID` = PI.`INVENTORY_ID`
+     INNER JOIN `project` P ON PI.`PROJECT_ID` = P.`PROJECT_ID`
+     INNER JOIN `business_partner` BP ON P.`developer_id` = BP.`partner_id`
+     INNER JOIN `code_det` proptype ON P.`property_type` = proptype.`code`
+     LEFT OUTER JOIN `customer` c1 ON A.`customer_id` = c1.`customer_id`
+     LEFT OUTER JOIN `customer` c2 ON A.`customer_id2` = c2.`customer_id`
+     RIGHT OUTER JOIN `code_det` PM ON A.`book_pymt_method` = PM.`code`
+     RIGHT OUTER JOIN `code_det` BB ON A.`book_pymt_bank` = BB.`code`
+     INNER JOIN `address` addr ON c1.`address_id` = addr.`address_id`
+     INNER JOIN `code_det` code_det ON c1.`title` = code_det.`code`
+     INNER JOIN `code_det` code_det_C ON c1.`sex` = code_det_C.`code`
+     INNER JOIN `code_det` code_det_D ON c1.`marital_status` = code_det_D.`code`
+     INNER JOIN `code_det` code_det_A ON addr.`state` = code_det_A.`code`
+     INNER JOIN `code_det` code_det_B ON addr.`country` = code_det_B.`code`
+WHERE
+     A.ACCOUNT_ID = $P{account_id}]]>
 	</queryString>
 	<field name="account_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -51,10 +85,13 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="account_type" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="account_status" class="java.lang.String">
+	<field name="attended_by" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="attended_by" class="java.lang.Long">
+	<field name="sales_person" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="corr_addr_cust_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="registration_fee" class="java.math.BigDecimal">
@@ -72,13 +109,16 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="discounted_amount" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="net_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="commission_amount" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="commission_paid_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="net_price" class="java.math.BigDecimal">
+	<field name="source" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="purchase_type" class="java.lang.String">
@@ -93,6 +133,9 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="total_payment_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="account_balance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="redemption_bank_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -100,6 +143,21 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="bank_redemption_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_refund_net_amt" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_doc_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancelled_reason" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="spa_signed_date" class="java.sql.Date">
@@ -117,6 +175,9 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="spa_solicitor_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="spa_doc_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="LO_signed_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -124,6 +185,9 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LO_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lo_doc_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LA_signed_date" class="java.sql.Date">
@@ -139,6 +203,9 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LA_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="la_doc_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="advise_signed_date" class="java.sql.Date">
@@ -183,7 +250,16 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="maintenance_biling_cycle" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancelled_reason" class="java.lang.String">
+	<field name="book_pymt_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_method" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_card_chq_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_bank" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="customer_id2" class="java.lang.Long">
@@ -198,46 +274,13 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="customer_id5" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="account_balance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="remark" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancel_fee" class="java.math.BigDecimal">
+	<field name="account_status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cancel_tax" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="cancel_refund_net_amt" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="cancel_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="spa_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="lo_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="la_doc_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="corr_addr_cust_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_amount" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_method" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_card_chq_no" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="book_pymt_bank" class="java.lang.String">
+	<field name="project_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="unit_no" class="java.lang.String">
@@ -267,13 +310,10 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="built_up_area" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="property_status" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="status_change_date" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="discount_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_rate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="redemption_amount" class="java.math.BigDecimal">
@@ -306,25 +346,19 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="key_handover_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="development_stage" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="discount_rate" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="dnc_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="source" class="java.lang.String">
+	<field name="development_stage" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="sales_person" class="java.lang.String">
+	<field name="status_change_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="remarks" class="java.lang.String">
+	<field name="property_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="institution_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="project_name" class="java.lang.String">
@@ -336,22 +370,49 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="property_type" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="report_group" class="java.lang.String">
+	<field name="developer_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="address1" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project_office_tel_no" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project_office_fax_no" class="java.lang.String">
+	<field name="land_proprietor_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="person_in_charge" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="pic_mobile_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_group" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="postcode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_office_tel_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_office_fax_no" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="location_longtitude" class="java.lang.String">
@@ -378,6 +439,9 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="public_booking_fee" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="sales_commission" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="maintenance_fee_rate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -388,27 +452,6 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="status" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="postcode" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="address2" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="address3" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="address4" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="sales_commission" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="developer_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="land_proprietor_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="c1_fn" class="java.lang.String"/>
@@ -422,6 +465,7 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="c1_dob" class="java.sql.Date"/>
 	<field name="c1_in" class="java.lang.String"/>
 	<field name="c1_ms" class="java.lang.String"/>
+	<field name="c1_fax" class="java.lang.String"/>
 	<field name="c2_fn" class="java.lang.String"/>
 	<field name="c2_e" class="java.lang.String"/>
 	<field name="c2_mn" class="java.lang.String"/>
@@ -433,769 +477,761 @@ WHERE A.ACCOUNT_ID = $P{account_id}]]>
 	<field name="c2_dob" class="java.sql.Date"/>
 	<field name="c2_in" class="java.lang.String"/>
 	<field name="c2_ms" class="java.lang.String"/>
-	<field name="c3_fn" class="java.lang.String"/>
-	<field name="c3_e" class="java.lang.String"/>
-	<field name="c3_mn" class="java.lang.String"/>
-	<field name="c3_htn" class="java.lang.String"/>
-	<field name="c3_t" class="java.lang.String"/>
-	<field name="c3_it" class="java.lang.String"/>
-	<field name="c3_s" class="java.lang.String"/>
-	<field name="c3_otn" class="java.lang.String"/>
-	<field name="c3_dob" class="java.sql.Date"/>
-	<field name="c3_in" class="java.lang.String"/>
-	<field name="c3_ms" class="java.lang.String"/>
-	<field name="c4_fn" class="java.lang.String"/>
-	<field name="c4_e" class="java.lang.String"/>
-	<field name="c4_mn" class="java.lang.String"/>
-	<field name="c4_htn" class="java.lang.String"/>
-	<field name="c4_t" class="java.lang.String"/>
-	<field name="c4_it" class="java.lang.String"/>
-	<field name="c4_s" class="java.lang.String"/>
-	<field name="c4_otn" class="java.lang.String"/>
-	<field name="c4_dob" class="java.sql.Date"/>
-	<field name="c4_in" class="java.lang.String"/>
-	<field name="c4_ms" class="java.lang.String"/>
-	<field name="c5_fn" class="java.lang.String"/>
-	<field name="c5_e" class="java.lang.String"/>
-	<field name="c5_mn" class="java.lang.String"/>
-	<field name="c5_htn" class="java.lang.String"/>
-	<field name="c5_t" class="java.lang.String"/>
-	<field name="c5_it" class="java.lang.String"/>
-	<field name="c5_s" class="java.lang.String"/>
-	<field name="c5_otn" class="java.lang.String"/>
-	<field name="c5_dob" class="java.sql.Date"/>
-	<field name="c5_in" class="java.lang.String"/>
-	<field name="c5_ms" class="java.lang.String"/>
+	<field name="c2_fax" class="java.lang.String"/>
 	<field name="pm_desc" class="java.lang.String"/>
 	<field name="bb_desc" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="272">
+	<field name="BP_name" class="java.lang.String"/>
+	<field name="proptype_desc" class="java.lang.String"/>
+	<field name="c1_l1" class="java.lang.String"/>
+	<field name="c1_l2" class="java.lang.String"/>
+	<field name="c1_l3" class="java.lang.String"/>
+	<field name="c1_l4" class="java.lang.String"/>
+	<field name="c1_pc" class="java.lang.String"/>
+	<field name="c1_city" class="java.lang.String"/>
+	<field name="c1_state" class="java.lang.String"/>
+	<field name="c1_country" class="java.lang.String"/>
+	<field name="c1title" class="java.lang.String"/>
+	<field name="c1state" class="java.lang.String"/>
+	<field name="c1country" class="java.lang.String"/>
+	<field name="c1sex" class="java.lang.String"/>
+	<field name="c1marital" class="java.lang.String"/>
+	<pageHeader>
+		<band height="159">
 			<staticText>
-				<reportElement x="168" y="10" width="236" height="29"/>
-				<textElement>
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="61" width="152" height="20"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<text><![CDATA[Registration Form]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="404" y="61" width="22" height="20"/>
-				<textElement/>
-				<text><![CDATA[No:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="436" y="61" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="115" width="100" height="20"/>
+				<reportElement x="3" y="108" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Unit / Lot No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="95" width="100" height="20"/>
+				<reportElement x="3" y="92" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Project Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="95" width="100" height="20"/>
+				<reportElement x="288" y="92" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Developer]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="135" width="100" height="20"/>
+				<reportElement x="288" y="124" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Attended By]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="101" y="115" width="186" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="108" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{unit_no}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="101" y="95" width="186" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="92" width="186" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="386" y="135" width="150" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{attended_by}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="1" y="135" width="100" height="20"/>
+				<reportElement x="3" y="124" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Purchase Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="155" width="100" height="20"/>
+				<reportElement x="3" y="140" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Purchase Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="115" width="100" height="20"/>
+				<reportElement x="288" y="108" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Property Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="287" y="155" width="100" height="20"/>
+				<reportElement x="288" y="140" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Verified By]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="1" y="175" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Address Line 1]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="286" y="175" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Address Line 2]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="195" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Address Line 3]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="286" y="195" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Address Line 4]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="215" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Post Code]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="286" y="215" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[City]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="235" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[State]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="287" y="235" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Country]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="101" y="135" width="100" height="20"/>
-				<textElement/>
+			<textField pattern="RM  #,##0.00" isBlankWhenNull="true">
+				<reportElement x="103" y="124" width="100" height="16"/>
+				<textElement textAlignment="Left">
+					<font isUnderline="false"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{purchase_price}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="101" y="155" width="100" height="20"/>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="103" y="140" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date_purchased}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="387" y="115" width="100" height="20"/>
+				<reportElement x="389" y="92" width="165" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BP_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="389" y="124" width="165" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{sales_person}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="101" y="175" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{address1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="386" y="175" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{address2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="195" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{address3}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="386" y="195" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{address4}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="215" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{postcode}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="386" y="215" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{location_city}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="235" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{location_state}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="387" y="235" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{location_country}]]></textFieldExpression>
-			</textField>
-			<image>
-				<reportElement x="1" y="0" width="155" height="51"/>
-				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
-			</image>
 			<line>
-				<reportElement x="1" y="263" width="552" height="1"/>
+				<reportElement mode="Opaque" x="389" y="155" width="165" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
 			</line>
-		</band>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="469">
-			<rectangle>
-				<reportElement x="2" y="414" width="553" height="44"/>
-			</rectangle>
+			<textField>
+				<reportElement x="389" y="108" width="165" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{proptype_desc}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="1" y="225" width="68" height="20"/>
-				<textElement>
-					<font isBold="true"/>
+				<reportElement x="163" y="16" width="387" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Purchaser 3]]></text>
+				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="245" width="100" height="20"/>
+				<reportElement x="2" y="59" width="152" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="59" width="22" height="20"/>
+				<textElement/>
+				<text><![CDATA[No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="59" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="2" y="4" width="155" height="51"/>
+				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="66">
+			<staticText>
+				<reportElement x="2" y="2" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Purchaser Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="33" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Post Code]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="103" y="16" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="103" y="32" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="103" y="48" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="103" y="63" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="330" y="16" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="330" y="32" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="330" y="48" width="222" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="103" y="0" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="18" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="18" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="33" width="50" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_pc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="33" width="172" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="34" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="49" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1country}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="183">
+			<rectangle>
+				<reportElement x="0" y="1" width="555" height="181"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="22" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="22" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Full Name]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="1" y="265" width="100" height="20"/>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="456" y="70" width="96" height="16"/>
 				<textElement/>
-				<text><![CDATA[Email]]></text>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_in}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="54" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[House Tel]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="285" width="100" height="20"/>
+				<reportElement x="375" y="38" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Marital Status]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="54" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_mn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="70" width="98" height="16"/>
+				<textElement/>
+				<text><![CDATA[Office]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="22" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="456" y="22" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_dob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="54" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Mobile No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="305" width="100" height="20"/>
+				<reportElement x="375" y="70" width="80" height="16"/>
 				<textElement/>
-				<text><![CDATA[House Tel No]]></text>
+				<text><![CDATA[ID No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="70" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_otn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="54" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_htn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="54" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Sex]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="112" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="128" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_ms}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="128" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_e}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="112" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Full Name]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="160" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_in}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="128" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Marital Status]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="144" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_mn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="112" width="49" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_t}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="144" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_s}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="112" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Date of birth]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="456" y="112" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_dob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="144" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Mobile No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="245" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Title]]></text>
+				<reportElement x="2" y="92" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchaser 2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="265" width="100" height="20"/>
+				<reportElement x="374" y="160" width="80" height="16"/>
 				<textElement/>
-				<text><![CDATA[ID Type]]></text>
+				<text><![CDATA[ID No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="160" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_otn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="144" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_htn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="128" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Email]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="285" width="100" height="20"/>
+				<reportElement x="375" y="144" width="80" height="16"/>
 				<textElement/>
 				<text><![CDATA[Sex]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="305" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Office Tel No]]></text>
+				<reportElement x="2" y="4" width="98" height="18"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchaser 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="374" y="245" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Date of birth]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="265" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[ID No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="285" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Marital Status]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="305" width="100" height="20"/>
+				<reportElement x="202" y="70" width="68" height="16"/>
 				<textElement/>
 				<text><![CDATA[Fax No]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="245" width="100" height="20"/>
+			<staticText>
+				<reportElement x="2" y="38" width="100" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_fn}]]></textFieldExpression>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="38" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_e}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Opaque" x="102" y="36" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="36" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="52" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="68" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="84" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="52" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="68" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="84" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="68" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="84" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="202" y="144" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[House Tel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="160" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[Fax No]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="102" y="126" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="101" y="142" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="158" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="174" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="158" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="174" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="126" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="142" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="158" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="174" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="89" width="555" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="22" width="49" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1title}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="265" width="100" height="20"/>
+				<reportElement x="456" y="38" width="96" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_e}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1marital}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="285" width="100" height="20"/>
+				<reportElement x="456" y="54" width="96" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_mn}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1sex}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="70" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fax}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="305" width="100" height="20"/>
+				<reportElement x="272" y="160" width="100" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_htn}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="245" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_t}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="265" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_it}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="285" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_s}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="305" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_otn}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fax}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="221" y="375" width="100" height="20"/>
+				<reportElement x="37" y="70" width="31" height="16"/>
+				<textElement/>
+				<text><![CDATA[Tel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="160" width="98" height="16"/>
+				<textElement/>
+				<text><![CDATA[Office]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="160" width="31" height="16"/>
+				<textElement/>
+				<text><![CDATA[Tel]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="378">
+			<rectangle>
+				<reportElement x="0" y="55" width="555" height="44"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="210" y="22" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Card / Cheque No:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="321" y="375" width="215" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="310" y="22" width="215" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_card_chq_no}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="2" y="394" width="100" height="20"/>
+				<reportElement x="2" y="38" width="100" height="16"/>
 				<textElement>
-					<font size="10" isBold="false"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Remarks]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="101" y="348" width="100" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="55" width="554" height="45"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="102" y="5" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="221" y="348" width="100" height="20"/>
+				<reportElement x="209" y="5" width="100" height="16"/>
 				<textElement/>
 				<text><![CDATA[Payment Method:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="321" y="348" width="100" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="309" y="5" width="100" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pm_desc}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="436" y="348" width="100" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="5" width="126" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bb_desc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="348" width="100" height="20"/>
+				<reportElement x="2" y="5" width="100" height="16"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Registration Fee]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="265" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_in}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="305" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_fn}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="285" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_ms}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="245" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c3_dob}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="20" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fn}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="456" y="60" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_ms}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="40" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_e}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="187" y="20" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="20" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Full Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="80" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Fax No]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="456" y="40" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_in}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="80" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[House Tel No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="60" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Marital Status]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="101" y="60" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_mn}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="287" y="20" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_t}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="287" y="60" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_s}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="187" y="80" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Office Tel No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="20" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Date of birth]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="456" y="20" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_dob}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="60" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Mobile No]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="456" y="80" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fn}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="187" y="40" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[ID Type]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="0" width="68" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Purchaser 1]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="40" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[ID No]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="287" y="40" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_it}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="287" y="80" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_otn}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="101" y="80" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_htn}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="40" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Email]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="187" y="60" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Sex]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="132" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fn}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="172" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_ms}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="152" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_e}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="187" y="132" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="132" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Full Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="192" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Fax No]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="152" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_in}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="192" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[House Tel No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="172" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Marital Status]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="172" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_mn}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="132" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_t}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="172" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_s}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="187" y="192" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Office Tel No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="132" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Date of birth]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="132" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_dob}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="172" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Mobile No]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="456" y="192" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fn}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="187" y="152" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[ID Type]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="112" width="68" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Purchaser 2]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="374" y="152" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[ID No]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="152" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_it}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="287" y="192" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_otn}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="101" y="192" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_htn}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="152" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Email]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="187" y="172" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Sex]]></text>
-			</staticText>
-			<line>
-				<reportElement x="0" y="336" width="552" height="1"/>
-			</line>
-			<textField isBlankWhenNull="true">
-				<reportElement x="2" y="414" width="554" height="45"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{remark}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="802">
-			<staticText>
-				<reportElement x="0" y="0" width="152" height="20"/>
+				<reportElement x="2" y="106" width="152" height="20"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TERMS & CONDITIONS :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="555" height="20"/>
+				<reportElement x="2" y="126" width="550" height="16"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[I/We Agree and undertake:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="40" width="555" height="40"/>
+				<reportElement x="18" y="142" width="534" height="40"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[1. to pay the first 10% of the purchase price and to sign the Sale and Purchase Agreement within 21 days from the date hereof, falling which the Developer reserves the right to sell or transfer the above property to any other party and I/we shall have no right and/or claim whatsover over the said property.]]></text>
+				<text><![CDATA[to pay the first 10% of the purchase price and to sign the Sale and Purchase Agreement within 21 days from the date hereof, falling which the Developer reserves the right to sell or transfer the above property to any other party and I/we shall have no right and/or claim whatsover over the said property.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="85" width="555" height="27"/>
+				<reportElement x="18" y="182" width="534" height="27"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[2. that should I/we cancel the purchase prior to the signing of the Sale and Purchase Agreement, we have the right to impose a sum of RM 500.00 as administrative fees against me/us.]]></text>
+				<text><![CDATA[that should I/we cancel the purchase prior to the signing of the Sale and Purchase Agreement, we have the right to impose a sum of RM 500.00 as administrative fees against me/us.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="120" width="555" height="16"/>
+				<reportElement x="18" y="209" width="534" height="16"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[3. that all cheque/bank drafts must be made payable to the Developer.]]></text>
+				<text><![CDATA[that all cheque/bank drafts must be made payable to the Developer.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="146" width="555" height="25"/>
+				<reportElement x="18" y="225" width="534" height="29"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[4. the Developer reserves the right (i) not to sell the unit/lot to me/us (ii) to reject the request for change of purchase unit/lot no.]]></text>
+				<text><![CDATA[the Developer reserves the right (i) not to sell the unit/lot to me/us (ii) to reject the request for change of purchase unit/lot no.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="182" width="555" height="27"/>
+				<reportElement x="2" y="142" width="10" height="16"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[5. this Registration Form is not a booking proforma for the said unit/lot and it does not impose any legal obligation on the Developer.]]></text>
+				<text><![CDATA[1.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="219" width="100" height="20"/>
+				<reportElement x="2" y="182" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="209" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="225" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="254" width="534" height="27"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[this Registration Form is not a booking proforma for the said unit/lot and it does not impose any legal obligation on the Developer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="296" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Signed by :]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="269" width="119" height="1"/>
-			</line>
-			<line>
-				<reportElement x="142" y="269" width="119" height="1"/>
-			</line>
-			<line>
-				<reportElement x="292" y="269" width="119" height="1"/>
-			</line>
-			<line>
-				<reportElement x="435" y="269" width="119" height="1"/>
-			</line>
 			<staticText>
-				<reportElement x="0" y="280" width="119" height="20"/>
-				<textElement/>
-				<text><![CDATA[Purchaser (1) Name]]></text>
+				<reportElement x="2" y="254" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="142" y="280" width="119" height="20"/>
+			<textField>
+				<reportElement x="2" y="354" width="200" height="20"/>
 				<textElement/>
-				<text><![CDATA[Purchaser (2) Name]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fn}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="353" width="119" height="1"/>
+			</line>
+			<line>
+				<reportElement x="428" y="354" width="119" height="1"/>
+			</line>
 			<staticText>
-				<reportElement x="292" y="280" width="119" height="20"/>
-				<textElement/>
-				<text><![CDATA[Purchaser (3) Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="435" y="280" width="119" height="20"/>
+				<reportElement x="431" y="355" width="119" height="20"/>
 				<textElement/>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 		</band>
-	</summary>
+	</pageFooter>
 </jasperReport>

@@ -30,7 +30,7 @@ Add Individuals
 				<p:outputLabel value="Purchaser Name" for="name"/>
 				<p:inputText id="name" value="#{salesRegister.individual.fullName}" maxlength="60" required="true" autocomplete="off"/>
 				<p:outputLabel value="Title" for="title"/>
-				<p:selectOneMenu id="title" value="#{salesRegister.individual.title}">
+				<p:selectOneMenu id="title" value="#{salesRegister.individual.title}" required="true">
 						<f:selectItems value="#{salesRegister.listTitle}"/>
 				</p:selectOneMenu>
 
@@ -39,7 +39,10 @@ Add Individuals
 					<f:selectItems value="#{salesRegister.listIdType}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="ID No" for="idno"/>
-				<p:inputText id="idno" value="#{salesRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+				<h:panelGroup>
+					<p:inputText id="idno" value="#{salesRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+					<p:outputLabel value=" ie. 880808-08-8888" />
+				</h:panelGroup>
 
 				<p:outputLabel value="Race" for="race"/>
 				<p:selectOneMenu id="race" value="#{salesRegister.individual.race}" required="false">
@@ -51,18 +54,18 @@ Add Individuals
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Marital Status" for="marital"/>
-				<p:selectOneMenu id="marital" value="#{salesRegister.individual.maritalStatus}">
+				<p:selectOneMenu id="marital" value="#{salesRegister.individual.maritalStatus}" required="true">
 						<f:selectItems value="#{salesRegister.listMaritalStatus}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Sex" for="sex"/>
-				<p:selectOneMenu id="sex" value="#{salesRegister.individual.sex}" required="false">
+				<p:selectOneMenu id="sex" value="#{salesRegister.individual.sex}" required="true">
 						<f:selectItems value="#{salesRegister.listGender}"/>
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Date of birth" for="dob"/>
 				<p:calendar id="dob" value="#{salesRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="false"/>
 				<p:outputLabel value="Citizenship" for="citizenship"/>
-				<p:selectOneMenu id="citizenship" value="citizenship" required="false">
+				<p:selectOneMenu id="citizenship" value="#{salesRegister.individual.citizenship}" required="false">
 						<f:selectItems value="#{salesRegister.listCountry}"/>
 				</p:selectOneMenu>
 
@@ -92,10 +95,17 @@ Add Individuals
 				</p:selectOneMenu>
 
 				<p:outputLabel value="House Tel No" for="tel"/>
-				<p:inputText  id="tel" value="#{salesRegister.individual.houseTelNo}" maxlength="15" autocomplete="off"/>
+				<h:panelGroup>
+					<p:inputText  id="tel" value="#{salesRegister.individual.houseTelNo}" maxlength="15" autocomplete="off"/>
+					<p:outputLabel value=" ie. 0368683322" />
+				</h:panelGroup>
+				
 				<p:outputLabel value="Mobile No" for="mobile"/>
-				<p:inputText  id="mobile" value="#{salesRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
-
+				<h:panelGroup>
+					<p:inputText  id="mobile" value="#{salesRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+					<p:outputLabel value=" ie. 0123558888" />
+				</h:panelGroup>
+								
 				<p:outputLabel value="Office Tel No" for="offtel"/>
 				<p:inputText id="offtel" value="#{salesRegister.individual.officeTelNo}" maxlength="15" autocomplete="off"/>
 				<p:outputLabel value="Fax No" for="fax"/>

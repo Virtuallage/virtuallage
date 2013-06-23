@@ -40,9 +40,6 @@ public class ProjectInventory implements java.io.Serializable {
 	private Short developmentStage;
 	private BigDecimal discountRate;
 	private Date dncDate;
-	private String source;
-	private String salesPerson;
-	private String remarks;
 	private String customerName;
 	private Set accounts = new HashSet(0);
 	private Set progressiveBillings = new HashSet(0);
@@ -363,30 +360,6 @@ public class ProjectInventory implements java.io.Serializable {
 		
 	}
 
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
-	public String getSalesPerson() {
-		return salesPerson;
-	}
-
-	public void setSalesPerson(String salesPerson) {
-		this.salesPerson = salesPerson;
-	}
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-	
 	public String getCustomerName() {
 		return customerName;
 	}

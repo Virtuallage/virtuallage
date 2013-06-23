@@ -1,7 +1,18 @@
+/**
+ * Vipro - Virtuallage Property Development System 
+ * Copyright(C) 2013 Virtuallage Team  http://www.virtuallage.com 
+ * ---------------------------------------------------------------
+ */
 package com.vipro.constant;
 
 public interface TransactionCodeConst {
 
-	public final static String BOOK_FEE = "BOOK";
-	public final static String CANCEL_FEE = "CANCEL";
+	public final static String BOOK_FEE = "100001";
+	
+	public final static String BOOK_FEE_REV = "200001";
+	
+	public final static String CANCEL_FEE = "300001";
+	
+	public final static String CANCEL_FEE_REV = "400001";
+	
 }

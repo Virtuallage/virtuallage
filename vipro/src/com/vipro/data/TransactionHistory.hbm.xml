@@ -37,13 +37,13 @@
         </property>
         
           <property name="paymentMethod" type="string">
-            <column name="payment_method" length="10" />
+            <column name="payment_method" length="5" />
         </property>
         <property name="bank" type="string">
-            <column name="bank" length="10" />
+            <column name="bank" length="5" />
         </property>
         <property name="cardChequeNo" type="string">
-            <column name="card_cheque_no" length="30" />
+            <column name="card_cheque_no" length="20" />
         </property>
     </class>
 </hibernate-mapping>

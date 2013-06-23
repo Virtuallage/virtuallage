@@ -20,9 +20,11 @@ Project Setup
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{projectSetup.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
+    	<p:dataTable var="c" value="#{projectSetup.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="10,20,40,60,80,100" >   
+ 
+                 
         <p:column headerText="Block" sortBy="#{c.blockNo}">  
             <h:outputText value="#{c.blockNo}">
             	

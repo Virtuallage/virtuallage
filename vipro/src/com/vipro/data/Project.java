@@ -31,6 +31,9 @@ public class Project implements java.io.Serializable {
 	private String address3;
 	private String address4;
 	private String postcode;
+	private String city;
+	private String state;
+	private String country;	
 	private String projectOfficeTelNo;
 	private String projectOfficeFaxNo;
 	private String personInCharge;
@@ -402,6 +405,30 @@ public class Project implements java.io.Serializable {
 
 	public void setLandProprietorName(String landProprietorName) {
 		this.landProprietorName = landProprietorName;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 }

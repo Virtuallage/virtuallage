@@ -50,7 +50,7 @@ Project Setup
 		<p:outputLabel value="PIC Mobile" for="picMobile"/>
 		<h:panelGroup>
 			<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" maxlength="20" autocomplete="off"/>
-			<p:outputLabel value=" ie.+60129876543" />
+			<p:outputLabel value=" ie. 0129876543" />
 		</h:panelGroup>
 			
 		<p:outputLabel value="Launch Date" for="launchDate"/>
@@ -91,15 +91,15 @@ Project Setup
 		</h:panelGroup>
 		
 		<p:outputLabel value="City" for="city"/>
-		<p:inputText id="city" value="#{projectSetup.project.locationCity}" maxlength="20" />
+		<p:inputText id="city" value="#{projectSetup.project.city}" maxlength="20" />
 
 		<p:outputLabel value="State" for="state"/>
-		<p:selectOneMenu id="state" value="#{projectSetup.project.locationState}">
+		<p:selectOneMenu id="state" value="#{projectSetup.project.state}">
 			<f:selectItems value="#{projectSetup.states}"/>
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Country" for="state"/>
-		<p:selectOneMenu id="country" value="#{projectSetup.project.locationCountry}">
+		<p:selectOneMenu id="country" value="#{projectSetup.project.country}">
 			<f:selectItems value="#{projectSetup.countries}"/>
 		</p:selectOneMenu>
 		

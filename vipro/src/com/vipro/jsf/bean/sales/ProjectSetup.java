@@ -73,15 +73,15 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		countries = CodeUtil.getCodes("COUNTRY");
-		cities = CodeUtil.getCodes("CITY");
-		states = CodeUtil.getCodes("STATE");
-		propertyTypes = CodeUtil.getCodes("PROP_TYPE");
-		setReportGroups(CodeUtil.getCodes("REPORT_GROUP"));
+		countries = CodeUtil.getCodes("CT");
+		cities = CodeUtil.getCodes("CI");
+		states = CodeUtil.getCodes("ST");
+		propertyTypes = CodeUtil.getCodes("PT");
+		setReportGroups(CodeUtil.getCodes("RG"));
 		propertyStatusList = CodeUtil.getPropertyStatusAsItems();
-		titleTypeList = CodeUtil.getCodes("TITLE_TYPE");
-		orientationList = CodeUtil.getCodes("ORIENTATION");
-		statusList = CodeUtil.getCodes("STATUS");
+		titleTypeList = CodeUtil.getCodes("PL");
+		orientationList = CodeUtil.getCodes("OR");
+		statusList = CodeUtil.getCodes("SS");
 		institutions = CodeUtil.getInstitutionAsItems();
 		developers = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.DEVELOPER);
 		landProprietors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.LAND_PROPRIETOR);

@@ -26,7 +26,7 @@
    			<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
    		</h:outputLabel>
    		<p:outputLabel value="Property Type"/>
-   		<p:outputLabel value="#{salesRegister.getCodeDesc('PROP_TYPE', salesRegister.project.propertyType)}"/>
+   		<p:outputLabel value="#{salesRegister.getCodeDesc('PT', salesRegister.project.propertyType)}"/>
    		
    		<p:outputLabel value="Purchase Date"/>
    		<h:outputText value="#{salesRegister.account.datePurchased}">
@@ -73,18 +73,18 @@
 	   	
 	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Source"/>
-   		<p:selectOneMenu  id="source" value="#{salesRegister.inventory.source}"> 
+   		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}"> 
 			<f:selectItems value="#{salesRegister.listMediaSource}" />
 		</p:selectOneMenu>
    		<p:outputLabel value="Sales Person"/>
-   		<h:inputText value="#{salesRegister.inventory.salesPerson}" />	
+   		<h:inputText value="#{salesRegister.account.salesPerson}" />	
    	</h:panelGrid>  	
 	
 	<br/>
 	
    	<h:panelGrid columns="2" style="width:95%">
 	   	<p:outputLabel value="Remarks"/>
-	   	<h:inputTextarea value="#{salesRegister.inventory.remarks}" cols="100" rows="3" />
+	   	<h:inputTextarea value="#{salesRegister.account.remark}" cols="100" rows="3" />
    	</h:panelGrid>
 	
 	<br/>

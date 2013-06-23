@@ -1,17 +1,22 @@
+/**
+ * Vipro - Virtuallage Property Development System 
+ * Copyright(C) 2013 Virtuallage Team  http://www.virtuallage.com 
+ * ---------------------------------------------------------------
+ * To define the code header value for all code type
+ */
 package com.vipro.constant;
 
 public interface CodeConst {
 
+	public static final String DEPARTMENT = "DM";
 	
-	public static final String DEPARTMENT = "DEPARTMENT";
+	public static final String CONTACT_TITLE = "TT";
 	
-	public static final String CONTACT_TITLE = "CONTACT_TITLE";
+	public static final String COUNTRY = "CT";
 	
-	public static final String COUNTRY = "COUNTRY";
+	public static final String STATE = "ST";
 	
-	public static final String STATE = "STATE";
+	public static final String CITY = "CI";
 	
-	public static final String CITY = "CITY";
-	
-	public static final String STATUS = "STATUS";
+	public static final String STATUS = "SS";
 }
