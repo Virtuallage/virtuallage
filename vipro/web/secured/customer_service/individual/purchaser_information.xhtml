@@ -22,15 +22,6 @@ Purchaser Information - Individual
 				
 				<p:row>
 					<p:column style="text-align:left">
-						<p:outputLabel value="Search by Name" />
-					</p:column>
-					<p:column style="text-align:left">
-						<p:inputText id="name" size="50" value="#{customerRegister.searchName}" required="false" autocomplete="off" />
-					</p:column>
-				</p:row>
-
-				<p:row>
-					<p:column style="text-align:left">
 						<p:outputLabel value="Search by ID Number" />
 					</p:column>
 					<p:column style="text-align:left">
@@ -40,6 +31,16 @@ Purchaser Information - Individual
 						<p:commandButton value="Search" action="#{customerRegister.searchIndividual}" update="searchCustForm:custs" />
 					</p:column>
 				</p:row>
+				
+				<p:row>
+					<p:column style="text-align:left">
+						<p:outputLabel value="Search by Name" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:inputText id="name" size="50" value="#{customerRegister.searchName}" required="false" autocomplete="off" />
+					</p:column>
+				</p:row>
+
 			</p:panelGrid>
 			
 			<br/>

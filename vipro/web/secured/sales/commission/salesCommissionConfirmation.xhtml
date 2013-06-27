@@ -29,19 +29,19 @@ Sales Commission
 	    	<h:outputText value="#{c.projectInventory.unitNo}" />
 		</p:column>
 		
-		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}">  
+		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
 	    	<h:outputText value="#{c.purchasePrice}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 
-	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}">  
+	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}" style="text-align:right">  
 	    	<h:outputText value="#{c.discountedAmount}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="Nett Price" sortBy="#{c.netPrice}">  
+		<p:column headerText="Nett Price" sortBy="#{c.netPrice}" style="text-align:right">  
 	    	<h:outputText value="#{c.netPrice}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
@@ -56,33 +56,33 @@ Sales Commission
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="Collection To-Date" sortBy="#{c.totalPaymentTodate}">  
+		<p:column headerText="Collection To-Date" sortBy="#{c.totalPaymentTodate}" style="text-align:right">  
 	    	<h:outputText value="#{c.totalPaymentTodate}" >
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}">  
+		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}" style="text-align:right">  
 	    	<h:outputText value="#{c.commissionAmount}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="Claim Percent" sortBy="">  
+		<p:column headerText="%" sortBy="" style="text-align:right">  
 	    	<h:outputText value="#{salesCommission.GetClaimPercentByAccountId(c.accountId)}" />
 		</p:column>
 		
-		<p:column headerText="Claim Amount" sortBy="">  
+		<p:column headerText="Amount" sortBy="" style="text-align:right">  
 	    	<h:outputText value="#{salesCommission.PriceDecimalFormat(salesCommission.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" />
 		</p:column>
 		
 	</p:dataTable>
 	<br/>
 	<h:panelGrid columns="1" style="width:100%;text-align:right;" >
-		<p:outputLabel value="Total">
-			&nbsp;
+		<p:outputLabel value="Total    ">
+		&nbsp;
 			<p:inputText value="#{salesCommission.totalClaimAmount}" style="width:120px;" readonly="true">
-				<f:convertNumber type="currency" currencySymbol="" />
+				<f:convertNumber type="currency" currencySymbol="RM "/>
 			</p:inputText>
 		</p:outputLabel>
 	</h:panelGrid>
