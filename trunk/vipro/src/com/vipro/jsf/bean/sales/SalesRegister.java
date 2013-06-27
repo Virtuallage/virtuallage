@@ -826,9 +826,16 @@ public class SalesRegister extends CommonBean implements Serializable {
 			AccountService accountService = (AccountService) SpringBeanUtil
 					.lookup(AccountService.class.getName());
 			
-			// new update disc & nett amount into account
+			// new update disc & nett amount into account plus other account fields
 			account.setDiscountedAmount(inventory.getDiscountAmount());
 			account.setNetPrice(account.getPurchasePrice().subtract(account.getDiscountedAmount()));
+			account.setTotalPaymentTodate(account.getBookPymtAmount());
+			account.setRegistrationFee(account.getBookPymtAmount());
+			account.setAccountBalance(account.getPurchasePrice().subtract(account.getBookPymtAmount()));
+			
+			// update commission amount from project file
+			account.setCommissionAmount(project.getSalesCommission());
+			
 			accountService.insert(account);
 			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
