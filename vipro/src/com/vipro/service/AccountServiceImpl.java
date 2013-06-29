@@ -33,6 +33,11 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	public List<Account> findByUserId(Long userId) {
+		return accountDao.findByUserId(userId);
+	}
+	
+	@Override
 	public List<Account> findByAvailableProjectInventoryId(Long inventoryId) {
 		return accountDao.findByAvailableProjectInventoryId(inventoryId);
 	}

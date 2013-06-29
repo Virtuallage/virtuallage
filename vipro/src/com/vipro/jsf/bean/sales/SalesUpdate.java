@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.model.StreamedContent;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
@@ -68,9 +69,6 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<Account> accounts;
 	private List<SelectItem> listProject;
 	private List<SelectItem> purchaseTypes;
-	private List<SelectItem> bankNames;
-	private List<SelectItem> spaSolicitorId;
-	private List<SelectItem> laSolicitorId;
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
 	private List<SelectItem> listState = null;
@@ -80,6 +78,8 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listMaritalStatus = null;
 	private List<SelectItem> listBumi = null;
 	private List<SelectItem> listRace = null;
+	private List<SelectItem> listSolicitors = null;
+	private List<SelectItem> listPanelBanks = null;
 	
 	private ProjectInventory inventory;
 	private Long projectId;
@@ -108,9 +108,6 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		purchaseTypes = CodeUtil.getCodes("PU");
-		bankNames = CodeUtil.getCodes("BK");
-		spaSolicitorId = CodeUtil.getCodes("SL");
-		laSolicitorId = CodeUtil.getCodes("SL");
 		listCountry = CodeUtil.getCodes("CT");
 		listCity = CodeUtil.getCodes("CI");
 		listIdType = CodeUtil.getCodes("ID");
@@ -120,7 +117,25 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		listBumi = CodeUtil.getCodes("BM");
 		listRace = CodeUtil.getCodes("RC");
 		listState = CodeUtil.getCodes("ST");
+		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
+		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
 
+	}
+	
+	public List<SelectItem> getListPanelBanks() {
+		return listPanelBanks;
+	}
+
+	public void setListPanelBanks(List<SelectItem> listPanelBanks) {
+		this.listPanelBanks = listPanelBanks;
+	}
+	
+	public List<SelectItem> getListSolicitors() {
+		return listSolicitors;
+	}
+
+	public void setListSolicitors(List<SelectItem> listSolicitors) {
+		this.listSolicitors = listSolicitors;
 	}
 
 	public List<SelectItem> getPurchaseTypes() {
@@ -129,30 +144,6 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setPurchaseTypes(List<SelectItem> purchaseTypes) {
 		this.purchaseTypes = purchaseTypes;
-	}
-	
-	public List<SelectItem> getBankNames() {
-		return bankNames;
-	}
-
-	public void setBankNames(List<SelectItem> bankNames) {
-		this.bankNames = bankNames;
-	}
-	
-	public List<SelectItem> getSpaSolicitorId() {
-		return spaSolicitorId;
-	}
-
-	public void setSpaSolicitorId(List<SelectItem> spaSolicitorId) {
-		this.spaSolicitorId = spaSolicitorId;
-	}
-	
-	public List<SelectItem> getLaSolicitorId() {
-		return laSolicitorId;
-	}
-
-	public void setLaSolicitorId(List<SelectItem> laSolicitorId) {
-		this.laSolicitorId = laSolicitorId;
 	}
 	
 	public List<SelectItem> getListState() {
@@ -474,20 +465,36 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public String listAccounts(){
 		listProject = CodeUtil.getProjectAsItems();
 		
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-				.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getInventories(projectId);
-		
-		AccountService accountService = (AccountService) SpringBeanUtil
-				.lookup(AccountService.class.getName());
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 
+		inventories = inventoryService.getInventories(projectId);
 		accounts = new ArrayList<Account>();
+		
+		AuthUser user = getCurrentUser();
+		Long userId = user.getUserProfile().getUserId();
+		UserProfile userProfile = userProfileService.findById(userId);
+		
 		
 		for(ProjectInventory projectInventory: inventories)
 		{
 			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
 			if(dataList != null && dataList.size() > 0) {
-				accounts.addAll(dataList);
+				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+				{
+					accounts.addAll(dataList);
+				}
+				else
+				{
+					for(Account data: dataList) {
+						if(data.getAttendedBy().equals(userId))
+						{
+							accounts.add(data);
+						}
+					}
+				}
 			}
 		}
 		

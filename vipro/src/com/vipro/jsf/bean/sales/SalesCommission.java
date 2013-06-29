@@ -173,8 +173,21 @@ public class SalesCommission extends CommonBean implements Serializable{
 	public String listAccounts(){
 		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
-		
-		accounts = accountService.findAll();
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+
+		AuthUser user = getCurrentUser();
+		Long userId = user.getUserProfile().getUserId();
+		UserProfile userProfile = userProfileService.findById(userId);
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
+				userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+		{
+			accounts = accountService.findAll();
+		}
+		else
+		{
+			accounts = accountService.findByUserId(userId);
+		}
+
 		salesCommissionHistorys = salesCommissionHistoryService.findAll();
 				
 		return "salesCommission";
@@ -251,7 +264,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 		try
 		{
 			float fValue = Float.valueOf(value);
-			DecimalFormat myFormatter = new DecimalFormat("###,###,###,###.00");
+			DecimalFormat myFormatter = new DecimalFormat("###,###,###,##0.00");
 			output = myFormatter.format(fValue);
 		} 
 		catch (Exception ex)

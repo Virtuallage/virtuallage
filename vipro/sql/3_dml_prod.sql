@@ -338,3 +338,7 @@ INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, 
      VALUES (1000000001, 'BANK', 'MBSB - Damansara Branch', 'ACTV');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
      VALUES (1000000001, 'BANK', 'Alliance Bank - UEP Subang Jaya', 'ACTV');
+     
+--290613 Max  
+INSERT INTO `vipro`.`code_header` (`code_header_id`, `name`) VALUES ('CI', 'City');
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('CI', 'CIKUL', 'Kuala Lumpur', 'ACTV');

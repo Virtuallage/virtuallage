@@ -10,7 +10,7 @@
     <http use-expressions="true">
         <intercept-url pattern="/login.xhtml" access="permitAll" />
     	<intercept-url pattern="/secured/**" access="isAuthenticated()" />
-    	<form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?failed=1" default-target-url="/secured/main.xhtml"/>
+    	<form-login login-page="/login.xhtml" authentication-failure-url="/loginfailed.xhtml" default-target-url="/secured/main.xhtml"/>
     	<logout logout-success-url="/login.xhtml?successLogout=true" />
     </http>
 

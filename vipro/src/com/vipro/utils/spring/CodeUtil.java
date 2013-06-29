@@ -34,7 +34,7 @@ public final class CodeUtil {
 		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
 		return codeService.getCodes(codeId);
 	}
-	
+
 	public static List<CodeDet> getCodeDetailList(String codeId) {
 		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());
 		return codeService.getCodeDetailList(codeId);
