@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/login_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:define name="title">
+Login
+</ui:define>
+
+<ui:define name="content">	
+	<br/>
+	<p:panel id="panel" header="Virtuallage Property Development System" style="width:50%;cellpadding:5px">  
+    <p:focus context="panel"/>  
+	<h:form id="loginForm" prependId="false"  >
+		<h:panelGrid columns="2" style="text-align:center;width:90%">
+   			<img height="150px" width="150px" alt="Logo for Virtuallage" src="images/VirtuallageLogo.jpg" />
+  				
+  			<p:panel>
+    			<h:panelGrid columns="2" cellpadding="3"> 
+	               <p:outputLabel value="User Name" for="j_username" styleClass="label"/>
+	               <p:inputText id="j_username" required="true" value="#{login.username}" autocomplete="off"/>
+         
+	               <p:outputLabel value="Password" for="j_password" styleClass="label"/>
+	               <p:password id="j_password" required="true" value="#{login.password}" autocomplete="off"/> 
+	               
+	               <p:outputLabel value=""/>
+	               <p:outputLabel value="Invalid User Name or Password" style="color:red"/>
+		        </h:panelGrid>
+       		</p:panel>
+		</h:panelGrid>
+        <p:commandButton id="saveButton" action="#{login.login}" value="Sign On" update="@form"  ajax="false" icon="ui-icon-key"/>
+	</h:form>
+    </p:panel>
+    <br/>
+</ui:define>
+
+</ui:composition>

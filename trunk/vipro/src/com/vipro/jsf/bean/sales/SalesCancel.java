@@ -84,7 +84,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 
 	@PostConstruct
 	public void init() {
-		cancelReasons = CodeUtil.getCodes("CANCEL_R");
+		cancelReasons = CodeUtil.getCodes("CR");
 	}
 
 	public List<SelectItem> getListProject() {
@@ -242,10 +242,36 @@ public class SalesCancel extends CommonBean implements Serializable{
 		listProject = CodeUtil.getProjectAsItems();
 		
 		ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
-		project = projectService.findById(projectId);
-
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getAvailableInventories(projectId);
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		
+		project = projectService.findById(projectId);
+		inventories = new ArrayList<ProjectInventory>();
+
+		AuthUser user = getCurrentUser();
+		Long userId = user.getUserProfile().getUserId();
+		UserProfile userProfile = userProfileService.findById(userId);
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
+				userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+		{
+			inventories = inventoryService.getAvailableInventories(projectId);
+		}
+		else
+		{
+			List<ProjectInventory> dataList = inventoryService.getAvailableInventories(projectId);
+			for(ProjectInventory data: dataList)
+			{
+				List<Account> accountList = accountService.findByAvailableProjectInventoryId(data.getInventoryId());
+				for(Account account: accountList) {
+					if(account.getAttendedBy().equals(userId))
+					{
+						inventories.add(data);
+						break;
+					}
+				}
+			}
+		}
 		
 		//return "cancelSelectUnit";
 		return "cancelPropertyList";

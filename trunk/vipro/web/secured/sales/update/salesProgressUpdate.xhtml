@@ -51,8 +51,8 @@ Sales Update
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<p:outputLabel value="Bank Name"/>
-   			<p:selectOneMenu id="bankName" value="#{salesUpdate.account.bookPymtBank}" style="width:200px">  
-						<f:selectItems value="#{salesUpdate.bankNames}" />
+   			<p:selectOneMenu id="bankName" value="#{salesUpdate.account.panelBankId}" style="width:200px">  
+						<f:selectItems value="#{salesUpdate.listPanelBanks}" />
 			</p:selectOneMenu>
    			
    			<p:outputLabel value="SPA Signed Date"/>
@@ -65,7 +65,7 @@ Sales Update
 			
 			<p:outputLabel value="Solicitor"/>
    			<p:selectOneMenu id="spaSolicitorId" value="#{salesUpdate.account.spaSolicitorId}" style="width:200px">  
-						<f:selectItems value="#{salesUpdate.spaSolicitorId}" />
+						<f:selectItems value="#{salesUpdate.listSolicitors}" />
 			</p:selectOneMenu>
 			<p:outputLabel value="SPA Stamped Date"/>
 			<h:panelGroup>
@@ -107,7 +107,7 @@ Sales Update
    			
    			<p:outputLabel value="Solicitor"/>
    			<p:selectOneMenu id="laSolicitorId" value="#{salesUpdate.account.laSolicitorId}" style="width:200px">  
-						<f:selectItems value="#{salesUpdate.laSolicitorId}" />
+						<f:selectItems value="#{salesUpdate.listSolicitors}" />
 			</p:selectOneMenu>
    			<p:outputLabel value="Verified by"/>
 			<h:inputText value="#{salesUpdate.account.laVerifiedBy}" style="width:400px" disabled="true"/>

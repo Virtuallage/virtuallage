@@ -257,5 +257,7 @@ ALTER TABLE vipro.project
       FOREIGN KEY (land_proprietor_id)
       REFERENCES vipro.business_partner (partner_id);
 
+--290613
+ALTER TABLE `vipro`.`document_reference` CHANGE COLUMN `created_by` `created_by` VARCHAR(100) NULL DEFAULT NULL  ;
 
 

@@ -8,6 +8,7 @@ public interface AccountService {
 
 	public List<Account> findAll();
 	public List<Account> findByProjectInventoryId(Long inventoryId);
+	public List<Account> findByUserId(Long userId);
 	public List<Account> findByAvailableProjectInventoryId(Long inventoryId);
 	public Account findById(Long accountId);
 	public void insert(Account a);
