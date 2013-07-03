@@ -557,7 +557,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			receiptButton.setStyle("display: none");
 		}
 
-		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_SOLD)) {
 			salesRegTabView.setActiveIndex(1);
 			registrationTab.setDisabled(false);
 			payBookingTab.setDisabled(false);
@@ -621,7 +621,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setPurchasePrice(inventory.getPurchasePrice());
 			
 			// ***  default account type to individual first. Should check for 1st purchaser type for this.
-			account.setAccountType(CommonConst.INDIVIDUAL);
+			// *** to set account type from customer category
+			account.setAccountType(selectedCustomer.getCustomerCategory());
 			
 			// corresponding address
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
@@ -840,7 +841,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_BOOKED);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
 			inventoryService.update(inventory);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");

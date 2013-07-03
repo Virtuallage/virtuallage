@@ -15,6 +15,6 @@ public interface CommonConst {
 	
 	public static final String CASH = "PMCAS";
 
-	public static final String INDIVIDUAL = "ATIND";
+	public static final String INDIVIDUAL = "CCIND";
 	
 }
