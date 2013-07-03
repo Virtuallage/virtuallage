@@ -7,7 +7,7 @@ package com.vipro.constant;
 
 public interface CommonConst {
 	
-	public static final String USER_ACTIVE="ACTV";
+	public static final String USER_ACTIVE="SSACT";
 	
 	public static final String STATUS_ACTIVE="SSACT";
 	

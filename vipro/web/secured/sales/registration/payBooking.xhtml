@@ -12,15 +12,14 @@
 	<h:form id="payBookForm">  
    	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Project Name"/>
-   		<p:outputLabel value="#{salesRegister.project.projectName}"/>
+   		<h:inputText value="#{salesRegister.project.projectName}" style="width:300px" disabled="true"/>
    		<p:outputLabel value="Registration No"/>
-   		<p:outputLabel value="#{salesRegister.account.accountId}"/>
+   		<h:inputText value="#{salesRegister.account.accountId}" disabled="true"/>
    		
-   		<p:outputLabel value="Lot/Unit No"/>
-   		<p:outputLabel value="#{salesRegister.inventory.unitNo}"/>
+   		<p:outputLabel value="Unit No"/>
+   		<h:inputText value="#{salesRegister.inventory.unitNo}" disabled="true"/>
    		<p:outputLabel value="Developer"/>
-   		<p:outputLabel value="#{salesRegister.project.developerName}"/>
-   		
+   		<h:inputText value="#{salesRegister.project.developerName}" style="width:300px" disabled="true"/>
    		
    		<p:outputLabel value="Payment Amount"/>
    		<p:inputText value="#{salesRegister.account.bookPymtAmount}" binding="#{salesRegister.payAmountField}"/>

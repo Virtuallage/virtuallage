@@ -12,28 +12,28 @@
 	<h:form id="registerForm">  
    	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Project Name"/>
-   		<p:outputLabel value="#{salesRegister.project.projectName}"/>
+   		<h:inputText value="#{salesRegister.project.projectName}" style="width:300px" disabled="true"/>
    		<p:outputLabel value="Registration No"/>
    		<p:outputLabel value="#{salesRegister.account.accountId}"/>
-   		
+  		
    		<p:outputLabel value="Unit No"/>
-   		<p:outputLabel value="#{salesRegister.inventory.unitNo}"/>
+   		<h:inputText value="#{salesRegister.inventory.unitNo}" disabled="true"/>
    		<p:outputLabel value="Developer"/>
-   		<p:outputLabel value="#{salesRegister.project.developerName}"/>
-   		
+   		<h:inputText value="#{salesRegister.project.developerName}" style="width:300px" disabled="true"/>
+ 		
    		<p:outputLabel value="Purchase Price"/>
-   		<h:outputLabel value="#{salesRegister.inventory.purchasePrice}">
-   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
-   		</h:outputLabel>
+   		<h:inputText value="#{salesRegister.inventory.purchasePrice}" disabled="true">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
+   		</h:inputText>
    		<p:outputLabel value="Property Type"/>
-   		<p:outputLabel value="#{salesRegister.getCodeDesc('PT', salesRegister.project.propertyType)}"/>
+   		<h:inputText value="#{salesRegister.getCodeDesc('PT', salesRegister.project.propertyType)}"  style="width:300px" disabled="true"/>
    		
    		<p:outputLabel value="Purchase Date"/>
-   		<h:outputText value="#{salesRegister.account.datePurchased}">
+   		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="true">
    			<f:convertDateTime pattern="dd/MM/yyyy"/>
-   		</h:outputText>
+   		</h:inputText>
    		<p:outputLabel value="Attended By"/>
-   		<p:outputLabel value="#{salesRegister.attendedBy.name}"/>
+   		<h:inputText value="#{salesRegister.attendedBy.name}" style="width:300px" disabled="true"/>
    	</h:panelGrid>
 
    	<br/>

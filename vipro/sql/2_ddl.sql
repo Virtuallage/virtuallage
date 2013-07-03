@@ -9,7 +9,6 @@
 -- | For any inquiry, please write to technical@virtuallage.com              |
 -- +-------------------------------------------------------------------------+
 
-
 ALTER TABLE vipro.audit_log_det
   ADD CONSTRAINT FK_audit_log_det_1
       FOREIGN KEY (hdr_id)
@@ -257,7 +256,6 @@ ALTER TABLE vipro.project
       FOREIGN KEY (land_proprietor_id)
       REFERENCES vipro.business_partner (partner_id);
 
---290613
+
+-- 290613 by MAX
 ALTER TABLE `vipro`.`document_reference` CHANGE COLUMN `created_by` `created_by` VARCHAR(100) NULL DEFAULT NULL  ;
-
-

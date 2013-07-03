@@ -430,11 +430,13 @@ public class SalesCancel extends CommonBean implements Serializable{
 			
 			ProjectInventoryService inventoryService=  (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 			inventory.setAccounts(null);
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_AVAILABLE);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_CANCELLED);
+			// ** Bill : Update the changed date to current system date** //
+			inventory.setStatusChangeDate(new Date());
 			inventoryService.update(inventory);
 
 			salesCancellationService.update(salesCancellationHistory);
-			addInfoMessage("Sales Cancellation", "Cancelled Successfully.");
+			addInfoMessage("Sales Cancellation", "Cancellation Pending Approval.");
 			return listPropertyUnits();
 		} else {
 			addErrorMessage("Sales Cancellation", "Failed to cancel.");
