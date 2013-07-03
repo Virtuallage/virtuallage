@@ -20,11 +20,11 @@ My Profile
         
 	<h:form id="myUserProfileForm" >
 	
-	<h:panelGrid columns="2" style="width:60%;border:0px;"> 
+	<h:panelGrid columns="2" style="width:90%;border:0px;"> 
 		
 		<p:outputLabel value="User Name" />
-		<p:outputLabel value="#{myUserProfile.userProfile.name}"/>
-		
+		<h:inputText value="#{myUserProfile.userProfile.name}" style="width:300px" disabled="true"/>
+
 		<p:outputLabel value="Company Name" for="companyName"/>
 		<p:selectOneMenu id="companyName" required="true" value="#{myUserProfile.userProfile.institution}" converter="institution"> 
 			<f:selectItems value="#{myUserProfile.institutions}" var="ins" itemLabel="#{ins.institutionName}" itemValue="#{ins}" />

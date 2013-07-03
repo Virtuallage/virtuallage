@@ -14,10 +14,6 @@ UPDATE vipro.project_inventory
 SET discount_amount = purchase_price * 0.10, discount_rate = 10.00
 WHERE project_id = 1;
 
-UPDATE vipro.project_inventory
-SET property_status = 'PSAVL'
-WHERE project_id = 1;
-
 UPDATE vipro.user_profile
 SET department = 'DMSMA'
 WHERE institution_id = 1000000001;

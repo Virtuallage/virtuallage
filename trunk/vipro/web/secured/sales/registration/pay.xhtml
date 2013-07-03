@@ -22,14 +22,14 @@ Sales  Registration
 <h:form>  
     <h:panelGrid columns="4">
     	<p:outputLabel value="Project Name"/>
-    	<p:outputLabel value="#{salesRegister.project.projectName}"/>
+    	<h:inputText value="#{salesRegister.project.projectName}" style="width:300px" disabled="true"/>
     	<p:outputLabel value="Registration No"/>
-    	<p:outputLabel value="#{salesRegister.account.accountId}"/>
+    	<h:inputText value="#{salesRegister.account.accountId}" disabled="true"/>
     	
     	<p:outputLabel value="Unit No"/>
-    	<p:outputLabel value="#{salesRegiser.inventory.unitNo}"/>
+    	<h:inputText value="#{salesRegiser.inventory.unitNo}" disabled="true"/>
     	<p:outputLabel value="Developer"/>
-    	<p:outputLabel value="#{salesRegister.project.institution.institutionName}"/>
+    	<h:inputText value="#{salesRegister.project.developerName}" style="width:300px" disabled="true"/>
     	
     	<p:outputLabel value="Payment Amount" for="amount"/>
     	<p:inputText id="amount" value="#{salesRegister.trx.amount}" required="true">

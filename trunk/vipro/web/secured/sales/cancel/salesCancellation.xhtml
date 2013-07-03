@@ -23,7 +23,7 @@ Sales Cancellation
    			<p:outputLabel value="Project Name"/>
 			<h:inputText value="#{salesCancel.project.projectName}" style="width:200px" disabled="true"/>
 			<p:outputLabel value="Registration Ref."/>
-			<h:inputText value="#{salesCancel.account.registrationNo}" style="width:200px" disabled="true"/>
+			<h:inputText value="#{salesCancel.account.accountId}" style="width:200px" disabled="true"/>
 			
    			<p:outputLabel value="Unit No."/>
    			<h:inputText value="#{salesCancel.inventory.unitNo}"  style="width:200px" disabled="true"/>
@@ -42,7 +42,7 @@ Sales Cancellation
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<h:outputLabel value="Payment Method" disabled="true"/>
-   			<h:inputText value="" style="width:200px" disabled="true"/>
+   			<h:inputText value="#{salesCancel.getCodeDesc('PM', salesCancel.account.bookPymtMethod)}" style="width:200px" disabled="true"/>
    			
    			<p:outputLabel value="Reason for Cancellation *" for="reasonForCancellation"/>
    			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancel.account.cancelledReason}" style="width:200px">  

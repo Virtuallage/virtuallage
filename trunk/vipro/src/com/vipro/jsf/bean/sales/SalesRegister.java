@@ -569,6 +569,30 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payAmountField.setDisabled(true);
 		}
 		
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_CANCELLED)) {
+			salesRegTabView.setActiveIndex(1);
+			registrationTab.setDisabled(false);
+			payBookingTab.setDisabled(false);
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
+			saveButton.setStyle("display: none");
+			submitButton.setStyle("display: none");
+			receiptButton.setStyle("");
+			payAmountField.setDisabled(true);
+		}
+		
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_RESERVED)) {
+			salesRegTabView.setActiveIndex(1);
+			registrationTab.setDisabled(false);
+			payBookingTab.setDisabled(false);
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
+			saveButton.setStyle("display: none");
+			submitButton.setStyle("display: none");
+			receiptButton.setStyle("");
+			payAmountField.setDisabled(true);
+		}
+		
 		return "salesRegistration";
 	}
 
