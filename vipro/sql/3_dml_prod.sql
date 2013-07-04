@@ -218,6 +218,8 @@ INSERT INTO code_det VALUES ( 'CR', 'CRBRJ', 'Loan Rejected By Bank' , 'SSACT');
 INSERT INTO code_header VALUES ('SS', 'Commonly Used Status Code');
 INSERT INTO code_det VALUES ( 'SS', 'SSACT', 'Active' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSDIS', 'Disabled' , 'SSACT');
+INSERT INTO code_det VALUES ( 'SS', 'SSCAN', 'Cancelled' , 'SSACT');
+INSERT INTO code_det VALUES ( 'SS', 'SSCLS', 'Closed' , 'SSACT');
 
 -- Property Status
 INSERT INTO vipro.code_header VALUES ('PS', 'Property Status');
