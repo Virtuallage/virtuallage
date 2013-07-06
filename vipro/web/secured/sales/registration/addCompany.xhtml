@@ -23,10 +23,10 @@ Add Company
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Purchaser ID"/>
-				<p:outputLabel value="#{salesRegister.company.customerId}"/>
+				<h:inputText value="#{salesRegister.company.customerId}" disabled="true"/>
 				<p:outputLabel value="Type"/>
-				<p:outputLabel value="Company"/>
-				
+				<h:inputText value="Company" disabled="true"/>
+
 				<p:outputLabel value="Contact Person Name" for="contactp"/>
 				<p:inputText id="contactp" value="#{salesRegister.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
@@ -40,7 +40,7 @@ Add Company
 				<p:inputText id="regno" value="#{salesRegister.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
 			
 				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
-				<p:selectOneMenu id="bumi" value="#{salesRegister.company.bumiIndicator}" >
+				<p:selectOneMenu id="bumi" value="#{salesRegister.company.bumiIndicator}"  required="true">
 						<f:selectItems value="#{salesRegister.listBumi}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Mobile No" for="mobile" required="true"/>

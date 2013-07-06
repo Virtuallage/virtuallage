@@ -75,7 +75,7 @@
             <column name="location_latitude" length="15" />
         </property>
         <property name="collectionInterestRate" type="big_decimal">
-            <column name="collection_interest_rate" precision="3" />
+            <column name="collection_interest_rate" precision="5" />
         </property>
         <property name="staffBookingFee" type="big_decimal">
             <column name="staff_booking_fee" precision="9" scale="2"/>
@@ -92,11 +92,23 @@
         <property name="salesCommission" type="big_decimal">
             <column name="sales_commission" precision="9" scale="2" />
         </property>
+        <property name="latePymtIntRate" type="big_decimal">
+            <column name="late_pymt_int_rate" precision="5" />
+        </property>
+        <property name="latePymtFee" type="big_decimal">
+            <column name="late_pymt_fee" precision="7"/>
+        </property>
         <property name="launchDate" type="date">
             <column name="launch_date" length="10" />
         </property>
         <property name="taxPercentage" type="big_decimal">
-            <column name="tax_percentage" precision="3" />
+            <column name="tax_percentage" precision="5" />
+        </property>
+        <property name="changedBy" type="java.lang.Long">
+            <column name="changed_by" />
+        </property>
+        <property name="dateChanged" type="date">
+            <column name="date_changed" length="10" />
         </property>
         <property name="status" type="string">
             <column name="status" length="10"/>

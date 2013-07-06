@@ -35,6 +35,9 @@ public class Account implements java.io.Serializable {
 	private String purchaseType;
 	private Long panelBankId;
 	private BigDecimal loanAmount;
+	private BigDecimal latePymtIntRate;
+	private BigDecimal latePymtFee;
+	private BigDecimal accrualInterest;
 	private BigDecimal totalPaymentTodate;
 	private Long redemptionBankId;
 	private BigDecimal bankRedemptionSum;
@@ -68,6 +71,8 @@ public class Account implements java.io.Serializable {
 	private String maintenanceBilingCycle;
 	private String cancelledReason;
 	private String remark;
+	private Long changedBy;
+	private Date dateChanged;
 	private String source;
 	private String salesPerson;
 	private Long corrAddrCustId;
@@ -814,6 +819,46 @@ public class Account implements java.io.Serializable {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public Date getDateChanged() {
+		return dateChanged;
+	}
+
+	public void setDateChanged(Date dateChanged) {
+		this.dateChanged = dateChanged;
+	}
+
+	public Long getChangedBy() {
+		return changedBy;
+	}
+
+	public void setChangedBy(Long changedBy) {
+		this.changedBy = changedBy;
+	}
+
+	public BigDecimal getLatePymtIntRate() {
+		return latePymtIntRate;
+	}
+
+	public void setLatePymtIntRate(BigDecimal latePymtIntRate) {
+		this.latePymtIntRate = latePymtIntRate;
+	}
+
+	public BigDecimal getLatePymtFee() {
+		return latePymtFee;
+	}
+
+	public void setLatePymtFee(BigDecimal latePymtFee) {
+		this.latePymtFee = latePymtFee;
+	}
+
+	public BigDecimal getAccrualInterest() {
+		return accrualInterest;
+	}
+
+	public void setAccrualInterest(BigDecimal accrualInterest) {
+		this.accrualInterest = accrualInterest;
 	}
 
 }

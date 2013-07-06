@@ -214,14 +214,18 @@ CREATE TABLE vipro.project (
      , location_city VARCHAR(20)
      , location_state VARCHAR(20)
      , location_country VARCHAR(5)
-     , collection_interest_rate NUMERIC(3, 2)
+     , collection_interest_rate NUMERIC(5, 2)
      , staff_booking_fee DEC(7, 2)
      , public_booking_fee NUMERIC(7, 2)
      , discount_rate DEC(11,2)
      , sales_commission DEC(11,2)
-     , maintenance_fee_rate NUMERIC(3, 2)
+	 , late_pymt_int_rate DEC(5, 2)
+     , late_pymt_fee DEC(7, 2)
+     , maintenance_fee_rate NUMERIC(5, 2)
      , launch_date DATE
-     , tax_percentage DEC(3, 2)
+     , tax_percentage DEC(5, 2)
+     , changed_by BIGINT
+     , date_changed DATE
      , status VARCHAR(10)
      , PRIMARY KEY (project_id)
 );
@@ -253,6 +257,7 @@ CREATE TABLE vipro.project_inventory (
      , key_handover_date DATE
      , dnc_date DATE
      , development_stage DEC(3)
+     , change_user_id BIGINT
      , status_change_date DATE
      , property_status VARCHAR(5)
      , PRIMARY KEY (inventory_id)
@@ -300,7 +305,7 @@ CREATE TABLE vipro.account (
      , inventory_id BIGINT NOT NULL
      , account_type VARCHAR(5)
      , attended_by BIGINT
-     , sales_person VARCHAR(20)
+     , sales_person VARCHAR(30)
      , corr_addr_cust_id BIGINT
      , registration_fee DEC(9, 2)
      , registration_no VARCHAR(20)
@@ -315,7 +320,10 @@ CREATE TABLE vipro.account (
      , panel_bank_id BIGINT
      , loan_amount DEC(9, 2)
      , total_payment_todate DEC(9, 2)
-     , account_balance DEC(9,2)
+     , account_balance DEC(9, 2)
+     , late_pymt_int_rate DEC(5 ,2)
+     , late_pymt_fee DEC(7 ,2)
+     , accrual_interest DEC(7 ,2)
      , redemption_bank_id BIGINT
      , bank_redemption_sum DEC(9, 2)
      , bank_redemption_todate DEC(9, 2)
@@ -363,6 +371,8 @@ CREATE TABLE vipro.account (
      , customer_id4 BIGINT
      , customer_id5 BIGINT
      , remark VARCHAR(300)
+     , changed_by BIGINT
+     , date_changed DATE
      , account_status VARCHAR(5)
      , PRIMARY KEY (account_id)
 );
@@ -579,6 +589,11 @@ CREATE TABLE vipro.sales_cancellation_history (
      , cancel_tax DECIMAL(9,2) NULL DEFAULT NULL 
      , cancel_refund_net_amt DECIMAL(9,2) NULL DEFAULT NULL 
      , cancel_doc_id BIGINT(20) NULL DEFAULT NULL 
+	 , submitted_by BIGINT
+     , date_submitted DATE
+     , approved_by BIGINT
+     , date_approved DATE
+     , status VARCHAR(5)
      , PRIMARY KEY (cancellation_id) 
      , INDEX FK_sales_cancellation_history_1_idx (inventory_id ASC) 
      , CONSTRAINT FK_sales_cancellation_history_1
@@ -589,12 +604,14 @@ CREATE TABLE vipro.sales_cancellation_history (
        DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE vipro.sales_commission_history (
-	   commission_id BIGINT(20) NOT NULL AUTO_INCREMENT 
-     , account_id BIGINT(20) NOT NULL 
+	   commission_id BIGINT(20) NOT NULL AUTO_INCREMENT
+     , account_id BIGINT(20) NOT NULL
      , claim_percent BIGINT(20) NULL
      , claim_amount DEC(9,2)
-     , attended_by BIGINT(20) NULL
+     , submitted_by BIGINT(20) NULL
      , date_submitted DATE NULL
+     , approved_by BIGINT
+     , date_approved DATE
      , claim_status VARCHAR(5) NULL
      , PRIMARY KEY (commission_id)
      , INDEX FK_commission_1_idx (account_id ASC)

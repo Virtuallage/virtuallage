@@ -29,5 +29,20 @@
         <property name="cancelDocId" type="java.lang.Long">
             <column name="cancel_doc_id" />
         </property>
+        <property name="submittedBy" type="java.lang.Long">
+            <column name="submitted_by" />
+        </property>
+        <property name="dateSubmitted" type="date">
+            <column name="date_submitted" length="10" />
+        </property>
+        <property name="approvedBy" type="java.lang.Long">
+            <column name="approved_by" />
+        </property>
+        <property name="dateApproved" type="date">
+            <column name="date_approved" length="10" />
+        </property>
+        <property name="Status" type="string">
+            <column name="status" length="5" />
+        </property>
     </class>
 </hibernate-mapping>

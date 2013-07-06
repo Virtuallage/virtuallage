@@ -74,6 +74,15 @@
         <property name="loanAmount" type="big_decimal">
             <column name="loan_amount" precision="9" />
         </property>
+        <property name="latePymtIntRate" type="big_decimal">
+            <column name="late_pymt_int_rate" precision="5" />
+        </property>
+        <property name="latePymtFee" type="big_decimal">
+            <column name="late_pymt_fee" precision="7" />
+        </property>
+        <property name="accrualInterest" type="big_decimal">
+            <column name="accrual_interest" precision="7" />
+        </property>
         <property name="totalPaymentTodate" type="big_decimal">
             <column name="total_payment_todate" precision="9" />
         </property>
@@ -170,7 +179,6 @@
         <property name="cancelledReason" type="string">
             <column name="cancelled_reason" length="5" />
         </property>
-        
         <property name="cancelFee" type="big_decimal">
             <column name="cancel_fee" precision="9" />
         </property>
@@ -183,7 +191,6 @@
         <property name="corrAddrCustId" type="java.lang.Long">
             <column name="corr_addr_cust_id" />
         </property>
-        
         <property name="bookPymtAmount" type="big_decimal">
             <column name="book_pymt_amount" precision="9" />
         </property>
@@ -200,7 +207,7 @@
             <column name="source" length="5" />
         </property>
          <property name="salesPerson" type="string">
-            <column name="sales_person" length="20" />
+            <column name="sales_person" length="30" />
         </property>
         
         <set name="waterBillings" table="water_billing" inverse="true" lazy="true" fetch="select">
@@ -257,21 +264,23 @@
             </key>
             <one-to-many class="com.vipro.data.AccountAging" />
         </set>
-        
         <property name="cancelDocId" type="java.lang.Long">
             <column name="cancel_doc_id" />
         </property>
-        
         <property name="spaDocId" type="java.lang.Long">
             <column name="spa_doc_id" />
         </property>
-        
         <property name="loDocId" type="java.lang.Long">
             <column name="lo_doc_id" />
         </property>
-        
         <property name="laDocId" type="java.lang.Long">
             <column name="la_doc_id" />
+        </property>
+        <property name="changedBy" type="java.lang.Long">
+            <column name="changed_by" />
+        </property>
+        <property name="dateChanged" type="date">
+            <column name="date_changed" length="10" />
         </property>
     </class>
 </hibernate-mapping>

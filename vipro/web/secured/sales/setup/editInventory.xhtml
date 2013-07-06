@@ -23,24 +23,21 @@ Project Setup
 <h:form>  
 	<h:panelGrid columns="4" style="width:100%;text-align:left;">
 		<p:outputLabel value="Project Name"/>
-		<p:outputLabel value="#{projectSetup.project.projectName}"/>
+		<h:inputText value="#{projectSetup.project.projectName}" style="width:250px" disabled="true"/>	
 		<p:outputLabel value="Status" for="status"/>
-		<p:selectOneMenu id="status" value="#{projectSetup.inventory.propertyStatus}"> 
-			<f:selectItems value="#{projectSetup.propertyStatusList}" />
+		<p:selectOneMenu id="status" value="#{projectSetup.inventory.propertyStatus}" disabled="true"> 
+			<f:selectItems value="#{projectSetup.propertyStatusList}"/>
 		</p:selectOneMenu>
 
-		
 		<p:outputLabel value="Block No" for="blockNo"/>
 		<p:inputText id="blockNo" value="#{projectSetup.inventory.blockNo}"  maxlength="8" autocomplete="off" required="true"/>
 		<p:outputLabel value="Level" for="level"/>
 		<p:inputText id="level" value="#{projectSetup.inventory.level}"  maxlength="5" autocomplete="off" required="true"/>
 
-
 		<p:outputLabel value="Unit No" for="unitNo"/>
 		<p:inputText id="unitNo" value="#{projectSetup.inventory.unitNo}"  maxlength="12" autocomplete="off" required="true"/>
 		<p:outputLabel value="Layout Type" for="type"/>
 		<p:inputText id="type" value="#{projectSetup.inventory.layoutType}"  maxlength="5" autocomplete="off"/>
-
 
 		<p:outputLabel value="Build Up Area" for="buildUpArea"/>
 		<p:inputText id="buildUpArea" value="#{projectSetup.inventory.builtUpArea}" maxlength="10" autocomplete="off" required="true">
@@ -51,7 +48,6 @@ Project Setup
 		<pe:inputNumber id="landArea" value="#{projectSetup.inventory.landArea}" decimalPlaces="0" autocomplete="off">
                 <p:ajax update="sellingPrice" event="blur" process="sellingPrice"/>
 		</pe:inputNumber>
-		
 		
 		<p:outputLabel value="Selling Price" for="sellingPrice"/>
 		<pe:inputNumber id="sellingPrice" value="#{projectSetup.inventory.purchasePrice}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" autocomplete="off" required="true">

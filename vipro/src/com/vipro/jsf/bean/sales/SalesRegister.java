@@ -497,6 +497,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 			attendedBy = user.getUserProfile();
 		}
 
+		account.setSalesPerson(user.getName());
+		
 		AccountService accountService = (AccountService) SpringBeanUtil
 				.lookup(AccountService.class.getName());
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
@@ -641,14 +643,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 			}
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
-			account.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
+			account.setAccountStatus(AccountStatusConst.STATUS_NEW);
+			account.setDateChanged(new Date());
+			account.setChangedBy(attendedBy.getUserId());
 			account.setPurchasePrice(inventory.getPurchasePrice());
 			
 			// ***  default account type to individual first. Should check for 1st purchaser type for this.
 			// *** to set account type from customer category
 			account.setAccountType(selectedCustomer.getCustomerCategory());
-			
-			// corresponding address
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
 			
 // BILL Removed	the calculation and replace with fee from Project Table		
@@ -659,8 +661,12 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 			accountService.insert(account);
 
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_IN_PROGRESS);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_IN_PROGRESS);		
+			inventory.setStatusChangeDate(new Date());
+			inventory.setChangeUserId(attendedBy.getUserId());
+			
 			inventoryService.update(inventory);
+			
 			saveButton.setStyle("display: none");
 			payButton.setStyle("");
 			
@@ -856,17 +862,24 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setNetPrice(account.getPurchasePrice().subtract(account.getDiscountedAmount()));
 			account.setTotalPaymentTodate(account.getBookPymtAmount());
 			account.setRegistrationFee(account.getBookPymtAmount());
-			account.setAccountBalance(account.getPurchasePrice().subtract(account.getBookPymtAmount()));
+			// account.setAccountBalance(account.getPurchasePrice().subtract(account.getBookPymtAmount()));
 			
 			// update commission amount from project file
 			account.setCommissionAmount(project.getSalesCommission());
+			account.setLatePymtIntRate(project.getLatePymtIntRate());
 			
 			accountService.insert(account);
 			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
+			inventory.setStatusChangeDate(new Date());
+			
+			AuthUser user = getCurrentUser();
+			inventory.setChangeUserId(user.getUserProfile().getUserId());
+			
 			inventoryService.update(inventory);
+			
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
 						
