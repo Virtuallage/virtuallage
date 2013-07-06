@@ -10,7 +10,7 @@
 -- +-------------------------------------------------------------------------+
 
 -- Create Institution Information Record
-INSERT INTO vipro.institution (institution_id, institution_name, status) 
+INSERT INTO vipro.institution (institution_id, institution_name, status)
      VALUES (1000000001, 'B&G Concept Engineering Sdn Bhd', 'SSACT');
 
 -- Create Holiday Table Data
@@ -43,39 +43,39 @@ INSERT INTO vipro.holiday (date, description, institution_id)
 
 -- Create Default User Group and Username
 INSERT INTO vipro.user_group VALUES('ADMIN', 'System Administrator Group', 'SSACT');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, status, group_id) 
-     VALUES ('sysadm', '5f4dcc3b5aa765d61d8327deb882cf99', 'System Administrator', 1000000001,'000', 'SSACT', 'ADMIN');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, department, status, group_id) 
+     VALUES ('sysadm', '5f4dcc3b5aa765d61d8327deb882cf99', 'System Administrator', 1000000001,'000', 'DMSYS', 'SSACT', 'ADMIN');
 
 INSERT INTO vipro.user_group VALUES ('SALES', 'Sales Staff Group', 'SSACT');
 
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, status, group_id) 
-     VALUES ('sales', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Staff Default User', 1000000001,'000', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('stevenoh', '5f4dcc3b5aa765d61d8327deb882cf99', 'Steven Oh Chan Yen', 1000000001,'stevenoh@mct.com.my', '0146183348', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('daren', '5f4dcc3b5aa765d61d8327deb882cf99', 'Daren Tiong Chee Wei', 1000000001,'daren@mct.com.my', '0167229771', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('ykwan', '5f4dcc3b5aa765d61d8327deb882cf99', 'Wan Yew Khuan', 1000000001,'ykwan@mct.com.my', '0165540606', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('stevenchow', '5f4dcc3b5aa765d61d8327deb882cf99', 'Steven Chow Kah Seng', 1000000001,'steven@mct.com.my', '0129313853', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('joelim', '5f4dcc3b5aa765d61d8327deb882cf99', 'Joe Lim Kheng Shen', 1000000001,'joe.lim@mct.com.my', '0193393596', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('sally', '5f4dcc3b5aa765d61d8327deb882cf99', 'Salina Binti Kassim', 1000000001,'salina@mct.com.my', '0173648087', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('jess', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hadijah Binti Maming (Jess)', 1000000001,'jess@mct.com.my', '0137027593', 'SSACT', 'SALES');
-INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, status, group_id) 
-     VALUES ('yan', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hazri Yanti Binti Mohd Yasim', 1000000001,'yan@mct.com.my', '0122361577', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, department, status, group_id) 
+     VALUES ('sales', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Staff Default User', 1000000001,'000', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('stevenoh', '5f4dcc3b5aa765d61d8327deb882cf99', 'Steven Oh Chan Yen', 1000000001,'stevenoh@mct.com.my', '0146183348', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('daren', '5f4dcc3b5aa765d61d8327deb882cf99', 'Daren Tiong Chee Wei', 1000000001,'daren@mct.com.my', '0167229771', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('ykwan', '5f4dcc3b5aa765d61d8327deb882cf99', 'Wan Yew Khuan', 1000000001,'ykwan@mct.com.my', '0165540606', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('stevenchow', '5f4dcc3b5aa765d61d8327deb882cf99', 'Steven Chow Kah Seng', 1000000001,'steven@mct.com.my', '0129313853', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('joelim', '5f4dcc3b5aa765d61d8327deb882cf99', 'Joe Lim Kheng Shen', 1000000001,'joe.lim@mct.com.my', '0193393596', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('sally', '5f4dcc3b5aa765d61d8327deb882cf99', 'Salina Binti Kassim', 1000000001,'salina@mct.com.my', '0173648087', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('jess', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hadijah Binti Maming (Jess)', 1000000001,'jess@mct.com.my', '0137027593', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('yan', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hazri Yanti Binti Mohd Yasim', 1000000001,'yan@mct.com.my', '0122361577', 'DMSMA', 'SSACT', 'SALES');
 
 
 INSERT INTO vipro.user_group VALUES ('SALES_PIC', 'Sales Person-in-Charge Group', 'SSACT');
 
-INSERT INTO vipro.user_profile (username, password, name, staff_no, status, institution_id, group_id)
-     VALUES ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Person-In-Charge', 000, 'SSACT', 1000000001, 'SALES_PIC');
-INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, status, institution_id, group_id)
-     VALUES ('adrian', '5f4dcc3b5aa765d61d8327deb882cf99', 'Adrian Soon Yee Jer', 'adrian@mct.com.my', '0122241717', 'SSACT', 1000000001, 'SALES_PIC');
-INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, status, institution_id, group_id)
-     VALUES ('hasrina', '5f4dcc3b5aa765d61d8327deb882cf99', 'Noor Hasrina', 'hasrina@mct.com.my', '0192326080', 'SSACT', 1000000001, 'SALES_PIC');
+INSERT INTO vipro.user_profile (username, password, name, staff_no, department, status, institution_id, group_id)
+     VALUES ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Person-In-Charge', 000, 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
+INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
+     VALUES ('adrian', '5f4dcc3b5aa765d61d8327deb882cf99', 'Adrian Soon Yee Jer', 'adrian@mct.com.my', '0122241717', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
+INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
+     VALUES ('hasrina', '5f4dcc3b5aa765d61d8327deb882cf99', 'Noor Hasrina', 'hasrina@mct.com.my', '0192326080', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
 
 -- For Future Used
 -- Other valid group in the system are 'SALES_ADM', 'CUST_SERV', 'ACCT', 'PROP_DEV'
@@ -205,7 +205,7 @@ INSERT INTO code_det VALUES ('BK', 'BKHLB', 'Hong Leong Bank', 'SSACT');
 INSERT INTO code_det VALUES ('BK', 'BKAFB', 'Affin Bank', 'SSACT');
 INSERT INTO code_det VALUES ('BK', 'BKABB', 'Alliance Bank', 'SSACT');
 INSERT INTO code_det VALUES ('BK', 'BKAMB', 'AmBank', 'SSACT');
-INSERT INTO code_det VALUES ('BK', 'BKHSBC', 'HSBC', 'SSACT');
+INSERT INTO code_det VALUES ('BK', 'BKHSB', 'HSBC', 'SSACT');
 INSERT INTO code_det VALUES ('BK', 'BKCTB', 'Citibank', 'SSACT');
 INSERT INTO code_det VALUES ('BK', 'BKSCB', 'Standard Charted Bank', 'SSACT');
 
@@ -220,6 +220,21 @@ INSERT INTO code_det VALUES ( 'SS', 'SSACT', 'Active' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSDIS', 'Disabled' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSCAN', 'Cancelled' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSCLS', 'Closed' , 'SSACT');
+INSERT INTO code_det VALUES ( 'SS', 'SSNEW', 'New' , 'SSACT');
+
+-- Sales Commission Payout Status
+INSERT INTO code_header VALUES ('CO', 'Commission Payout Status Code');
+INSERT INTO code_det VALUES ( 'CO', 'COSUB', 'Submitted' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CO', 'COAPP', 'Approved' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CO', 'COREJ', 'Rejected' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CO', 'COPAI', 'Paid' , 'SSACT');
+
+-- Sales Cancellation Status
+INSERT INTO code_header VALUES ('CX', 'Sales Cancellation Status Code');
+INSERT INTO code_det VALUES ( 'CX', 'CXSUB', 'Submitted' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CX', 'CXAPP', 'Approved' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CX', 'CXREJ', 'Rejected' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CX', 'CXCAN', 'Cancelled' , 'SSACT');
 
 -- Property Status
 INSERT INTO vipro.code_header VALUES ('PS', 'Property Status');
@@ -271,6 +286,7 @@ INSERT INTO vipro.code_det VALUES ('DM', 'DMSMA', 'Sales & Marketing', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('DM', 'DMSAD', 'Sales Admin', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('DM', 'DMACT', 'Accounting', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('DM', 'DMMGR', 'Management', 'SSACT');
+INSERT INTO vipro.code_det VALUES ('DM', 'DMSYS', 'System Support', 'SSACT');
 
 -- Purchase Type (Bill 14/6)
 INSERT INTO vipro.code_header VALUES ('PU', 'Purchase Type');
@@ -344,6 +360,6 @@ INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, 
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
      VALUES (1000000001, 'BANK', 'Alliance Bank - UEP Subang Jaya', 'SSACT');
      
---290613 Max  
+-- 290613 Max  
 INSERT INTO `vipro`.`code_header` (`code_header_id`, `name`) VALUES ('CI', 'City');
 INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('CI', 'CIKUL', 'Kuala Lumpur', 'SSACT');

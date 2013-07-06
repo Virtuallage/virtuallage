@@ -359,7 +359,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 
 				AuthUser user = getCurrentUser();
 				if (user != null)
-					salesCommissionHistory.setAttendedBy(user.getUserProfile().getUserId());
+					salesCommissionHistory.setSubmittedBy(user.getUserProfile().getUserId());
 
 				salesCommissionHistoryService.update(salesCommissionHistory);
 			}

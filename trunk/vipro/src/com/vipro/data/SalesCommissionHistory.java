@@ -15,20 +15,24 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	private Long claimPercent;
 	private BigDecimal claimAmount;
 	private String claimStatus;
-	private Long attendedBy;
+	private Long submittedBy;
 	private Date dateSubmitted;
+	private Long approvedBy;
+	private Date dateApproved;
 	
 	public SalesCommissionHistory() {
 	}
 
 	public SalesCommissionHistory(Account account, Long claimPercent, BigDecimal claimAmount, String claimStatus,
-			Long attendedBy, Date dateSubmitted) {
+			Long submittedBy, Date dateSubmitted, Long approvedBy, Date dateApproved) {
 		this.account = account;
 		this.claimPercent = claimPercent;
 		this.claimAmount = claimAmount;
 		this.claimStatus = claimStatus;
-		this.attendedBy = attendedBy;
+		this.submittedBy = submittedBy;
 		this.dateSubmitted = dateSubmitted;
+		this.approvedBy = approvedBy;
+		this.dateApproved = dateApproved;
 	}
 
 	public Long getCommissionId() {
@@ -71,20 +75,36 @@ public class SalesCommissionHistory implements java.io.Serializable {
 		this.claimStatus = claimStatus;
 	}
 	
-	public Long getAttendedBy() {
-		return attendedBy;
-	}
-
-	public void setAttendedBy(Long attendedBy) {
-		this.attendedBy = attendedBy;
-	}
-
 	public Date getDateSubmitted() {
 		return dateSubmitted;
 	}
 
 	public void setDateSubmitted(Date dateSubmitted) {
 		this.dateSubmitted = dateSubmitted;
+	}
+
+	public Long getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(Long approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public Date getDateApproved() {
+		return dateApproved;
+	}
+
+	public void setDateApproved(Date dateApproved) {
+		this.dateApproved = dateApproved;
+	}
+
+	public Long getSubmittedBy() {
+		return submittedBy;
+	}
+
+	public void setSubmittedBy(Long submittedBy) {
+		this.submittedBy = submittedBy;
 	}
 	
 }

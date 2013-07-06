@@ -24,7 +24,6 @@ Project Setup
 	<h:panelGrid columns="4" style="width:100%">
 		<p:outputLabel value="Project Name" for="projectName"/>
 		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" maxlength="40" required="true" autocomplete="off"/>
-		
 		<p:outputLabel value="Project Code" for="code"/>
 		<p:inputText id="code" value="#{projectSetup.project.projectCode}" maxlength="10" required="true" autocomplete="off"/>
 		
@@ -33,7 +32,6 @@ Project Setup
 		<p:selectOneMenu id="developerName" value="#{projectSetup.project.developerId}"> 
 			<f:selectItems value="#{projectSetup.developers}" />
 		</p:selectOneMenu>
-		
 		<p:outputLabel value="Land Proprietor" for="developerName"/>
 		<p:selectOneMenu id="landProprietor" value="#{projectSetup.project.landProprietorId}"> 
 			<f:selectItems value="#{projectSetup.landProprietors}" />
@@ -43,16 +41,14 @@ Project Setup
 		<p:selectOneMenu id="propType" value="#{projectSetup.project.propertyType}" >
 			<f:selectItems value="#{projectSetup.propertyTypes}"/>
 		</p:selectOneMenu>
-
 		<p:outputLabel value="Person In Charge" for="pic"/>
 		<p:inputText id="pic" value="#{projectSetup.project.personInCharge}" maxlength="30" autocomplete="off"/>
 
 		<p:outputLabel value="PIC Mobile" for="picMobile"/>
 		<h:panelGroup>
 			<p:inputText id="picMobile" value="#{projectSetup.project.picMobileNo}" maxlength="20" autocomplete="off"/>
-			<p:outputLabel value=" ie. 0129876543" />
+			<p:outputLabel value="  ie. 0129876543" />
 		</h:panelGroup>
-			
 		<p:outputLabel value="Launch Date" for="launchDate"/>
 		<p:calendar id="launchDate" value="#{projectSetup.project.launchDate}"  pattern="dd/MM/yyyy"/>
 		
@@ -60,7 +56,6 @@ Project Setup
 		<p:selectOneMenu id="rptGroup" value="#{projectSetup.project.reportGroup}" >
 			<f:selectItems value="#{projectSetup.reportGroups}"/>
 		</p:selectOneMenu>
-		
 		<p:outputLabel value="Status" for="status"/>
 		<p:selectOneMenu id="status" value="#{projectSetup.project.status}" >
 			<f:selectItems value="#{projectSetup.statusList}"/>
@@ -68,20 +63,22 @@ Project Setup
 
 		<p:outputLabel value="Discount Rate"/>
 		<pe:inputNumber value="#{projectSetup.project.discountRate}" minValue="0" maxValue="100" emptyValue="0" decimalPlaces="2"/> 
-		
 		<p:outputLabel value="Sales Commission"/>
 		<pe:inputNumber value="#{projectSetup.project.salesCommission}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2"/>
 
+		<p:outputLabel value="Late Payment Interest (% per year)"/>
+		<pe:inputNumber value="#{projectSetup.project.latePymtIntRate}" minValue="0" maxValue="100" emptyValue="0" decimalPlaces="2"/> 
+		<p:outputLabel value="Late Payment Fee"/>
+		<pe:inputNumber value="#{projectSetup.project.latePymtFee}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2"/>
+
 		<p:outputLabel value="Address Line 1" for="address1"/>
 		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
-		
 		<p:outputLabel value="Address Line 2" for="address2"/>
 		<p:inputText id="address2" value="#{projectSetup.project.address2}" maxlength="20" />
 		
 		
 		<p:outputLabel value="Address Line 3" for="address3"/>
 		<p:inputText id="address3" value="#{projectSetup.project.address3}" maxlength="20" />
-		
 		<p:outputLabel value="Address Line 4" for="address4"/>
 		<p:inputText id="address4" value="#{projectSetup.project.address4}" maxlength="20" />
 		
@@ -89,7 +86,6 @@ Project Setup
 		<h:panelGroup>
 			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" maxlength="10" autocomplete="off"/>
 		</h:panelGroup>
-		
 		<p:outputLabel value="City" for="city"/>
 		<p:inputText id="city" value="#{projectSetup.project.city}" maxlength="20" />
 
@@ -97,7 +93,6 @@ Project Setup
 		<p:selectOneMenu id="state" value="#{projectSetup.project.state}">
 			<f:selectItems value="#{projectSetup.states}"/>
 		</p:selectOneMenu>
-		
 		<p:outputLabel value="Country" for="state"/>
 		<p:selectOneMenu id="country" value="#{projectSetup.project.country}">
 			<f:selectItems value="#{projectSetup.countries}"/>
@@ -105,15 +100,11 @@ Project Setup
 		
 		<p:outputLabel value="Project Office Tel" for="tel"/>
 		<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" maxlength="15" autocomplete="off"/>
-		
-
 		<p:outputLabel value="Project Office Fax" for="fax"/>
 		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
 
 		<p:outputLabel value="Location Longtitude" for="locationLongtitude"/>
 		<p:inputText id="locationLongtitude" value="#{projectSetup.project.locationLongtitude}" autocomplete="off"/>
-		
-
 		<p:outputLabel value="Location Latitude" for="locationLatitude"/>
 		<p:inputText id="locationLatitude" value="#{projectSetup.project.locationLatitude}" autocomplete="off"/>
 		

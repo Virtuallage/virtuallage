@@ -38,6 +38,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private Date strataTitleObtainedDate;
 	private Date keyHandoverDate;
 	private Short developmentStage;
+	private Long changeUserId;
 	private BigDecimal discountRate;
 	private Date dncDate;
 	private String customerName;
@@ -366,6 +367,14 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public Long getChangeUserId() {
+		return changeUserId;
+	}
+
+	public void setChangeUserId(Long changeUserId) {
+		this.changeUserId = changeUserId;
 	}
 	
 }

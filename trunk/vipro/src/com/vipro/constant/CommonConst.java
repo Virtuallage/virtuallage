@@ -13,6 +13,12 @@ public interface CommonConst {
 	
 	public static final String STATUS_DISABLED="SSDIS";
 	
+	public static final String STATUS_NEW="SSNEW";
+	
+	public static final String STATUS_CANCELLED="SSCAN";
+	
+	public static final String STATUS_CLOSED="SSCLS";
+	
 	public static final String CASH = "PMCAS";
 
 	public static final String INDIVIDUAL = "CCIND";

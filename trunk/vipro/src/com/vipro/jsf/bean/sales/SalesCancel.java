@@ -433,8 +433,15 @@ public class SalesCancel extends CommonBean implements Serializable{
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_CANCELLED);
 			// ** Bill : Update the changed date to current system date** //
 			inventory.setStatusChangeDate(new Date());
+			
+			AuthUser user = getCurrentUser();
+			inventory.setChangeUserId(user.getUserProfile().getUserId());
+			
 			inventoryService.update(inventory);
 
+			salesCancellationHistory.setSubmittedBy(user.getUserProfile().getUserId());
+			salesCancellationHistory.setDateSubmitted(new Date());
+			
 			salesCancellationService.update(salesCancellationHistory);
 			addInfoMessage("Sales Cancellation", "Cancellation Pending Approval.");
 			return listPropertyUnits();

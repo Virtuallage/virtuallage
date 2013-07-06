@@ -23,10 +23,10 @@ Add Individuals
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Purchaser ID"/>
-				<p:outputLabel value="#{salesRegister.individual.customerId}"/>
+				<h:inputText value="#{salesRegister.individual.customerId}" disabled="true"/>
 				<p:outputLabel value="Type"/>
-				<p:outputLabel value="Individual"/>
-				
+				<h:inputText value="Individual" disabled="true"/>
+
 				<p:outputLabel value="Purchaser Name" for="name"/>
 				<p:inputText id="name" value="#{salesRegister.individual.fullName}" maxlength="60" required="true" autocomplete="off"/>
 				<p:outputLabel value="Title" for="title"/>
@@ -90,7 +90,7 @@ Add Individuals
 						<f:selectItems value="#{salesRegister.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>
-				<p:selectOneMenu id="country" value="#{salesRegister.address.country}"  required="false">
+				<p:selectOneMenu id="country" value="#{salesRegister.address.country}"  required="true">
 						<f:selectItems value="#{salesRegister.listCountry}"/>
 				</p:selectOneMenu>
 

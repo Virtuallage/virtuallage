@@ -89,6 +89,9 @@
         <property name="developmentStage" type="java.lang.Short">
             <column name="development_stage" precision="3" scale="0" />
         </property>
+        <property name="changeUserId" type="java.lang.Long">
+            <column name="change_user_id" />
+        </property>
         <set name="accounts" table="account" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="inventory_id" not-null="true" />

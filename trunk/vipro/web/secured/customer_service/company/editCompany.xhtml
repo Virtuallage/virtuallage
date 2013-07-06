@@ -23,14 +23,14 @@ Add Company
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Purchaser ID"/>
-				<p:outputLabel value="#{customerRegister.company.customerId}"/>
+				<h:inputText value="#{customerRegister.company.customerId}" disabled="true"/>
 				<p:outputLabel value="Type"/>
-				<p:outputLabel value="Company"/>
+				<h:inputText value="Company" disabled="true"/>
 				
 				<p:outputLabel value="Contact Person Name" for="contactp"/>
 				<p:inputText id="contactp" value="#{customerRegister.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
-				<p:selectOneMenu id="title" value="#{customerRegister.company.title}">
+				<p:selectOneMenu id="title" value="#{customerRegister.company.title}" required="true">
 						<f:selectItems value="#{customerRegister.listTitle}"/>
 				</p:selectOneMenu>
 				
@@ -40,7 +40,7 @@ Add Company
 				<p:inputText id="regno" value="#{customerRegister.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
 			
 				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
-				<p:selectOneMenu id="bumi" value="#{customerRegister.company.bumiIndicator}" >
+				<p:selectOneMenu id="bumi" value="#{customerRegister.company.bumiIndicator}" required="true">
 						<f:selectItems value="#{customerRegister.listBumi}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Mobile No" for="mobile" required="true"/>
@@ -59,9 +59,7 @@ Add Company
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{customerRegister.address.postcode}" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:selectOneMenu id="city" value="#{customerRegister.address.city}"  required="true">
-						<f:selectItems value="#{customerRegister.listCity}"/>
-				</p:selectOneMenu>
+				<p:inputText id="city" value="#{customerRegister.address.city}" maxlength="20" autocomplete="off"/>
 
 				<p:outputLabel value="State" for="state" required="true"/>
 				<p:selectOneMenu id="state" value="#{customerRegister.address.state}"  required="true">

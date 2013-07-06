@@ -18,8 +18,8 @@ public class Project implements java.io.Serializable {
 	private Long projectId;
 	private Account account;
 	private Institution institution;
-	private long developerId;
-	private long landProprietorId;
+	private Long developerId;
+	private Long landProprietorId;
 	private String developerName;
 	private String landProprietorName;
 	private String projectName;
@@ -49,8 +49,12 @@ public class Project implements java.io.Serializable {
 	private BigDecimal maintenanceFeeRate;
 	private BigDecimal discountRate;
 	private BigDecimal salesCommission;
+	private BigDecimal latePymtIntRate;
+	private BigDecimal latePymtFee;
 	private Date launchDate;
 	private BigDecimal taxPercentage;
+	private Long changedBy;
+	private Date dateChanged;
 	private String status;
 	private Set<ProjectInventory> projectInventories = new HashSet(0);
 	private Set<SalesCommission> salesCommissions = new HashSet(0);
@@ -367,19 +371,19 @@ public class Project implements java.io.Serializable {
 		this.salesCommission = salesCommission;
 	}
 
-	public long getDeveloperId() {
+	public Long getDeveloperId() {
 		return developerId;
 	}
 
-	public void setDeveloperId(long developerId) {
+	public void setDeveloperId(Long developerId) {
 		this.developerId = developerId;
 	}
 
-	public long getLandProprietorId() {
+	public Long getLandProprietorId() {
 		return landProprietorId;
 	}
 
-	public void setLandProprietorId(long landProprietorId) {
+	public void setLandProprietorId(Long landProprietorId) {
 		this.landProprietorId = landProprietorId;
 	}
 
@@ -429,6 +433,38 @@ public class Project implements java.io.Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public BigDecimal getLatePymtIntRate() {
+		return latePymtIntRate;
+	}
+
+	public void setLatePymtIntRate(BigDecimal latePymtIntRate) {
+		this.latePymtIntRate = latePymtIntRate;
+	}
+
+	public BigDecimal getLatePymtFee() {
+		return latePymtFee;
+	}
+
+	public void setLatePymtFee(BigDecimal latePymtFee) {
+		this.latePymtFee = latePymtFee;
+	}
+
+	public Long getChangedBy() {
+		return changedBy;
+	}
+
+	public void setChangedBy(Long changedBy) {
+		this.changedBy = changedBy;
+	}
+
+	public Date getDateChanged() {
+		return dateChanged;
+	}
+
+	public void setDateChanged(Date dateChanged) {
+		this.dateChanged = dateChanged;
 	}
 
 }

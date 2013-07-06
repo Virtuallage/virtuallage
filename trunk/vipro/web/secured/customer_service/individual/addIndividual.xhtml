@@ -23,14 +23,14 @@ Add Individuals
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Purchaser ID"/>
-				<p:outputLabel value="#{customerRegister.individual.customerId}"/>
+				<h:inputText value="#{customerRegister.individual.customerId}" disabled="true"/>
 				<p:outputLabel value="Type"/>
-				<p:outputLabel value="Individual"/>
+				<h:inputText value="Individual" disabled="true"/>
 				
 				<p:outputLabel value="Purchaser Name" for="name"/>
 				<p:inputText id="name" value="#{customerRegister.individual.fullName}" maxlength="60" style="width:300px" required="true" autocomplete="off"/>
 				<p:outputLabel value="Title" for="title"/>
-				<p:selectOneMenu id="title" value="#{customerRegister.individual.title}">
+				<p:selectOneMenu id="title" value="#{customerRegister.individual.title}" required="true">
 						<f:selectItems value="#{customerRegister.listTitle}"/>
 				</p:selectOneMenu>
 
@@ -55,11 +55,11 @@ Add Individuals
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Marital Status" for="marital"/>
-				<p:selectOneMenu id="marital" value="#{customerRegister.individual.maritalStatus}">
+				<p:selectOneMenu id="marital" value="#{customerRegister.individual.maritalStatus}"  required="true">
 						<f:selectItems value="#{customerRegister.listMaritalStatus}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Sex" for="sex"/>
-				<p:selectOneMenu id="sex" value="#{customerRegister.individual.sex}" required="false">
+				<p:selectOneMenu id="sex" value="#{customerRegister.individual.sex}" required="true">
 						<f:selectItems value="#{customerRegister.listGender}"/>
 				</p:selectOneMenu>
 
@@ -90,7 +90,7 @@ Add Individuals
 						<f:selectItems value="#{customerRegister.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>
-				<p:selectOneMenu id="country" value="#{customerRegister.address.country}"  required="false">
+				<p:selectOneMenu id="country" value="#{customerRegister.address.country}"  required="true">
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</p:selectOneMenu>
 
