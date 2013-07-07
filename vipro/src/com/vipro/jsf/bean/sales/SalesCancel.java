@@ -35,6 +35,7 @@ import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
+import com.vipro.constant.UserGroupConst;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCancellationHistory;
 import com.vipro.data.Customer;
@@ -252,8 +253,8 @@ public class SalesCancel extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		Long userId = user.getUserProfile().getUserId();
 		UserProfile userProfile = userProfileService.findById(userId);
-		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
-				userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
 			inventories = inventoryService.getAvailableInventories(projectId);
 		}

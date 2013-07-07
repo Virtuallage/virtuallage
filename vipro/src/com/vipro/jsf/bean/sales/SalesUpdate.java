@@ -19,6 +19,7 @@ import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
+import com.vipro.constant.UserGroupConst;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
@@ -491,8 +492,8 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		{
 			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
 			if(dataList != null && dataList.size() > 0) {
-				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
-						userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 				{
 					accounts.addAll(dataList);
 				}

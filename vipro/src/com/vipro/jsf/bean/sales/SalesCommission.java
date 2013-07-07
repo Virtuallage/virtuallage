@@ -30,9 +30,11 @@ import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.constant.PurchaseTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.ClaimStatusConst;
+import com.vipro.constant.UserGroupConst;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCommissionHistory;
 import com.vipro.data.Customer;
@@ -179,8 +181,8 @@ public class SalesCommission extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		Long userId = user.getUserProfile().getUserId();
 		UserProfile userProfile = userProfileService.findById(userId);
-		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
-				userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
 			accounts = accountService.findAllAvailable();
 		}
@@ -298,7 +300,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 					salesCommissionAccounts.add(account);
 				} else {
 					if(account.getSpaStampedDate() !=null && account.getSpaVerifiedBy() != null ) {
-						if(account.getPurchaseType().equals("PUCSH")) {
+						if(account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
 							salesCommissionAccounts.add(account);
 						} else {
 							if(account.getLaStampedDate() !=null && account.getLaVerifiedBy() != null) {
