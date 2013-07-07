@@ -26,6 +26,11 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> findAll() {
 		return accountDao.findAll();
 	}
+	
+	@Override
+	public List<Account> findAllAvailable() {
+		return accountDao.findAllAvailable();
+	}
 
 	@Override
 	public List<Account> findByProjectInventoryId(Long inventoryId) {
@@ -33,13 +38,18 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
-	public List<Account> findByUserId(Long userId) {
-		return accountDao.findByUserId(userId);
+	public List<Account> findByAvailableProjectInventoryId(Long inventoryId) {
+		return accountDao.findByAvailableProjectInventoryId(inventoryId);
 	}
 	
 	@Override
-	public List<Account> findByAvailableProjectInventoryId(Long inventoryId) {
-		return accountDao.findByAvailableProjectInventoryId(inventoryId);
+	public List<Account> findByUserId(Long userId) {
+		return accountDao.findByUserId(userId);
+	}
+		
+	@Override
+	public List<Account> findByAvailableUserId(Long userId) {
+		return accountDao.findByAvailableUserId(userId);
 	}
 
 	@Override

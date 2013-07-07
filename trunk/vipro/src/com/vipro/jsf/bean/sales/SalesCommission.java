@@ -32,6 +32,7 @@ import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
+import com.vipro.constant.ClaimStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCommissionHistory;
 import com.vipro.data.Customer;
@@ -181,11 +182,11 @@ public class SalesCommission extends CommonBean implements Serializable{
 		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase("SALES_PIC") ||
 				userProfile.getUserGroup().getGroupId().equalsIgnoreCase("ADMIN"))
 		{
-			accounts = accountService.findAll();
+			accounts = accountService.findAllAvailable();
 		}
 		else
 		{
-			accounts = accountService.findByUserId(userId);
+			accounts = accountService.findByAvailableUserId(userId);
 		}
 
 		salesCommissionHistorys = salesCommissionHistoryService.findAll();
@@ -249,7 +250,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 		Long id = Long.valueOf(idStr.trim());
 		for(SalesCommissionHistory salesCommissionHistory: salesCommissionHistorys) {
 			if(salesCommissionHistory.getAccount().getAccountId().equals(id)) {
-				if(salesCommissionHistory.getClaimStatus().equals("12")) {
+				if(salesCommissionHistory.getClaimStatus().equals(ClaimStatusConst.STATUS_SUBMITTED)) {
 					status = "Submitted";
 				}
 				break;
@@ -288,17 +289,21 @@ public class SalesCommission extends CommonBean implements Serializable{
 		for(Account account: accounts) {
 			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
 			if(status.equalsIgnoreCase("New")) {
-				if(account.getSpaStampedDate() !=null) {
-					if(account.getLaStampedDate() !=null) {
-						salesCommissionAccounts.add(account);
-					} else {
-						Date dateBilled = null;
-						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getProjectInventory().getInventoryId());
-						for (ProgressiveBilling record : records) {
-							dateBilled = record.getDateBilled();
-						}
-						if(dateBilled != null) {
+				Date dateBilled = null;
+				List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getProjectInventory().getInventoryId());
+				for (ProgressiveBilling record : records) {
+					dateBilled = record.getDateBilled();
+				}
+				if(dateBilled != null) {
+					salesCommissionAccounts.add(account);
+				} else {
+					if(account.getSpaStampedDate() !=null && account.getSpaVerifiedBy() != null ) {
+						if(account.getPurchaseType().equals("PUCSH")) {
 							salesCommissionAccounts.add(account);
+						} else {
+							if(account.getLaStampedDate() !=null && account.getLaVerifiedBy() != null) {
+								salesCommissionAccounts.add(account);
+							}
 						}
 					}
 				}
@@ -334,7 +339,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 			for(Account account: salesCommissionAccounts) {
 				SalesCommissionHistory salesCommissionHistory = new SalesCommissionHistory();
 				salesCommissionHistory.setAccount(account);
-				salesCommissionHistory.setClaimStatus("12");
+				salesCommissionHistory.setClaimStatus(ClaimStatusConst.STATUS_SUBMITTED);
 				salesCommissionHistory.setDateSubmitted(new Date());
 				
 				long claimPercent = 100;
