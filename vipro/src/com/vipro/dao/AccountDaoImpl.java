@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.BusinessPartner;
 import com.vipro.data.Project;
@@ -19,7 +20,16 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 		String query="select o from com.vipro.data.Account o";
 		return getHibernateTemplate().find(query);
 	}
+	
+	
+	@Override
+	public List<Account> findAllAvailable() {
+		String query="select o from com.vipro.data.Account o where o.projectInventory.propertyStatus='" 
+				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
+		return getHibernateTemplate().find(query);
+	}
 
+	
 	@Override
 	public List<Account> findByProjectInventoryId(Long inventoryId) {
 		String query="select o from com.vipro.data.Account o where o.projectInventory.inventoryId=?";
@@ -27,12 +37,6 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 		return acc;
 	}
 	
-	@Override
-	public List<Account> findByUserId(Long userId) {
-		String query="select o from com.vipro.data.Account o where o.attendedBy=?";
-		List<Account> acc = getHibernateTemplate().find(query, userId);
-		return acc;
-	}
 	
 	@Override
 	public List<Account> findByAvailableProjectInventoryId(Long inventoryId) {
@@ -41,7 +45,25 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 		List<Account> acc = getHibernateTemplate().find(query, inventoryId);
 		return acc;
 	}
-
+	
+	
+	@Override
+	public List<Account> findByUserId(Long userId) {
+		String query="select o from com.vipro.data.Account o where o.attendedBy=?";
+		List<Account> acc = getHibernateTemplate().find(query, userId);
+		return acc;
+	}
+	
+	
+	@Override
+	public List<Account> findByAvailableUserId(Long userId) {
+		String query="select o from com.vipro.data.Account o where o.attendedBy=? and o.projectInventory.propertyStatus='" 
+				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
+		List<Account> acc = getHibernateTemplate().find(query, userId);
+		return acc;
+	}
+		
+	
 	@Override
 	public Account findById(Long accountId) {
 		return getHibernateTemplate().get(Account.class, accountId);

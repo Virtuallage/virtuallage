@@ -15,7 +15,7 @@ Sales Update
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Update" style="width:95%;">  
+<p:panel id="panel" header="Sales Update - Unit No: #{salesUpdate.account.projectInventory.unitNo}" style="width:95%;">  
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
@@ -24,7 +24,9 @@ Sales Update
 			<p:outputLabel value="Purchaser Name"/>
 			<h:inputText value="#{salesUpdate.customerName}" style="width:400px" disabled="true"/>
 			<p:outputLabel value="Property Type"/>
-			<h:inputText value="" style="width:200px" disabled="true"/>
+			<p:selectOneMenu id="propertyType" value="#{salesUpdate.account.projectInventory.project.propertyType}" style="width:200px">
+				<f:selectItems value="#{salesUpdate.propertyTypes}" />
+			</p:selectOneMenu>
 
 			<p:outputLabel value="Selling Price"/>
 			<h:panelGroup>

@@ -69,6 +69,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<Account> accounts;
 	private List<SelectItem> listProject;
 	private List<SelectItem> purchaseTypes;
+	private List<SelectItem> propertyTypes;
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
 	private List<SelectItem> listState = null;
@@ -108,6 +109,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		purchaseTypes = CodeUtil.getCodes("PU");
+		propertyTypes = CodeUtil.getCodes("PT");
 		listCountry = CodeUtil.getCodes("CT");
 		listCity = CodeUtil.getCodes("CI");
 		listIdType = CodeUtil.getCodes("ID");
@@ -144,6 +146,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setPurchaseTypes(List<SelectItem> purchaseTypes) {
 		this.purchaseTypes = purchaseTypes;
+	}
+	
+	public List<SelectItem> getPropertyTypes() {
+		return propertyTypes;
+	}
+
+	public void setPropertyTypes(List<SelectItem> propertyTypes) {
+		this.propertyTypes = propertyTypes;
 	}
 	
 	public List<SelectItem> getListState() {
@@ -469,7 +479,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 
-		inventories = inventoryService.getInventories(projectId);
+		inventories = inventoryService.getAvailableInventories(projectId);
 		accounts = new ArrayList<Account>();
 		
 		AuthUser user = getCurrentUser();
