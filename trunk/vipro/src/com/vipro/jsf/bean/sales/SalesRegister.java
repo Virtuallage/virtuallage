@@ -603,7 +603,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 			if (customers.size() <= 0) {
 				addInfoMessage("Sales Registration",
-						"Please select a customer");
+						"Please select a purchaser");
 				return null;
 			}
 
