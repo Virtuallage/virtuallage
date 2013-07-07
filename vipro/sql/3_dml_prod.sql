@@ -49,7 +49,7 @@ INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff
 INSERT INTO vipro.user_group VALUES ('SALES', 'Sales Staff Group', 'SSACT');
 
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, department, status, group_id) 
-     VALUES ('sales', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Staff Default User', 1000000001,'000', 'DMSMA', 'SSACT', 'SALES');
+     VALUES ('sales', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Administrator', 1000000001,'000', 'DMSMA', 'SSACT', 'SALES');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('stevenoh', '5f4dcc3b5aa765d61d8327deb882cf99', 'Steven Oh Chan Yen', 1000000001,'stevenoh@mct.com.my', '0146183348', 'DMSMA', 'SSACT', 'SALES');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
@@ -71,7 +71,7 @@ INSERT INTO vipro.user_profile (username, password, name, institution_id,  email
 INSERT INTO vipro.user_group VALUES ('SALES_PIC', 'Sales Person-in-Charge Group', 'SSACT');
 
 INSERT INTO vipro.user_profile (username, password, name, staff_no, department, status, institution_id, group_id)
-     VALUES ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'Sales Person-In-Charge', 000, 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
+     VALUES ('salespic', '5f4dcc3b5aa765d61d8327deb882cf99', 'PIC Administrator', 000, 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
 INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
      VALUES ('adrian', '5f4dcc3b5aa765d61d8327deb882cf99', 'Adrian Soon Yee Jer', 'adrian@mct.com.my', '0122241717', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
 INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)

@@ -107,12 +107,12 @@
 <h:form id="searchCustForm">
 	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
-			<p:outputLabel value="ID No." for="searchIdNo"/>
-			<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>
-			
 			<p:outputLabel value="Name" for="searchName"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+
+			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>
-				<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{salesRegister.searchIdNo}" autocomplete="off"/>			
 				&nbsp;
 				<p:commandButton  value="Search" action="#{salesRegister.searchCustomer}" update="searchCustForm:custs"/>
 			</h:panelGroup>

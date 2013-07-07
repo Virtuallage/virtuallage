@@ -24,7 +24,7 @@ Sales Update
 			<p:outputLabel value="Purchaser Name"/>
 			<h:inputText value="#{salesUpdate.customerName}" style="width:400px" disabled="true"/>
 			<p:outputLabel value="Property Type"/>
-			<p:selectOneMenu id="propertyType" value="#{salesUpdate.account.projectInventory.project.propertyType}" style="width:200px">
+			<p:selectOneMenu id="propertyType" value="#{salesUpdate.account.projectInventory.project.propertyType}" style="width:200px" disabled="true">
 				<f:selectItems value="#{salesUpdate.propertyTypes}" />
 			</p:selectOneMenu>
 
@@ -40,10 +40,18 @@ Sales Update
 			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:400px" disabled="true" />
 				 			
    			<p:outputLabel value="Discount Price"/>
-   			<h:inputText value="#{salesUpdate.account.discountedAmount}" style="width:200px" disabled="true">
-   				<f:convertNumber type="currency" currencySymbol="" />
-   			</h:inputText>
-   			<p:outputLabel value="Purchase Type"/>
+			<h:panelGroup>
+	   			<h:inputText value="#{salesUpdate.account.discountedAmount}" style="width:200px" disabled="true">
+	   				<f:convertNumber type="currency" currencySymbol="" />
+	   			</h:inputText>
+	   			&nbsp;&nbsp;
+	   			<h:outputLabel value="#{salesUpdate.account.projectInventory.discountRate}" style="width:50px">  			
+	   				<f:convertNumber type="currency" currencySymbol="" />
+   					<p:outputLabel value="%"/>	   				
+ 	   			</h:outputLabel>			
+ 
+ 			</h:panelGroup>
+    			<p:outputLabel value="Purchase Type"/>
    			<p:selectOneMenu id="purchaseType" value="#{salesUpdate.account.purchaseType}" style="width:200px">
 						<f:selectItems value="#{salesUpdate.purchaseTypes}" />
 			</p:selectOneMenu>

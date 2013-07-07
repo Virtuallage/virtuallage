@@ -48,7 +48,8 @@
 	        </p:column>  
 	        
 	         <p:column headerText="Orientation" sortBy="#{c.builtUpArea}">  
-	           <h:outputText value="#{c.orientation}"/>
+	           <h:outputText value="#{salesRegister.getCodeDesc('OR', c.orientation)}">
+	           </h:outputText>
 	        </p:column>  
 	        
 	        <p:column headerText="Price (RM)" sortBy="#{c.purchasePrice}" style="text-align:right">  

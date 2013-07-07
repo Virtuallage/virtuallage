@@ -35,7 +35,7 @@ Project Setup
   
         <p:column headerText="Date Launched" sortBy="#{c.launchDate}">  
             <h:outputText value="#{c.launchDate}">
-            <f:convertDateTime pattern="dd/MM/yyyy"/>  
+            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>  
             </h:outputText>
         </p:column>  
   
