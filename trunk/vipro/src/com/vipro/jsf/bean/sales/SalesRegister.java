@@ -907,32 +907,36 @@ public class SalesRegister extends CommonBean implements Serializable {
 			}
 						
 			// BILL Check if there is 2nd purchaser, cash payment or company, all use different form.
+			
+			HashMap<String, Object> hm2 = new HashMap<String, Object>();
+			hm2.put("account_id", Long.toString(account.getAccountId()));
+			
 			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
 				if (account.getCustomer2()==null) {
 					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
 						String report = JasperConst.SALES_REG_FORM3;
-						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} else {
 						String report = JasperConst.SALES_REG_FORM;
-						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} 
 				}
 				if (account.getCustomer2()!=null) {
 					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
 						String report = JasperConst.SALES_REG_FORM4;
-						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} else {
 						String report = JasperConst.SALES_REG_FORM2;
-						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					}			
 				}
 			} else {
 				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
 					String report = JasperConst.SALES_REG_FORM6;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 				} else {
 					String report = JasperConst.SALES_REG_FORM5;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 				} 
 			}
 			
