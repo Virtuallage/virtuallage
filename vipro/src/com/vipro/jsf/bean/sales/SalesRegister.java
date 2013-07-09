@@ -910,29 +910,29 @@ public class SalesRegister extends CommonBean implements Serializable {
 			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
 				if (account.getCustomer2()==null) {
 					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-						String report2 = JasperConst.SALES_REG_FORM3;
-						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+						String report = JasperConst.SALES_REG_FORM3;
+						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} else {
-						String report2 = JasperConst.SALES_REG_FORM;
-						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+						String report = JasperConst.SALES_REG_FORM;
+						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} 
 				}
 				if (account.getCustomer2()!=null) {
 					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-						String report2 = JasperConst.SALES_REG_FORM4;
-						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+						String report = JasperConst.SALES_REG_FORM4;
+						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					} else {
-						String report2 = JasperConst.SALES_REG_FORM2;
-						JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+						String report = JasperConst.SALES_REG_FORM2;
+						JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 					}			
 				}
 			} else {
 				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-					String report2 = JasperConst.SALES_REG_FORM6;
-					JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					String report = JasperConst.SALES_REG_FORM6;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 				} else {
-					String report2 = JasperConst.SALES_REG_FORM5;
-					JasperUtil.generateReport(hm, report2, account, JasperReportTypeConst.REGISTRATION_FILE);
+					String report = JasperConst.SALES_REG_FORM5;
+					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.REGISTRATION_FILE);
 				} 
 			}
 			
