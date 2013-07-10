@@ -6,7 +6,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:sec="http://www.springframework.org/security/tags">
     
-    
+
     
     <h:form>
     <p:menubar>
@@ -28,6 +28,9 @@
     		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
     		<p:menuitem id="salesCommission" value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
     	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
     	<p:submenu label="Sales Admin" icon="ui-icon-star">
@@ -43,12 +46,6 @@
     		<p:menuitem value="Transaction Entry" url="#" />
     		<p:menuitem value="Transaction Approval" url="#" />
     		<p:menuitem value="External Transaction Upload" url="#" />
-    	</p:submenu>
-    	</sec:authorize>
-    	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
-    	<p:submenu label="MIS" icon="ui-icon-document">
-    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
-<!--     		<p:menuitem value="..." url="#" /> -->
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_CUST_SERV">
@@ -68,6 +65,9 @@
     	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
