@@ -442,6 +442,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 
 			salesCancellationHistory.setSubmittedBy(user.getUserProfile().getUserId());
 			salesCancellationHistory.setDateSubmitted(new Date());
+			salesCancellationHistory.setStatus(PropertyUnitStatusConst.SUBMIT_CANCEL);
 			
 			salesCancellationService.update(salesCancellationHistory);
 			addInfoMessage("Sales Cancellation", "Cancellation Pending Approval.");

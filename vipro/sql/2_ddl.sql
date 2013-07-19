@@ -66,8 +66,8 @@ ALTER TABLE vipro.project_inventory
 
 ALTER TABLE vipro.progressive_billing
   ADD CONSTRAINT FK_progressive_billing_1
-      FOREIGN KEY (inventory_id)
-      REFERENCES vipro.project_inventory (inventory_id);
+      FOREIGN KEY (account_id)
+      REFERENCES vipro.account (account_id);
 
 ALTER TABLE vipro.postdated_cheque
   ADD CONSTRAINT FK_postdated_cheque_1

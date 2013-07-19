@@ -14,6 +14,8 @@
 -- | Try generating Foreign Keys with ALTER TABLE statements.                |
 -- +-------------------------------------------------------------------------+
 
+DROP TABLE IF EXISTS vipro.sales_cancellation_history;
+DROP TABLE IF EXISTS vipro.sales_commission_history;
 DROP TABLE IF EXISTS vipro.case_activity;
 DROP TABLE IF EXISTS vipro.case;
 DROP TABLE IF EXISTS vipro.contact;
@@ -270,13 +272,13 @@ CREATE TABLE vipro.project_inventory (
 
 CREATE TABLE vipro.progressive_billing (
        schedule_id BIGINT NOT NULL AUTO_INCREMENT
-     , inventory_id BIGINT NOT NULL
+     , account_id BIGINT NOT NULL
      , seq_no DECIMAL(2)
      , stage_no VARCHAR(5)
      , stage_description VARCHAR(120)
-     , percentage DEC(3, 2)
+     , percentage DEC(5, 2)
      , due_date DATE
-     , interest_rate DEC(3, 2)
+     , interest_rate DEC(5, 2)
      , amount_billed DEC(9, 2)
      , date_billed DATE
      , payment_due_date DATE
@@ -606,7 +608,8 @@ CREATE TABLE vipro.sales_cancellation_history (
 CREATE TABLE vipro.sales_commission_history (
 	   commission_id BIGINT(20) NOT NULL AUTO_INCREMENT
      , account_id BIGINT(20) NOT NULL
-     , claim_percent BIGINT(20) NULL
+     , batch_no BIGINT (20)
+     , claim_percent DEC(5,2) NULL
      , claim_amount DEC(9,2)
      , submitted_by BIGINT(20) NULL
      , date_submitted DATE NULL

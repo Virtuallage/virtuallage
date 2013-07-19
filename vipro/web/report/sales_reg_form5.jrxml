@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="116"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -523,7 +523,7 @@ WHERE
 				<textElement textAlignment="Left">
 					<font isUnderline="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{purchase_price}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{purchase_price}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="103" y="140" width="100" height="16"/>
@@ -552,13 +552,6 @@ WHERE
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{proptype_desc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="163" y="16" width="387" height="29"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="2" y="59" width="152" height="20"/>
 				<textElement>
 					<font size="15" isBold="true"/>
@@ -575,10 +568,17 @@ WHERE
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="2" y="4" width="155" height="51"/>
+			<image scaleImage="FillFrame">
+				<reportElement x="2" y="4" width="100" height="35"/>
 				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="121" y="2" width="435" height="35"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BP_name}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -588,25 +588,20 @@ WHERE
 				<textElement/>
 				<text><![CDATA[Purchaser Address]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="3" y="33" width="100" height="16"/>
-				<textElement/>
-				<text><![CDATA[Post Code]]></text>
-			</staticText>
 			<line>
-				<reportElement mode="Opaque" x="103" y="16" width="222" height="1" forecolor="#000000"/>
+				<reportElement mode="Opaque" x="103" y="16" width="450" height="1" forecolor="#000000"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement mode="Opaque" x="103" y="32" width="222" height="1" forecolor="#000000"/>
+				<reportElement mode="Opaque" x="103" y="32" width="450" height="1" forecolor="#000000"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement mode="Opaque" x="103" y="48" width="222" height="1" forecolor="#000000"/>
+				<reportElement mode="Opaque" x="103" y="48" width="450" height="1" forecolor="#000000"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -617,63 +612,25 @@ WHERE
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<line>
-				<reportElement mode="Opaque" x="330" y="16" width="222" height="1" forecolor="#000000"/>
-				<graphicElement>
-					<pen lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement mode="Opaque" x="330" y="32" width="222" height="1" forecolor="#000000"/>
-				<graphicElement>
-					<pen lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement mode="Opaque" x="330" y="48" width="222" height="1" forecolor="#000000"/>
-				<graphicElement>
-					<pen lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
-			<textField>
-				<reportElement x="103" y="0" width="225" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="330" y="0" width="225" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="103" y="18" width="225" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l3}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="330" y="18" width="225" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l4}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="103" y="33" width="50" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_pc}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="156" y="33" width="172" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_city}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="330" y="34" width="225" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1state}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="103" y="49" width="225" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="2" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l1} + " " + $F{c1_l2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="17" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l3} + " " + $F{c1_l4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="33" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_pc} + " " + $F{c1_city} + " " + $F{c1state}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -720,7 +677,7 @@ WHERE
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="102" y="40" width="96" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_dob}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{c1_dob}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="2" y="102" width="100" height="16"/>
@@ -812,11 +769,6 @@ WHERE
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="65" width="49" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1title}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="389" y="120" width="100" height="16"/>
 				<textElement/>
@@ -832,10 +784,10 @@ WHERE
 				<textElement/>
 				<text><![CDATA[Contact Person]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="152" y="66" width="398" height="16"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="65" width="448" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1ctc}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1title} + " " + $F{c1ctc}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement mode="Opaque" x="102" y="80" width="445" height="1" forecolor="#000000"/>
@@ -875,10 +827,10 @@ WHERE
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+			<textField pattern="RM  #,##0.00" isBlankWhenNull="true">
 				<reportElement x="102" y="5" width="100" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="209" y="5" width="100" height="16"/>

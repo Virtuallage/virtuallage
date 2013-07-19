@@ -11,8 +11,11 @@
         <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
             <column name="account_id" not-null="true" />
         </many-to-one>
-        <property name="claimPercent" type="java.lang.Long">
-            <column name="claim_percent" />
+        <property name="batchNo" type="java.lang.Long">
+            <column name="batch_no" />
+        </property>
+        <property name="claimPercent" type="big_decimal">
+            <column name="claim_percent" precision="5"/>
         </property>
         <property name="claimAmount" type="big_decimal">
             <column name="claim_amount" precision="7" />
