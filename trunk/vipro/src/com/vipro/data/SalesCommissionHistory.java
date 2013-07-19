@@ -12,6 +12,7 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	private Long commissionId;
 	private Account account;
+	private Long batchNo;
 	private Long claimPercent;
 	private BigDecimal claimAmount;
 	private String claimStatus;
@@ -105,6 +106,14 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	public void setSubmittedBy(Long submittedBy) {
 		this.submittedBy = submittedBy;
+	}
+
+	public Long getBatchNo() {
+		return batchNo;
+	}
+
+	public void setBatchNo(Long batchNo) {
+		this.batchNo = batchNo;
 	}
 	
 }

@@ -299,11 +299,11 @@ public class SalesCommission extends CommonBean implements Serializable{
 				if(dateBilled != null) {
 					salesCommissionAccounts.add(account);
 				} else {
-					if(account.getSpaStampedDate() !=null && account.getSpaVerifiedBy() != null ) {
+					if(account.getSpaSignedDate() !=null && account.getSpaVerifiedBy() != null ) {
 						if(account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
 							salesCommissionAccounts.add(account);
 						} else {
-							if(account.getLaStampedDate() !=null && account.getLaVerifiedBy() != null) {
+							if(account.getLaSignedDate() !=null && account.getLaVerifiedBy() != null) {
 								salesCommissionAccounts.add(account);
 							}
 						}

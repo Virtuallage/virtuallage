@@ -76,7 +76,12 @@ INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, depa
      VALUES ('adrian', '5f4dcc3b5aa765d61d8327deb882cf99', 'Adrian Soon Yee Jer', 'adrian@mct.com.my', '0122241717', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
 INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
      VALUES ('hasrina', '5f4dcc3b5aa765d61d8327deb882cf99', 'Noor Hasrina', 'hasrina@mct.com.my', '0192326080', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
+INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
+     VALUES ('joycegoh', '5f4dcc3b5aa765d61d8327deb882cf99', 'Joyce Goh', 'joycegoh@mct.com.my', '0192435082', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
+INSERT INTO vipro.user_profile (username, password, name, email, mobile_no, department, status, institution_id, group_id)
+     VALUES ('sookc', '5f4dcc3b5aa765d61d8327deb882cf99', 'Soo Kai Chee', 'soo@mct.com.my', '0192435068', 'DMSMA', 'SSACT', 1000000001, 'SALES_PIC');
 
+     
 -- For Future Used
 -- Other valid group in the system are 'SALES_ADM', 'CUST_SERV', 'ACCT', 'PROP_DEV'
 
@@ -218,7 +223,7 @@ INSERT INTO code_det VALUES ( 'CR', 'CRBRJ', 'Loan Rejected By Bank' , 'SSACT');
 INSERT INTO code_header VALUES ('SS', 'Commonly Used Status Code');
 INSERT INTO code_det VALUES ( 'SS', 'SSACT', 'Active' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSDIS', 'Disabled' , 'SSACT');
-INSERT INTO code_det VALUES ( 'SS', 'SSCAN', 'Cancelled' , 'SSACT');
+INSERT INTO code_det VALUES ( 'SS', 'SSCXA', 'Cancelled' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSCLS', 'Closed' , 'SSACT');
 INSERT INTO code_det VALUES ( 'SS', 'SSNEW', 'New' , 'SSACT');
 
@@ -234,7 +239,7 @@ INSERT INTO code_header VALUES ('CX', 'Sales Cancellation Status Code');
 INSERT INTO code_det VALUES ( 'CX', 'CXSUB', 'Submitted' , 'SSACT');
 INSERT INTO code_det VALUES ( 'CX', 'CXAPP', 'Approved' , 'SSACT');
 INSERT INTO code_det VALUES ( 'CX', 'CXREJ', 'Rejected' , 'SSACT');
-INSERT INTO code_det VALUES ( 'CX', 'CXCAN', 'Cancelled' , 'SSACT');
+INSERT INTO code_det VALUES ( 'CX', 'CXRFD', 'Refunded' , 'SSACT');
 
 -- Property Status
 INSERT INTO vipro.code_header VALUES ('PS', 'Property Status');
@@ -245,6 +250,7 @@ INSERT INTO vipro.code_det VALUES ('PS','PSPRG','In Progress','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSBOK','Booked','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSCAN','Cancelling','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSRSV','Reserved','SSACT');
+INSERT INTO vipro.code_det VALUES ('PS','PSCXA','Cancelled','SSACT');
 
 -- Unit Status
 INSERT INTO code_header (code_header_id, name) VALUES ('BS', 'Booking Status');
@@ -293,6 +299,7 @@ INSERT INTO vipro.code_header VALUES ('PU', 'Purchase Type');
 INSERT INTO vipro.code_det VALUES ('PU', 'PUBLN', 'Bank Loan', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('PU', 'PUCLN', 'Company Loan', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('PU', 'PUCSH', 'Cash', 'SSACT');
+INSERT INTO vipro.code_det VALUES ('PU', 'PUGOV', 'Government Loan', 'SSACT');
 
 -- Solicitor (Bill 14/6)
 INSERT INTO vipro.code_header VALUES ('SL', 'Name of Panel Solicitors');
@@ -332,33 +339,34 @@ INSERT INTO vipro.transaction_code VALUES ('400004', 'Cancellation Tax', 'DR', n
 INSERT INTO business_partner (partner_id, institution_id) 
      VALUES (0, 1000000001);
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'DEVP', 'B&G Development Sdn Bhd', 'SSACT');
+     VALUES (1000000001, 'DEVP', 'B&G Greenery Property Sdn Bhd', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
      VALUES (1000000001, 'LAND', 'Multi Bina Sdn Bhd', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
      VALUES (1000000001, 'SOLI', 'Low & Lee', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'RHB - Paradigm Mall', 'SSACT');
+     VALUES (1000000001, 'BANK', 'RHB', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'RHB - Jinjang Utara Branch', 'SSACT');
+     VALUES (1000000001, 'BANK', 'Affin', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'Affin Bank - Affin HQ (Central)', 'SSACT');
+     VALUES (1000000001, 'BANK', 'CIMB', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'CIMB - Taman Sri Selayang', 'SSACT');
+     VALUES (1000000001, 'BANK', 'Ambank', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'Ambank - Menara Ambank', 'SSACT');
+     VALUES (1000000001, 'BANK', 'UOB', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'UOB - Medan Putra Business Centre', 'SSACT');
+     VALUES (1000000001, 'BANK', 'Public', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'Public Bank - Bandar Sunway', 'SSACT');
+     VALUES (1000000001, 'BANK', 'HLB', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'HLB - Taman Selayang Jaya', 'SSACT');
+     VALUES (1000000001, 'BANK', 'HSBC', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'HSBC - Bandar Puchong Jaya', 'SSACT');
+     VALUES (1000000001, 'BANK', 'MBSB', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'MBSB - Damansara Branch', 'SSACT');
+     VALUES (1000000001, 'BANK', 'Alliance', 'SSACT');
 INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) 
-     VALUES (1000000001, 'BANK', 'Alliance Bank - UEP Subang Jaya', 'SSACT');
+     VALUES (1000000001, 'BANK', 'Maybank', 'SSACT');
+     
      
 -- 290613 Max  
 INSERT INTO `vipro`.`code_header` (`code_header_id`, `name`) VALUES ('CI', 'City');

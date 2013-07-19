@@ -91,6 +91,15 @@ WHERE
 	<field name="account_balance" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="late_pymt_int_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="late_pymt_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accrual_interest" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="redemption_bank_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -232,6 +241,12 @@ WHERE
 	<field name="remark" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="changed_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_changed" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="account_status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -307,6 +322,9 @@ WHERE
 	<field name="development_stage" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="change_user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="status_change_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -344,17 +362,10 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="2" y="2" width="120" height="38"/>
+			<image scaleImage="FillFrame">
+				<reportElement x="2" y="2" width="100" height="35"/>
 				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="120" y="6" width="305" height="29"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Concept Engineering Sdn Bhd]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="312" y="39" width="239" height="20"/>
 				<textElement textAlignment="Right">
@@ -362,6 +373,13 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				</textElement>
 				<text><![CDATA[TEMPORARY RECEIPT]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="121" y="2" width="435" height="35"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{developer}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -425,10 +443,10 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{unit_no}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="122" y="40" width="430" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="122" y="58" width="430" height="16"/>
@@ -460,11 +478,6 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
-				<reportElement x="122" y="22" width="76" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="122" y="18" width="152" height="1"/>
 				<graphicElement>
@@ -506,9 +519,9 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="197" y="22" width="354" height="16"/>
+				<reportElement x="122" y="22" width="429" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cname}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{title} + " " + $F{cname}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -564,10 +577,12 @@ signature is not required.
 				</textElement>
 				<text><![CDATA[TOTAL:   RM]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="101" y="6" width="154" height="16"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="2" y="24" width="99" height="16"/>
