@@ -9,6 +9,8 @@ public interface PropertyUnitStatusConst extends CommonConst {
 	
 	public static final String STATUS_AVAILABLE="PSAVL";
 	
+	public static final String STATUS_LOCKED="PSLCK";	
+	
 	public static final String STATUS_SOLD="PSSLD";
 	
 	public static final String STATUS_IN_PROGRESS="PSPRG";

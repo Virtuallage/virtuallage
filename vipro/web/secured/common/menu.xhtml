@@ -34,11 +34,14 @@
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
     	<p:submenu label="Sales Admin" icon="ui-icon-star">
-    		<p:menuitem value="Property Unit Update" url="#" />
+    		<p:menuitem value="Property Update" url="/secured/salesadm/sa_update/saListProject.xhtml" />
     		<p:menuitem value="Document Verification" url="#" />
     		<p:menuitem value="Progessive Billing" url="#" />
     		<p:menuitem value="Renotice Processing" url="#" />
     		<p:menuitem value="Payment Entry" url="#" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_ACCT">
@@ -46,6 +49,9 @@
     		<p:menuitem value="Transaction Entry" url="#" />
     		<p:menuitem value="Transaction Approval" url="#" />
     		<p:menuitem value="External Transaction Upload" url="#" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
     	</sec:authorize>
     	<sec:authorize ifAnyGranted="ROLE_CUST_SERV">

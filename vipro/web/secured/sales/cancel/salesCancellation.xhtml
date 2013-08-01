@@ -48,7 +48,7 @@ Sales Cancellation
    			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancel.account.cancelledReason}" style="width:200px">  
 				<f:selectItems value="#{salesCancel.cancelReasons}" />
 			</p:selectOneMenu>
-			<p:outputLabel value="Cancellation Letter"/>
+			<p:outputLabel value="Letter"/>
 			<h:panelGroup>
 				<p:commandButton id="uploadDialogButton" value="Upload" onclick="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
 				<p:commandButton id="viewDialogButton" value="View" actionListener="#{salesCancel.listCANCDocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>

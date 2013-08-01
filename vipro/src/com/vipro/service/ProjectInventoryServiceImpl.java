@@ -67,4 +67,10 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	public int countTotalUnits(Long projectId) {
 		return projectInventoryDao.countTotalUnits(projectId);
 	}
+
+	@Override
+	public List<ProjectInventory> getInventories(Long projectId, String unitNo) {
+		// TODO Auto-generated method stub
+		return projectInventoryDao.findByProjectIdUnitNo(projectId, unitNo);
+	}
 }

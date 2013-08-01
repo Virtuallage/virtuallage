@@ -64,7 +64,7 @@
      <p:panelGrid styleClass="no-borders" style="width:96%">
      	<p:row>
      		<p:column style="text-align:left">
-     			<p:commandButton value="Add Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-plus"/>  
+     			<p:commandButton value="Add Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-plus" binding="#{salesRegister.addPurchaserButton}"/>  
      		</p:column>
      	</p:row>
      </p:panelGrid>
@@ -89,7 +89,7 @@
 	
 	<br/>
 	
-	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
+	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnitsBack}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
 	&nbsp;
 	<p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.saveButton}"/>
 	&nbsp;
