@@ -14,32 +14,33 @@ INSERT INTO vipro.institution (institution_id, institution_name, status)
      VALUES (1000000001, 'B&G Concept Engineering Sdn Bhd', 'SSACT');
 
 -- Create Holiday Table Data
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20130601, 'Agong Birthday', 1000000001);
+-- Create Holiday Table Data
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20130601, 'Agong Birthday', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20130808, 'Hari Raya Puasa', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20130808, 'Hari Raya Puasa', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20130809, 'Hari Raya Puasa', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20130809, 'Hari Raya Puasa', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20130831, 'Hari Merdeka', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20130831, 'Hari Merdeka', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20130916, 'Hari Malaysia', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20130916, 'Hari Malaysia', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20131015, 'Hari Raya Haji', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20131015, 'Hari Raya Haji', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20131103, 'Deepavali', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20131103, 'Deepavali', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20131105, 'Awal Muharram', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20131105, 'Awal Muharram', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
-INSERT INTO vipro.holiday (date, description, institution_id)
-     VALUES (20131224, 'Chrismas Day', 1000000001);
+INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
+     VALUES (1000000001, 20131224, 'Chrismas Day', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
 
 -- Create Default User Group and Username
 INSERT INTO vipro.user_group VALUES('ADMIN', 'System Administrator Group', 'SSACT');
@@ -66,6 +67,8 @@ INSERT INTO vipro.user_profile (username, password, name, institution_id,  email
      VALUES ('jess', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hadijah Binti Maming (Jess)', 1000000001,'jess@mct.com.my', '0137027593', 'DMSMA', 'SSACT', 'SALES');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('yan', '5f4dcc3b5aa765d61d8327deb882cf99', 'Hazri Yanti Binti Mohd Yasim', 1000000001,'yan@mct.com.my', '0122361577', 'DMSMA', 'SSACT', 'SALES');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('slchua', '5f4dcc3b5aa765d61d8327deb882cf99', 'Chua Siew Ling', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'SALES');
 
 
 INSERT INTO vipro.user_group VALUES ('SALES_PIC', 'Sales Person-in-Charge Group', 'SSACT');
@@ -251,6 +254,7 @@ INSERT INTO vipro.code_det VALUES ('PS','PSBOK','Booked','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSCAN','Cancelling','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSRSV','Reserved','SSACT');
 INSERT INTO vipro.code_det VALUES ('PS','PSCXA','Cancelled','SSACT');
+INSERT INTO vipro.code_det VALUES ('PS','PSLCK','Locked','SSACT');
 
 -- Unit Status
 INSERT INTO code_header (code_header_id, name) VALUES ('BS', 'Booking Status');

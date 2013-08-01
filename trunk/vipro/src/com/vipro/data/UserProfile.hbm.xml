@@ -47,6 +47,9 @@
         <property name="specialHandling" type="java.lang.Character">
             <column name="special_handling" length="1" />
         </property>
+        <property name="lastLoginDatetime" type="timestamp">
+            <column name="last_login_datetime" length="19" />
+        </property>
         <property name="status" type="string">
             <column name="status" length="5" />
         </property>

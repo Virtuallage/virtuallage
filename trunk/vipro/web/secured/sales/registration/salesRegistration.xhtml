@@ -18,7 +18,7 @@ Sales  Registration
 <p:panel id="panel" header="Sales Registration" style="width:95%">  
 	<p:focus context="panel"/> 
     <p:tabView binding="#{salesRegister.salesRegTabView}">
-	    <p:tab title="Project Selection">
+	    <p:tab title="Project Selection" disabled="false" binding="#{salesRegister.selectionTab}"> 
 			<ui:include src="selectProject.xhtml"/>
 		</p:tab>
 		<p:tab title="Registration" disabled="true" binding="#{salesRegister.registrationTab}">

@@ -13,15 +13,21 @@
 		<p:panelGrid style="width:100%;" styleClass="no-borders">
 			<p:row>
 				<p:column style="width:20%;text-align:left">
-					<h:outputText value="Project Name"/>
+					<h:outputText value="Project Name :"/>
 				</p:column>
-				<p:column style="width:20%;text-align:left">
+				<p:column style="width:30%;text-align:left">
 					<p:selectOneMenu id="projectList" value="#{salesRegister.projectId}" 
-						 required="true" style="width:200px">  
+						 required="true" style="width:250px">  
 						<f:selectItems value="#{salesRegister.listProject}"/>
 					</p:selectOneMenu>
 				</p:column>
-				<p:column style="width:60%;text-align:left;">
+				<p:column style="width:10%;text-align:left">
+					<p:outputLabel value="Unit No :" for="unitNo"/>
+				</p:column>
+				<p:column style="width:20%;text-align:left">
+					<p:inputText id="unitNo" length="30" size="10" value="#{salesRegister.unitNo}" autocomplete="off"/>
+				</p:column>
+				<p:column style="width:40%;text-align:left;">
 					<p:commandButton value="Search" action="#{salesRegister.listPropertyUnits}" update="inventoriesDataTable" />
 				</p:column>
 			</p:row>

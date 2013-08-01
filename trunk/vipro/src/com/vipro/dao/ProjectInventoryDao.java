@@ -10,6 +10,8 @@ public interface ProjectInventoryDao extends Dao<ProjectInventory>{
 	
 	public List<ProjectInventory> findByProjectId(Long projectId);
 	
+	public List<ProjectInventory> findByProjectIdUnitNo(Long projectId, String unitNo);
+	
 	public List<ProjectInventory> findByAvailableProjectId(Long projectId);
 	
 	public ProjectInventory findById(Long id);

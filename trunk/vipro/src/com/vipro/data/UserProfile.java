@@ -1,5 +1,7 @@
 package com.vipro.data;
 
+import java.util.Date;
+
 // Generated Feb 3, 2013 6:50:08 PM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -21,6 +23,7 @@ public class UserProfile implements java.io.Serializable {
 	private String officeNo;
 	private Integer invalidPasswordCount;
 	private Character specialHandling;
+	private Date lastLoginDatetime;
 	private String status;
 
 	public UserProfile() {
@@ -169,6 +172,14 @@ public class UserProfile implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getLastLoginDatetime() {
+		return lastLoginDatetime;
+	}
+
+	public void setLastLoginDatetime(Date lastLoginDatetime) {
+		this.lastLoginDatetime = lastLoginDatetime;
 	}
 
 }

@@ -48,4 +48,11 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 		String query = "select o from ProjectInventory o where o.project.projectId=?";
 		return getHibernateTemplate().find(query, projectId).size();
 	}
+
+	@Override
+	public List<ProjectInventory> findByProjectIdUnitNo(Long projectId,
+			String unitNo) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? and o.unitNo=?";
+		return getHibernateTemplate().find(query, projectId, unitNo);
+	}
 }

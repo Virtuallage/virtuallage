@@ -79,6 +79,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private List<ProjectInventory> inventories;
 	private ProjectInventory inventory;
 	private Long projectId;
+	private String unitNo;
 	private Project project;
 	private List<Customer> customers;
 	private CustomerDataModel customerDataModel;
@@ -86,6 +87,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private UserProfile attendedBy;
 
 	private TabView salesRegTabView;
+	private Tab selectionTab;
 	private Tab registrationTab;
 	private Tab payBookingTab;
 	private CommandButton saveButton;
@@ -93,14 +95,15 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton previewButton;
 	private CommandButton submitButton;
 	private CommandButton receiptButton;
-	private InputText payAmountField;
+	private CommandButton addPurchaserButton;	
+	private InputText payBookingFields;
 	
-	public InputText getPayAmountField() {
-		return payAmountField;
+	public InputText getPayBookingFields() {
+		return payBookingFields;
 	}
 
-	public void setPayAmountField(InputText payAmountField) {
-		this.payAmountField = payAmountField;
+	public void setPayBookingFields(InputText payBookingFields) {
+		this.payBookingFields = payBookingFields;
 	}
 
 	/**
@@ -471,19 +474,57 @@ public class SalesRegister extends CommonBean implements Serializable {
 		return "selectProject";
 	}
 
-	public String listPropertyUnits() {
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		project = projectService.findById(projectId);
+	public String listPropertyUnitsBack() {
+
+		unitNo = null;
 		
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
-		inventories = inventoryService.getInventories(projectId);
+
+		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_LOCKED)) {
+				inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_AVAILABLE);		
+				inventory.setStatusChangeDate(new Date());
+				inventory.setChangeUserId(attendedBy.getUserId());
+				inventoryService.update(inventory);	
+		}
 		
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
+
+		inventories = inventoryService.getInventories(projectId);
+
 		salesRegTabView.setActiveIndex(0);
+		selectionTab.setDisabled(false);
 		registrationTab.setDisabled(true);
 		payBookingTab.setDisabled(true);
 		
+		return "salesRegistration";
+
+	}
+	
+	public String listPropertyUnits() {
+		
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
+
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+
+
+		if (StringUtils.hasText(unitNo)) {
+			inventories = inventoryService.getInventories(projectId, unitNo);;
+		} else {
+			inventories = inventoryService.getInventories(projectId);
+		}
+	
+		salesRegTabView.setActiveIndex(0);
+		selectionTab.setDisabled(false);
+		registrationTab.setDisabled(true);
+		payBookingTab.setDisabled(true);
+
+		unitNo = null;
 		return "salesRegistration";
 	}
 
@@ -538,61 +579,76 @@ public class SalesRegister extends CommonBean implements Serializable {
 		company = new Customer();
 		address = new Address();
 		
+		selectionTab.setDisabled(true);
+		registrationTab.setDisabled(false);
+		payBookingFields.setDisabled(true);
+		addPurchaserButton.setStyle("display: none");
+
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+		
 		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
 			salesRegTabView.setActiveIndex(1);
-			registrationTab.setDisabled(false);
 			previewButton.setStyle("display: none");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("");
 			submitButton.setStyle("");
+			addPurchaserButton.setStyle("");
 			receiptButton.setStyle("display: none");
-
+			payBookingFields.setDisabled(false);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_LOCKED);		
+			inventory.setStatusChangeDate(new Date());
+			inventory.setChangeUserId(attendedBy.getUserId());
+			inventoryService.update(inventory);			
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
 			salesRegTabView.setActiveIndex(1);
-			registrationTab.setDisabled(false);
 			previewButton.setStyle("display: none");
 			payButton.setStyle("");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("");
 			receiptButton.setStyle("display: none");
+			payBookingFields.setDisabled(false);
 		}
 
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_SOLD)) {
 			salesRegTabView.setActiveIndex(1);
-			registrationTab.setDisabled(false);
 			payBookingTab.setDisabled(false);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
 			receiptButton.setStyle("");
-			payAmountField.setDisabled(true);
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_CANCELLED)) {
 			salesRegTabView.setActiveIndex(1);
-			registrationTab.setDisabled(false);
 			payBookingTab.setDisabled(false);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
 			receiptButton.setStyle("");
-			payAmountField.setDisabled(true);
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_RESERVED)) {
 			salesRegTabView.setActiveIndex(1);
-			registrationTab.setDisabled(false);
 			payBookingTab.setDisabled(false);
 			previewButton.setStyle("");
 			payButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
 			receiptButton.setStyle("");
-			payAmountField.setDisabled(true);
+		}
+		
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_LOCKED)) {
+			selectionTab.setDisabled(false);
+			addInfoMessage(
+				"LOCKED!",
+				"This unit is still under Locked Status."
+						+ inventory.getUnitNo());
+
 		}
 		
 		return "salesRegistration";
@@ -834,6 +890,25 @@ public class SalesRegister extends CommonBean implements Serializable {
 	}
 
 	public String payBooking() {
+		
+		if (account.getBookPymtMethod() != CommonConst.CASH) {
+			if (account.getBookPymtCardChqNo().equalsIgnoreCase("") && account.getBookPymtBank().equalsIgnoreCase("")) {
+				addErrorMessage("Invalid Fields",
+						"Please Enter Card/Cheque No & Bank Name for non-cash payment!");
+				return null;
+			}
+			if (account.getBookPymtCardChqNo().equalsIgnoreCase("") && !account.getBookPymtBank().equalsIgnoreCase("")) {
+				addErrorMessage("Invalid Field",
+						"Please Enter Card/Cheque No!");
+				return null;
+			}
+			if (!account.getBookPymtCardChqNo().equalsIgnoreCase("") && account.getBookPymtBank().equalsIgnoreCase("")) {
+				addErrorMessage("Invalid Field",
+						"Please Select a Bank Name!");
+				return null;
+			}
+		}
+		
 		try {
 			TransactionCode code = new TransactionCode();
 			code.setTransactionCode(TransactionCodeConst.BOOK_FEE);
@@ -998,5 +1073,29 @@ public class SalesRegister extends CommonBean implements Serializable {
         receipt = new DefaultStreamedContent(stream, fileName, fileName); 
         
         return receipt;  
-    } 
+    }
+
+	public Tab getSelectionTab() {
+		return selectionTab;
+	}
+
+	public void setSelectionTab(Tab selectionTab) {
+		this.selectionTab = selectionTab;
+	}
+
+	public String getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
+	}
+
+	public CommandButton getAddPurchaserButton() {
+		return addPurchaserButton;
+	}
+
+	public void setAddPurchaserButton(CommandButton addPurchaserButton) {
+		this.addPurchaserButton = addPurchaserButton;
+	} 
 }

@@ -62,6 +62,13 @@ CREATE TABLE vipro.institution (
      , contact_person_email VARCHAR(50)
      , currency_symbol VARCHAR(4)
      , decimal_points DECIMAL(2)
+     , mon_off VARCHAR(1)
+     , tue_off VARCHAR(1)
+     , wed_off VARCHAR(1)
+     , thu_off VARCHAR(1)
+     , fri_off VARCHAR(1)
+     , sat_off VARCHAR(1)
+     , sun_off VARCHAR(1)
      , status VARCHAR(5)
      , PRIMARY KEY (institution_id)
 );
@@ -100,6 +107,7 @@ CREATE TABLE vipro.user_profile (
      , office_no CHAR(20)
      , invalid_password_count INT
      , special_handling CHAR(1)
+     , last_login_datetime DATETIME
      , status VARCHAR(5)
      , PRIMARY KEY (user_id)
 );
