@@ -23,8 +23,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 
 	@Override
-	public List<ProgressiveBilling> getProgressiveBilling(Long inventoryId) {
-		return progressiveBillingDao.findByInventoryId(inventoryId);
+	public List<ProgressiveBilling> getProgressiveBilling(Long accountId) {
+		return progressiveBillingDao.findByAccountId(accountId);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 
 	@Override
-	public void delete(Long inventoryId) {
-		ProgressiveBilling o = progressiveBillingDao.findById(inventoryId);
+	public void delete(Long id) {
+		ProgressiveBilling o = progressiveBillingDao.findById(id);
 		progressiveBillingDao.delete(o);
 
 	}

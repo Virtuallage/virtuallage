@@ -25,55 +25,55 @@ Sales Commission
                  rowsPerPageTemplate="5,10,15"> 
         
         <p:column headerText="Purchaser&lt;br/&gt;Unit No" sortBy="#{c.customer.fullName}">  
-	    	<h:outputText value="#{c.customer.fullName}" /><br />
-	    	<h:outputText value="#{c.projectInventory.unitNo}" />
+	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/><br />
+	    	<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.purchasePrice}">
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 
 	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}" style="text-align:right">  
-	    	<h:outputText value="#{c.discountedAmount}">
+	    	<h:outputText value="#{c.discountedAmount}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Nett Price" sortBy="#{c.netPrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.netPrice}">
+	    	<h:outputText value="#{c.netPrice}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
-	    	<h:outputText value="#{c.spaStampedDate}">
+	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText><br />
-	    	<h:outputText value="#{c.laStampedDate}">
+	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Collection To-Date" sortBy="#{c.totalPaymentTodate}" style="text-align:right">  
-	    	<h:outputText value="#{c.totalPaymentTodate}" >
+	    	<h:outputText value="#{c.totalPaymentTodate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}" style="text-align:right">  
-	    	<h:outputText value="#{c.commissionAmount}">
+	    	<h:outputText value="#{c.commissionAmount}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="%" sortBy="" style="text-align:right">  
-	    	<h:outputText value="#{salesCommission.GetClaimPercentByAccountId(c.accountId)}" />
+	    	<h:outputText value="#{salesCommission.GetClaimPercentByAccountId(c.accountId)}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Amount" sortBy="" style="text-align:right">  
-	    	<h:outputText value="#{salesCommission.PriceDecimalFormat(salesCommission.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" />
+	    	<h:outputText value="#{salesCommission.PriceDecimalFormat(salesCommission.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 	</p:dataTable>

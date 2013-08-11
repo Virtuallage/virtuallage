@@ -42,39 +42,39 @@ Sales Update
                  rowsPerPageTemplate="5,10,15" id="accountsDataTable"> 
               
         <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
-	 		<h:outputText value="#{c.customer.fullName}" />
+	 		<h:outputText value="#{c.customer.fullName}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}"/>
 	    </p:column> 
 	        
         <p:column headerText="Unit No" sortBy="#{c.projectInventory.unitNo}">  
-	 		<h:outputText value="#{c.projectInventory.unitNo}" />
+	 		<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}"/>
 	    </p:column> 
 	    
 	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.purchasePrice}">
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>  
 	        
 	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}" style="text-align:center">  
-	  		<h:outputText value="#{c.datePurchased}">
+	  		<h:outputText value="#{c.datePurchased}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	  		</h:outputText>
 	 	</p:column>  
 	        
 	  	<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}" style="text-align:center">  
-	  		<h:outputText value="#{c.spaStampedDate}">
+	  		<h:outputText value="#{c.spaStampedDate}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	  		</h:outputText>
 		</p:column>
 	        
 	 	<p:column headerText="LO Date" sortBy="#{c.loVerifiedDate}" style="text-align:center">  
-	  		<h:outputText value="#{c.loVerifiedDate}">
+	  		<h:outputText value="#{c.loVerifiedDate}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	  		</h:outputText>
 		</p:column>
 		
 		<p:column headerText="LA Date" sortBy="#{c.laStampedDate}" style="text-align:center">  
-	  		<h:outputText value="#{c.laStampedDate}">
+	  		<h:outputText value="#{c.laStampedDate}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	  		</h:outputText>
 		</p:column>

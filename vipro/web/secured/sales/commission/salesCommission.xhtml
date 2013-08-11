@@ -25,31 +25,31 @@ Sales Commission
                  rowsPerPageTemplate="5,10,15"> 
         
         <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
-	    	<h:outputText value="#{c.customer.fullName}" />
+	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Project Code" sortBy="#{c.projectInventory.project.projectCode}">  
-	    	<h:outputText value="#{c.projectInventory.project.projectCode}" />
+	    	<h:outputText value="#{c.projectInventory.project.projectCode}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		   
         <p:column headerText="Unit No" sortBy="#{c.projectInventory.unitNo}">  
-	 		<h:outputText value="#{c.projectInventory.unitNo}" />
+	 		<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
 	    </p:column> 
 	    
 	 	<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.purchasePrice}">
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="SPA Date" sortBy="#{c.spaStampedDate}" style="text-align:center">  
-	    	<h:outputText value="#{c.spaStampedDate}">
+	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="LA Date" sortBy="#{c.laStampedDate}" style="text-align:center">  
-	    	<h:outputText value="#{c.laStampedDate}">
+	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>

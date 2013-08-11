@@ -8,8 +8,8 @@
             <column name="schedule_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select">
-            <column name="inventory_id" not-null="true" />
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
         </many-to-one>
         <property name="seqNo" type="java.lang.Byte">
             <column name="seq_no" precision="2" scale="0" />
