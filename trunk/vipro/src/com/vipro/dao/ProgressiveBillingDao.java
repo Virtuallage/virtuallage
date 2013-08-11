@@ -7,7 +7,7 @@ import com.vipro.data.ProgressiveBilling;
 
 public interface ProgressiveBillingDao extends Dao<ProgressiveBilling>{
 
-	public List<ProgressiveBilling> findByInventoryId(Long inventoryId);
+	public List<ProgressiveBilling> findByAccountId(Long accountId);
 		
 	public ProgressiveBilling findById(Long id);
 	

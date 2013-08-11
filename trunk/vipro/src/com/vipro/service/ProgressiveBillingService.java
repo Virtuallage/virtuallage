@@ -7,7 +7,7 @@ import com.vipro.data.ProgressiveBilling;
 public interface ProgressiveBillingService {
 
 	
-	public List<ProgressiveBilling> getProgressiveBilling(Long inventoryId);
+	public List<ProgressiveBilling> getProgressiveBilling(Long accountId);
 	
 	public void insert(ProgressiveBilling p);
 	

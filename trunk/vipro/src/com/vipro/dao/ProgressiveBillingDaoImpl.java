@@ -13,9 +13,9 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		implements ProgressiveBillingDao {
 
 	@Override
-	public List<ProgressiveBilling> findByInventoryId(Long inventoryId) {
-		String query = "select o from ProgressiveBilling o where o.projectInventory.inventoryId=?";
-		return getHibernateTemplate().find(query, inventoryId);
+	public List<ProgressiveBilling> findByAccountId(Long accountId) {
+		String query = "select o from ProgressiveBilling o where o.account.accountId=?";
+		return getHibernateTemplate().find(query, accountId);
 	}
 	
 	@Override

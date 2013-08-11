@@ -87,6 +87,10 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private Long projectId;
 	private Project project;
 	private String customerName;
+	private String customerName2;
+	private String customerName3;
+	private String customerName4;
+	private String customerName5;
 	private List<Customer> customers;
 	private Account account;
 	private Long accountId;
@@ -99,6 +103,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	private String searchIdNo;
 	private String searchName;
+	private String customerNo;
 	private List<Customer> searchCustList;
 	private Customer selectedCustomer;
 	private Customer delCustomer;
@@ -296,7 +301,47 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
+	
+	
+	public String getCustomerName2() {
+		return customerName2;
+	}
 
+
+	public void setCustomerName2(String customerName2) {
+		this.customerName2 = customerName2;
+	}
+	
+	
+	public String getCustomerName3() {
+		return customerName3;
+	}
+
+
+	public void setCustomerName3(String customerName3) {
+		this.customerName3 = customerName3;
+	}
+	
+	
+	public String getCustomerName4() {
+		return customerName4;
+	}
+
+
+	public void setCustomerName4(String customerName4) {
+		this.customerName4 = customerName4;
+	}
+	
+	
+	public String getCustomerName5() {
+		return customerName5;
+	}
+
+
+	public void setCustomerName5(String customerName5) {
+		this.customerName5 = customerName5;
+	}
+	
 
 	public List<Customer> getCustomers() {
 		return customers;
@@ -331,8 +376,8 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
-
-
+	
+	
 	public void setAccount(Account account) {
 		this.account = account;
 	}
@@ -486,8 +531,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		Long userId = user.getUserProfile().getUserId();
 		UserProfile userProfile = userProfileService.findById(userId);
-		
-		
+			
 		for(ProjectInventory projectInventory: inventories)
 		{
 			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
@@ -513,16 +557,84 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	}
 	
 	public String selectAccount() {
-		setSelectedCustomer(account.getCustomer());
-		setCustomerName(account.getCustomer().getFullName());
+		setCustomerName(account.getCustomer() != null ? account.getCustomer().getFullName() : null);
+		setCustomerName2(account.getCustomer2() != null ? account.getCustomer2().getFullName() : null);
+		setCustomerName3(account.getCustomer3() != null ? account.getCustomer3().getFullName() : null);
+		setCustomerName4(account.getCustomer4() != null ? account.getCustomer4().getFullName() : null);
+		setCustomerName5(account.getCustomer5() != null ? account.getCustomer5().getFullName() : null);
 		return "salesProgressUpdate";
+	}
+	
+	public String GetFontColorByAttendedBy(String attendedByStr) {
+		String fontColor = "Black";
+		try {
+			long attendedBy = Long.valueOf(attendedByStr);
+			
+			AuthUser user = getCurrentUser();
+			long userId = user.getUserProfile().getUserId();
+			
+			if(attendedBy != userId){
+				fontColor = "Grey";
+			}
+		} catch (Exception ex){
+		}
+		return fontColor;
+	}
+	
+	public String verify() {
+		AuthUser user = getCurrentUser();
+		long userId = user.getUserProfile().getUserId();
+		if(this.documentType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
+			account.setSpaVerifiedBy(userId);
+		} else if(this.documentType.equalsIgnoreCase(DocumentTypeConst.LO)) {
+			account.setLoVerifiedBy(userId);
+		} else if(this.documentType.equalsIgnoreCase(DocumentTypeConst.LA)) {
+			account.setLaVerifiedBy(userId);
+		}
+		return "salesProgressUpdate";
+	}
+	
+	public String verifyByUserId(String userIdStr) {
+		String verified = userIdStr;
+		try
+		{
+			Long userId = Long.valueOf(userIdStr);
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+			UserProfile userProfie = userProfileService.findById(userId);
+			if(userProfie != null) {
+				verified = userProfie.getUsername();
+			}
+		} catch (Exception ex)
+		{
+		}
+		return verified;
+	}
+	
+	public String verifyByDocumentType(String docType) {
+		String display = "none";
+		AuthUser user = getCurrentUser();
+		String groupId = user.getUserProfile().getUserGroup().getGroupId();
+		if(docType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+				display = "inline";
+			}
+		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LO)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
+				display = "inline";
+			}
+		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LA)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+				display = "inline";
+			}
+		}
+		return display;
 	}
 	
 	public String update() {
 		
 		if (account != null) {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-			account.setCustomer(selectedCustomer);
+			
 			accountService.update(account);
 			addInfoMessage("Sales Update", "Updated Successfully.");
 			return listAccounts();
@@ -626,8 +738,32 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return null;
 	}
 	
+	public void SetCustomerNo(String customerNo) {
+		this.customerNo = customerNo;
+	}
+
 	public void changeSelectedCustomer() {
-		setCustomerName(selectedCustomer.getFullName());
+		SetAccountCustomer(selectedCustomer);
+	}
+	
+	public void SetAccountCustomer(Customer customer)
+	{
+		if(this.customerNo.equals("2")) {
+			account.setCustomer2(customer);
+			setCustomerName2(customer.getFullName());
+		} else if(this.customerNo.equals("3")) {
+			account.setCustomer3(customer);
+			setCustomerName3(customer.getFullName());
+		} else if(this.customerNo.equals("4")) {
+			account.setCustomer4(customer);
+			setCustomerName4(customer.getFullName());
+		} else if(this.customerNo.equals("5")) {
+			account.setCustomer5(customer);
+			setCustomerName5(customer.getFullName());
+		} else {
+			account.setCustomer(customer);
+			setCustomerName(customer.getFullName());
+		}
 	}
 	
 	public String toAddIndividual() {
@@ -661,8 +797,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		setSelectedCustomer(individual);
-		setCustomerName(individual.getFullName());
+		SetAccountCustomer(individual);
 		
 		return "salesProgressUpdate";
 	}
@@ -685,8 +820,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		setSelectedCustomer(company);
-		setCustomerName(company.getFullName());
+		SetAccountCustomer(company);
 		
 		return "salesProgressUpdate";
 	}

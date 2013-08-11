@@ -21,23 +21,59 @@ Sales Update
    	<h:form id="custAccountForm">
    		<h:panelGrid columns="4" style="width:100%;">
 
-			<p:outputLabel value="Purchaser Name"/>
-			<h:inputText value="#{salesUpdate.customerName}" style="width:400px" disabled="true"/>
-			<p:outputLabel value="Property Type"/>
+			<p:outputLabel value="Purchaser  "/>
+			<h:panelGroup>
+				<h:inputText value="#{salesUpdate.customerName}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser &nbsp;&nbsp;" actionListener="#{salesUpdate.SetCustomerNo(1)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+			
+			<p:outputLabel value="Purchaser 2" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
+			<h:panelGroup style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}">
+				<h:inputText value="#{salesUpdate.customerName2}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser 2" actionListener="#{salesUpdate.SetCustomerNo(2)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
+			
+			<p:outputLabel value="Purchaser 3" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
+			<h:panelGroup style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}">
+				<h:inputText value="#{salesUpdate.customerName3}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser 3" actionListener="#{salesUpdate.SetCustomerNo(3)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
+			
+			<p:outputLabel value="Purchaser 4" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
+			<h:panelGroup style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}">
+				<h:inputText value="#{salesUpdate.customerName4}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser 4" actionListener="#{salesUpdate.SetCustomerNo(4)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
+			
+			<p:outputLabel value="Purchaser 5" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
+			<h:panelGroup style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}">
+				<h:inputText value="#{salesUpdate.customerName5}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton value="Change Purchaser 5" actionListener="#{salesUpdate.SetCustomerNo(5)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
+			</h:panelGroup>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
+			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
+
+			<p:outputLabel value="Selling Price"/>
+			<h:inputText value="#{salesUpdate.account.purchasePrice}" style="width:200px" disabled="true">
+				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Property Type"/>
 			<p:selectOneMenu id="propertyType" value="#{salesUpdate.account.projectInventory.project.propertyType}" style="width:200px" disabled="true">
 				<f:selectItems value="#{salesUpdate.propertyTypes}" />
 			</p:selectOneMenu>
-
-			<p:outputLabel value="Selling Price"/>
-			<h:panelGroup>
-				<h:inputText value="#{salesUpdate.account.purchasePrice}" style="width:200px" disabled="true">
-					<f:convertNumber type="currency" currencySymbol="" />
-   				</h:inputText>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value="Sales Person"/>
-			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:400px" disabled="true" />
 				 			
    			<p:outputLabel value="Discount Price"/>
 			<h:panelGroup>
@@ -88,7 +124,11 @@ Sales Update
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Verified by"/>
-			<h:inputText value="#{salesUpdate.account.spaVerifiedBy}" style="width:400px" disabled="true"/>
+   			<h:panelGroup>
+				<h:inputText id="spaVerifiedBy" value="#{salesUpdate.verifyByUserId(salesUpdate.account.spaVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="spaVerifiedByViewDialogButton" value="Verify" actionListener="#{salesUpdate.setSPADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{salesUpdate.verifyByDocumentType('SPA')}"/>
+			</h:panelGroup>
 			
 			<p:outputLabel value="LO Date"/>
    			<p:calendar id="loDate" value="#{salesUpdate.account.loSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
@@ -103,7 +143,11 @@ Sales Update
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Verified by"/>
-			<h:inputText value="#{salesUpdate.account.loVerifiedBy}" style="width:400px" disabled="true"/>
+   			<h:panelGroup>
+				<h:inputText id="loVerifiedBy" value="#{salesUpdate.verifyByUserId(salesUpdate.account.loVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="loVerifiedByViewDialogButton" value="Verify" actionListener="#{salesUpdate.setLODocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{salesUpdate.verifyByDocumentType('LO')}"/>
+			</h:panelGroup>
 			
 			<p:outputLabel value="LA Signed Date"/>
    			<p:calendar id="laSignedDate" value="#{salesUpdate.account.laSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
@@ -120,7 +164,16 @@ Sales Update
 						<f:selectItems value="#{salesUpdate.listSolicitors}" />
 			</p:selectOneMenu>
    			<p:outputLabel value="Verified by"/>
-			<h:inputText value="#{salesUpdate.account.laVerifiedBy}" style="width:400px" disabled="true"/>
+   			<h:panelGroup>
+				<h:inputText id="laVerifiedBy" value="#{salesUpdate.verifyByUserId(salesUpdate.account.laVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="laVerifiedByViewDialogButton" value="Verify" actionListener="#{salesUpdate.setLADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{salesUpdate.verifyByDocumentType('LA')}"/>     
+			</h:panelGroup>
+			
+			<p:outputLabel value="Sales Person"/>
+			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:400px" disabled="true" />
+			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
    			
    		</h:panelGrid>
    		
@@ -140,6 +193,15 @@ Sales Update
             	</p:column>   
         	</p:dataTable>  
 		</p:dialog>
+		<p:dialog id="verifyDialog" header="Confirmation" widgetVar="verifyDialog" resizable="false">  
+			<h:panelGrid columns="1" style="text-align:center">
+				<p:outputLabel value="Are you confirm?"/>
+				<h:panelGroup>
+        			<p:commandButton value="Yes" actionListener="#{salesUpdate.verify}" update="spaVerifiedBy,loVerifiedBy,laVerifiedBy" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="verifyDialog.hide()" />
+        			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="verifyDialog.hide()"/> 
+        		</h:panelGroup>
+        	</h:panelGrid>
+        </p:dialog>
 		<p:growl id="messages" showDetail="true"/>
 				
    		<p:commandButton value="Back" action="#{salesUpdate.listAccounts}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;

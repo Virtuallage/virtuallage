@@ -11,7 +11,7 @@ import java.util.Date;
 public class ProgressiveBilling implements java.io.Serializable {
 
 	private Long scheduleId;
-	private ProjectInventory projectInventory;
+	private Account account;
 	private Byte seqNo;
 	private String stageNo;
 	private String stageDescription;
@@ -28,16 +28,16 @@ public class ProgressiveBilling implements java.io.Serializable {
 	public ProgressiveBilling() {
 	}
 
-	public ProgressiveBilling(ProjectInventory projectInventory) {
-		this.projectInventory = projectInventory;
+	public ProgressiveBilling(Account account) {
+		this.account = account;
 	}
 
-	public ProgressiveBilling(ProjectInventory projectInventory, Byte seqNo,
+	public ProgressiveBilling(Account account, Byte seqNo,
 			String stageNo, String stageDescription, BigDecimal percentage,
 			Date dueDate, BigDecimal interestRate, BigDecimal amountBilled,
 			Date dateBilled, Date paymentDueDate, Date datePaid,
 			BigDecimal overdueInterest, String status) {
-		this.projectInventory = projectInventory;
+		this.account = account;
 		this.seqNo = seqNo;
 		this.stageNo = stageNo;
 		this.stageDescription = stageDescription;
@@ -60,12 +60,12 @@ public class ProgressiveBilling implements java.io.Serializable {
 		this.scheduleId = scheduleId;
 	}
 
-	public ProjectInventory getProjectInventory() {
-		return this.projectInventory;
+	public Account getAccount() {
+		return this.account;
 	}
 
-	public void setProjectInventory(ProjectInventory projectInventory) {
-		this.projectInventory = projectInventory;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public Byte getSeqNo() {

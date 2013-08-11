@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Calendar;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -196,6 +197,22 @@ public class SalesCommission extends CommonBean implements Serializable{
 		return "salesCommission";
 	}
 	
+	public String GetFontColorByAttendedBy(String attendedByStr) {
+		String fontColor = "Black";
+		try {
+			long attendedBy = Long.valueOf(attendedByStr);
+			
+			AuthUser user = getCurrentUser();
+			long userId = user.getUserProfile().getUserId();
+			
+			if(attendedBy != userId){
+				fontColor = "Grey";
+			}
+		} catch (Exception ex){
+		}
+		return fontColor;
+	}
+	
 	public String GetClaimPercentByAccountId(String idStr){
 		String percent = "100";
 		try
@@ -288,11 +305,11 @@ public class SalesCommission extends CommonBean implements Serializable{
 		claim50PercentAccounts = new ArrayList<Account>();
 		totalClaimAmount = new BigDecimal(0);
 		
-		for(Account account: accounts) {
+		/*for(Account account: accounts) {
 			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
 			if(status.equalsIgnoreCase("New")) {
 				Date dateBilled = null;
-				List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getProjectInventory().getInventoryId());
+				List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
 				for (ProgressiveBilling record : records) {
 					dateBilled = record.getDateBilled();
 				}
@@ -307,6 +324,34 @@ public class SalesCommission extends CommonBean implements Serializable{
 								salesCommissionAccounts.add(account);
 							}
 						}
+					}
+				}
+			}
+		}*/
+		
+		for(Account account: accounts) {
+			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
+			if(status.equalsIgnoreCase("New")) {
+				if(account.getPurchaseType() != null && account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
+					if(account.getSpaSignedDate() != null) {
+						Date secondBillingDatePaid = null;
+						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
+						int seqNo = 0;
+						for (ProgressiveBilling record : records) {
+							seqNo++;
+							if(seqNo == 2) {
+								secondBillingDatePaid = record.getDatePaid();
+								break;
+							}
+						}
+						if(records.size() >= 2 && secondBillingDatePaid != null)
+						{
+							salesCommissionAccounts.add(account);
+						}
+					}
+				} else {
+					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null) {
+						salesCommissionAccounts.add(account);
 					}
 				}
 			}
@@ -337,17 +382,26 @@ public class SalesCommission extends CommonBean implements Serializable{
 		
 		if (salesCommissionAccounts != null) {
 			SalesCommissionHistoryService salesCommissionHistoryService =  (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+			SimpleDateFormat fmt = new SimpleDateFormat("yyMMddHHmmss");
 			
 			for(Account account: salesCommissionAccounts) {
 				SalesCommissionHistory salesCommissionHistory = new SalesCommissionHistory();
 				salesCommissionHistory.setAccount(account);
 				salesCommissionHistory.setClaimStatus(ClaimStatusConst.STATUS_SUBMITTED);
 				salesCommissionHistory.setDateSubmitted(new Date());
+				try
+				{
+					String batchNo = account.getAccountId() + fmt.format(new Date());
+					salesCommissionHistory.setBatchNo(Long.valueOf(batchNo));
+				}
+				catch(Exception ex){
 				
-				long claimPercent = 100;
+				}
+				
+				BigDecimal claimPercent = new BigDecimal(100);
 				String percent = GetClaimPercentByAccountId(account.getAccountId().toString());
 				if(percent.equals("50")) {
-					claimPercent = 50;
+					claimPercent = new BigDecimal(50);
 				}
 				salesCommissionHistory.setClaimPercent(claimPercent);
 				

@@ -31,6 +31,7 @@ import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
@@ -80,6 +81,9 @@ public class SalesCancel extends CommonBean implements Serializable{
 	private TransactionHistory bookTrx;
 	private UserProfile attendedBy;
 	private DocumentReference documentReference;
+	
+	private double TaxCharge = 0.02;
+	private double AdminFee = 500;
 
 	private StreamedContent file;  
 
@@ -160,7 +164,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 	public void setProject(Project project) {
 		this.project = project;
 	}
-
+	
 	public String listProject() {
 		try
 		{		
@@ -253,6 +257,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		Long userId = user.getUserProfile().getUserId();
 		UserProfile userProfile = userProfileService.findById(userId);
+		
 		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
 				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
@@ -277,6 +282,41 @@ public class SalesCancel extends CommonBean implements Serializable{
 		//return "cancelSelectUnit";
 		return "cancelPropertyList";
 	}
+	
+	public String GetFontColorByInvertoryId(String idStr) {
+		String fontColor = "Black";
+		try
+		{
+			long attendedBy = -1;
+			Long id = Long.valueOf(idStr);
+			AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			List<Account> accounts = accountService.findByAvailableProjectInventoryId(id);
+			for (Account account : accounts) {
+				attendedBy = account.getAttendedBy();
+			}
+			
+			AuthUser user = getCurrentUser();
+			long userId = user.getUserProfile().getUserId();
+			
+			if(attendedBy != userId)
+			{
+				fontColor = "Grey";
+			}
+		} catch (Exception ex)
+		{
+		}
+		return fontColor;
+	}
+	
+	public String GetAttendedByByInventoryId(Long id){
+		String attendedBy = "";
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		List<Account> accounts = accountService.findByAvailableProjectInventoryId(id);
+		for (Account account : accounts) {
+			attendedBy = account.getAttendedBy().toString();
+		}
+		return attendedBy;
+	}
 		
 	public String GetCustomerNameByInventoryId(String idStr){
 		String customerName = "";
@@ -298,6 +338,34 @@ public class SalesCancel extends CommonBean implements Serializable{
 			customerName = account.getCustomer().getFullName();
 		}
 		return customerName;
+	}
+	
+	public void updateCancelTax() {
+		if(account.getBookPymtMethod().equals(CommonConst.CREDIT_CARD)) {
+			double regFee = account.getRegistrationFee()!=null ? account.getRegistrationFee().doubleValue() : 0.0d;
+			double cancelTax = regFee * TaxCharge;
+			account.setCancelTax(new BigDecimal(cancelTax));
+		} else {
+			account.setCancelTax(new BigDecimal(0));
+		}
+		
+	}
+	
+	public void updateCancelFee() {
+		DocumentReferenceService docService = (DocumentReferenceService) SpringBeanUtil.lookup(DocumentReferenceService.class.getName());
+		List<DocumentReference> docs = docService.findByAccountIdAndDocType(account.getAccountId(), DocumentTypeConst.CANCEL);
+		if(docs.size() > 0){
+			account.setCancelFee(new BigDecimal(0));
+		} else {
+			double regFee = account.getRegistrationFee()!=null ? account.getRegistrationFee().doubleValue() : 0.0d;
+			double cancelTax = account.getCancelTax()!=null ? account.getCancelTax().doubleValue() : 0.0d;
+			double cancelFee = regFee;
+			if(regFee + cancelTax > AdminFee) {
+				cancelFee = AdminFee;
+			}
+			account.setCancelFee(new BigDecimal(cancelFee));
+		}
+		
 	}
 	
 	public String updateNetRefund() {
@@ -395,6 +463,8 @@ public class SalesCancel extends CommonBean implements Serializable{
 				return listPropertyUnits();
 			}
 			
+			updateCancelTax();
+			updateCancelFee();
 			updateNetRefund();
 			
 		} catch (Throwable t) {
@@ -521,6 +591,8 @@ public class SalesCancel extends CommonBean implements Serializable{
 		doc.setFilename(filename);
 		doc.setAccount(account);
 		service.insert(doc);
+		
+		updateCancelFee();
 		
 	    addInfoMessage("Upload Successful", "File(s) is uploaded");
 	    

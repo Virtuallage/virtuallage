@@ -85,7 +85,9 @@ Sales Cancellation
    		</h:panelGrid>
    		
    		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
-   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesCancel.upload}" />
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesCancel.upload}"/>
+   			<p:ajax event="close" update="cancelFee" listener="#{salesCancel.updateCancelFee}"/>
+   			<p:ajax event="close" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
 		</p:dialog>
 		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
 			<p:dataTable id="documentReferenceTable" var="d" value="#{salesCancel.documentReferences}">  
