@@ -10,17 +10,19 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<h:form id="registerForm">  
+	
+	<p:panel id="rPanel" header="Sales Registration" style="margin-bottom:10px;">  
    	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Project Name"/>
    		<h:inputText value="#{salesRegister.project.projectName}" style="width:300px" disabled="true"/>
    		<p:outputLabel value="Registration No"/>
    		<p:outputLabel value="#{salesRegister.account.accountId}"/>
-  		
+
    		<p:outputLabel value="Unit No"/>
    		<h:inputText value="#{salesRegister.inventory.unitNo}" disabled="true"/>
    		<p:outputLabel value="Developer"/>
    		<h:inputText value="#{salesRegister.project.developerName}" style="width:300px" disabled="true"/>
- 		
+ 
    		<p:outputLabel value="Purchase Price"/>
    		<h:inputText value="#{salesRegister.inventory.purchasePrice}" disabled="true">
    			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
@@ -30,12 +32,13 @@
    		
    		<p:outputLabel value="Purchase Date"/>
    		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="true">
-   			<f:convertDateTime pattern="dd/MM/yyyy"/>
+   			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
    		</h:inputText>
    		<p:outputLabel value="Attended By"/>
    		<h:inputText value="#{salesRegister.attendedBy.name}" style="width:300px" disabled="true"/>
-   	</h:panelGrid>
 
+   	</h:panelGrid>
+   	
    	<br/>
    	
    	<h:panelGrid styleClass="no-borders" style="width:95%">
@@ -53,15 +56,19 @@
         </p:column>
         <p:column selectionMode="single" headerText="Corr. Addr." style="width:5%"/>
         <p:column headerText="Action">  
-            <p:commandButton action="#{salesRegister.deleteCustomer}" ajax="false" icon="ui-icon-trash" title="Delete Customer">
+            <p:commandButton action="#{salesRegister.deleteCustomer}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" binding="#{salesRegister.deleteButton}">
            		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.delCustomer}" />  
+           </p:commandButton>
+           &nbsp;
+           <p:commandButton action="#{salesRegister.editPurchaser}" ajax="false" icon="ui-icon-pencil" title="Edit Purchaser" binding="#{salesRegister.editButton}" >
+           		 <f:setPropertyActionListener value="#{c}" target="#{salesRegister.purchaser}" />  
            </p:commandButton>
         </p:column> 
      </p:dataTable>
      
      <br/>
      
-     <p:panelGrid styleClass="no-borders" style="width:96%">
+     <p:panelGrid styleClass="no-borders" style="width:95%">
      	<p:row>
      		<p:column style="text-align:left">
      			<p:commandButton value="Add Purchaser" onclick="dlgSearchCust.show()" icon="ui-icon-plus" binding="#{salesRegister.addPurchaserButton}"/>  
@@ -70,30 +77,35 @@
      </p:panelGrid>
      
      <br/>
-	   	
-	<h:panelGrid columns="4" style="width:95%">
+
+ 	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Source"/>
-   		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}"> 
+   		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}" style="width:200px"> 
 			<f:selectItems value="#{salesRegister.listMediaSource}" />
 		</p:selectOneMenu>
    		<p:outputLabel value="Sales Person"/>
-   		<h:inputText value="#{salesRegister.account.salesPerson}" required="true"/>	
+   		<h:inputText value="#{salesRegister.account.salesPerson}" required="true"/>
    	</h:panelGrid>  	
 	
 	<br/>
-	
+	 	
    	<h:panelGrid columns="2" style="width:95%">
 	   	<p:outputLabel value="Remarks"/>
 	   	<h:inputTextarea value="#{salesRegister.account.remark}" cols="100" rows="3" />
    	</h:panelGrid>
+	</p:panel>  
 	
 	<br/>
 	
-	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnitsBack}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
+	<p:commandButton value="Back" action="#{salesRegister.listPropertyUnitsBack}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w" >  
+        <p:resetInput target="rPanel" />  
+    </p:commandButton>  
 	&nbsp;
 	<p:commandButton value="Save" action="#{salesRegister.saveRegister}" ajax="false"  icon="ui-icon-disk" binding="#{salesRegister.saveButton}"/>
 	&nbsp;
-	<p:commandButton value="Pay" action="#{salesRegister.toPay}" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.payButton}"/>
+	<p:commandButton value="Pay" action="#{salesRegister.toPay}" ajax="false" icon="ui-icon-cart" binding="#{salesRegister.payButton}"/>
+	&nbsp;
+	<p:commandButton value="Confirm" action="#{salesRegister.toConfirm}" ajax="false" icon="ui-icon-check" binding="#{salesRegister.confirmButton}" />
 	&nbsp;
 	<p:commandButton value="Preview" ajax="false" icon="ui-icon-disk" binding="#{salesRegister.previewButton}">
 		<p:fileDownload value="#{salesRegister.registrationForm}" />  

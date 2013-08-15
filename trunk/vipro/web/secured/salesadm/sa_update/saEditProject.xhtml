@@ -27,10 +27,9 @@ Project Setup
 		<p:outputLabel value="Project Code"/>
 		<h:inputText value="#{projectSetup.project.projectCode}" disabled="true"/>
 		
-		<p:outputLabel value="Developer Name" for="developerName"/>
-		<p:selectOneMenu id="developerName" value="#{projectSetup.project.developerId}"> 
-			<f:selectItems value="#{projectSetup.developers}" />
-		</p:selectOneMenu>
+		<p:outputLabel value="Developer Name"/>
+   		<h:inputText value="#{projectSetup.project.developerName}" style="width:300px" disabled="true"/>
+		
 		<p:outputLabel value="Land Proprietor" for="developerName"/>
 		<p:selectOneMenu id="landProprietor" value="#{projectSetup.project.landProprietorId}"> 
 			<f:selectItems value="#{projectSetup.landProprietors}" />

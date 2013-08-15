@@ -85,6 +85,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CustomerDataModel customerDataModel;
 	private Account account;
 	private UserProfile attendedBy;
+	private List<ProjectInventory> lockedUnit;
+	private Long currentUserId;
+	private ProjectInventory lockedInventory;
+	private long editCustomerId;
 
 	private TabView salesRegTabView;
 	private Tab selectionTab;
@@ -95,7 +99,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton previewButton;
 	private CommandButton submitButton;
 	private CommandButton receiptButton;
-	private CommandButton addPurchaserButton;	
+	private CommandButton addPurchaserButton;
+	private CommandButton editButton;
+	private CommandButton confirmButton;
+	private CommandButton deleteButton;
 	private InputText payBookingFields;
 	
 	public InputText getPayBookingFields() {
@@ -121,6 +128,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	 */
 	private Customer individual;
 	private Customer company;
+	private Customer purchaser;
 	private Address address;
 
 	/**
@@ -319,6 +327,14 @@ public class SalesRegister extends CommonBean implements Serializable {
 		this.company = company;
 	}
 
+	public Customer getPurchaser() {
+		return purchaser;
+	}
+
+	public void setPurchaser(Customer purchaser) {
+		this.purchaser = purchaser;
+	}
+	
 	public Customer getDelCustomer() {
 		return delCustomer;
 	}
@@ -476,23 +492,26 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public String listPropertyUnitsBack() {
 
-		unitNo = null;
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		project = projectService.findById(projectId);
 		
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 
+		// update the status back to Available
 		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_LOCKED)) {
 				inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_AVAILABLE);		
 				inventory.setStatusChangeDate(new Date());
 				inventory.setChangeUserId(attendedBy.getUserId());
 				inventoryService.update(inventory);	
 		}
-		
-		ProjectService projectService = (ProjectService) SpringBeanUtil
-				.lookup(ProjectService.class.getName());
-		project = projectService.findById(projectId);
 
-		inventories = inventoryService.getInventories(projectId);
+		if (StringUtils.hasText(unitNo)) {
+			inventories = inventoryService.getInventories(projectId, unitNo);;
+		} else {
+			inventories = inventoryService.getInventories(projectId);
+		}
 
 		salesRegTabView.setActiveIndex(0);
 		selectionTab.setDisabled(false);
@@ -512,34 +531,42 @@ public class SalesRegister extends CommonBean implements Serializable {
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 
-
 		if (StringUtils.hasText(unitNo)) {
-			inventories = inventoryService.getInventories(projectId, unitNo);;
+			inventories = inventoryService.getInventories(projectId, unitNo);
 		} else {
 			inventories = inventoryService.getInventories(projectId);
 		}
-	
+		
 		salesRegTabView.setActiveIndex(0);
 		selectionTab.setDisabled(false);
 		registrationTab.setDisabled(true);
 		payBookingTab.setDisabled(true);
-
-		unitNo = null;
+		
 		return "salesRegistration";
 	}
 
-	public String selectInventory() {
-		customers = new ArrayList<Customer>();
-		account = new Account();
-		account.setDatePurchased(new Date());
+	public String selectInventoryBack() {
 
+		salesRegTabView.setActiveIndex(1);
+		return "salesRegistration";
+	}
+	
+	public String selectInventory() {
+		
 		AuthUser user = getCurrentUser();
 		if (user != null) {
 			attendedBy = user.getUserProfile();
+			setCurrentUserId(attendedBy.getUserId());
 		}
 
-		account.setSalesPerson(user.getName());
-		
+		// reset tables and fields for new registration
+		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
+			customers = new ArrayList<Customer>();
+			account = new Account();
+			account.setDatePurchased(new Date());
+			account.setSalesPerson(user.getName());
+		}
+
 		AccountService accountService = (AccountService) SpringBeanUtil
 				.lookup(AccountService.class.getName());
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
@@ -573,28 +600,73 @@ public class SalesRegister extends CommonBean implements Serializable {
 					.lookup(CustomerService.class.getName());
 			selectedCustomer = customerService.findByCustId(account.getCorrAddrCustId());
 		}
-
+		
 		customerDataModel = new CustomerDataModel(customers);
 		individual = new Customer();
 		company = new Customer();
 		address = new Address();
 		
-		selectionTab.setDisabled(true);
-		registrationTab.setDisabled(false);
-		payBookingFields.setDisabled(true);
-		addPurchaserButton.setStyle("display: none");
-
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 				.lookup(ProjectInventoryService.class.getName());
 		
+		Long vInventoryId = inventory.getInventoryId();
+		inventory = inventoryService.getInventoryById(vInventoryId);
+		
+		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_LOCKED)) {
+			if (inventory.getChangeUserId().equals(user.getUserProfile().getUserId())){
+				salesRegTabView.setActiveIndex(1);
+				addPurchaserButton.setStyle("");
+				saveButton.setStyle("");
+				submitButton.setStyle("");
+				previewButton.setStyle("display: none");
+				payButton.setStyle("display: none");
+				receiptButton.setStyle("display: none");
+				editButton.setStyle("display: none");
+				confirmButton.setStyle("display: none");
+				deleteButton.setStyle("");
+				payBookingFields.setDisabled(false);
+				inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_LOCKED);		
+				inventory.setStatusChangeDate(new Date());
+				inventory.setChangeUserId(attendedBy.getUserId());
+				inventoryService.update(inventory);	
+			} else {
+				selectionTab.setDisabled(false);
+				addInfoMessage(
+						"Unit Locked!",
+						"This unit is still under Locked by another user." + inventory.getUnitNo());
+				return listPropertyUnits();
+			}			
+		} else {
+			salesRegTabView.setActiveIndex(0);
+			selectionTab.setDisabled(false);
+			registrationTab.setDisabled(true);
+			payBookingFields.setDisabled(true);
+			
+			lockedUnit = inventoryService.getLockedUnit(project.getProjectId(), getCurrentUserId());
+			if (lockedUnit.size() > 0) {
+				setLockedInventory(lockedUnit.set(0, getInventory())); 
+				addInfoMessage(
+						"You Have Locked: " + lockedInventory.getUnitNo(),
+						"Please unlock this unit before procedding.");
+				return null;
+			}
+		}
+		
+		selectionTab.setDisabled(true);
+		registrationTab.setDisabled(false);
+		payBookingFields.setDisabled(true);
+
 		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
 			salesRegTabView.setActiveIndex(1);
-			previewButton.setStyle("display: none");
-			payButton.setStyle("display: none");
+			addPurchaserButton.setStyle("");
 			saveButton.setStyle("");
 			submitButton.setStyle("");
-			addPurchaserButton.setStyle("");
+			previewButton.setStyle("display: none");
+			payButton.setStyle("display: none");
 			receiptButton.setStyle("display: none");
+			editButton.setStyle("display: none");
+			confirmButton.setStyle("display: none");
+			deleteButton.setStyle("");
 			payBookingFields.setDisabled(false);
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_LOCKED);		
 			inventory.setStatusChangeDate(new Date());
@@ -604,51 +676,75 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_IN_PROGRESS)) {
 			salesRegTabView.setActiveIndex(1);
-			previewButton.setStyle("display: none");
-			payButton.setStyle("");
+			addPurchaserButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("");
+			previewButton.setStyle("display: none");
+			payButton.setStyle("");
 			receiptButton.setStyle("display: none");
+			editButton.setStyle("display: none");
+			confirmButton.setStyle("display: none");
+			deleteButton.setStyle("display: none");
 			payBookingFields.setDisabled(false);
 		}
 
-		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_SOLD)) {
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
 			salesRegTabView.setActiveIndex(1);
-			payBookingTab.setDisabled(false);
-			previewButton.setStyle("");
-			payButton.setStyle("display: none");
+			addPurchaserButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
+			previewButton.setStyle("display: none");
+			payButton.setStyle("display: none");
+			receiptButton.setStyle("display: none");
+			editButton.setStyle("");
+			confirmButton.setStyle("");
+			deleteButton.setStyle("display: none");
+			payBookingFields.setDisabled(false);
+			payBookingTab.setDisabled(false);
+		}
+		
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_SOLD)) {
+			salesRegTabView.setActiveIndex(1);
+			addPurchaserButton.setStyle("display: none");
+			saveButton.setStyle("display: none");
+			submitButton.setStyle("display: none");
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
 			receiptButton.setStyle("");
+			editButton.setStyle("display: none");
+			confirmButton.setStyle("display: none");
+			deleteButton.setStyle("display: none");
+			payBookingFields.setDisabled(false);
+			payBookingTab.setDisabled(false);
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_CANCELLED)) {
 			salesRegTabView.setActiveIndex(1);
-			payBookingTab.setDisabled(false);
-			previewButton.setStyle("");
-			payButton.setStyle("display: none");
+			addPurchaserButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
+			previewButton.setStyle("");
+			payButton.setStyle("display: none");
 			receiptButton.setStyle("");
+			editButton.setStyle("display: none");
+			confirmButton.setStyle("display: none");
+			deleteButton.setStyle("display: none");
+			payBookingFields.setDisabled(false);
+			payBookingTab.setDisabled(false);
 		}
 		
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_RESERVED)) {
 			salesRegTabView.setActiveIndex(1);
-			payBookingTab.setDisabled(false);
-			previewButton.setStyle("");
-			payButton.setStyle("display: none");
+			addPurchaserButton.setStyle("");
 			saveButton.setStyle("display: none");
-			submitButton.setStyle("display: none");
-			receiptButton.setStyle("");
-		}
-		
-		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_LOCKED)) {
-			selectionTab.setDisabled(false);
-			addInfoMessage(
-				"LOCKED!",
-				"This unit is still under Locked Status."
-						+ inventory.getUnitNo());
-
+			submitButton.setStyle("");
+			previewButton.setStyle("display: none");
+			payButton.setStyle("");
+			receiptButton.setStyle("display: none");
+			editButton.setStyle("");
+			confirmButton.setStyle("display: none");
+			deleteButton.setStyle("display: none");
+			payBookingFields.setDisabled(false);
 		}
 		
 		return "salesRegistration";
@@ -724,7 +820,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 			inventoryService.update(inventory);
 			
 			saveButton.setStyle("display: none");
+			addPurchaserButton.setStyle("display: none");
 			payButton.setStyle("");
+			editButton.setStyle("display: none");
+			deleteButton.setStyle("display: none");
 			
 			addInfoMessage(
 					"Sales Registration",
@@ -754,8 +853,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			return null;
 		}
 
-		CustomerService customerService = (CustomerService) SpringBeanUtil
-				.lookup(CustomerService.class.getName());
+		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
 //		if (StringUtils.hasText(searchIdNo)) {
 //			setSearchCustList(customerService.findByIdNo(searchIdNo));
 //		}
@@ -780,6 +878,26 @@ public class SalesRegister extends CommonBean implements Serializable {
 		return "salesRegistration";
 	}
 
+	public String editPurchaser() {
+		try {
+			editCustomerId = purchaser.getCustomerId();
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address = addressService.findByCustomerId(editCustomerId);
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+			return null;
+		}
+		
+		if (purchaser.getCustomerCategory().equalsIgnoreCase(CustomerTypeConst.COMPANY)) {
+			return "editCompanyReg";
+		}
+		else {
+			return "editIndividualReg";
+		}
+	}
+	
 	public String toAddIndividual() {
 		individual = new Customer();
 		address = new Address();
@@ -850,6 +968,38 @@ public class SalesRegister extends CommonBean implements Serializable {
 		return "salesRegistration";
 	}
 
+
+	public String savePurchaser() {
+		try {
+			CustomerService customerService = (CustomerService) SpringBeanUtil
+					.lookup(CustomerService.class.getName());
+			customerService.update(purchaser);
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address.setCustomer(purchaser);
+			addressService.update(address);
+
+			purchaser.setAddressId(address.getAddressId());
+			customerService.update(purchaser);
+			
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Change Purchaser Information", t.getMessage());
+			return null;
+		}
+		salesRegTabView.setActiveIndex(1);
+		registrationTab.setDisabled(false);
+		
+		setSelectedCustomer(purchaser);
+		// addSelectedCustomer();
+		
+		addInfoMessage("Record Saved", "Purchaser information successfully saved.");
+		
+		return "salesRegistration";
+	}	
+	
+	
 	public String backToRegistration() {
 		return "registration";
 	}
@@ -891,7 +1041,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public String payBooking() {
 		
-		if (account.getBookPymtMethod() != CommonConst.CASH) {
+		if (!account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
 			if (account.getBookPymtCardChqNo().equalsIgnoreCase("") && account.getBookPymtBank().equalsIgnoreCase("")) {
 				addErrorMessage("Invalid Fields",
 						"Please Enter Card/Cheque No & Bank Name for non-cash payment!");
@@ -947,7 +1097,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_BOOKED);
 			inventory.setStatusChangeDate(new Date());
 			
 			AuthUser user = getCurrentUser();
@@ -955,71 +1105,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 			
 			inventoryService.update(inventory);
 			
-			previewButton.setStyle("");
-			payButton.setStyle("display: none");
-						
-			// generate receipt
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("account_id", Long.toString(account.getAccountId()));
-			
-			// check to print which receipt format
-			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
-				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-					String report = JasperConst.SALES_REG_RECEIPT;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
-				} else {
-					String report = JasperConst.SALES_REG_RECEIPT2;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
-				}
-			} else {
-				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-					String report = JasperConst.SALES_REG_RECEIPT3;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
-				} else {
-					String report = JasperConst.SALES_REG_RECEIPT4;
-					JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
-				}
-			}
-						
-			// BILL Check if there is 2nd purchaser, cash payment or company, all use different form.
-			
-			HashMap<String, Object> hm2 = new HashMap<String, Object>();
-			hm2.put("account_id", Long.toString(account.getAccountId()));
-			
-			if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
-				if (account.getCustomer2()==null) {
-					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-						String report = JasperConst.SALES_REG_FORM3;
-						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-					} else {
-						String report = JasperConst.SALES_REG_FORM;
-						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-					} 
-				}
-				if (account.getCustomer2()!=null) {
-					if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-						String report = JasperConst.SALES_REG_FORM4;
-						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-					} else {
-						String report = JasperConst.SALES_REG_FORM2;
-						JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-					}			
-				}
-			} else {
-				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
-					String report = JasperConst.SALES_REG_FORM6;
-					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-				} else {
-					String report = JasperConst.SALES_REG_FORM5;
-					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
-				} 
-			}
-			
-			// show/hide buttons
+			// show & hide buttons
+			confirmButton.setStyle("");
+			editButton.setStyle("");
 			payButton.setStyle("display: none");
 			submitButton.setStyle("display: none");
-			previewButton.setStyle("");
-			receiptButton.setStyle("");
+			deleteButton.setStyle("display: none");
+			addPurchaserButton.setStyle("display: none");
 			
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -1029,6 +1121,128 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		addInfoMessage("Booking Fee", "Transaction saved");
 		salesRegTabView.setActiveIndex(1);
+		
+		return "salesRegistration";
+	//	return selectInventory();
+	}
+	
+	public String toConfirm() {
+		
+		AccountService accountService = (AccountService) SpringBeanUtil
+				.lookup(AccountService.class.getName());
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
+				.lookup(ProjectInventoryService.class.getName());
+
+		/**
+		 * support max 5 customers per account only
+		 */
+		account.setCustomer(null);
+		account.setCustomer2(null);
+		account.setCustomer3(null);
+		account.setCustomer4(null);
+		account.setCustomer5(null);
+		
+		for (int i = 0; i < customers.size(); i++) {
+			Customer c = customers.get(i);
+			switch (i) {
+			case 0:
+				account.setCustomer(c);
+				break;
+			case 1:
+				account.setCustomer2(c);
+				break;
+			case 2:
+				account.setCustomer3(c);
+				break;
+			case 3:
+				account.setCustomer4(c);
+				break;
+			case 4:
+				account.setCustomer5(c);
+				break;
+			}
+		}
+		
+		if (account.getCustomer()==null) {
+			addErrorMessage("Invalid Purchaser",
+					"You need at least 1 purchaser for sales registration!");
+			return null;
+		}
+		
+		account.setDateChanged(new Date());
+		account.setChangedBy(getCurrentUserId());
+		accountService.update(account);
+		
+		// update inventory status to SOLD confirmation.
+		inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_SOLD);
+		inventory.setStatusChangeDate(new Date());
+		inventory.setChangeUserId(getCurrentUserId());
+		inventoryService.update(inventory);
+
+		// generate receipt
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("account_id", Long.toString(account.getAccountId()));
+		
+		// check to print which receipt format
+		if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
+			if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+				String report = JasperConst.SALES_REG_RECEIPT;
+				JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+			} else {
+				String report = JasperConst.SALES_REG_RECEIPT2;
+				JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+			}
+		} else {
+			if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+				String report = JasperConst.SALES_REG_RECEIPT3;
+				JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+			} else {
+				String report = JasperConst.SALES_REG_RECEIPT4;
+				JasperUtil.generateReport(hm, report, account, JasperReportTypeConst.RECEIPT_FILE);
+			}
+		}
+					
+		// BILL Check if there is 2nd purchaser, cash payment or company, all use different form.
+		
+		HashMap<String, Object> hm2 = new HashMap<String, Object>();
+		hm2.put("account_id", Long.toString(account.getAccountId()));
+		
+		if (account.getAccountType().equalsIgnoreCase(CommonConst.INDIVIDUAL)) {
+			if (account.getCustomer2()==null) {
+				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+					String report = JasperConst.SALES_REG_FORM3;
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+				} else {
+					String report = JasperConst.SALES_REG_FORM;
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+				} 
+			}
+			if (account.getCustomer2()!=null) {
+				if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+					String report = JasperConst.SALES_REG_FORM4;
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+				} else {
+					String report = JasperConst.SALES_REG_FORM2;
+					JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+				}			
+			}
+		} else {
+			if (account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
+				String report = JasperConst.SALES_REG_FORM6;
+				JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+			} else {
+				String report = JasperConst.SALES_REG_FORM5;
+				JasperUtil.generateReport(hm2, report, account, JasperReportTypeConst.REGISTRATION_FILE);
+			} 
+		}
+
+		confirmButton.setStyle("display: none");
+		editButton.setStyle("display: none");
+		addPurchaserButton.setStyle("display: none");
+		previewButton.setStyle("");
+		receiptButton.setStyle("");
+		
+		addInfoMessage("Document Generated", "Registration Form & Receipt Generated.");
 		
 		return "salesRegistration";
 	}
@@ -1097,5 +1311,53 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setAddPurchaserButton(CommandButton addPurchaserButton) {
 		this.addPurchaserButton = addPurchaserButton;
-	} 
+	}
+
+	public CommandButton getEditButton() {
+		return editButton;
+	}
+
+	public void setEditButton(CommandButton editButton) {
+		this.editButton = editButton;
+	}
+
+	public CommandButton getConfirmButton() {
+		return confirmButton;
+	}
+
+	public void setConfirmButton(CommandButton confirmButton) {
+		this.confirmButton = confirmButton;
+	}
+
+	public CommandButton getDeleteButton() {
+		return deleteButton;
+	}
+
+	public void setDeleteButton(CommandButton deleteButton) {
+		this.deleteButton = deleteButton;
+	}
+
+	public Long getCurrentUserId() {
+		return currentUserId;
+	}
+
+	public void setCurrentUserId(Long currentUserId) {
+		this.currentUserId = currentUserId;
+	}
+
+	public ProjectInventory getLockedInventory() {
+		return lockedInventory;
+	}
+
+	public void setLockedInventory(ProjectInventory lockedInventory) {
+		this.lockedInventory = lockedInventory;
+	}
+
+	public long getEditCustomerId() {
+		return editCustomerId;
+	}
+
+	public void setEditCustomerId(long editCustomerId) {
+		this.editCustomerId = editCustomerId;
+	}
 }
