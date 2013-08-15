@@ -127,7 +127,8 @@ public class Account implements java.io.Serializable {
 			String maintenanceFeeFreq, Date fireInsuranceDueDate,
 			BigDecimal fireInsuranceAmount, Long fireInsuranceCompanyId,
 			Date lastPaymentMadeDate, String maintenanceBilingCycle,
-			String cancelledReason, Set waterBillings, Set projects,
+			String cancelledReason, String remark, String source, String salesPerson,
+			Set waterBillings, Set projects,
 			Set addresses, Set emails, Set postdatedCheques, Set mobilePhones,
 			Set joinAccounts, Set transactionHistories, Set accountAgings) {
 		this.customer = customer;
@@ -178,6 +179,9 @@ public class Account implements java.io.Serializable {
 		this.lastPaymentMadeDate = lastPaymentMadeDate;
 		this.maintenanceBilingCycle = maintenanceBilingCycle;
 		this.cancelledReason = cancelledReason;
+		this.remark = remark;
+		this.source = source;
+		this.salesPerson = salesPerson;
 		this.waterBillings = waterBillings;
 		this.projects = projects;
 		this.addresses = addresses;

@@ -1,4 +1,4 @@
-package com.vipro.jsf.bean.sales;
+package com.vipro.jsf.bean.salesadm;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,15 +26,10 @@ import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
-@ManagedBean(name = "projectSetup")
+@ManagedBean(name = "projectUpdate")
 @SessionScoped
-public class ProjectSetup extends CommonBean implements Serializable {
-	/**
-	 * project related properties
-	 */
+public class ProjectUpdate extends CommonBean implements Serializable {
 	private List<Project> projects;
-	private List<Discount> discounts;
-	private List<SalesCommission> commissions;
 	private Long projectId;
 	private Project project;
 	private List<SelectItem> countries;
@@ -48,16 +43,11 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> statusList;
 	private String locationSearch;
 	private int totalUnits;
-	private double priceRangeFrom;
-	private double priceRangeTo;
 	private double currentDiscount;
-	private Date discountExpiry;
 	private double salesCommission;
 	private String commisionType;
-	private Date commisionEffective;
 	private Discount discount;
 	private SalesCommission commission;
-
 	/**
 	 * inventory related properties
 	 */
@@ -67,7 +57,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> titleTypeList;
 	private List<SelectItem> orientationList;
 
-	public ProjectSetup() {
+	public ProjectUpdate() {
 
 	}
 
@@ -87,8 +77,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		landProprietors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.LAND_PROPRIETOR);
 		
 		listProject();
-	}
 
+	}
+	
 	public List<SelectItem> getPropertyStatusList() {
 		return propertyStatusList;
 	}
@@ -145,22 +136,6 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		this.projectId = projectId;
 	}
 
-	public List<Discount> getDiscounts() {
-		return discounts;
-	}
-
-	public void setDiscounts(List<Discount> discounts) {
-		this.discounts = discounts;
-	}
-
-	public List<SalesCommission> getCommissions() {
-		return commissions;
-	}
-
-	public void setCommissions(List<SalesCommission> commissions) {
-		this.commissions = commissions;
-	}
-
 	public int getTotalUnits() {
 		try {
 			ProjectInventoryService projectInventoryService = 
@@ -177,22 +152,6 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		this.totalUnits = totalUnits;
 	}
 
-	public double getPriceRangeFrom() {
-		return priceRangeFrom;
-	}
-
-	public void setPriceRangeFrom(double priceRangeFrom) {
-		this.priceRangeFrom = priceRangeFrom;
-	}
-
-	public double getPriceRangeTo() {
-		return priceRangeTo;
-	}
-
-	public void setPriceRangeTo(double priceRangeTo) {
-		this.priceRangeTo = priceRangeTo;
-	}
-
 	public double getCurrentDiscount() {
 		return currentDiscount;
 	}
@@ -201,28 +160,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		this.currentDiscount = currentDiscount;
 	}
 
-	public Date getDiscountExpiry() {
-		return discountExpiry;
-	}
-
-	public void setDiscountExpiry(Date discountExpiry) {
-		this.discountExpiry = discountExpiry;
-	}
-
 	public double getSalesCommission() {
 		return salesCommission;
 	}
 
 	public void setSalesCommission(double salesCommission) {
 		this.salesCommission = salesCommission;
-	}
-
-	public Date getCommisionEffective() {
-		return commisionEffective;
-	}
-
-	public void setCommisionEffective(Date commisionEffective) {
-		this.commisionEffective = commisionEffective;
 	}
 
 	public String getLocationSearch() {
@@ -313,36 +256,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
-		return "project";
+		return "saListProject";
 	}
 
-	public String addNewProject() {
-		project = new Project();
-		return "newProject";
-	}
-
-	public String editProject() {
-		try {
-			projectId = project.getProjectId();
-
-			DiscountService discountService = (DiscountService) SpringBeanUtil
-					.lookup(DiscountService.class.getName());
-			discounts = discountService.findByProjectId(projectId);
-			
-			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-					.lookup(SalesCommissionService.class.getName());
-
-			commissions = salesCommissionService.findByProjectId(projectId);
-
-			discount = new Discount();
-			commission = new SalesCommission();
-
-			refreshCommissionDiscount();
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-
-		return "newProject";
+	public String EditProject() {
+		projectId = project.getProjectId();
+		return "saEditProject";
 	}
 	
 	public String saveProject() {
@@ -356,141 +275,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 			listProject();
 
-			discount = new Discount();
-			commission = new SalesCommission();
-
-			refreshCommissionDiscount();
 			addInfoMessage("Project", "Project Saved");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 
-		return "project";
-	}
-
-	public void refreshCommissionDiscount() {
-
-		DiscountService discountService = (DiscountService) SpringBeanUtil
-				.lookup(DiscountService.class.getName());
-		SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-				.lookup(SalesCommissionService.class.getName());
-
-		Discount d = discountService.findCurrentEffectiveDiscount(projectId);
-		SalesCommission s = salesCommissionService
-				.findCurrentEffectiveSalesCommission(projectId);
-
-		if (d != null) {
-			this.currentDiscount = d.getDiscountRate().doubleValue();
-			this.discountExpiry = d.getExpiryDate();
-		} else {
-			this.currentDiscount = 0;
-			this.discountExpiry = null;
-		}
-
-		if (s != null) {
-			this.commisionEffective = s.getEffectiveDate();
-			this.salesCommission = s.getAmountOrRate().doubleValue();
-			this.commisionType = s.getType();
-		} else {
-			this.commisionEffective = null;
-			this.salesCommission = 0;
-			this.commisionType = null;
-		}
-	}
-
-	public String addDiscount() {
-		try {
-			validateDiscount();
-			DiscountService discountService = (DiscountService) SpringBeanUtil
-					.lookup(DiscountService.class.getName());
-			discount.setProject(project);
-			discount.setCreatedOn(new Date());
-			discountService.insert(discount);
-			discounts = discountService.findByProjectId(projectId);
-			discount = new Discount();
-			refreshCommissionDiscount();
-			addInfoMessage("Discount", "Discount Added");
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-		return null;
-	}
-
-	public void validateDiscount() throws Throwable {
-		Date effDate = discount.getEffectiveDate();
-		Date expDate = discount.getExpiryDate();
-
-		if (effDate.after(expDate)) {
-			throw new Throwable("Invalid Date Range selected");
-		}
-
-		for (Discount iter : discounts) {
-			if (effDate != null) {
-				if (effDate.after(iter.getEffectiveDate())
-						&& effDate.before(iter.getExpiryDate())) {
-					throw new Throwable(
-							"Effective Date overlap with existing Discounts");
-				}
-			}
-
-			if (expDate != null) {
-				if (expDate.after(iter.getEffectiveDate())
-						&& expDate.before(iter.getExpiryDate())) {
-					throw new Throwable(
-							"Expiry Date overlap with existing Discounts");
-				}
-			}
-		}
-	}
-
-	public String addSalesCommission() {
-		try {
-			SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-					.lookup(SalesCommissionService.class.getName());
-			commission.setProject(project);
-			commission.setCreatedOn(new Date());
-			salesCommissionService.insert(commission);
-			commissions = salesCommissionService.findByProjectId(projectId);
-			commission = new SalesCommission();
-			refreshCommissionDiscount();
-			addInfoMessage("Sales Commission", "Sales Commission Added");
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-		return "newProject";
-	}
-
-	public String deleteDiscount() {
-		try {
-			if (discount != null && discount.getDiscountId() != null) {
-				DiscountService discountService = (DiscountService) SpringBeanUtil
-						.lookup(DiscountService.class.getName());
-				discountService.delete(discount.getDiscountId());
-				discounts = discountService.findByProjectId(projectId);
-				discount = new Discount();
-				refreshCommissionDiscount();
-				addInfoMessage("Discount", "Discount Deleted");
-			}
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-		return null;
-	}
-
-	public String deleteSalesCommission() {
-		try {
-			if (commission != null && commission.getCommissionId() != null) {
-				SalesCommissionService salesCommissionService = (SalesCommissionService) SpringBeanUtil
-						.lookup(SalesCommissionService.class.getName());
-				salesCommissionService.delete(commission.getCommissionId());
-				commissions = salesCommissionService.findByProjectId(projectId);
-				commission = new SalesCommission();
-				refreshCommissionDiscount();
-			}
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-		return null;
+		return "saListProject";
 	}
 
 	public String toInventoryList() {
@@ -505,38 +295,12 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
-		return "inventoryList";
-	}
-
-	public String addInventory() {
-		inventory = new ProjectInventory();
-		inventory.setDiscountRate(project.getDiscountRate());
-		return "editInventory";
+		return "saListInventory";
 	}
 
 	public String editInventory() {
 		inventory.setDiscountRate(project.getDiscountRate());
-		return "editInventory";
-	}
-
-	public String deleteInventory() {
-		try {
-			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-					.lookup(ProjectInventoryService.class.getName());
-
-			if (inventory != null) {
-				inventoryService.delete(inventory.getInventoryId());
-				addInfoMessage("Property Unit", "Property Unit Deleted");
-			}
-		} catch (Throwable t) {
-			if (t instanceof DataIntegrityViolationException) {
-				addErrorMessage("Property Unit",
-						"This property is currently purchased. Deletion not allowed.");
-			} else {
-				addErrorMessage("Property Unit", t.getMessage());
-			}
-		}
-		return toInventoryList();
+		return "saEditInventory";
 	}
 
 	public String saveInventory() {
@@ -552,24 +316,6 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			return null;
 		}
 		return toInventoryList();
-	}
-
-	public String saveInventoryAsNew() {
-		Long inventoryId = inventory.getInventoryId();
-		try {
-			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-					.lookup(ProjectInventoryService.class.getName());
-			inventory.setInventoryId(null);
-			inventory.setProject(project);
-			validateInventoryKey(inventoryService);
-			inventoryService.insert(inventory);
-			addInfoMessage("Property Unit", "Property Unit Added");
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-			inventory.setInventoryId(inventoryId);
-			return null;
-		}
-		return editInventory();
 	}
 
 	public void validateInventoryKey(ProjectInventoryService inventoryService) throws Throwable {

@@ -203,7 +203,7 @@
         <property name="bookPymtBank" type="string">
             <column name="book_pymt_bank" length="5" />
         </property>
-                 <property name="source" type="string">
+        <property name="source" type="string">
             <column name="source" length="5" />
         </property>
          <property name="salesPerson" type="string">

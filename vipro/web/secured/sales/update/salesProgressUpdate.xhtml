@@ -19,7 +19,12 @@ Sales Update
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
-   		<h:panelGrid columns="4" style="width:100%;">
+   	   		<h:panelGrid columns="4" style="width:100%;">
+			
+			<p:outputLabel value="Unit No"/>
+			<h:inputText value="#{salesUpdate.account.projectInventory.unitNo}" disabled="true" />
+   			<p:outputLabel value="Sales Person"/>
+			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:300px" disabled="true" />
 
 			<p:outputLabel value="Purchaser  "/>
 			<h:panelGroup>
@@ -169,11 +174,6 @@ Sales Update
 				&nbsp;&nbsp;
 				<p:commandButton id="laVerifiedByViewDialogButton" value="Verify" actionListener="#{salesUpdate.setLADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{salesUpdate.verifyByDocumentType('LA')}"/>     
 			</h:panelGroup>
-			
-			<p:outputLabel value="Sales Person"/>
-			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:400px" disabled="true" />
-			<p:outputLabel value=""/>
-   			<p:outputLabel value=""/>
    			
    		</h:panelGrid>
    		

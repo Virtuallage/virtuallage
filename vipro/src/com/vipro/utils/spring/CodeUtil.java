@@ -82,11 +82,12 @@ public final class CodeUtil {
 
 	public static List<SelectItem> getPropertyStatusAsItems() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_ACTIVE, "Available") );
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_AVAILABLE, "Available") );
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_DISABLED, "Not Available"));
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_IN_PROGRESS, "In Progress"));
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_BOOKED, "Booked") );
-		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_SOLD, "Sold"));
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_SOLD_CONFIRMED, "Sold"));
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_RESERVED, "Reserved"));
 		
 		return list;
 	}

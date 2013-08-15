@@ -73,4 +73,9 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 		// TODO Auto-generated method stub
 		return projectInventoryDao.findByProjectIdUnitNo(projectId, unitNo);
 	}
+
+	@Override
+	public List<ProjectInventory> getLockedUnit(Long projectId, Long userId) {
+		return projectInventoryDao.findLockedUnit(projectId, userId);
+	}
 }

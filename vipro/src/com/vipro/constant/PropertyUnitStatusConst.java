@@ -13,6 +13,8 @@ public interface PropertyUnitStatusConst extends CommonConst {
 	
 	public static final String STATUS_SOLD="PSSLD";
 	
+	public static final String STATUS_SOLD_CONFIRMED="PSSLC";
+	
 	public static final String STATUS_IN_PROGRESS="PSPRG";
 	
 	public static final String STATUS_BOOKED="PSBOK";
