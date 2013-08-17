@@ -103,7 +103,9 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	private String searchIdNo;
 	private String searchName;
+	private String customerId;
 	private String customerNo;
+	private List<Customer> availableCustomers;
 	private List<Customer> searchCustList;
 	private Customer selectedCustomer;
 	private Customer delCustomer;
@@ -406,6 +408,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public void setSearchName(String searchName) {
 		this.searchName = searchName;
 	}
+	
+	public List<Customer> getAvailableCustomers() {
+		return availableCustomers;
+	}
+
+	public void setAvailableCustomers(List<Customer> availableCustomers) {
+		this.availableCustomers = searchCustList;
+	}
 
 	public List<Customer> getSearchCustList() {
 		return searchCustList;
@@ -557,11 +567,24 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	}
 	
 	public String selectAccount() {
-		setCustomerName(account.getCustomer() != null ? account.getCustomer().getFullName() : null);
-		setCustomerName2(account.getCustomer2() != null ? account.getCustomer2().getFullName() : null);
-		setCustomerName3(account.getCustomer3() != null ? account.getCustomer3().getFullName() : null);
-		setCustomerName4(account.getCustomer4() != null ? account.getCustomer4().getFullName() : null);
-		setCustomerName5(account.getCustomer5() != null ? account.getCustomer5().getFullName() : null);
+		availableCustomers = new ArrayList<Customer>();
+		
+		if (account.getCustomer() != null) {
+			availableCustomers.add(account.getCustomer());
+		}
+		if (account.getCustomer2() != null) {
+			availableCustomers.add(account.getCustomer2());
+		}
+		if (account.getCustomer3() != null) {
+			availableCustomers.add(account.getCustomer3());
+		}
+		if (account.getCustomer4() != null) {
+			availableCustomers.add(account.getCustomer4());
+		}
+		if (account.getCustomer5() != null) {
+			availableCustomers.add(account.getCustomer5());
+		}
+
 		return "salesProgressUpdate";
 	}
 	
@@ -610,20 +633,78 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return verified;
 	}
 	
+	private int countDeleteCustomer = 0;
+	public String verifyDeleteCustomer() {
+		String display = "none";
+
+		int lastCustomerNo = 0;
+		if(account.getCustomer5() != null) {
+			lastCustomerNo = 5;
+		} else if(account.getCustomer4() != null) {
+			lastCustomerNo = 4;
+		} else if(account.getCustomer3() != null) {
+			lastCustomerNo = 3;
+		} else if(account.getCustomer2() != null) {
+			lastCustomerNo = 2;
+		} else {
+			lastCustomerNo = 1;
+		}
+		
+		countDeleteCustomer = countDeleteCustomer + 1;
+		
+		if(countDeleteCustomer == lastCustomerNo) {
+			if(countDeleteCustomer > 1) {
+				display = "inline";
+			}
+			countDeleteCustomer = 0;
+		}
+		
+		return display;
+	}
+	
+	private int countAddCustomer = 0;
+	public String verifyAddCustomer() {
+		String display = "none";
+		
+		int lastCustomerNo = 0;
+		if(account.getCustomer5() != null) {
+			lastCustomerNo = 5;
+		} else if(account.getCustomer4() != null) {
+			lastCustomerNo = 4;
+		} else if(account.getCustomer3() != null) {
+			lastCustomerNo = 3;
+		} else if(account.getCustomer2() != null) {
+			lastCustomerNo = 2;
+		} else {
+			lastCustomerNo = 1;
+		}
+		
+		countAddCustomer = countAddCustomer + 1;
+		
+		if(countAddCustomer == lastCustomerNo) {
+			if(countAddCustomer < 5) {
+				display = "inline";
+			}
+			countAddCustomer = 0;
+		}
+			
+		return display;
+	}
+	
 	public String verifyByDocumentType(String docType) {
 		String display = "none";
 		AuthUser user = getCurrentUser();
 		String groupId = user.getUserProfile().getUserGroup().getGroupId();
 		if(docType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SYS_ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LO)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SYS_ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SYS_ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
 				display = "inline";
 			}
 		}
@@ -738,32 +819,66 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return null;
 	}
 	
-	public void SetCustomerNo(String customerNo) {
-		this.customerNo = customerNo;
-	}
-
-	public void changeSelectedCustomer() {
-		SetAccountCustomer(selectedCustomer);
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+		this.customerNo = "";
 	}
 	
-	public void SetAccountCustomer(Customer customer)
+	public void setCustomerNo(String customerId) {
+		this.customerId = "";
+		
+		if(account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "2";
+		} else if(account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "3";
+		} else if(account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "4";
+		} else if(account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "5";
+		} else {
+			this.customerNo = "1";
+		}
+	}
+	
+	public void changeSelectedCustomer() {
+		setAccountCustomer(selectedCustomer);
+	}
+	
+	public void deleteByCustomerId(String customerId) {
+
+		if(account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			account.setCustomer5(null);
+		} else if(account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			account.setCustomer4(null);
+		} else if(account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			account.setCustomer3(null);
+		} else if(account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			account.setCustomer2(null);
+		}
+		
+		selectAccount();
+	}
+	
+	public void setAccountCustomer(Customer customer)
 	{
-		if(this.customerNo.equals("2")) {
+		if((account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("1")) {
 			account.setCustomer2(customer);
 			setCustomerName2(customer.getFullName());
-		} else if(this.customerNo.equals("3")) {
+		} else if((account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("2")) {
 			account.setCustomer3(customer);
 			setCustomerName3(customer.getFullName());
-		} else if(this.customerNo.equals("4")) {
+		} else if((account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("3")) {
 			account.setCustomer4(customer);
 			setCustomerName4(customer.getFullName());
-		} else if(this.customerNo.equals("5")) {
+		} else if((account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("4")) {
 			account.setCustomer5(customer);
 			setCustomerName5(customer.getFullName());
 		} else {
 			account.setCustomer(customer);
 			setCustomerName(customer.getFullName());
 		}
+
+		selectAccount();
 	}
 	
 	public String toAddIndividual() {
@@ -797,7 +912,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		SetAccountCustomer(individual);
+		setAccountCustomer(individual);
 		
 		return "salesProgressUpdate";
 	}
@@ -820,7 +935,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		SetAccountCustomer(company);
+		setAccountCustomer(company);
 		
 		return "salesProgressUpdate";
 	}

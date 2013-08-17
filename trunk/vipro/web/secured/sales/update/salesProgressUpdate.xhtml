@@ -19,58 +19,25 @@ Sales Update
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
-   	   		<h:panelGrid columns="4" style="width:100%;">
-			
-			<p:outputLabel value="Unit No"/>
-			<h:inputText value="#{salesUpdate.account.projectInventory.unitNo}" disabled="true" />
+   		<p:dataTable id="availableCustomers" var="c" value="#{salesUpdate.availableCustomers}" paginator="false">   
+        	<p:column headerText="Purchaser Name" style="width:35%;">  
+            	<h:outputText value="#{c.getFullName()}" />
+        	</p:column>  
+        	<p:column headerText="ID. No" style="width:35%;">  
+            	<h:outputText value="#{c.getIdentityNo()}" />
+        	</p:column>
+        	<p:column headerText="Action">
+           		<p:commandButton actionListener="#{salesUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Customer" />
+           		<p:commandButton actionListener="#{salesUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Customer" style="display:#{salesUpdate.verifyAddCustomer()}"/>
+        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Customer" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
+           	</p:column> 
+     	</p:dataTable><br />
+   		<h:panelGrid columns="4" style="width:100%;">
+   			<p:outputLabel value="Unit No"/>
+			<h:inputText value="#{salesUpdate.account.projectInventory.unitNo}"  style="width:200px" disabled="true" />
    			<p:outputLabel value="Sales Person"/>
-			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:300px" disabled="true" />
-
-			<p:outputLabel value="Purchaser  "/>
-			<h:panelGroup>
-				<h:inputText value="#{salesUpdate.customerName}" style="width:200px" disabled="true"/>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser &nbsp;&nbsp;" actionListener="#{salesUpdate.SetCustomerNo(1)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value=""/>
-   			<p:outputLabel value=""/>
+			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:200px" disabled="true" />
 			
-			<p:outputLabel value="Purchaser 2" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
-			<h:panelGroup style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}">
-				<h:inputText value="#{salesUpdate.customerName2}" style="width:200px" disabled="true"/>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser 2" actionListener="#{salesUpdate.SetCustomerNo(2)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer2().getFullName() != null? 'block':'none'}"/>
-			
-			<p:outputLabel value="Purchaser 3" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
-			<h:panelGroup style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}">
-				<h:inputText value="#{salesUpdate.customerName3}" style="width:200px" disabled="true"/>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser 3" actionListener="#{salesUpdate.SetCustomerNo(3)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer3().getFullName() != null? 'block':'none'}"/>
-			
-			<p:outputLabel value="Purchaser 4" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
-			<h:panelGroup style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}">
-				<h:inputText value="#{salesUpdate.customerName4}" style="width:200px" disabled="true"/>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser 4" actionListener="#{salesUpdate.SetCustomerNo(4)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer4().getFullName() != null? 'block':'none'}"/>
-			
-			<p:outputLabel value="Purchaser 5" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
-			<h:panelGroup style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}">
-				<h:inputText value="#{salesUpdate.customerName5}" style="width:200px" disabled="true"/>
-				&nbsp;&nbsp;
-				<p:commandButton value="Change Purchaser 5" actionListener="#{salesUpdate.SetCustomerNo(5)}" oncomplete="dlgSearchCust.show()" icon="ui-icon-contact"/>
-			</h:panelGroup>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
-			<p:outputLabel value="" style="display:#{salesUpdate.account.getCustomer5().getFullName() != null? 'block':'none'}"/>
-
 			<p:outputLabel value="Selling Price"/>
 			<h:inputText value="#{salesUpdate.account.purchasePrice}" style="width:200px" disabled="true">
 				<f:convertNumber type="currency" currencySymbol="" />
@@ -174,7 +141,7 @@ Sales Update
 				&nbsp;&nbsp;
 				<p:commandButton id="laVerifiedByViewDialogButton" value="Verify" actionListener="#{salesUpdate.setLADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{salesUpdate.verifyByDocumentType('LA')}"/>     
 			</h:panelGroup>
-   			
+
    		</h:panelGrid>
    		
    		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
