@@ -10,38 +10,37 @@
 -- +-------------------------------------------------------------------------+
 
 -- Create Institution Information Record
-INSERT INTO vipro.institution (institution_id, institution_name, status)
-     VALUES (1000000001, 'B&G Concept Engineering Sdn Bhd', 'SSACT');
+INSERT INTO vipro.institution (institution_id, institution_name, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off, status)
+     VALUES (1000000001, 'B&G Concept Engineering Sdn Bhd', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y', 'SSACT');
 
 -- Create Holiday Table Data
--- Create Holiday Table Data
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20130601, 'Agong Birthday', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20130601, 'Agong Birthday');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20130808, 'Hari Raya Puasa', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20130808, 'Hari Raya Puasa');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20130809, 'Hari Raya Puasa', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20130809, 'Hari Raya Puasa');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20130831, 'Hari Merdeka', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20130831, 'Hari Merdeka');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20130916, 'Hari Malaysia', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20130916, 'Hari Malaysia');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20131015, 'Hari Raya Haji', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20131015, 'Hari Raya Haji');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20131103, 'Deepavali', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20131103, 'Deepavali');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20131105, 'Awal Muharram', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20131105, 'Awal Muharram');
 
-INSERT INTO vipro.holiday (institution_id, date, description, mon_off, tue_off, wed_off, thu_off, fri_off, sat_off, sun_off)
-     VALUES (1000000001, 20131224, 'Chrismas Day', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y');
-
+INSERT INTO vipro.holiday (institution_id, date, description)
+     VALUES (1000000001, 20131224, 'Chrismas Day');
+     
 -- Create Default User Group and Username
 INSERT INTO vipro.user_group VALUES('ADMIN', 'System Administrator Group', 'SSACT');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  staff_no, department, status, group_id) 
@@ -147,6 +146,11 @@ INSERT INTO vipro.code_det VALUES ('CT', 'CTOTH', 'Other', 'SSACT');
 INSERT INTO vipro.code_header VALUES ('CC', 'Customer Category/Type');
 INSERT INTO vipro.code_det VALUES ('CC', 'CCIND', 'Individual', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('CC', 'CCCOM', 'Company', 'SSACT');
+
+-- Special Handling
+INSERT INTO vipro.code_header VALUES ('SH', 'Special Handling Customer Type');
+INSERT INTO vipro.code_det VALUES ('SH', 'SHLND', 'Land Owner', 'SSACT');
+INSERT INTO vipro.code_det VALUES ('SH', 'SHSTF', 'Staff', 'SSACT');
 
 -- Type of Property 
 INSERT INTO vipro.code_header VALUES ('PT', 'Property Type');
