@@ -15,7 +15,7 @@ Sales Update
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Update - Unit No: #{salesUpdate.account.projectInventory.unitNo}" style="width:95%;">  
+<p:panel id="panel" header="Sales Update #{salesUpdate.project.projectName}" style="width:95%;">  
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
@@ -27,9 +27,9 @@ Sales Update
             	<h:outputText value="#{c.getIdentityNo()}" />
         	</p:column>
         	<p:column headerText="Action">
-           		<p:commandButton actionListener="#{salesUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Customer" />
-           		<p:commandButton actionListener="#{salesUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Customer" style="display:#{salesUpdate.verifyAddCustomer()}"/>
-        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Customer" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
+           		<p:commandButton actionListener="#{salesUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
+           		<p:commandButton actionListener="#{salesUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Purchaser" style="display:#{salesUpdate.verifyAddCustomer()}"/>
+        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
            	</p:column> 
      	</p:dataTable><br />
    		<h:panelGrid columns="4" style="width:100%;">
@@ -177,14 +177,13 @@ Sales Update
 	
 <p:focus id="btnSearchCust" for="btnSearchCust"/> 
 <h:form id="searchCustForm">
-	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" showEffect="fade" hideEffect="fade"> 
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600" showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
-			<p:outputLabel value="ID No." for="searchIdNo"/>
-			<p:inputText id="searchIdNo" length="15" size="30" value="#{salesUpdate.searchIdNo}" autocomplete="off"/>
-			
 			<p:outputLabel value="Name" for="searchName"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
+			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>
-				<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
+				<p:inputText id="searchIdNo" length="15" size="30" value="#{salesUpdate.searchIdNo}" autocomplete="off"/>
 				&nbsp;
 				<p:commandButton  value="Search" action="#{salesUpdate.searchCustomer}" update="searchCustForm:custs"/>
 			</h:panelGroup>

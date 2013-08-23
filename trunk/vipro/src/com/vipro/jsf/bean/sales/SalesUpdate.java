@@ -713,6 +713,18 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public String update() {
 		
+		if (account.getSpaSignedDate() != null && account.getSpaSolicitorId() == 0) {
+			addErrorMessage("Invalid SPA Solicitor",
+					"Please select SPA Solicitor from the dropdown list.");
+			return "salesProgressUpdate";
+		}
+		
+		if (account.getLaSignedDate() != null && account.getLaSolicitorId() == 0) {
+			addErrorMessage("Invalid LA Solicitor",
+					"Please select LA Solicitor from the dropdown list.");
+			return "salesProgressUpdate";
+		}
+		
 		if (account != null) {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 			
