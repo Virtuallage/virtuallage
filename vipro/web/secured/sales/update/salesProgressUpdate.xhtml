@@ -176,19 +176,23 @@ Sales Update
 	</h:form> 
 	
 <p:focus id="btnSearchCust" for="btnSearchCust"/> 
+
 <h:form id="searchCustForm">
-	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600" showEffect="fade" hideEffect="fade"> 
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Name" for="searchName"/>
 			<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
+
 			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>
-				<p:inputText id="searchIdNo" length="15" size="30" value="#{salesUpdate.searchIdNo}" autocomplete="off"/>
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{salesUpdate.searchIdNo}" autocomplete="off"/>			
 				&nbsp;
 				<p:commandButton  value="Search" action="#{salesUpdate.searchCustomer}" update="searchCustForm:custs"/>
 			</h:panelGroup>
 		</h:panelGrid>
+		
 		<br/>
+		
 		<p:dataTable id="custs" var="c" value="#{salesUpdate.searchCustList}" style="width:90%;">  
 	        <p:column headerText="Purchaser Name" style="width:50%">  
 	            <h:outputText value="#{c.fullName}" />  
@@ -198,13 +202,16 @@ Sales Update
 	        </p:column>  
 	        <p:column headerText="Id No." style="width:25%">  
 	            <h:outputText value="#{c.identityNo}" />  
-	        </p:column>
+	        </p:column>  
+	     
 	        <p:column headerText="Action" style="width:10%">  
-	           <p:commandButton id="selectButton" ajax="false" action="#{salesUpdate.changeSelectedCustomer}" oncomplete="dlgSearchCust.hide()" update="custAccountForm" icon="ui-icon-check" title="Select Customer">  
+	           <p:commandButton id="selectButton" ajax="false" action="#{salesUpdate.changeSelectedCustomer}"
+	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-check" title="Select Customer">  
 	                <f:setPropertyActionListener value="#{c}" target="#{salesUpdate.selectedCustomer}" />  
 	            </p:commandButton>  
 	        </p:column>  
-		</p:dataTable>
+		</p:dataTable>  
+
 		<br/>
 		<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
 			action="#{salesUpdate.toAddIndividual}" icon="ui-icon-plus"/>
@@ -213,6 +220,7 @@ Sales Update
 			action="#{salesUpdate.toAddCompany}" icon="ui-icon-plus"/>
 		&nbsp; 
 		<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
+	
 	</p:dialog>				
 </h:form>	
 
