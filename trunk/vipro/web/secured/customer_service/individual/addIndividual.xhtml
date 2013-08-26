@@ -106,6 +106,10 @@ Add Individuals
 				
 				<p:outputLabel value="Email Address" for="email"/>
 				<p:inputText id="email" value="#{customerRegister.individual.email}" maxlength="30" autocomplete="off"/>
+				<p:outputLabel value="Special Handling" for="special"/>
+				<p:selectOneMenu id="special" value="#{customerRegister.individual.specialHandling}"  required="false">
+						<f:selectItems value="#{customerRegister.listSpecial}"/>
+				</p:selectOneMenu>
 			</h:panelGrid>
 		   	
 		   	<h:panelGrid columns="2" style="width:100%">

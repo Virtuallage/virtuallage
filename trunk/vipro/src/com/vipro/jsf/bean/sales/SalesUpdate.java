@@ -82,6 +82,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listSolicitors = null;
 	private List<SelectItem> listPanelBanks = null;
+	private List<SelectItem> listSpecial = null;
 	
 	private ProjectInventory inventory;
 	private Long projectId;
@@ -127,6 +128,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		listBumi = CodeUtil.getCodes("BM");
 		listRace = CodeUtil.getCodes("RC");
 		listState = CodeUtil.getCodes("ST");
+		listSpecial = CodeUtil.getCodes("SH");
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
 		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
 
@@ -950,6 +952,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		setAccountCustomer(company);
 		
 		return "salesProgressUpdate";
+	}
+
+	public List<SelectItem> getListSpecial() {
+		return listSpecial;
+	}
+
+	public void setListSpecial(List<SelectItem> listSpecial) {
+		this.listSpecial = listSpecial;
 	}
 
 }

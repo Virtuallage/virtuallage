@@ -112,6 +112,10 @@ Edit purchaser
 				
 				<p:outputLabel value="Email Address" for="email"/>
 				<p:inputText id="email" value="#{salesRegister.purchaser.email}" maxlength="30" autocomplete="off"/>
+				<p:outputLabel value="Special Handling" for="special"/>
+				<p:selectOneMenu id="special" value="#{salesRegister.individual.specialHandling}"  required="false">
+						<f:selectItems value="#{salesRegister.listSpecial}"/>
+				</p:selectOneMenu>
 			</h:panelGrid>
 		   	
 		   	<h:panelGrid columns="2" style="width:100%">
