@@ -391,7 +391,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 				salesCommissionHistory.setDateSubmitted(new Date());
 				try
 				{
-					String batchNo = account.getAccountId() + fmt.format(new Date());
+					String batchNo = account.getAttendedBy() + fmt.format(new Date());
 					salesCommissionHistory.setBatchNo(Long.valueOf(batchNo));
 				}
 				catch(Exception ex){
@@ -426,6 +426,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 			}
 			
 			addInfoMessage("Sales Commission", "Submitted Successful.");
+			
 			return listAccounts();
 		} else {
 			addInfoMessage("Sales Commission", "Failed to submit.");

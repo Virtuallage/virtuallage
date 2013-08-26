@@ -45,6 +45,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listBumi = null;
 	private List<SelectItem> listLanguage = null;
 	private List<SelectItem> listRace = null;
+	private List<SelectItem> listSpecial = null;
 
 	private List<Customer> customers;
 	private CustomerDataModel customerDataModel;
@@ -83,6 +84,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		listLanguage = CodeUtil.getCodes("LG");
 		listRace = CodeUtil.getCodes("RC");
 		listState = CodeUtil.getCodes("ST");
+		listSpecial = CodeUtil.getCodes("SH");
 	}
 
 	public List<SelectItem> getListState() {
@@ -350,6 +352,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			return null;
 		}
 
+		addInfoMessage("Record Created", "Purchaser information created successfully.");
+		
 		return "individualRegistration";
 	}
 
@@ -374,6 +378,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			return null;
 		}
 
+		addInfoMessage("Record Created", "Company information created successfully.");
+		
 		return "companyRegistration";
 	}
 	
@@ -424,6 +430,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			return null;
 		}
 
+		addInfoMessage("Record Saved", "Purchaser information updated successfully.");
+		
 		return "individualRegistration";
 	}
 
@@ -448,6 +456,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			return null;
 		}
 
+		addInfoMessage("Record Saved", "Company information updated successfully.");
+		
 		return "companyRegistration";
 	}
 
@@ -457,5 +467,13 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	
 	public String backCompany() {
 		return "companyRegistration";
+	}
+
+	public List<SelectItem> getListSpecial() {
+		return listSpecial;
+	}
+
+	public void setListSpecial(List<SelectItem> listSpecial) {
+		this.listSpecial = listSpecial;
 	}
 }

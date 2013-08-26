@@ -70,6 +70,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listLanguage = null;
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listProject = null;
+	private List<SelectItem> listSpecial = null;
 	
 	private List<SelectItem> listBank = null;
 	private List<SelectItem> listPaymentMethod = null;
@@ -153,7 +154,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		listState = CodeUtil.getCodes("ST");
 		listMediaSource = CodeUtil.getCodes("ME");
 		listProject = CodeUtil.getProjectAsItems();
-		
+		listSpecial = CodeUtil.getCodes("SH");		
 		listBank = CodeUtil.getCodes("BK");
 		listPaymentMethod = CodeUtil.getCodes("PM");
 	}
@@ -1359,5 +1360,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setEditCustomerId(long editCustomerId) {
 		this.editCustomerId = editCustomerId;
+	}
+
+	public List<SelectItem> getListSpecial() {
+		return listSpecial;
+	}
+
+	public void setListSpecial(List<SelectItem> listSpecial) {
+		this.listSpecial = listSpecial;
 	}
 }

@@ -88,6 +88,10 @@ Add Company
 				<p:outputLabel value="Mobile No" for="mobile" required="true"/>
 				<p:inputText id="mobile" value="#{salesUpdate.company.mobileNo}" maxlength="15" autocomplete="off"/>
 				
+				<p:outputLabel value="Special Handling" for="special"/>
+				<p:selectOneMenu id="special" value="#{salesUpdate.company.specialHandling}"  required="false">
+						<f:selectItems value="#{salesUpdate.listSpecial}"/>
+				</p:selectOneMenu>	
 			</h:panelGrid>
 
 			<h:panelGrid columns="2" style="width:100%">
