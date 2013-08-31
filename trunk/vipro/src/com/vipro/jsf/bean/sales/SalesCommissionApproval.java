@@ -61,9 +61,9 @@ import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 
-@ManagedBean(name = "salesCommission")
+@ManagedBean(name = "salesCommissionApproval")
 @SessionScoped
-public class SalesCommission extends CommonBean implements Serializable{
+public class SalesCommissionApproval extends CommonBean implements Serializable{
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -79,6 +79,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 	private Account account;
 	private Long accountId;
 	private BigDecimal totalClaimAmount;
+	private SalesCommissionHistory salesCommissionHistory;
 
 	@PostConstruct
 	public void init() {
@@ -140,6 +141,23 @@ public class SalesCommission extends CommonBean implements Serializable{
 	public void setSalesCommissionAccounts(List<Account> salesCommissionAccounts) {
 		this.salesCommissionAccounts = salesCommissionAccounts;
 	}
+	
+	public List<SalesCommissionHistory> getSalesCommissionHistorys() {
+		listAccounts();
+		return this.salesCommissionHistorys;
+	}
+
+	public void setSalesCommissionHistorys(List<SalesCommissionHistory> salesCommissionHistorys) {
+		this.salesCommissionHistorys = salesCommissionHistorys;
+	}
+	
+	public SalesCommissionHistory getSalesCommissionHistory() {
+		return this.salesCommissionHistory;
+	}
+
+	public void setSalesCommissionHistory(SalesCommissionHistory salesCommissionHistory) {
+		this.salesCommissionHistory = salesCommissionHistory;
+	}
 
 	public Account getAccount() {
 		return account;
@@ -174,29 +192,6 @@ public class SalesCommission extends CommonBean implements Serializable{
 		this.totalClaimAmount = totalClaimAmount;
 	}
 
-	public String listAccounts(){
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
-		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
-
-		AuthUser user = getCurrentUser();
-		Long userId = user.getUserProfile().getUserId();
-		UserProfile userProfile = userProfileService.findById(userId);
-		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
-				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
-		{
-			accounts = accountService.findAllAvailable();
-		}
-		else
-		{
-			accounts = accountService.findByAvailableUserId(userId);
-		}
-
-		salesCommissionHistorys = salesCommissionHistoryService.findAll();
-				
-		return "salesCommission";
-	}
-	
 	public String GetFontColorByAttendedBy(String attendedByStr) {
 		String fontColor = "Black";
 		try {
@@ -248,9 +243,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 			}
 
 			output = amount + "";
-			//DecimalFormat myFormatter = new DecimalFormat("###,###,###,###.00");
-			//output = myFormatter.format(amount);
-			
+
 			float totalAmount = Float.valueOf(totalClaimAmount.toString());
 			totalAmount += amount;
 			totalClaimAmount = new BigDecimal(totalAmount);
@@ -297,42 +290,37 @@ public class SalesCommission extends CommonBean implements Serializable{
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
+	public String listAccounts(){
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+
+		AuthUser user = getCurrentUser();
+		Long userId = user.getUserProfile().getUserId();
+		UserProfile userProfile = userProfileService.findById(userId);
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
+		{
+			accounts = accountService.findAllAvailable();
+		}
+		else
+		{
+			accounts = accountService.findByAvailableUserId(userId);
+		}
+
+		salesCommissionHistorys = salesCommissionHistoryService.findAll();
+				
+		return "salesCommissionApproval";
+	}
+	
 	public String submit() {
 		
 		ProgressiveBillingService progressiveBillingService = (ProgressiveBillingService) SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 		
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-		AuthUser user = getCurrentUser();
-		Long userId = user.getUserProfile().getUserId();
-		
 		salesCommissionAccounts = new ArrayList<Account>();
 		claim50PercentAccounts = new ArrayList<Account>();
 		totalClaimAmount = new BigDecimal(0);
-		
-		/*for(Account account: accounts) {
-			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
-			if(status.equalsIgnoreCase("New")) {
-				Date dateBilled = null;
-				List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
-				for (ProgressiveBilling record : records) {
-					dateBilled = record.getDateBilled();
-				}
-				if(dateBilled != null) {
-					salesCommissionAccounts.add(account);
-				} else {
-					if(account.getSpaSignedDate() !=null && account.getSpaVerifiedBy() != null ) {
-						if(account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
-							salesCommissionAccounts.add(account);
-						} else {
-							if(account.getLaSignedDate() !=null && account.getLaVerifiedBy() != null) {
-								salesCommissionAccounts.add(account);
-							}
-						}
-					}
-				}
-			}
-		}*/
-		accounts = accountService.findByAvailableUserId(userId);
+				
 		for(Account account: accounts) {
 			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
 			if(status.equalsIgnoreCase("New")) {
@@ -340,7 +328,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 					if(account.getSpaSignedDate() != null) {
 						Date secondBillingDatePaid = null;
 						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
-						/*int seqNo = 0;
+						int seqNo = 0;
 						for (ProgressiveBilling record : records) {
 							seqNo++;
 							if(seqNo == 2) {
@@ -351,26 +339,11 @@ public class SalesCommission extends CommonBean implements Serializable{
 						if(records.size() >= 2 && secondBillingDatePaid != null)
 						{
 							salesCommissionAccounts.add(account);
-						}*/
-						if(records.size() > 1) {
-							secondBillingDatePaid = records.get(1).getDatePaid();
-							if(secondBillingDatePaid != null)
-							{
-								salesCommissionAccounts.add(account);
-							}
 						}
 					}
 				} else {
 					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null) {
-						Date secondBillingDatePaid = null;
-						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
-						if(records.size() > 0) {
-							secondBillingDatePaid = records.get(0).getDatePaid();
-							if(secondBillingDatePaid != null)
-							{
-								salesCommissionAccounts.add(account);
-							}
-						}
+						salesCommissionAccounts.add(account);
 					}
 				}
 			}
@@ -394,7 +367,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 			return listAccounts();
 		}
 
-		return "salesCommissionConfirmation";
+		return "salesCommissionApprovalConfirmation";
 	}
 	
 	public String confirm() {
@@ -410,7 +383,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 				salesCommissionHistory.setDateSubmitted(new Date());
 				try
 				{
-					String batchNo = account.getAttendedBy() + fmt.format(new Date());
+					String batchNo = account.getAccountId() + fmt.format(new Date());
 					salesCommissionHistory.setBatchNo(Long.valueOf(batchNo));
 				}
 				catch(Exception ex){
@@ -444,12 +417,11 @@ public class SalesCommission extends CommonBean implements Serializable{
 				salesCommissionHistoryService.update(salesCommissionHistory);
 			}
 			
-			addInfoMessage("Sales Commission", "Submitted Successful.");
-			
+			addInfoMessage("Sales Commission Approval", "Submitted Successful.");
 			return listAccounts();
 		} else {
-			addInfoMessage("Sales Commission", "Failed to submit.");
-			return "salesCommissionConfirmation";
+			addInfoMessage("Sales Commission Approval", "Failed to submit.");
+			return "salesCommissionApprovalConfirmation";
 		}
 	}
 	
