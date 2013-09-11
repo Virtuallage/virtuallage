@@ -32,6 +32,9 @@
         <property name="specialHandling" type="string">
             <column name="special_handling" length="5" />
         </property>
+        <property name="businessPartner" type="long">
+            <column name="business_partner" />
+        </property>
         <property name="race" type="string">
             <column name="race" length="5" />
         </property>

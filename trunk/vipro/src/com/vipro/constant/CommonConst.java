@@ -31,4 +31,6 @@ public interface CommonConst {
 	
 	public static final String INDIVIDUAL = "CCIND";
 	
+	public static final String SELECT = "Select";
+	
 }

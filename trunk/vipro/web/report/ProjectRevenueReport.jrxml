@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProjectRevenueReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="projectId" class="java.lang.Long"/>
+	<parameter name="institution_name" class="java.lang.String"/>
+	<parameter name="project_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 1 from dual]]>
+	</queryString>
+	<field name="1" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="10" width="306" height="25"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{institution_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="57" width="255" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="57" width="51" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="35" width="306" height="22"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Summary: Project Revenue Summary]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch"/>
+	</detail>
+</jasperReport>

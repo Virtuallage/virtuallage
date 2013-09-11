@@ -282,5 +282,11 @@
         <property name="dateChanged" type="date">
             <column name="date_changed" length="10" />
         </property>
+        <property name="campaignCode" type="string">
+            <column name="campaign_code" length="5" />
+        </property>
+        <property name="financierRef" type="string">
+            <column name="financier_ref" length="20" />
+        </property>
     </class>
 </hibernate-mapping>

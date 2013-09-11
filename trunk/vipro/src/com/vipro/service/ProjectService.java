@@ -1,9 +1,12 @@
 package com.vipro.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+import com.vipro.dto.SalesByAgentItemDTO;
+import com.vipro.dto.TotalLoanOfferedItemDTO;
 
 public interface ProjectService {
 
@@ -19,4 +22,27 @@ public interface ProjectService {
 	public void insert(ProjectInventory i);
 	public void update(ProjectInventory i);
 	public void deleteInventory(Long inventoryId);
+	
+	public List<String> getTotalInventoryBlocks();
+	public Long getBlockCountByNo(String blockNo,Long projectId);
+	public BigDecimal getValidityPeriodSum(String blockNo, Long projectId,String type);
+	public Long getA5NameBlockCountByNo(String blockNo,Long projectId,Long landProprietorID);
+	public BigDecimal addA5NameSum(String blockNo, Long projectId,String type,Long landProprietorID);
+	public Long getBookingCountByNo(String blockNo,Long projectId);
+	public BigDecimal addBookingSum(String blockNo, Long projectId,String type);
+	public Long getSPACountByNo(String blockNo,Long projectId);
+	public BigDecimal addSPASum(String blockNo, Long projectId,String type);
+	public Long getCashCountByNo(String blockNo,Long projectId);
+	public BigDecimal addCashSum(String blockNo, Long projectId,String type);
+	public Long getLOCountByNo(String blockNo, Long projectId);
+	public BigDecimal addLOSum(String blockNo, Long projectId, String type);
+	public Long getLACountByNo(String blockNo, Long projectId);
+	public BigDecimal addLASum(String blockNo, Long projectId, String type);
+	public Long getAdviseCountByNo(String blockNo, Long projectId);
+	public BigDecimal addAdviseSum(String blockNo, Long projectId, String type);
+	
+	
+	
+	public List<TotalLoanOfferedItemDTO> getTotalLoanOfferedByProjectId(Long projectId);
+	public List<SalesByAgentItemDTO> getSalesByAgentByProjectId(Long projectId);
 }
