@@ -98,11 +98,20 @@
         <property name="latePymtFee" type="big_decimal">
             <column name="late_pymt_fee" precision="7"/>
         </property>
+        <property name="startDate" type="date">
+            <column name="start_date" length="10" />
+        </property>
         <property name="launchDate" type="date">
             <column name="launch_date" length="10" />
         </property>
+        <property name="endDate" type="date">
+            <column name="end_date" length="10" />
+        </property>
         <property name="taxPercentage" type="big_decimal">
             <column name="tax_percentage" precision="5" />
+        </property>
+        <property name="billingModelCode" type="string">
+            <column name="billing_model_code" length="1"/>
         </property>
         <property name="changedBy" type="java.lang.Long">
             <column name="changed_by" />

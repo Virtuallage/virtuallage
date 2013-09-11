@@ -20,6 +20,9 @@
         <property name="stageDescription" type="string">
             <column name="stage_description" length="120" />
         </property>
+        <property name="invoiceNo" type="string">
+            <column name="invoice_no" length="10" />
+        </property>
         <property name="percentage" type="big_decimal">
             <column name="percentage" precision="3" />
         </property>

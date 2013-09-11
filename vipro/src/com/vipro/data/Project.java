@@ -51,8 +51,11 @@ public class Project implements java.io.Serializable {
 	private BigDecimal salesCommission;
 	private BigDecimal latePymtIntRate;
 	private BigDecimal latePymtFee;
+	private Date startDate;	
 	private Date launchDate;
+	private Date endDate;
 	private BigDecimal taxPercentage;
+	private String billingModelCode;
 	private Long changedBy;
 	private Date dateChanged;
 	private String status;
@@ -407,6 +410,14 @@ public class Project implements java.io.Serializable {
 		return landProprietorName;
 	}
 
+	
+	public Long getBussinessPartnerId() {
+		BusinessPartnerService businessPartnerService = (BusinessPartnerService) SpringBeanUtil
+				.lookup(BusinessPartnerService.class.getName());
+		 return businessPartnerService.findById(landProprietorId).getPartnerId();
+	}
+	
+	
 	public void setLandProprietorName(String landProprietorName) {
 		this.landProprietorName = landProprietorName;
 	}
@@ -465,6 +476,30 @@ public class Project implements java.io.Serializable {
 
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
+	}
+
+	public String getBillingModelCode() {
+		return billingModelCode;
+	}
+
+	public void setBillingModelCode(String billingModelCode) {
+		this.billingModelCode = billingModelCode;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

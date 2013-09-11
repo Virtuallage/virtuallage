@@ -44,7 +44,7 @@ public class JasperUtil {
 			String report, Account account, String reportType) {
 		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 		
-	    path = path.concat("accounts/");
+	    path = path.concat("reports/");
 	    File reportDirectory = new File(path);
 	    if (!reportDirectory.exists())
 	    {

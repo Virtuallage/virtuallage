@@ -1,0 +1,184 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"       
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+ <h:head><title>Sales Summary</title></h:head>
+ 
+ <body>
+ 	 <ui:composition template="/template/main_template.xhtml">
+ 	 	 <ui:define name="content">
+ 	 	 
+ 	 	 <p:panel id="panel" header="MIS - Sales Summary " style="width:95%">  			
+		    <h:form id="salesSummaryForm">
+		    <input type="hidden" name="selectedProjectId" value="#{salesSummaryBean.selectedProjectId}" />
+		    <p:outputPanel id="searchPanel"   styleClass="no-borders">
+					<p:focus context="salesSummaryForm"/>
+					
+					<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+				<p:panelGrid style="width:45%; background-color: lightgrey;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:30%;text-align:right; margin-right:5px;vertical-align:middle" id="projectName">
+							<h:outputText value="Project Name"/>
+						</p:column>
+						<p:column style="width:50%;text-align:left;vertical-align:middle">											
+							<p:selectOneMenu id="projectList" value="#{salesSummaryBean.selectedProjectId}"  requiredMessage="Project Name is mandatory"
+								 required="true" style="width:100%" for="projectName">  
+								<f:selectItems value="#{salesSummaryBean.projects}"/>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:20%;text-align:left;vertical-align:middle">
+							 <p:commandButton value = "Search" action="#{salesSummaryBean.searchProject}" ajax="true" update=":panel"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br/>
+				</p:outputPanel>
+ 	 	 	<p:outputPanel id="resultsPanel" rendered = "#{salesSummaryBean.selectedProjectId != null}" >
+ 	 	 			<p:tabView id="tabView"  style="background:none" >
+						<p:tab id="projRevTab" title="Project Revenue Summary" titleStyle="background-color: lightgrey;"  titletip="Project Revenue Summary">
+							
+														
+							 <p:dataTable id="prjRevSummaryTable" var="row" value="#{salesSummaryBean.projRevSummaryRows}"   style="background-color: lightgrey">   							 
+							 <p:column >
+						             <f:facet name="header">  
+						              <h:outputLabel value="Description"/>
+						            </f:facet> 
+						             <h:outputLabel value=" #{row.description}" style="font-weight: bold;" rendered="#{row.heading}" />
+						             <h:outputLabel value=" #{row.description}" rendered="#{!row.heading}" />
+						            
+						        </p:column>                   
+						        <p:columns value="#{salesSummaryBean.columns}" var="column" columnIndexVar="colIndex" >  
+						            <f:facet name="header">   
+						                <h:outputLabel value="#{column}"/>
+						            </f:facet>  
+						            <p:outputPanel rendered = "#{empty row.additionalInformation}">
+						   				<h:outputLabel value="#{row.blocks[colIndex]}" style="float:right" rendered="#{!row.emptyRow and row.currency}">
+						   					<f:convertNumber type="currency"  currencySymbol=""/>
+						            	</h:outputLabel>
+						            	<h:outputLabel value="#{row.blocks[colIndex]}" style="float:right" rendered="#{!row.emptyRow and !row.currency}" >
+						            		<f:convertNumber type="currency"  currencySymbol="" pattern="#,##0"/>
+						            	</h:outputLabel>
+						            <h:outputLabel value = "&#160;" style="float:right" rendered="#{row.emptyRow}" />
+						            </p:outputPanel>
+						            <p:outputPanel rendered = "#{not empty row.additionalInformation}">
+						            		<h:outputText value="#{row.additionalInformation}" rendered = "#{colIndex == 0}"/>
+						            		<h:outputText value="&#160;" rendered = "#{colIndex != 0}"/>
+						            </p:outputPanel>
+						        </p:columns>
+						         <p:column>
+						             <f:facet name="header">  
+						              <h:outputLabel value="Total"/>
+						            </f:facet> 
+						            <h:outputLabel value="#{row.total}" style="float:right" rendered="#{!row.emptyRow and row.currency}"> 
+						            		<f:convertNumber type="currency"  currencySymbol=""/>
+						            </h:outputLabel>
+						            <h:outputLabel value="#{row.total}" style="float:right" rendered="#{!row.emptyRow and !row.currency}" >
+						            	<f:convertNumber type="currency"  currencySymbol="" pattern="#,##0"/>
+						            </h:outputLabel>
+						             <h:outputLabel value="&#160;" style="float:right" rendered="#{row.emptyRow}" />
+						        </p:column>  						  
+						    </p:dataTable>
+						    <br/>
+		 					<p:outputPanel align="right">
+						       	<p:commandButton value = "PDF" action="#{salesSummaryBean.exportReportAction(2)}" ajax="false" />
+								<p:commandButton value = "EXCEL" action="#{salesSummaryBean.exportReportAction(1)}" ajax="false" />
+							</p:outputPanel>
+						</p:tab>
+						<p:tab id="totLoanOffTab" title="Total Loan Offered"> 	
+							 <p:panel id="totLoanOffPanel" style="width:98%" header=" Total Loan Offered">
+							 	<p:dataTable id="totalLoanOfferedTable" var="row" value="#{salesSummaryBean.totalLoanOfferedRows}"   >
+							 		 <p:columnGroup type="header">  
+								           <p:row>  
+								               <p:column rowspan="2" headerText="Bank" />  
+								               <p:column colspan="2" headerText="#{salesSummaryBean.blocksTitle}" />  
+								           </p:row>  
+								 
+								           <p:row>  
+                								<p:column headerText="No Of Loan" />  
+                								<p:column headerText="Total Amount (RM)" />
+								           </p:row>  
+								           </p:columnGroup> 
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{empty row.bankName}"  value = "&#160;"/>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and row.isTotalRow}"  value = "#{row.bankName}" style="font-weight:bold"/>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and !row.isTotalRow}"  value = "#{row.bankName}" />
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and row.isTotalRow}"  value = "#{row.loanCount}" style="font-weight:bold"/>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and !row.isTotalRow}"  value = "#{row.loanCount}" />
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and row.isTotalRow}"  value = "#{row.totalAmount}" style="font-weight:bold;float:right">
+								           			 <f:convertNumber type="currency"  currencySymbol=""/>
+								           		</h:outputLabel>
+								           		<h:outputLabel  rendered = "#{not empty row.bankName and !row.isTotalRow}"  value = "#{row.totalAmount}" style="float:right;">
+								           			 <f:convertNumber type="currency"  currencySymbol=""/>
+								           		</h:outputLabel>
+								           </p:column>
+							 	</p:dataTable>
+							 	<br/><br/>
+		 						<p:outputPanel align="right">
+								 	<p:commandButton value = "PDF" action="#{salesSummaryBean.exportTotalLoanOfferedReport(2)}" ajax="false"/>
+									<p:commandButton value = "EXCEL" action="#{salesSummaryBean.exportTotalLoanOfferedReport(1)}" ajax="false" />
+								</p:outputPanel>
+							 </p:panel> 	
+						</p:tab>
+						<p:tab id="saleByStAgTab" title="Sales By Staff/Agent"> 
+							<p:panel id="saleByStAgPanel" style="width:98%" header=" Sales By Staff/Agent">
+							 <p:dataTable id="saleByStAgable" var="row" value="#{salesSummaryBean.salesByAgentRows}"   >
+							 		 <p:columnGroup type="header">  
+								           <p:row>  
+								               <p:column rowspan="2" headerText="Sold By" />  
+								               <p:column colspan="2" headerText="#{salesSummaryBean.blocksTitle}" />
+								               <p:column rowspan="2" headerText="Staff Purchase" />
+								               <p:column rowspan="2" headerText="Sales Campaign" />  
+								           </p:row>  
+								 
+								           <p:row>  
+                								<p:column headerText="Units" />  
+                								<p:column headerText="Net Sales (RM)" />
+								           </p:row>  
+								           </p:columnGroup> 
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and row.isTotalRow}"  value = "#{row.soldBy}" style="font-weight:bold"/>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and !row.isTotalRow}"  value = "#{row.soldBy}" />
+								           		<h:outputLabel  rendered = "#{empty row.soldBy}"  value = "&#160;"/>
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and row.isTotalRow}"  value = "#{row.units}" style="font-weight:bold;float:right" />
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and !row.isTotalRow}"  value = "#{row.units}" style="float:right"/>
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and row.isTotalRow}"  value = "#{row.netSales}" style="font-weight:bold;float:right">
+								           			<f:convertNumber type="currency"  currencySymbol=""/>
+								           		</h:outputLabel>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and !row.isTotalRow}"  value = "#{row.netSales}" style=";float:right">
+								           			<f:convertNumber type="currency"  currencySymbol=""/>
+								           		</h:outputLabel>
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and row.isTotalRow}"  value = "#{row.staffPurchase}" style="font-weight:bold"/>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and !row.isTotalRow}"  value = "#{row.staffPurchase}" />
+								           </p:column>
+								           <p:column>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and row.isTotalRow}"  value = "#{row.salesCampaign}" style="font-weight:bold"/>
+								           		<h:outputLabel  rendered = "#{not empty row.soldBy and !row.isTotalRow}"  value = "#{row.salesCampaign}" />
+								           </p:column>
+							 	</p:dataTable>
+							 	<br/>
+		 						<p:outputPanel align="right">								
+									<p:commandButton value = "PDF" action="#{salesSummaryBean.exportSalesByStaffAgentReport(2)}" ajax="false"/>
+									<p:commandButton value = "EXCEL" action="#{salesSummaryBean.exportSalesByStaffAgentReport(1)}" ajax="false" />
+								</p:outputPanel>
+							</p:panel>
+						</p:tab>
+					</p:tabView>
+ 	 	 	</p:outputPanel>
+ 	 	 	</h:form>
+		</p:panel>
+ 	 	</ui:define>
+ 	 </ui:composition>
+ </body>
+</html> 

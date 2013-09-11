@@ -98,6 +98,8 @@ public class Account implements java.io.Serializable {
 	private Long loDocId;
 	private Long spaDocId;
 	private Long laDocId;
+	private String campaignCode;
+	private String financierRef;
 
 	public Account() {
 	}
@@ -863,6 +865,22 @@ public class Account implements java.io.Serializable {
 
 	public void setAccrualInterest(BigDecimal accrualInterest) {
 		this.accrualInterest = accrualInterest;
+	}
+
+	public String getCampaignCode() {
+		return campaignCode;
+	}
+
+	public void setCampaignCode(String campaignCode) {
+		this.campaignCode = campaignCode;
+	}
+
+	public String getFinancierRef() {
+		return financierRef;
+	}
+
+	public void setFinancierRef(String financierRef) {
+		this.financierRef = financierRef;
 	}
 
 }

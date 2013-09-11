@@ -22,6 +22,7 @@ public class Customer implements java.io.Serializable {
 	private String fullName;
 	private String contactPerson;
 	private String specialHandling;
+	private Long businessPartner;
 	private String race;
 	private String bumiIndicator;
 	private String sex;
@@ -347,6 +348,14 @@ public class Customer implements java.io.Serializable {
 
 	public void setCitizenship(String citizenship) {
 		this.citizenship = citizenship;
+	}
+
+	public Long getBusinessPartner() {
+		return businessPartner;
+	}
+
+	public void setBusinessPartner(Long businessPartner) {
+		this.businessPartner = businessPartner;
 	}
 	
 }

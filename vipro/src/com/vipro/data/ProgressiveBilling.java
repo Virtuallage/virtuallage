@@ -15,6 +15,7 @@ public class ProgressiveBilling implements java.io.Serializable {
 	private Byte seqNo;
 	private String stageNo;
 	private String stageDescription;
+	private String invoiceNo;	
 	private BigDecimal percentage;
 	private Date dueDate;
 	private BigDecimal interestRate;
@@ -162,6 +163,14 @@ public class ProgressiveBilling implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
 	}
 
 }
