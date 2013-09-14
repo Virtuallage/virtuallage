@@ -14,6 +14,9 @@
         <property name="batchNo" type="java.lang.Long">
             <column name="batch_no" />
         </property>
+        <property name="purchasePrice" type="big_decimal">
+            <column name="purchase_price" precision="7"/>
+        </property>
         <property name="claimPercent" type="big_decimal">
             <column name="claim_percent" precision="5"/>
         </property>

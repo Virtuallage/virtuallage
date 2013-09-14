@@ -13,6 +13,7 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	private Long commissionId;
 	private Account account;
 	private Long batchNo;
+	private BigDecimal purchasePrice;
 	private BigDecimal claimPercent;
 	private BigDecimal claimAmount;
 	private String claimStatus;
@@ -24,9 +25,10 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	public SalesCommissionHistory() {
 	}
 
-	public SalesCommissionHistory(Account account, BigDecimal claimPercent, BigDecimal claimAmount, String claimStatus,
+	public SalesCommissionHistory(Account account, BigDecimal purchasePrice, BigDecimal claimPercent, BigDecimal claimAmount, String claimStatus,
 			Long submittedBy, Date dateSubmitted, Long approvedBy, Date dateApproved) {
 		this.account = account;
+		this.purchasePrice = purchasePrice;
 		this.claimPercent = claimPercent;
 		this.claimAmount = claimAmount;
 		this.claimStatus = claimStatus;
@@ -50,6 +52,14 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+	
+	public BigDecimal getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(BigDecimal purchasePrice) {
+		this.purchasePrice = purchasePrice;
 	}
 	
 	public BigDecimal getClaimPercent() {

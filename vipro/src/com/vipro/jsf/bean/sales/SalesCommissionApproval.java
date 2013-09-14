@@ -16,48 +16,25 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.component.commandbutton.CommandButton;
 
 import com.vipro.auth.AuthUser;
-import com.vipro.constant.AccountStatusConst;
-import com.vipro.constant.DocumentTypeConst;
-import com.vipro.constant.PropertyUnitStatusConst;
-import com.vipro.constant.PurchaseTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.ClaimStatusConst;
-import com.vipro.constant.UserGroupConst;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCommissionHistory;
-import com.vipro.data.Customer;
-import com.vipro.data.DocumentReference;
-import com.vipro.data.Project;
-import com.vipro.data.ProjectInventory;
-import com.vipro.data.SalesCancellationHistory;
 import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
-import com.vipro.data.ProgressiveBilling;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
 import com.vipro.service.SalesCommissionHistoryService;
-import com.vipro.service.DocumentReferenceService;
-import com.vipro.service.ProjectInventoryService;
-import com.vipro.service.ProjectService;
-import com.vipro.service.SalesCancellationService;
 import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
-import com.vipro.service.ProgressiveBillingService;
-import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 
@@ -65,75 +42,18 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class SalesCommissionApproval extends CommonBean implements Serializable{
 
-	private List<Project> projects;
-	private List<ProjectInventory> inventories;
-	private List<Account> accounts;
 	private List<Account> salesCommissionAccounts;
-	private List<Account> claim50PercentAccounts;
-	private List<ProgressiveBilling> progressiveBillings;
 	private List<SalesCommissionHistory> salesCommissionHistorys;
 
-	private ProjectInventory inventory;
-	private Long projectId;
-	private Project project;
-	private Account account;
-	private Long accountId;
 	private BigDecimal totalClaimAmount;
 	private SalesCommissionHistory salesCommissionHistory;
+	private CommandButton approveButton;
 
 	@PostConstruct
 	public void init() {
-		
+		approveButton = new CommandButton();
 	}
 	
-	public List<ProgressiveBilling> getProgressiveBillings() {
-		return progressiveBillings;
-	}
-
-	public void setProgressiveBillings(List<ProgressiveBilling> progressiveBillings) {
-		this.progressiveBillings = progressiveBillings;
-	}
-				
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
-	public List<ProjectInventory> getInventories() {
-		return inventories;
-	}
-
-	public void setInventories(List<ProjectInventory> inventories) {
-		this.inventories = inventories;
-	}
-
-	public ProjectInventory getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(ProjectInventory inventory) {
-		this.inventory = inventory;
-	}
-
-	public Long getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
 	public List<Account> getSalesCommissionAccounts() {
 		return this.salesCommissionAccounts;
 	}
@@ -159,29 +79,12 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		this.salesCommissionHistory = salesCommissionHistory;
 	}
 
-	public Account getAccount() {
-		return account;
-	}
-	
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-	
-	public Long getAccountId() {
-		return accountId;
+	public CommandButton getApproveButton() {
+		return approveButton;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
-	
-	public List<Account> getAccounts() {
-		listAccounts();
-		return this.accounts;
-	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+	public void setApproveButton(CommandButton approveButton) {
+		this.approveButton = approveButton;
 	}
 	
 	public BigDecimal getTotalClaimAmount() {
@@ -213,20 +116,23 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		try
 		{
 			Long id = Long.valueOf(idStr.trim());
-			for (Account claim50PercentAccount : claim50PercentAccounts) {
-				if(claim50PercentAccount.getAccountId().equals(id))
+			SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+			List<SalesCommissionHistory> historyList = salesCommissionHistoryService.findByAccountId(id);
+			if(historyList.size() > 0)
+			{
+				if(historyList.get(0).getClaimPercent().toString().equalsIgnoreCase("50") || historyList.get(0).getClaimPercent().toString().equalsIgnoreCase("50.00"))
 				{
 					percent = "50";
-					break;
 				}
-			}
+			}			
 		} 
 		catch (Exception ex)
 		{
 		}
+
 		return percent;
 	}
-
+	
 	public String GetClaimAmountByPercent(String idStr, String totalCommission)
 	{
 		String output = "0.00";
@@ -256,22 +162,6 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		return output;
 	}
 	
-	public String GetClaimStatusByAccountId(String idStr) {
-		String status = "New";
-
-		Long id = Long.valueOf(idStr.trim());
-		for(SalesCommissionHistory salesCommissionHistory: salesCommissionHistorys) {
-			if(salesCommissionHistory.getAccount().getAccountId().equals(id)) {
-				if(salesCommissionHistory.getClaimStatus().equals(ClaimStatusConst.STATUS_SUBMITTED)) {
-					status = "Submitted";
-				}
-				break;
-			}
-		}
-		
-		return status;
-	}
-	
 	public String PriceDecimalFormat(String value) {
 		String output = "";
 		try
@@ -290,138 +180,133 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
+	public String verifyByUserId(String userIdStr) {
+		String verified = userIdStr;
+		try
+		{
+			Long userId = Long.valueOf(userIdStr);
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+			UserProfile userProfie = userProfileService.findById(userId);
+			if(userProfie != null) {
+				verified = userProfie.getName();
+			}
+		} catch (Exception ex)
+		{
+		}
+		return verified;
+	}
+	
 	public String listAccounts(){
-		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		salesCommissionHistorys = new ArrayList<SalesCommissionHistory>();
+		
 		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
-		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
-
-		AuthUser user = getCurrentUser();
-		Long userId = user.getUserProfile().getUserId();
-		UserProfile userProfile = userProfileService.findById(userId);
-		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
-				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
+		List<SalesCommissionHistory> historyList = salesCommissionHistoryService.findAll();
+		List<Long> batchNoList = new ArrayList<Long>();
+		for(SalesCommissionHistory history: historyList)
 		{
-			accounts = accountService.findAllAvailable();
+			if(!batchNoList.contains(history.getBatchNo()))
+			{
+				batchNoList.add(history.getBatchNo());
+			}
 		}
-		else
+		
+		for(Long batchNo: batchNoList)
 		{
-			accounts = accountService.findByAvailableUserId(userId);
+			List<SalesCommissionHistory> historyBatchNoList = salesCommissionHistoryService.findByBatchNo(batchNo);
+			if(historyBatchNoList != null && historyBatchNoList.size() > 0)
+			{
+				float totalPurchasePrice = 0;
+				float totalClaimAmount = 0;
+				SalesCommissionHistory historyBatchNo = new SalesCommissionHistory();
+				for(int x=0; x< historyBatchNoList.size(); x++)
+				{
+					historyBatchNo = historyBatchNoList.get(x);
+					totalPurchasePrice = totalPurchasePrice + Float.valueOf(historyBatchNo.getPurchasePrice().toString());
+					historyBatchNo.setPurchasePrice(new BigDecimal(totalPurchasePrice));
+					
+					totalClaimAmount = totalClaimAmount + Float.valueOf(historyBatchNo.getClaimAmount().toString());
+					historyBatchNo.setClaimAmount(new BigDecimal(totalClaimAmount));
+				}
+				salesCommissionHistorys.add(historyBatchNo);
+			}
 		}
-
-		salesCommissionHistorys = salesCommissionHistoryService.findAll();
-				
+			
 		return "salesCommissionApproval";
 	}
 	
 	public String submit() {
-		
-		ProgressiveBillingService progressiveBillingService = (ProgressiveBillingService) SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-		
+
 		salesCommissionAccounts = new ArrayList<Account>();
-		claim50PercentAccounts = new ArrayList<Account>();
 		totalClaimAmount = new BigDecimal(0);
-				
-		for(Account account: accounts) {
-			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
-			if(status.equalsIgnoreCase("New")) {
-				if(account.getPurchaseType() != null && account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
-					if(account.getSpaSignedDate() != null) {
-						Date secondBillingDatePaid = null;
-						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
-						int seqNo = 0;
-						for (ProgressiveBilling record : records) {
-							seqNo++;
-							if(seqNo == 2) {
-								secondBillingDatePaid = record.getDatePaid();
-								break;
-							}
-						}
-						if(records.size() >= 2 && secondBillingDatePaid != null)
-						{
-							salesCommissionAccounts.add(account);
-						}
-					}
-				} else {
-					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null) {
-						salesCommissionAccounts.add(account);
-					}
-				}
-			}
-		}
+		
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+		List<SalesCommissionHistory> historyList = salesCommissionHistoryService.findByBatchNo(salesCommissionHistory.getBatchNo());
+		
+		for(SalesCommissionHistory history: historyList) {
+			Long accountId = history.getAccount().getAccountId();
+			Account account = accountService.findById(accountId);
+			salesCommissionAccounts.add(account);
 
-		for(Account salesCommissionAccount: salesCommissionAccounts) {
-			Date currentDate = new Date();
-			Date purchasedDate = salesCommissionAccount.getDatePurchased();
-			Calendar currentCal = Calendar.getInstance();
-			currentCal.setTime(currentDate);
-	        Calendar purchasedCal = Calendar.getInstance();
-	        purchasedCal.setTime(purchasedDate);
-	        
-			if(DaysBetween(purchasedCal.getTime(), currentCal.getTime()) > 180) {
-				claim50PercentAccounts.add(salesCommissionAccount);
-			}
 		}
-
+		
+		if(salesCommissionHistory.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_SUBMITTED))
+		{
+			approveButton.setStyle("");
+		}
+		else
+		{
+			approveButton.setStyle("display: none");
+		}
+		
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
-			addInfoMessage("Sales Commission", "There is nothing to claim.");
+			addInfoMessage("Sales Commission Approval", "There is nothing claim to approve.");
 			return listAccounts();
 		}
-
-		return "salesCommissionApprovalConfirmation";
+		
+		return "salesCommissionConfirmationApproval";
 	}
 	
 	public String confirm() {
 		
 		if (salesCommissionAccounts != null) {
-			SalesCommissionHistoryService salesCommissionHistoryService =  (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
-			SimpleDateFormat fmt = new SimpleDateFormat("yyMMddHHmmss");
 			
-			for(Account account: salesCommissionAccounts) {
-				SalesCommissionHistory salesCommissionHistory = new SalesCommissionHistory();
-				salesCommissionHistory.setAccount(account);
-				salesCommissionHistory.setClaimStatus(ClaimStatusConst.STATUS_SUBMITTED);
-				salesCommissionHistory.setDateSubmitted(new Date());
-				try
-				{
-					String batchNo = account.getAccountId() + fmt.format(new Date());
-					salesCommissionHistory.setBatchNo(Long.valueOf(batchNo));
-				}
-				catch(Exception ex){
+			Date currentDate = new Date();
+			for(Account salesCommissionAccount: salesCommissionAccounts)
+			{
+				TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
+				TransactionHistory transactionHistory = new TransactionHistory();
+				TransactionCode code = new TransactionCode();
+				code.setTransactionCode(TransactionCodeConst.COMMISSION_FEE);
+				transactionHistory.setTransactionCode(code);
+				transactionHistory.setTransactionDate(currentDate);
+				transactionHistory.setTransactionDescription("Commission Fee");
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setAmount(totalClaimAmount);
+				transactionHistory.setAccount(salesCommissionAccount);
+				transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
+				transactionHistoryService.insert(transactionHistory);
 				
-				}
-				
-				BigDecimal claimPercent = new BigDecimal(100);
-				String percent = GetClaimPercentByAccountId(account.getAccountId().toString());
-				if(percent.equals("50")) {
-					claimPercent = new BigDecimal(50);
-				}
-				salesCommissionHistory.setClaimPercent(claimPercent);
-				
-				BigDecimal claimAmount = new BigDecimal(0);
-				String amount = GetClaimAmountByPercent(account.getAccountId().toString(), account.getCommissionAmount().toString());
-				try
-				{
-					if(amount != null && amount.length() > 0) {
-						claimAmount = new BigDecimal(amount);
-					}
-				}
-				catch (Exception ex)
-				{
-				}
-				salesCommissionHistory.setClaimAmount(claimAmount);
-
 				AuthUser user = getCurrentUser();
-				if (user != null)
-					salesCommissionHistory.setSubmittedBy(user.getUserProfile().getUserId());
+				Long userId = user.getUserProfile().getUserId();
+				SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+				List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
+				if(historys != null && historys.size() > 0)
+				{
+					SalesCommissionHistory history = historys.get(0);
+					history.setApprovedBy(userId);
+					history.setDateApproved(currentDate);
+					history.setClaimStatus(ClaimStatusConst.STATUS_APPROVED);
+					salesCommissionHistoryService.update(history);
+				}
 
-				salesCommissionHistoryService.update(salesCommissionHistory);
 			}
+			addInfoMessage("Sales Commission", "Commission Approved.");
+			return "salesCommissionApproval";
 			
-			addInfoMessage("Sales Commission Approval", "Submitted Successful.");
-			return listAccounts();
 		} else {
-			addInfoMessage("Sales Commission Approval", "Failed to submit.");
-			return "salesCommissionApprovalConfirmation";
+			addInfoMessage("Sales Commission", "Failed to approve commission.");
+			return "salesCommissionConfirmationApproval";
 		}
 	}
 	

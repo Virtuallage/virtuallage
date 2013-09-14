@@ -37,6 +37,7 @@ import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.UserGroupConst;
+import com.vipro.constant.CancelStatusConst;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCancellationHistory;
 import com.vipro.data.Customer;
@@ -501,7 +502,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			
 			ProjectInventoryService inventoryService=  (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 			inventory.setAccounts(null);
-			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_CANCELLED);
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_CANCELLING);
 			// ** Bill : Update the changed date to current system date** //
 			inventory.setStatusChangeDate(new Date());
 			
@@ -512,7 +513,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 
 			salesCancellationHistory.setSubmittedBy(user.getUserProfile().getUserId());
 			salesCancellationHistory.setDateSubmitted(new Date());
-			salesCancellationHistory.setStatus(PropertyUnitStatusConst.SUBMIT_CANCEL);
+			salesCancellationHistory.setStatus(CancelStatusConst.SUBMIT_CANCEL);
 			
 			salesCancellationService.update(salesCancellationHistory);
 			addInfoMessage("Sales Cancellation", "Cancellation Pending Approval.");

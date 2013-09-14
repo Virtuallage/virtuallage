@@ -15,65 +15,65 @@ Sales Commission
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Commission Claim Confirmation" style="width:95%">  
+<p:panel id="panel" header="Sales Commission Claim Approval for #{salesUpdate.verifyByUserId(salesCommissionApproval.salesCommissionHistory.submittedBy)}" style="width:95%">  
     
 <p:focus context="panel"/> 
       
 	<h:form>  
-	<p:dataTable var="c" value="#{salesCommission.salesCommissionAccounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+	<p:dataTable var="c" value="#{salesCommissionApproval.salesCommissionAccounts}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15"> 
         
         <p:column headerText="Purchaser&lt;br/&gt;Unit No" sortBy="#{c.customer.fullName}">  
-	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/><br />
-	    	<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
+	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}"/><br />
+	    	<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 
 	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}" style="text-align:right">  
-	    	<h:outputText value="#{c.discountedAmount}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.discountedAmount}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Nett Price" sortBy="#{c.netPrice}" style="text-align:right">  
-	    	<h:outputText value="#{c.netPrice}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.netPrice}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
-	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText><br />
-	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Collection To-Date" sortBy="#{c.totalPaymentTodate}" style="text-align:right">  
-	    	<h:outputText value="#{c.totalPaymentTodate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.totalPaymentTodate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}" style="text-align:right">  
-	    	<h:outputText value="#{c.commissionAmount}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.commissionAmount}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
 		<p:column headerText="%" sortBy="" style="text-align:right">  
-	    	<h:outputText value="#{salesCommission.GetClaimPercentByAccountId(c.accountId)}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
+	    	<h:outputText value="#{salesCommissionApproval.GetClaimPercentByAccountId(c.accountId)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Amount" sortBy="" style="text-align:right">  
-	    	<h:outputText value="#{salesCommission.PriceDecimalFormat(salesCommission.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>
+	    	<h:outputText value="#{salesCommissionApproval.PriceDecimalFormat(salesCommissionApproval.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
 	</p:dataTable>
@@ -81,14 +81,15 @@ Sales Commission
 	<h:panelGrid columns="1" style="width:100%;text-align:right;" >
 		<p:outputLabel value="Total    ">
 		&nbsp;
-			<p:inputText value="#{salesCommission.totalClaimAmount}" style="width:120px;" readonly="true">
+			<p:inputText value="#{salesCommissionApproval.totalClaimAmount}" style="width:120px;" readonly="true">
 				<f:convertNumber type="currency" currencySymbol="RM "/>
 			</p:inputText>
 		</p:outputLabel>
 	</h:panelGrid>
 	<br />
-	<p:commandButton value="Cancel" action="#{salesCommission.listAccounts}" ajax="false" immediate="true" icon="ui-icon-cancel"/>  &nbsp;&nbsp;
-    <p:commandButton value="Confirm" action="#{salesCommission.confirm}" ajax="false" icon="ui-icon-circle-check"/>
+	
+	<p:commandButton value="Back" action="salesCommissionApproval" ajax="false" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+    <p:commandButton value="Approve" action="#{salesCommissionApproval.confirm}" ajax="false" icon="ui-icon-circle-check" binding="#{salesCommissionApproval.approveButton}"/>
     	
     <br/>
 

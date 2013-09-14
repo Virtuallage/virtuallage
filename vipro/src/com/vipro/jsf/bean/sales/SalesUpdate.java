@@ -627,7 +627,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 			UserProfile userProfie = userProfileService.findById(userId);
 			if(userProfie != null) {
-				verified = userProfie.getUsername();
+				verified = userProfie.getName();
 			}
 		} catch (Exception ex)
 		{

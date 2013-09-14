@@ -147,7 +147,7 @@ Sales Update
    		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
    			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesUpdate.upload}" oncomplete="uploadDialog.hide()"/>
 		</p:dialog>
-		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  modal="true" >
 			<p:dataTable id="documentReferenceTable" var="d" value="#{salesUpdate.documentReferences}">  
             	<p:column headerText="File">  
                 	<h:outputText value="#{d.filename}" />  
@@ -160,7 +160,7 @@ Sales Update
             	</p:column>   
         	</p:dataTable>  
 		</p:dialog>
-		<p:dialog id="verifyDialog" header="Confirmation" widgetVar="verifyDialog" resizable="false">  
+		<p:dialog id="verifyDialog" header="Confirmation" widgetVar="verifyDialog"  modal="true" resizable="false">  
 			<h:panelGrid columns="1" style="text-align:center">
 				<p:outputLabel value="Are you confirm?"/>
 				<h:panelGroup>
@@ -178,7 +178,7 @@ Sales Update
 <p:focus id="btnSearchCust" for="btnSearchCust"/> 
 
 <h:form id="searchCustForm">
-	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Name" for="searchName"/>
 			<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
