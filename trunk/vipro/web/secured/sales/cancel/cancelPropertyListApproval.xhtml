@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Cancellation Approval List
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Cancellation Approval List" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:panelGrid style="width:100%" styleClass="no-borders" >
+		<p:row>
+			<p:column style="width:20%;text-align:left;">
+				<h:outputText value="Project Name" />
+			</p:column>
+			<p:column style="width:20%;text-align:left;">
+					<p:selectOneMenu id="projectList" value="#{salesCancelApproval.projectId}"
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{salesCancelApproval.listProject}" />
+					</p:selectOneMenu>
+			</p:column>
+			<p:column style="width:60%;text-align:left;">
+				<p:commandButton value="Search" action="#{salesCancelApproval.listPropertyUnits}" update="inventoriesDataTable" icon="ui-icon-search" />
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<br />
+	<p:dataTable var="c" value="#{salesCancelApproval.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15" id="inventoriesDataTable"> 
+                  
+        <p:column headerText="Unit No" sortBy="#{c.unitNo}">  
+	 		<h:outputText value="#{c.unitNo}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}"/>
+	    </p:column> 
+	    
+	 	<p:column headerText="Block" sortBy="#{c.blockNo}">  
+	    	<h:outputText value="#{c.blockNo}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}"/>
+		</p:column>  
+	        
+	 	<p:column headerText="Purchaser" sortBy="#{salesCancelApproval.GetCustomerNameByInventoryId(c.inventoryId)}">  
+	  		<h:outputText value="#{salesCancelApproval.GetCustomerNameByInventoryId(c.inventoryId)}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}"/>
+	 	</p:column>  
+	        
+	  	<p:column headerText="Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
+	  		<h:outputText value="#{c.purchasePrice}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}">
+	  			<f:convertNumber type="currency" currencySymbol="" />
+			</h:outputText>
+		</p:column>
+	        
+	 	<p:column headerText="Net Price" sortBy="#{c.nettPrice}" style="text-align:right">  
+			<h:outputText value="#{c.nettPrice}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	   		</h:outputText>
+	 	</p:column>
+	       
+	 	<p:column headerText="Status" sortBy="#{salesCancelApproval.GetCancelStatusByInventoryId(c.inventoryId)}">  
+	  		<h:outputText value="#{salesCancelApproval.GetCancelStatusByInventoryId(c.inventoryId)}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}">
+	    	</h:outputText>
+		</p:column>
+	        
+	  	<p:column headerText="Actions">
+			<p:commandButton action="#{salesCancelApproval.selectInventory}" ajax="false" icon="ui-icon-check" title="Select">
+	  		<f:setPropertyActionListener value="#{c}" target="#{salesCancelApproval.inventory}" />  
+		</p:commandButton>  
+	    </p:column>	
+
+	</p:dataTable>
+      
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

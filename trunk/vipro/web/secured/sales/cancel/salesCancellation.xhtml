@@ -89,7 +89,7 @@ Sales Cancellation
    			<p:ajax event="close" update="cancelFee" listener="#{salesCancel.updateCancelFee}"/>
    			<p:ajax event="close" update="netRefund" listener="#{salesCancel.updateNetRefund}"/>
 		</p:dialog>
-		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  >
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  modal="true" >
 			<p:dataTable id="documentReferenceTable" var="d" value="#{salesCancel.documentReferences}">  
             	<p:column headerText="File">  
                 	<h:outputText value="#{d.filename}" />  

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Cancellation Approval
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Cancellation Approval" style="width:95%">  
+    
+<p:focus context="panel"/> 
+   <h:form >
+   		<h:panelGrid columns="4" style="width:100%;">
+   			<p:outputLabel value="Project Name"/>
+			<h:inputText value="#{salesCancelApproval.project.projectName}" style="width:200px" disabled="true"/>
+			<p:outputLabel value="Registration Ref."/>
+			<h:inputText value="#{salesCancelApproval.account.accountId}" style="width:200px" disabled="true"/>
+			
+   			<p:outputLabel value="Unit No."/>
+   			<h:inputText value="#{salesCancelApproval.inventory.unitNo}"  style="width:200px" disabled="true"/>
+   			<p:outputLabel value="Block No."/>
+   			<h:inputText value="#{salesCancelApproval.inventory.blockNo}" style="width:200px" disabled="true"/>
+   			
+   			<p:outputLabel value="Purchaser Name"/>
+   			<h:inputText value="#{salesCancelApproval.customerNames}" style="width:200px" disabled="true"/>
+   			<p:outputLabel value="Date Registered"/>
+   			<h:inputText value="#{salesCancelApproval.account.datePurchased}" style="width:200px" disabled="true">
+   				<f:convertDateTime pattern="dd/MM/yyyy"/>
+   			</h:inputText>
+   			
+   			<p:outputLabel value="Registration Fee Paid"/>
+   			<h:inputText value="#{salesCancelApproval.account.registrationFee}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<h:outputLabel value="Payment Method" disabled="true"/>
+   			<h:inputText value="#{salesCancelApproval.getCodeDesc('PM', salesCancelApproval.account.bookPymtMethod)}" style="width:200px" disabled="true"/>
+   			
+   			<p:outputLabel value="Reason for Cancellation *" for="reasonForCancellation"/>
+   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancelApproval.salesCancellationHistory.cancelledReason}" style="width:200px">  
+				<f:selectItems value="#{salesCancelApproval.cancelReasons}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Letter"/>
+			<h:panelGroup>
+				<p:commandButton id="viewDialogButton" value="View" actionListener="#{salesCancelApproval.listCANCDocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+
+   			<p:outputLabel value="Admin charges" for="cancelFee"/>
+   			<p:inputText id="cancelFee" value="#{salesCancelApproval.salesCancellationHistory.cancelFee}" style="width:200px" autocomplete="off" 
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   				<p:ajax event="keyup" update="netRefund" listener="#{salesCancelApproval.updateNetRefund}"/>
+                <!--<f:convertNumber maxFractionDigits="2" />
+                <p:ajax update="cancelFee" event="blur" process="cancelFee"/>-->
+   			</p:inputText>
+			<p:outputLabel value="Property Price"/>
+   			<h:inputText value="#{salesCancelApproval.account.purchasePrice}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			
+   			
+   			<p:outputLabel value="Tax" for="cancelTax"/>
+   			<p:inputText id="cancelTax" value="#{salesCancelApproval.salesCancellationHistory.cancelTax}" style="width:200px" autocomplete="off"
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   				<p:ajax event="keyup" update="netRefund" listener="#{salesCancelApproval.updateNetRefund}"/>
+   			</p:inputText>
+   			<p:outputLabel value="Discount Amount / Rate"/>
+   			<h:panelGroup>
+   				<h:inputText value="#{salesCancelApproval.account.projectInventory.discountAmount}" style="width:130px" disabled="true">
+   					<f:convertNumber type="currency" currencySymbol="" />
+   				</h:inputText> / 
+   				<h:inputText value="#{salesCancelApproval.account.projectInventory.discountRate}" style="width:50px" disabled="true">
+   					<f:convertNumber type="currency" currencySymbol="" />
+   				</h:inputText>
+   			</h:panelGroup>
+   			
+   			<p:outputLabel value="Net Refund Amount"/>
+   			<h:inputText id="netRefund" value="#{salesCancelApproval.salesCancellationHistory.cancelNetRefundAmt}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Nett Price"/>
+   			<h:inputText value="#{salesCancelApproval.account.netPrice}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Property Status"/>
+   			<h:inputText value="#{salesCancelApproval.getCodeDesc('PS', salesCancelApproval.account.projectInventory.propertyStatus)}" style="width:200px" disabled="true"/>
+   			   			
+   		</h:panelGrid>
+   		
+   		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{salesCancelApproval.upload}"/>
+   			<p:ajax event="close" update="cancelFee" listener="#{salesCancelApproval.updateCancelFee}"/>
+   			<p:ajax event="close" update="netRefund" listener="#{salesCancelApproval.updateNetRefund}"/>
+		</p:dialog>
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  modal="true" >
+			<p:dataTable id="documentReferenceTable" var="d" value="#{salesCancelApproval.documentReferences}">  
+            	<p:column headerText="File">  
+                	<h:outputText value="#{d.filename}" />  
+            	</p:column>  
+            	<p:column headerText="Action">
+  					<p:commandButton id="downloadLink" value="Download" ajax="false"  icon="ui-icon-arrowstop-1-s"> 
+  						<f:setPropertyActionListener value="#{d}" target="#{salesCancelApproval.documentReference}" /> 
+    					<p:fileDownload value="#{salesCancelApproval.file}" />  
+    				</p:commandButton>
+            	</p:column>   
+        	</p:dataTable>  
+		</p:dialog>
+		<p:growl id="messages" showDetail="true"/>
+
+   		<p:commandButton value="Back" action="#{salesCancelApproval.listPropertyUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Approve" actionListener="#{salesCancelApproval.approve}" icon="ui-icon-check" oncomplete="#{salesCancelApproval.dialogConfirmationName}" binding="#{salesCancelApproval.approveButton}"/>  &nbsp;&nbsp;
+   </h:form> 
+	
+	<h:form id="confirmationForm">
+		<p:dialog header="Cancellation Approval Confirmation" widgetVar="dlgConfirmationAdjHeader" width="600"  modal="true" showEffect="fade" hideEffect="fade"> 
+			<h:panelGrid columns="4" style="width:100%;">
+				<p:outputLabel value="Adjustment Date"/>
+   				<h:inputText id="adjustmentDate" value="#{salesCancelApproval.adjHeader.dateApproved}" style="width:100px" disabled="true">
+   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   				</h:inputText>
+   				<p:outputLabel value="Discount Rate Changed"/>
+   				<h:inputText id="discountRateChanged" value="#{salesCancelApproval.adjLog.discountRateAft}" style="width:100px" disabled="true" />
+   				
+   				<p:outputLabel value="Adjusted by Amount" style="width:300px"/>
+   				<h:inputText id="adjustedByAmount" value="#{salesCancelApproval.adjHeader.adjAmount}" style="width:100px" disabled="true">
+   					<f:convertNumber type="currency" currencySymbol="" />
+   				</h:inputText>
+   				<p:outputLabel value="Adjusted by Percentage" style="width:300px"/>
+   				<h:inputText id="adjustedByPercentage" value="#{salesCancelApproval.adjHeader.adjPercent}" style="width:100px" disabled="true" />
+			</h:panelGrid>
+			<br/><br/>
+			<h:panelGrid columns="3" style="width:100%;">
+				<p:outputLabel value=""/>
+				<p:outputLabel value="Before"/>
+				<p:outputLabel value="After"/>
+				
+				<p:outputLabel value="Purchase Price"/>
+				<h:inputText id="purchasePriceBefore" value="#{salesCancelApproval.adjLog.purchasePriceBef}" style="width:100px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+				</h:inputText>
+				<p:inputText id="purchasePriceAfter" value="#{salesCancelApproval.adjLog.purchasePriceAft}" style="width:100px" autocomplete="off"
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   					<f:convertNumber type="currency" currencySymbol="" />
+   					<p:ajax event="keyup" update="nettPriceAfter" listener="#{salesCancelApproval.updateNettPrice}"/>
+   					<p:ajax event="keyup" update="discountPriceAfter"/>
+   				</p:inputText>
+				
+				<p:outputLabel value="Discount Price"/>
+				<h:inputText id="discountPriceBefore" value="#{salesCancelApproval.adjLog.discountAmountBef}" style="width:100px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+				</h:inputText>
+				<h:inputText id="discountPriceAfter" value="#{salesCancelApproval.adjLog.discountAmountAft}" style="width:100px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+				</h:inputText>
+				
+				<p:outputLabel value="Nett Price"/>
+				<h:inputText id="nettPriceBefore" value="#{salesCancelApproval.adjLog.netAdjBef}" style="width:100px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+				</h:inputText>
+				<h:inputText id="nettPriceAfter" value="#{salesCancelApproval.adjLog.netAdjAft}" style="width:100px" disabled="true">
+					<f:convertNumber type="currency" currencySymbol="" />
+				</h:inputText>
+			</h:panelGrid>
+			<br/>
+			<p:commandButton value="Cancel" onclick="dlgConfirmationAdjHeader.hide();" icon="ui-icon-circle-close"/>  &nbsp;&nbsp;
+   			<p:commandButton value="Confirm" action="#{salesCancelApproval.confirm}" ajax="false" icon="ui-icon-circle-check"/>  &nbsp;&nbsp;
+		</p:dialog>				
+	</h:form>
+	
+	<h:form id="confirmationNoAdjustForm">
+		<p:dialog header="Cancellation Approval Confirmation" widgetVar="dlgConfirmation"  modal="true" showEffect="fade" hideEffect="fade"> 
+			<p:outputLabel value="Please confirm this confirmation and release the property to the public."/>
+			<br/><br/>
+			<br/>
+			<p:commandButton value="Cancel" onclick="dlgConfirmation.hide();" icon="ui-icon-circle-close"/>  &nbsp;&nbsp;
+   			<p:commandButton value="Confirm" action="#{salesCancelApproval.confirm}" ajax="false" icon="ui-icon-circle-check"/>  &nbsp;&nbsp;
+		</p:dialog>				
+	</h:form>	
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

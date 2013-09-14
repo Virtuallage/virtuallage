@@ -23,6 +23,16 @@ public class SalesCommissionHistoryServiceImpl implements SalesCommissionHistory
 	}
 	
 	@Override
+	public List<SalesCommissionHistory> findByAccountId(Long accountId) {
+		return salesCommissionHistoryDao.findByAccountId(accountId);
+	}
+	
+	@Override
+	public List<SalesCommissionHistory> findByBatchNo(Long batchNo) {
+		return salesCommissionHistoryDao.findByBatchNo(batchNo);
+	}
+	
+	@Override
 	public List<SalesCommissionHistory> findAll() {
 		return salesCommissionHistoryDao.findAll();
 	}

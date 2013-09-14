@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.AdjHeader" table="adj_header" catalog="vipro">
+        <id name="adjHeaderId" type="java.lang.Long">
+            <column name="adj_header_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="project" class="com.vipro.data.Project" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
+        <property name="adjType" type="string">
+            <column name="adj_type" length="5" />
+        </property>
+        <property name="adjAmount" type="big_decimal">
+            <column name="adj_amount" precision="11" />
+        </property>
+        <property name="adjPercent" type="big_decimal">
+            <column name="adj_percent" precision="5" />
+        </property>
+        <property name="totalUnitAdj" type="java.lang.Long">
+            <column name="total_unit_adj" />
+        </property>
+        <property name="totalBefAdj" type="big_decimal">
+            <column name="total_bef_adj" precision="15" />
+        </property>
+        <property name="totalAftAdj" type="big_decimal">
+            <column name="total_aft_adj" precision="15" />
+        </property>
+        <property name="submittedBy" type="java.lang.Long">
+            <column name="submitted_by" />
+        </property>
+        <property name="dateSubmitted" type="date">
+            <column name="date_submitted" length="10" />
+        </property>
+        <property name="approvedBy" type="java.lang.Long">
+            <column name="approved_by" />
+        </property>
+        <property name="dateApproved" type="date">
+            <column name="date_approved" length="10" />
+        </property>
+        <property name="Status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

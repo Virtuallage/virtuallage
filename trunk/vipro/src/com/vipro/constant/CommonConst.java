@@ -15,7 +15,7 @@ public interface CommonConst {
 	
 	public static final String STATUS_NEW="SSNEW";
 	
-	public static final String STATUS_CANCELLED="SSCAN";
+	public static final String STATUS_CANCELLED="SSCXA";
 	
 	public static final String STATUS_CLOSED="SSCLS";
 	

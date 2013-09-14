@@ -15,4 +15,10 @@ public interface TransactionCodeConst {
 	
 	public final static String CANCEL_FEE_REV = "400001";
 	
+	public final static String CANCEL_ADMIN_FEE = "400002";
+	
+	public final static String CANCEL_TAX = "400003";
+	
+	public final static String COMMISSION_FEE = "400004";
+	
 }

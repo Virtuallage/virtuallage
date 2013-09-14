@@ -19,9 +19,10 @@ public interface PropertyUnitStatusConst extends CommonConst {
 	
 	public static final String STATUS_BOOKED="PSBOK";
 	
-	public static final String STATUS_CANCELLED="PSCAN";
+	public static final String STATUS_CANCELLING="PSCAN";
+	
+	public static final String STATUS_CANCELLED="PSCXA";
 
 	public static final String STATUS_RESERVED="PSRSV";
-	
-	public static final String SUBMIT_CANCEL ="CXSUB";
+
 }

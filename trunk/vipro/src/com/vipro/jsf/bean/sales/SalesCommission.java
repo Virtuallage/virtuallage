@@ -269,9 +269,10 @@ public class SalesCommission extends CommonBean implements Serializable{
 		Long id = Long.valueOf(idStr.trim());
 		for(SalesCommissionHistory salesCommissionHistory: salesCommissionHistorys) {
 			if(salesCommissionHistory.getAccount().getAccountId().equals(id)) {
-				if(salesCommissionHistory.getClaimStatus().equals(ClaimStatusConst.STATUS_SUBMITTED)) {
+				status = getCodeDesc("CO", salesCommissionHistory.getClaimStatus());
+				/*if(salesCommissionHistory.getClaimStatus().equals(ClaimStatusConst.STATUS_SUBMITTED)) {
 					status = "Submitted";
-				}
+				}*/
 				break;
 			}
 		}
@@ -440,7 +441,8 @@ public class SalesCommission extends CommonBean implements Serializable{
 				AuthUser user = getCurrentUser();
 				if (user != null)
 					salesCommissionHistory.setSubmittedBy(user.getUserProfile().getUserId());
-
+				
+				salesCommissionHistory.setPurchasePrice(account.getPurchasePrice());
 				salesCommissionHistoryService.update(salesCommissionHistory);
 			}
 			

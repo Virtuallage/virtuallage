@@ -719,7 +719,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			payBookingTab.setDisabled(false);
 		}
 		
-		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_CANCELLED)) {
+		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_CANCELLING)) {
 			salesRegTabView.setActiveIndex(1);
 			addPurchaserButton.setStyle("display: none");
 			saveButton.setStyle("display: none");
