@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,10 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.text.NumberFormatter;
-
-import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -27,6 +22,9 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+
+import org.springframework.stereotype.Service;
+
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
@@ -66,7 +64,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		
 		
 		// Column Header Font and Style
-		Font font = new Font(10, "Verdana", true);
+		Font font = new Font(10, "SansSerif", true);
 		
 		Style headerStyle = new Style();
 		headerStyle.setFont(font);
@@ -83,7 +81,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		centerHeaderStyle.setTransparency(Transparency.OPAQUE);
 		
 		// Column Value Font and Style
-		font = new Font(8, "Verdana", false);
+		font = new Font(8, "SansSerif", false);
 		
 		Style detailStyle = new Style();
 		detailStyle.setFont(font);
