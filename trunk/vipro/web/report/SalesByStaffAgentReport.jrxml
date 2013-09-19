@@ -82,21 +82,21 @@ ORDER BY a.sales_person ASC]]>
 			<staticText>
 				<reportElement x="21" y="57" width="51" height="20"/>
 				<textElement>
-					<font fontName="Verdana" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Project:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="72" y="57" width="255" height="20"/>
 				<textElement>
-					<font fontName="Verdana" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="21" y="35" width="306" height="22"/>
 				<textElement>
-					<font fontName="Verdana" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sales Summary: By Sales/Agent
 ]]></text>
@@ -104,7 +104,7 @@ ORDER BY a.sales_person ASC]]>
 			<textField>
 				<reportElement x="21" y="10" width="306" height="25"/>
 				<textElement>
-					<font fontName="Verdana" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
 			</textField>
@@ -115,42 +115,42 @@ ORDER BY a.sales_person ASC]]>
 			<textField>
 				<reportElement mode="Opaque" x="168" y="10" width="208" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{blocksTitle}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="257" y="30" width="119" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Net Sales (RM)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="17" y="10" width="151" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sold By]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="168" y="30" width="89" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Units]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="376" y="10" width="78" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Staff Purchase]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="454" y="10" width="86" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sales Campaign]]></text>
 			</staticText>
@@ -161,28 +161,28 @@ ORDER BY a.sales_person ASC]]>
 			<textField>
 				<reportElement x="17" y="0" width="151" height="20"/>
 				<textElement>
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{salesPerson}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="168" y="0" width="89" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{units}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="257" y="0" width="119" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{netSales}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="376" y="0" width="78" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{staffPurchase}]]></textFieldExpression>
 			</textField>
@@ -195,7 +195,7 @@ ORDER BY a.sales_person ASC]]>
 			<textField>
 				<reportElement x="455" y="2" width="85" height="20"/>
 				<textElement>
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{salesCampaign}]]></textFieldExpression>
 			</textField>
@@ -206,35 +206,35 @@ ORDER BY a.sales_person ASC]]>
 			<staticText>
 				<reportElement x="17" y="0" width="151" height="20"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="168" y="0" width="89" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalUnits}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="376" y="0" width="78" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalStaffPurchase}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="257" y="0" width="119" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalNetSales}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="0" width="85" height="20"/>
 				<textElement>
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalSalesCampaign}]]></textFieldExpression>
 			</textField>

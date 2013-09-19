@@ -6,25 +6,30 @@
 	<parameter name="projectId" class="java.lang.Long"/>
 	<parameter name="blocksTitle" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT i.institution_name,p.project_name,
-  bp.company_name AS bankName,
-  COALESCE(COUNT(a.account_id)) AS noOfLoans,
-  COALESCE(SUM(a.loan_amount)) AS totalAmount
-FROM account a,
-  business_partner bp,
-  project_inventory pin,project p,
-  institution i
-WHERE a.inventory_id = pin.inventory_id
-    AND p.project_id = $P{projectId}
-    AND pin.project_id = $P{projectId}
-    AND a.purchase_type <> 'PUCSH'
-    AND a.panel_bank_id = bp.partner_id
-    AND p.institution_id = i.institution_id
-    AND (a.account_status IN('SSNEW', 'SSACT'))
-GROUP BY bp.company_name]]>
+		<![CDATA[SELECT
+     COALESCE(COUNT(a.account_id)) AS noOfLoans,
+     COALESCE(SUM(a.loan_amount)) AS totalAmount,
+     i.`institution_name`,
+     p.`project_name`,
+     bp.`company_name` AS bankName
+FROM
+     `account` a INNER JOIN `project_inventory` pin ON a.`inventory_id` = pin.`inventory_id`
+     INNER JOIN `business_partner` bp ON a.`panel_bank_id` = bp.`partner_id`,
+     `project` p INNER JOIN `institution` i ON p.`institution_id` = i.`institution_id`
+WHERE
+     p.project_id = $P{projectId}
+ AND pin.project_id = $P{projectId}
+ AND a.purchase_type <> 'PUCSH'
+ AND (a.account_status IN ('SSNEW','SSACT'))
+GROUP BY
+     bp.company_name]]>
 	</queryString>
-	<field name="institution_name" class="java.lang.String"/>
-	<field name="project_name" class="java.lang.String"/>
+	<field name="institution_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="bankName" class="java.lang.String"/>
 	<field name="noOfLoans" class="java.lang.Long"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
@@ -42,28 +47,28 @@ GROUP BY bp.company_name]]>
 			<textField>
 				<reportElement x="61" y="57" width="255" height="20"/>
 				<textElement>
-					<font fontName="Verdana" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="35" width="306" height="22"/>
 				<textElement>
-					<font fontName="Verdana" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sales Summary: Total Loan Offered]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="57" width="51" height="20"/>
 				<textElement>
-					<font fontName="Verdana" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Project:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="10" y="10" width="306" height="25"/>
 				<textElement>
-					<font fontName="Verdana" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
 			</textField>
@@ -74,28 +79,28 @@ GROUP BY bp.company_name]]>
 			<textField>
 				<reportElement mode="Opaque" x="216" y="0" width="315" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{blocksTitle}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="10" y="0" width="206" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bank ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="216" y="20" width="157" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No Of Loan]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="373" y="20" width="158" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="10" isBold="true"/>
+					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Amount (RM)]]></text>
 			</staticText>
@@ -106,21 +111,21 @@ GROUP BY bp.company_name]]>
 			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="10" y="0" width="206" height="20"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Verdana" isItalic="false"/>
+					<font fontName="SansSerif" isItalic="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bankName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="216" y="0" width="157" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{noOfLoans}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="373" y="0" width="158" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Verdana"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
@@ -137,21 +142,21 @@ GROUP BY bp.company_name]]>
 			<staticText>
 				<reportElement x="10" y="0" width="206" height="20"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
 				<reportElement x="373" y="0" width="158" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalOfTotalAmount}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="216" y="0" width="157" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalNoOfLoans}]]></textFieldExpression>
 			</textField>

@@ -325,9 +325,15 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 					Object[] objArr = (Object[])obj;
 					SalesByAgentItemDTO dto = new SalesByAgentItemDTO();
 					
-					dto.setSoldBy(objArr[0].toString());
-					dto.setUnits(Long.parseLong(objArr[1].toString()));					
-					dto.setNetSales(new BigDecimal(objArr[2].toString()));
+					if(objArr[0] != null){
+						dto.setSoldBy(objArr[0].toString());
+					}
+					if(objArr[1] != null){
+						dto.setUnits(Long.parseLong(objArr[1].toString()));
+					}
+					if(objArr[2] != null){
+						dto.setNetSales(new BigDecimal(objArr[2].toString()));
+					}
 					if(objArr[3] != null){
 						dto.setStaffPurchase(Long.parseLong(objArr[3].toString()));
 					}
