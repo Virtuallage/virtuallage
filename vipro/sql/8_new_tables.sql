@@ -54,6 +54,6 @@ ALTER TABLE vipro.adj_log
       
 -- Create the Available General Codes for adjustment type (adj_type of adj_header table)
 INSERT INTO vipro.code_header (code_header_id, name) VALUES ( 'AD', 'Adjustment Type');
-INSERT INTO vipro.code_det VALUES ('AD', 'ADAMT', 'Change Purchase Price By Fixed Amount', 'SSACT');
-INSERT INTO vipro.code_det VALUES('AD', 'ADPER', 'Change Purchase Price By Percentage', 'SSACT');
+INSERT INTO vipro.code_det VALUES ('AD', 'ADAMT', 'Change By Fixed Amount', 'SSACT');
+INSERT INTO vipro.code_det VALUES('AD', 'ADPER', 'Change By Percentage', 'SSACT');
 INSERT INTO vipro.code_det VALUES ('AD', 'ADDIS', 'Change Discount Rate', 'SSACT');
