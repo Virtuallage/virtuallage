@@ -56,4 +56,10 @@ ALTER TABLE vipro.adj_log
 INSERT INTO vipro.code_header (code_header_id, name) VALUES ( 'AD', 'Adjustment Type');
 INSERT INTO vipro.code_det VALUES ('AD', 'ADAMT', 'Change By Fixed Amount', 'SSACT');
 INSERT INTO vipro.code_det VALUES('AD', 'ADPER', 'Change By Percentage', 'SSACT');
-INSERT INTO vipro.code_det VALUES ('AD', 'ADDIS', 'Change Discount Rate', 'SSACT');
+
+-- Progressive Billing Status Code
+INSERT INTO code_header VALUES ('PA', 'Price Adjustment');
+INSERT INTO code_det VALUES ('PA', 'PASUB', 'Submitted', 'SSACT');
+INSERT INTO code_det VALUES ('PA', 'PAAPP', 'Approved', 'SSACT');
+INSERT INTO code_det VALUES ('PA', 'PAREJ', 'Rejected', 'SSACT');
+

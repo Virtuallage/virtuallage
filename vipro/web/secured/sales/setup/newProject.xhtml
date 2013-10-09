@@ -23,7 +23,7 @@ Project Setup
 <h:form id="projectForm">  
 	<h:panelGrid columns="4" style="width:100%">
 		<p:outputLabel value="Project Name" for="projectName"/>
-		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" maxlength="40" required="true" autocomplete="off"/>
+		<p:inputText id="projectName" value="#{projectSetup.project.projectName}" maxlength="40" style="text-transform:uppercase" required="true" autocomplete="off"/>
 		<p:outputLabel value="Project Code" for="code"/>
 		<p:inputText id="code" value="#{projectSetup.project.projectCode}" maxlength="10" required="true" autocomplete="off"/>
 		
@@ -72,22 +72,22 @@ Project Setup
 		<pe:inputNumber value="#{projectSetup.project.latePymtFee}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2"/>
 
 		<p:outputLabel value="Address Line 1" for="address1"/>
-		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
+		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" style="text-transform:uppercase" required="true" />
 		<p:outputLabel value="Address Line 2" for="address2"/>
-		<p:inputText id="address2" value="#{projectSetup.project.address2}" maxlength="20" />
+		<p:inputText id="address2" value="#{projectSetup.project.address2}" maxlength="20" style="text-transform:uppercase" />
 		
 		
 		<p:outputLabel value="Address Line 3" for="address3"/>
-		<p:inputText id="address3" value="#{projectSetup.project.address3}" maxlength="20" />
+		<p:inputText id="address3" value="#{projectSetup.project.address3}" maxlength="20" style="text-transform:uppercase" />
 		<p:outputLabel value="Address Line 4" for="address4"/>
-		<p:inputText id="address4" value="#{projectSetup.project.address4}" maxlength="20" />
+		<p:inputText id="address4" value="#{projectSetup.project.address4}" maxlength="20" style="text-transform:uppercase" />
 		
 		<p:outputLabel value="Post Code" for="postcode"/>
 		<h:panelGroup>
 			<p:inputText id="postcode" value="#{projectSetup.project.postcode}" maxlength="10" autocomplete="off"/>
 		</h:panelGroup>
 		<p:outputLabel value="City" for="city"/>
-		<p:inputText id="city" value="#{projectSetup.project.city}" maxlength="20" />
+		<p:inputText id="city" value="#{projectSetup.project.city}" maxlength="20" style="text-transform:uppercase" />
 
 		<p:outputLabel value="State" for="state"/>
 		<p:selectOneMenu id="state" value="#{projectSetup.project.state}">
@@ -102,6 +102,11 @@ Project Setup
 		<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" maxlength="15" autocomplete="off"/>
 		<p:outputLabel value="Project Office Fax" for="fax"/>
 		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
+
+		<p:outputLabel value="Valid From" for="validfr"/>
+		<p:calendar id="validfr" value="#{projectSetup.project.startDate}" pattern="dd/MM/yyyy" showOn="button" required="false"/>
+		<p:outputLabel value="Valid Till" for="validto"/>
+		<p:calendar id="validto" value="#{projectSetup.project.endDate}" pattern="dd/MM/yyyy" showOn="button" required="false"/>
 
 		<p:outputLabel value="Location Longtitude" for="locationLongtitude"/>
 		<p:inputText id="locationLongtitude" value="#{projectSetup.project.locationLongtitude}" autocomplete="off"/>

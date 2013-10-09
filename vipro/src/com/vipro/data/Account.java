@@ -3,7 +3,6 @@ package com.vipro.data;
 // Generated Feb 3, 2013 6:50:08 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -95,9 +94,9 @@ public class Account implements java.io.Serializable {
 	private Set accountAgings = new HashSet(0);
 	
 	private Long cancelDocId;
-	private Long loDocId;
-	private Long spaDocId;
-	private Long laDocId;
+	private Long financierId;
+	private String spaRefNo;
+	private Long laRefNo;
 	private String campaignCode;
 	private String financierRef;
 
@@ -201,30 +200,6 @@ public class Account implements java.io.Serializable {
 
 	public void setCancelDocId(Long cancelDocId) {
 		this.cancelDocId = cancelDocId;
-	}
-
-	public Long getLoDocId() {
-		return loDocId;
-	}
-
-	public void setLoDocId(Long loDocId) {
-		this.loDocId = loDocId;
-	}
-
-	public Long getSpaDocId() {
-		return spaDocId;
-	}
-
-	public void setSpaDocId(Long spaDocId) {
-		this.spaDocId = spaDocId;
-	}
-
-	public Long getLaDocId() {
-		return laDocId;
-	}
-
-	public void setLaDocId(Long laDocId) {
-		this.laDocId = laDocId;
 	}
 
 	public BigDecimal getCancelFee() {
@@ -881,6 +856,165 @@ public class Account implements java.io.Serializable {
 
 	public void setFinancierRef(String financierRef) {
 		this.financierRef = financierRef;
+	}
+
+	public String getSpaRefNo() {
+		return spaRefNo;
+	}
+
+	public void setSpaRefNo(String spaRefNo) {
+		this.spaRefNo = spaRefNo;
+	}
+
+	public Long getFinancierId() {
+		return financierId;
+	}
+
+	public void setFinancierId(Long financierId) {
+		this.financierId = financierId;
+	}
+
+	public Long getLaRefNo() {
+		return laRefNo;
+	}
+
+	public void setLaRefNo(Long laRefNo) {
+		this.laRefNo = laRefNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Account ["
+				+ (accountId != null ? "accountId=" + accountId + ", " : "")
+				+ (accountType != null ? "accountType=" + accountType + ", "
+						: "")
+				+ (accountStatus != null ? "accountStatus=" + accountStatus
+						+ ", " : "")
+				+ (accountBalance != null ? "accountBalance=" + accountBalance
+						+ ", " : "")
+				+ (attendedBy != null ? "attendedBy=" + attendedBy + ", " : "")
+				+ (registrationFee != null ? "registrationFee="
+						+ registrationFee + ", " : "")
+				+ (registrationNo != null ? "registrationNo=" + registrationNo
+						+ ", " : "")
+				+ (datePurchased != null ? "datePurchased=" + datePurchased
+						+ ", " : "")
+				+ (purchasePrice != null ? "purchasePrice=" + purchasePrice
+						+ ", " : "")
+				+ (discountedAmount != null ? "discountedAmount="
+						+ discountedAmount + ", " : "")
+				+ (commissionAmount != null ? "commissionAmount="
+						+ commissionAmount + ", " : "")
+				+ (commissionPaidDate != null ? "commissionPaidDate="
+						+ commissionPaidDate + ", " : "")
+				+ (netPrice != null ? "netPrice=" + netPrice + ", " : "")
+				+ (purchaseType != null ? "purchaseType=" + purchaseType + ", "
+						: "")
+				+ (panelBankId != null ? "panelBankId=" + panelBankId + ", "
+						: "")
+				+ (loanAmount != null ? "loanAmount=" + loanAmount + ", " : "")
+				+ (latePymtIntRate != null ? "latePymtIntRate="
+						+ latePymtIntRate + ", " : "")
+				+ (latePymtFee != null ? "latePymtFee=" + latePymtFee + ", "
+						: "")
+				+ (accrualInterest != null ? "accrualInterest="
+						+ accrualInterest + ", " : "")
+				+ (totalPaymentTodate != null ? "totalPaymentTodate="
+						+ totalPaymentTodate + ", " : "")
+				+ (redemptionBankId != null ? "redemptionBankId="
+						+ redemptionBankId + ", " : "")
+				+ (bankRedemptionSum != null ? "bankRedemptionSum="
+						+ bankRedemptionSum + ", " : "")
+				+ (bankRedemptionTodate != null ? "bankRedemptionTodate="
+						+ bankRedemptionTodate + ", " : "")
+				+ (spaSignedDate != null ? "spaSignedDate=" + spaSignedDate
+						+ ", " : "")
+				+ (spaStampedDate != null ? "spaStampedDate=" + spaStampedDate
+						+ ", " : "")
+				+ (spaVerifiedBy != null ? "spaVerifiedBy=" + spaVerifiedBy
+						+ ", " : "")
+				+ (spaVerifiedDate != null ? "spaVerifiedDate="
+						+ spaVerifiedDate + ", " : "")
+				+ (spaSolicitorId != null ? "spaSolicitorId=" + spaSolicitorId
+						+ ", " : "")
+				+ (loSignedDate != null ? "loSignedDate=" + loSignedDate + ", "
+						: "")
+				+ (loVerifiedDate != null ? "loVerifiedDate=" + loVerifiedDate
+						+ ", " : "")
+				+ (loVerifiedBy != null ? "loVerifiedBy=" + loVerifiedBy + ", "
+						: "")
+				+ (laSignedDate != null ? "laSignedDate=" + laSignedDate + ", "
+						: "")
+				+ (laStampedDate != null ? "laStampedDate=" + laStampedDate
+						+ ", " : "")
+				+ (laVerifiedBy != null ? "laVerifiedBy=" + laVerifiedBy + ", "
+						: "")
+				+ (laVerifiedDate != null ? "laVerifiedDate=" + laVerifiedDate
+						+ ", " : "")
+				+ (laSolicitorId != null ? "laSolicitorId=" + laSolicitorId
+						+ ", " : "")
+				+ (adviseSignedDate != null ? "adviseSignedDate="
+						+ adviseSignedDate + ", " : "")
+				+ (adviseStampedDate != null ? "adviseStampedDate="
+						+ adviseStampedDate + ", " : "")
+				+ (adviseVerifiedBy != null ? "adviseVerifiedBy="
+						+ adviseVerifiedBy + ", " : "")
+				+ (adviseVerifiedDate != null ? "adviseVerifiedDate="
+						+ adviseVerifiedDate + ", " : "")
+				+ (maintenanceStartDate != null ? "maintenanceStartDate="
+						+ maintenanceStartDate + ", " : "")
+				+ (maintenanceEndDate != null ? "maintenanceEndDate="
+						+ maintenanceEndDate + ", " : "")
+				+ (maintenanceFee != null ? "maintenanceFee=" + maintenanceFee
+						+ ", " : "")
+				+ (maintenanceBilingAddress != null ? "maintenanceBilingAddress="
+						+ maintenanceBilingAddress + ", "
+						: "")
+				+ (maintenanceFeeFreq != null ? "maintenanceFeeFreq="
+						+ maintenanceFeeFreq + ", " : "")
+				+ (fireInsuranceDueDate != null ? "fireInsuranceDueDate="
+						+ fireInsuranceDueDate + ", " : "")
+				+ (fireInsuranceAmount != null ? "fireInsuranceAmount="
+						+ fireInsuranceAmount + ", " : "")
+				+ (fireInsuranceCompanyId != null ? "fireInsuranceCompanyId="
+						+ fireInsuranceCompanyId + ", " : "")
+				+ (lastPaymentMadeDate != null ? "lastPaymentMadeDate="
+						+ lastPaymentMadeDate + ", " : "")
+				+ (maintenanceBilingCycle != null ? "maintenanceBilingCycle="
+						+ maintenanceBilingCycle + ", " : "")
+				+ (cancelledReason != null ? "cancelledReason="
+						+ cancelledReason + ", " : "")
+				+ (remark != null ? "remark=" + remark + ", " : "")
+				+ (changedBy != null ? "changedBy=" + changedBy + ", " : "")
+				+ (dateChanged != null ? "dateChanged=" + dateChanged + ", "
+						: "")
+				+ (source != null ? "source=" + source + ", " : "")
+				+ (salesPerson != null ? "salesPerson=" + salesPerson + ", "
+						: "")
+				+ (corrAddrCustId != null ? "corrAddrCustId=" + corrAddrCustId
+						+ ", " : "")
+				+ (bookPymtAmount != null ? "bookPymtAmount=" + bookPymtAmount
+						+ ", " : "")
+				+ (bookPymtMethod != null ? "bookPymtMethod=" + bookPymtMethod
+						+ ", " : "")
+				+ (bookPymtCardChqNo != null ? "bookPymtCardChqNo="
+						+ bookPymtCardChqNo + ", " : "")
+				+ (bookPymtBank != null ? "bookPymtBank=" + bookPymtBank + ", "
+						: "")
+				+ (cancelFee != null ? "cancelFee=" + cancelFee + ", " : "")
+				+ (cancelTax != null ? "cancelTax=" + cancelTax + ", " : "")
+				+ (cancelNetRefundAmt != null ? "cancelNetRefundAmt="
+						+ cancelNetRefundAmt + ", " : "")
+				+ (cancelDocId != null ? "cancelDocId=" + cancelDocId + ", "
+						: "")
+				+ (financierId != null ? "financierId=" + financierId + ", "
+						: "")
+				+ (spaRefNo != null ? "spaRefNo=" + spaRefNo + ", " : "")
+				+ (laRefNo != null ? "laRefNo=" + laRefNo + ", " : "")
+				+ (campaignCode != null ? "campaignCode=" + campaignCode + ", "
+						: "")
+				+ (financierRef != null ? "financierRef=" + financierRef : "")
+				+ "]";
 	}
 
 }

@@ -68,9 +68,10 @@
         <property name="disbursementFee" type="big_decimal">
             <column name="disbursement_fee" precision="9" />
         </property>
-        <property name="propertyAddress" type="string">
-            <column name="property_address" length="60" />
-        </property>
+         <many-to-one name="propertyAddress" class="com.vipro.data.Address" fetch="select">
+            <column name="address_id" not-null="false" />
+        </many-to-one>
+               
         <property name="propertyTitleType" type="string">
             <column name="property_title_type" length="10" />
         </property>

@@ -28,14 +28,14 @@ Add Company
 				<h:inputText value="Company" disabled="true"/>
 
 				<p:outputLabel value="Contact Person Name" for="contactp"/>
-				<p:inputText id="contactp" value="#{salesRegister.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
+				<p:inputText id="contactp" value="#{salesRegister.company.contactPerson}" maxlength="30" style="text-transform:uppercase" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
 				<p:selectOneMenu id="title" value="#{salesRegister.company.title}">
 						<f:selectItems value="#{salesRegister.listTitle}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Company Name" for="name"/>
-				<p:inputText id="name" value="#{salesRegister.company.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				<p:inputText id="name" value="#{salesRegister.company.fullName}" maxlength="60" style="text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Business Reg. No." for="regno"/>
 				<p:inputText id="regno" value="#{salesRegister.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
 			
@@ -47,19 +47,19 @@ Add Company
 				<p:inputText id="mobile" value="#{salesRegister.company.mobileNo}" maxlength="15" autocomplete="off"/>
 			
 				<p:outputLabel value="Address 1" for="addr1"/>
-				<p:inputText id="addr1" value="#{salesRegister.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
+				<p:inputText id="addr1" value="#{salesRegister.address.addressLine1}" maxlength="40" style="text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Address 2" for="addr2"/>
-				<p:inputText id="addr2" value="#{salesRegister.address.addressLine2}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr2" value="#{salesRegister.address.addressLine2}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
-				<p:inputText id="addr3" value="#{salesRegister.address.addressLine3}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr3" value="#{salesRegister.address.addressLine3}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
 				<p:outputLabel value="Address 4" for="addr4"/>
-				<p:inputText id="addr4" value="#{salesRegister.address.addressLine4}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr4" value="#{salesRegister.address.addressLine4}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{salesRegister.address.postcode}" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="false"/>
-				<p:selectOneMenu id="city" value="#{salesRegister.address.city}"  required="false">
+				<p:selectOneMenu id="city" value="#{salesRegister.address.city}" style="text-transform:uppercase" required="false">
 						<f:selectItems value="#{salesRegister.listCity}"/>
 				</p:selectOneMenu>
 				
@@ -88,10 +88,11 @@ Add Company
 				</p:selectOneMenu>	
 			</h:panelGrid>
 
-			<h:panelGrid columns="2" style="width:100%;text-align:left;">
-			   	<p:outputLabel value="Remarks"/>
-			   	<h:inputTextarea value="#{salesRegister.company.remarks}" cols="100" rows="3" />
-		   	</h:panelGrid>
+<!-- To remark off the follow requested by Hasrina 7 Oct 2013 -->	
+<!--			<h:panelGrid columns="2" style="width:100%;text-align:left;">  -->
+<!--			   	<p:outputLabel value="Remarks"/>  -->
+<!--			   	<h:inputTextarea value="#{salesRegister.company.remarks}" cols="100" rows="3" />  -->
+<!--		   	</h:panelGrid>  -->
 			
 			<br/>
 			

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.vipro.dao.ProjectDao;
 import com.vipro.dao.ProjectInventoryDao;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+import com.vipro.dto.AdviseUpdateDetailsDTO;import com.vipro.dto.ProgressiveBillingUnitSeachDTO;import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
 
@@ -95,6 +97,23 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 		return projectDao.findById(projectId);
 	}
 
+	@Override
+	public Project findByIdAndUnit(Long projectId,String unit) {
+		Project p = null;
+		if(StringUtils.isEmpty(unit))
+			p = projectDao.findById(projectId);
+		else
+			p = projectDao.findByIdAndUnit(projectId, unit);		
+		return p;
+	}
+	
+	public List<PropertyUnitDetailsDTO> getPropertyUnitDetailsDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		return projectDao.getPropertyUnitDetailsDTOListByProjectIdAndUnit(projectId, UnitNo);
+	}
+	
+	public List<AdviseUpdateDetailsDTO> getAdviseUpdateDetailsDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		return projectDao.getAdviseUpdateDetailsDTOListByProjectIdAndUnit(projectId, UnitNo);
+	}
 	@Override
 	public List<String> getTotalInventoryBlocks() {
 		List<String> result = null;
@@ -356,4 +375,10 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<ProgressiveBillingUnitSeachDTO> getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(
+			Long projectId, String UnitNo) {
+		return projectDao.getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(projectId, UnitNo);
+		}
 }

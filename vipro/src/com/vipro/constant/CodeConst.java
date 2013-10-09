@@ -19,4 +19,6 @@ public interface CodeConst {
 	public static final String CITY = "CI";
 	
 	public static final String STATUS = "SS";
+	
+	public static final String PROPERTY_TITLE = "PE";
 }

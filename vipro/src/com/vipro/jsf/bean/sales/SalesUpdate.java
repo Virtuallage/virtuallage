@@ -841,14 +841,22 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	public void setCustomerNo(String customerId) {
 		this.customerId = "";
 		
-		if(account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			this.customerNo = "2";
-		} else if(account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			this.customerNo = "3";
-		} else if(account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			this.customerNo = "4";
-		} else if(account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			this.customerNo = "5";
+		if(account.getCustomer2() != null) {
+			if (account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				this.customerNo = "2";
+			}
+		} else if(account.getCustomer3() != null) { 
+			if (account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				this.customerNo = "3";
+			}
+		} else if(account.getCustomer4() != null) { 
+			if(account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				this.customerNo = "4";
+			}
+		} else if(account.getCustomer5() != null) { 
+			if(account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				this.customerNo = "5";
+			}
 		} else {
 			this.customerNo = "1";
 		}
@@ -860,14 +868,25 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public void deleteByCustomerId(String customerId) {
 
-		if(account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			account.setCustomer5(null);
-		} else if(account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			account.setCustomer4(null);
-		} else if(account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-			account.setCustomer3(null);
-		} else if(account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+		if(customerId == null) {
+			this.customerId = "";
+		}
+		if(account.getCustomer5() != null) {
+			if (account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				account.setCustomer5(null);
+			}
+		} else if(account.getCustomer4() != null) {
+			if(account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				account.setCustomer4(null);
+			}
+		} else if(account.getCustomer3() != null) { 
+			if(account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+				account.setCustomer3(null);
+			}
+		} else if(account.getCustomer2() != null) { 
+			if(account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
 			account.setCustomer2(null);
+			}
 		}
 		
 		selectAccount();
@@ -875,18 +894,29 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public void setAccountCustomer(Customer customer)
 	{
-		if((account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("1")) {
-			account.setCustomer2(customer);
-			setCustomerName2(customer.getFullName());
-		} else if((account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("2")) {
-			account.setCustomer3(customer);
-			setCustomerName3(customer.getFullName());
-		} else if((account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("3")) {
-			account.setCustomer4(customer);
-			setCustomerName4(customer.getFullName());
-		} else if((account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("4")) {
-			account.setCustomer5(customer);
-			setCustomerName5(customer.getFullName());
+		if(customerNo == null) {
+			this.customerNo = "";
+		}
+		if(account.getCustomer2() != null) { 
+			if((account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("1")) {
+				account.setCustomer2(customer);
+				setCustomerName2(customer.getFullName());
+			}
+		} else if(account.getCustomer3() != null) { 
+			if((account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("2")) {
+				account.setCustomer3(customer);
+				setCustomerName3(customer.getFullName());
+			}
+		} else if(account.getCustomer4() != null) { 
+			if((account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("3")) {
+				account.setCustomer4(customer);
+				setCustomerName4(customer.getFullName());
+			}
+		} else if(account.getCustomer5() != null) { 
+			if ((account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("4")) {
+				account.setCustomer5(customer);
+				setCustomerName5(customer.getFullName());
+			}
 		} else {
 			account.setCustomer(customer);
 			setCustomerName(customer.getFullName());
@@ -909,17 +939,30 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public String saveIndividual() {
 		try {
+			String fname = individual.getFullName();
+			individual.setFullName(fname.toUpperCase());
+			
 			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
 			customerService.insert(individual);
 
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
 			address.setCustomer(individual);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());			
 			addressService.insert(address);
 
 			individual.setAddressId(address.getAddressId());
-
 			customerService.update(individual);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Individual", t.getMessage());
@@ -933,16 +976,30 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public String saveCompany() {
 		try {
+			String fname = company.getFullName();
+			company.setFullName(fname.toUpperCase());
+			
 			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
 			address.setCustomer(company);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());			
 			addressService.insert(address);
 
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Company", t.getMessage());

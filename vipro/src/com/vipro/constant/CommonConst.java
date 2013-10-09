@@ -33,4 +33,10 @@ public interface CommonConst {
 	
 	public static final String SELECT = "Select";
 	
+	public static final String DATE_FROMAT = "dd/MM/yyyy";
+	
+	public static final String TIME_ZONE = "MYT";
+	
+	public static final String ADVISE_FOLDER_NAME = "ADVISE";
+	
 }

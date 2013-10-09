@@ -189,8 +189,8 @@ public class SalesSummaryBean extends CommonBean implements Serializable{
 	private ProjectRevenueItemDTO addTotalProjRev(){
 		ProjectRevenueItemDTO itemDTO = new ProjectRevenueItemDTO();
 		itemDTO.setCurrency(false);
-		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yy");
-		itemDTO.setDescription("Total Proj Rev as of "+dateTimeFormat.format(new Date()));
+		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM yyyy");
+		itemDTO.setDescription("Total Proj Rev. "+"("+"Updated as at "+dateTimeFormat.format(new Date())+")");
 		if(columns.size() -1 >0 ){
 			List<BigDecimal> blocksList = new ArrayList<BigDecimal>();
 			BigDecimal totalValue = new BigDecimal(0);
@@ -584,7 +584,7 @@ public class SalesSummaryBean extends CommonBean implements Serializable{
 	}
 	private ProjectRevenueItemDTO addAdviseMainRow(){
 		ProjectRevenueItemDTO itemDTO = new ProjectRevenueItemDTO();
-		itemDTO.setDescription("Advice");
+		itemDTO.setDescription("Advise");
 		itemDTO.setHeading(true);
 		itemDTO.setCurrency(false);
 		if(columns.size() -1 >0 ){

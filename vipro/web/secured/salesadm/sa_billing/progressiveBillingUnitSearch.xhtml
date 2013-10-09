@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"       
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+ <h:head><title>Progressive Billing Unit Search</title></h:head>
+ 
+ <body>
+ 	 <ui:composition template="/template/main_template.xhtml">
+ 	 	 <ui:define name="content">
+ 	 	 	<p:panel id="panel" header="Progressive Billing Unit Search" style="width:95%">  			
+		    <h:form id="pbUSearchForm">
+		    <input type="hidden" name="selectedProjectId" value="#{progressiveBillingUnitSearchBean.selectedProjectId}" />
+		    <p:outputPanel id="searchPanel"   styleClass="no-borders">
+					<p:focus context="pbUSearchForm"/>
+					
+					<p:growl id="growlForm" showDetail="true" life="3000" autoUpdate="false" /> 
+				<p:panelGrid style="width:100%; background-color: lightgrey;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="projectName">
+							<p:outputLabel  value="Project Name"/>
+						</p:column>
+						<p:column style="width:40%;text-align:left;vertical-align:middle">											
+							<p:selectOneMenu id="projectList" value="#{progressiveBillingUnitSearchBean.selectedProjectId}"  requiredMessage="Project Name is mandatory"
+								 required="true" style="width:100%" for="projectName">  
+								<f:selectItems value="#{propertyUnitUpdateBean.projects}"/>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="UnitNoLbl">
+							<p:outputLabel  value="Unit No"/>
+						</p:column>
+						<p:column style="width:15%;text-align:left;vertical-align:middle">
+							 <p:inputText id="unitTxt" value="#{progressiveBillingUnitSearchBean.unit}"/>
+						</p:column>
+						<p:column  style="width:15%;text-align:left;vertical-align:middle">
+							 <p:commandButton value = "Search" action="#{progressiveBillingUnitSearchBean.searchProject}" ajax="false" process="projectList,unitTxt" update=":pbUSearchForm:resultsPanel"/>.
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br/>
+				</p:outputPanel>
+				<p:outputPanel id="resultsPanel" rendered = "#{progressiveBillingUnitSearchBean.selectedProjectId != null}" >
+ 	 	 	
+ 		 	 	<p:dataTable var="dto" value="#{progressiveBillingUnitSearchBean.dtoList}" draggableColumns="true" resizableColumns="false" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+ 		 	 			paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" tableStyle="width:100%"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  >  
+                 
+    			    <p:column headerText="Unit No" sortBy="#{dto.projectInvetory.unitNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.unitNo}" />  
+        			</p:column>
+        			 <p:column headerText="Purchaser Name" sortBy="#{dto.customer.fullName}">  
+            			<p:outputLabel  value="#{dto.customer.fullName}" />  
+        			</p:column>
+        			 <p:column headerText="PT No" sortBy="#{dto.projectInvetory.ptNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.ptNo}" />  
+        			</p:column>
+        			 <p:column headerText="HSD No" sortBy="#{dto.projectInventory.hsdNo}">  
+            			<p:outputLabel  value="#{dto.projectInventory.hsdNo}" />  
+        			</p:column>
+        			 <p:column headerText="Stage" sortBy="#{dto.progressiveBilling.stageNo}">  
+            			<p:outputLabel  value="#{dto.progressiveBilling.stageNo}" />  
+        			</p:column>
+        			 <p:column headerText="Selling Price" sortBy="#{dto.projectInventory.purchasePrice}">  
+            			<p:outputLabel  value="#{dto.projectInventory.purchasePrice}" />  
+        			</p:column>
+        			<p:column headerText="Billed ToDate" sortBy="#{dto.account.totalPaymentTodate}">  
+            			<p:outputLabel  value="#{dto.account.totalPaymentTodate}" />  
+        			</p:column>
+        			 <p:column headerText="Status" sortBy="#{dto.projectInventory.propertyStatus}">  
+            			<p:outputLabel  value="#{dto.projectInventory.propertyStatus}" />  
+        			</p:column>
+        			
+        			<p:column style="width:4%">  
+			                  
+			        </p:column> 
+        			
+		        </p:dataTable> 
+				</p:outputPanel>
+				</h:form>
+				</p:panel>
+ 	 	 </ui:define>
+ 	 </ui:composition>
+ </body>
+ </html>

@@ -267,14 +267,14 @@
         <property name="cancelDocId" type="java.lang.Long">
             <column name="cancel_doc_id" />
         </property>
-        <property name="spaDocId" type="java.lang.Long">
-            <column name="spa_doc_id" />
+        <property name="spaRefNo" type="string">
+            <column name="spa_ref_no" length="20"/>
         </property>
-        <property name="loDocId" type="java.lang.Long">
-            <column name="lo_doc_id" />
+        <property name="financierId" type="java.lang.Long">
+            <column name="financier_id" />
         </property>
-        <property name="laDocId" type="java.lang.Long">
-            <column name="la_doc_id" />
+        <property name="laRefNo" type="string">
+            <column name="la_ref_no" length="20"/>
         </property>
         <property name="changedBy" type="java.lang.Long">
             <column name="changed_by" />

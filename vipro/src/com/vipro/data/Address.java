@@ -163,5 +163,27 @@ public class Address implements java.io.Serializable {
 	public void setAddressLine4(String addressLine4) {
 		this.addressLine4 = addressLine4;
 	}
+
+	@Override
+	public String toString() {
+		return "Address ["
+				+ (addressId != null ? "addressId=" + addressId + ", " : "")
+				+ (addressType != null ? "addressType=" + addressType + ", "
+						: "")
+				+ (addressLine1 != null ? "addressLine1=" + addressLine1 + ", "
+						: "")
+				+ (addressLine2 != null ? "addressLine2=" + addressLine2 + ", "
+						: "")
+				+ (addressLine3 != null ? "addressLine3=" + addressLine3 + ", "
+						: "")
+				+ (addressLine4 != null ? "addressLine4=" + addressLine4 + ", "
+						: "")
+				+ (postcode != null ? "postcode=" + postcode + ", " : "")
+				+ (city != null ? "city=" + city + ", " : "")
+				+ (state != null ? "state=" + state + ", " : "")
+				+ (country != null ? "country=" + country + ", " : "")
+				+ (createdOn != null ? "createdOn=" + createdOn + ", " : "")
+				+ (createdBy != null ? "createdBy=" + createdBy : "") + "]";
+	}
 	
 }

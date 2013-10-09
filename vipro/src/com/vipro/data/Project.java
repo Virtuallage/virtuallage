@@ -502,4 +502,84 @@ public class Project implements java.io.Serializable {
 		this.endDate = endDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Project ["
+				+ (projectId != null ? "projectId=" + projectId + ", " : "")
+				+ (account != null ? "account=" + account + ", " : "")
+				+ (institution != null ? "institution=" + institution + ", "
+						: "")
+				+ (developerId != null ? "developerId=" + developerId + ", "
+						: "")
+				+ (landProprietorId != null ? "landProprietorId="
+						+ landProprietorId + ", " : "")
+				+ (developerName != null ? "developerName=" + developerName
+						+ ", " : "")
+				+ (landProprietorName != null ? "landProprietorName="
+						+ landProprietorName + ", " : "")
+				+ (projectName != null ? "projectName=" + projectName + ", "
+						: "")
+				+ (projectCode != null ? "projectCode=" + projectCode + ", "
+						: "")
+				+ (propertyType != null ? "propertyType=" + propertyType + ", "
+						: "")
+				+ (reportGroup != null ? "reportGroup=" + reportGroup + ", "
+						: "")
+				+ (address1 != null ? "address1=" + address1 + ", " : "")
+				+ (address2 != null ? "address2=" + address2 + ", " : "")
+				+ (address3 != null ? "address3=" + address3 + ", " : "")
+				+ (address4 != null ? "address4=" + address4 + ", " : "")
+				+ (postcode != null ? "postcode=" + postcode + ", " : "")
+				+ (city != null ? "city=" + city + ", " : "")
+				+ (state != null ? "state=" + state + ", " : "")
+				+ (country != null ? "country=" + country + ", " : "")
+				+ (projectOfficeTelNo != null ? "projectOfficeTelNo="
+						+ projectOfficeTelNo + ", " : "")
+				+ (projectOfficeFaxNo != null ? "projectOfficeFaxNo="
+						+ projectOfficeFaxNo + ", " : "")
+				+ (personInCharge != null ? "personInCharge=" + personInCharge
+						+ ", " : "")
+				+ (picMobileNo != null ? "picMobileNo=" + picMobileNo + ", "
+						: "")
+				+ (locationLongtitude != null ? "locationLongtitude="
+						+ locationLongtitude + ", " : "")
+				+ (locationLatitude != null ? "locationLatitude="
+						+ locationLatitude + ", " : "")
+				+ (locationCity != null ? "locationCity=" + locationCity + ", "
+						: "")
+				+ (locationState != null ? "locationState=" + locationState
+						+ ", " : "")
+				+ (locationCountry != null ? "locationCountry="
+						+ locationCountry + ", " : "")
+				+ (collectionInterestRate != null ? "collectionInterestRate="
+						+ collectionInterestRate + ", " : "")
+				+ (staffBookingFee != null ? "staffBookingFee="
+						+ staffBookingFee + ", " : "")
+				+ (publicBookingFee != null ? "publicBookingFee="
+						+ publicBookingFee + ", " : "")
+				+ (maintenanceFeeRate != null ? "maintenanceFeeRate="
+						+ maintenanceFeeRate + ", " : "")
+				+ (discountRate != null ? "discountRate=" + discountRate + ", "
+						: "")
+				+ (salesCommission != null ? "salesCommission="
+						+ salesCommission + ", " : "")
+				+ (latePymtIntRate != null ? "latePymtIntRate="
+						+ latePymtIntRate + ", " : "")
+				+ (latePymtFee != null ? "latePymtFee=" + latePymtFee + ", "
+						: "")
+				+ (startDate != null ? "startDate=" + startDate + ", " : "")
+				+ (launchDate != null ? "launchDate=" + launchDate + ", " : "")
+				+ (endDate != null ? "endDate=" + endDate + ", " : "")
+				+ (taxPercentage != null ? "taxPercentage=" + taxPercentage
+						+ ", " : "")
+				+ (billingModelCode != null ? "billingModelCode="
+						+ billingModelCode + ", " : "")
+				+ (changedBy != null ? "changedBy=" + changedBy + ", " : "")
+				+ (dateChanged != null ? "dateChanged=" + dateChanged + ", "
+						: "")
+				+ (status != null ? "status=" + status + ", " : "")
+				 + "]";
+	}
+
+	
 }

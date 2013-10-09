@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+
+import com.vipro.dto.AdviseUpdateDetailsDTO;import com.vipro.dto.ProgressiveBillingUnitSeachDTO;import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
 
@@ -13,7 +15,10 @@ public interface ProjectService {
 	
 	public List<Project> findAllProjects();
 	public Project findById(Long projectId);
-	public List<ProjectInventory> findInventories(Long projectId);
+	public Project findByIdAndUnit(Long projectId, String unit);
+	public List<PropertyUnitDetailsDTO> getPropertyUnitDetailsDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
+
+	public List<AdviseUpdateDetailsDTO> getAdviseUpdateDetailsDTOListByProjectIdAndUnit(Long projectId, String UnitNo);	public List<ProgressiveBillingUnitSeachDTO> getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(Long projectId, String UnitNo);	public List<ProjectInventory> findInventories(Long projectId);
 	
 	public void insert(Project p);
 	public void update(Project p);
