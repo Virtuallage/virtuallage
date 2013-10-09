@@ -347,6 +347,19 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	
 	public String saveProject() {
 		try {
+			String pname= project.getProjectName();
+			project.setProjectName(pname.toUpperCase());
+			String addr1= project.getAddress1();
+			project.setAddress1(addr1.toUpperCase());
+			String addr2= project.getAddress2();
+			project.setAddress2(addr2.toUpperCase());
+			String addr3= project.getAddress3();
+			project.setAddress3(addr3.toUpperCase());
+			String addr4= project.getAddress4();
+			project.setAddress4(addr4.toUpperCase());
+			String pcity= project.getCity();
+			project.setCity(pcity.toUpperCase());
+			
 			ProjectService projectService = (ProjectService) SpringBeanUtil
 					.lookup(ProjectService.class.getName());
 			if(project.getStatus() == null) {
@@ -515,7 +528,9 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	}
 
 	public String editInventory() {
-		inventory.setDiscountRate(project.getDiscountRate());
+		if (inventory.getDiscountRate() == null) {
+			inventory.setDiscountRate(project.getDiscountRate());
+		}
 		return "editInventory";
 	}
 
@@ -557,6 +572,13 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	public String saveInventoryAsNew() {
 		Long inventoryId = inventory.getInventoryId();
 		try {
+			String fblock = inventory.getBlockNo();
+			inventory.setBlockNo(fblock.toUpperCase());
+			String funitno = inventory.getUnitNo();
+			inventory.setUnitNo(funitno.toUpperCase());
+			String flayout = inventory.getLayoutType();
+			inventory.setLayoutType(flayout.toUpperCase());
+			
 			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setInventoryId(null);

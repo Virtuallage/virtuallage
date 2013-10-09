@@ -13,8 +13,9 @@ public class BusinessPartner implements java.io.Serializable {
 	private String partnerType;
 	private String businessRegistrationNo;
 	private Date registrationDate;
+	private String companyCode;	
 	private String companyName;
-	private String address;
+	private Long addressId;
 	private String contactPersonTitle;
 	private String contactPersonName;
 	private String officeTel;
@@ -65,14 +66,6 @@ public class BusinessPartner implements java.io.Serializable {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public String getContactPersonTitle() {
@@ -137,6 +130,22 @@ public class BusinessPartner implements java.io.Serializable {
 
 	public void setInstitution(Institution institution) {
 		this.institution = institution;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
 	}
 
 	

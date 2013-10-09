@@ -77,7 +77,7 @@ WHERE
 	<field name="disbursement_fee" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="property_address" class="java.lang.String">
+	<field name="address_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="property_title_type" class="java.lang.String">

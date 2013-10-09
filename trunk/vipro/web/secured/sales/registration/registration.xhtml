@@ -31,7 +31,7 @@
    		<h:inputText value="#{salesRegister.getCodeDesc('PT', salesRegister.project.propertyType)}"  style="width:300px" disabled="true"/>
    		
    		<p:outputLabel value="Purchase Date"/>
-   		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="true">
+   		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="false">
    			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
    		</h:inputText>
    		<p:outputLabel value="Attended By"/>
@@ -47,7 +47,7 @@
    	<p:dataTable id="customerList" var="c" value="#{salesRegister.customerDataModel}" paginator="false" 
    		selection="#{salesRegister.selectedCustomer}" style="width:95%">   
         <p:column headerText="Name">  
-            <h:outputText value="#{c.fullName}">
+            <h:outputText value="#{c.fullName}" style="text-transform:uppercase">
             </h:outputText>
         </p:column>  
         <p:column headerText="ID. No">  
@@ -80,11 +80,11 @@
 
  	<h:panelGrid columns="4" style="width:95%">
    		<p:outputLabel value="Source"/>
-   		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}" style="width:200px"> 
+   		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}" style="width:200px" required="true"> 
 			<f:selectItems value="#{salesRegister.listMediaSource}" />
 		</p:selectOneMenu>
    		<p:outputLabel value="Sales Person"/>
-   		<h:inputText value="#{salesRegister.account.salesPerson}" required="true"/>
+   		<h:inputText value="#{salesRegister.account.salesPerson}" style="text-transform:uppercase" required="true"/>
    	</h:panelGrid>  	
 	
 	<br/>
@@ -120,7 +120,7 @@
 	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="false" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Name" for="searchName"/>
-			<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" autocomplete="off"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{salesRegister.searchName}" style="text-transform:uppercase" autocomplete="off"/>
 
 			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>

@@ -33,7 +33,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private BigDecimal quitRent;
 	private BigDecimal legalFee;
 	private BigDecimal disbursementFee;
-	private String propertyAddress;
+	private Address propertyAddress;
 	private String propertyTitleType;
 	private Date strataTitleObtainedDate;
 	private Date keyHandoverDate;
@@ -59,7 +59,7 @@ public class ProjectInventory implements java.io.Serializable {
 			BigDecimal purchasePrice, BigDecimal discountAmount,
 			BigDecimal redemptionAmount, Date redemptionPaidTodate,
 			BigDecimal assessment, BigDecimal quitRent, BigDecimal legalFee,
-			BigDecimal disbursementFee, String propertyAddress,
+			BigDecimal disbursementFee, Address propertyAddress,
 			String propertyTitleType, Date strataTitleObtainedDate,
 			Date keyHandoverDate, Short developmentStage, Set accounts,
 			Set progressiveBillings) {
@@ -272,11 +272,11 @@ public class ProjectInventory implements java.io.Serializable {
 		this.disbursementFee = disbursementFee;
 	}
 
-	public String getPropertyAddress() {
+	public Address getPropertyAddress() {
 		return this.propertyAddress;
 	}
 
-	public void setPropertyAddress(String propertyAddress) {
+	public void setPropertyAddress(Address propertyAddress) {
 		this.propertyAddress = propertyAddress;
 	}
 
@@ -375,6 +375,56 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setChangeUserId(Long changeUserId) {
 		this.changeUserId = changeUserId;
+	}
+
+	@Override
+	public String toString() {
+		return "ProjectInventory ["
+				+ (inventoryId != null ? "inventoryId=" + inventoryId + ", "
+						: "")
+				+ (unitNo != null ? "unitNo=" + unitNo + ", " : "")
+				+ (ptNo != null ? "ptNo=" + ptNo + ", " : "")
+				+ (hsdNo != null ? "hsdNo=" + hsdNo + ", " : "")
+				+ (blockNo != null ? "blockNo=" + blockNo + ", " : "")
+				+ (level != null ? "level=" + level + ", " : "")
+				+ (layoutType != null ? "layoutType=" + layoutType + ", " : "")
+				+ (orientation != null ? "orientation=" + orientation + ", "
+						: "")
+				+ (landArea != null ? "landArea=" + landArea + ", " : "")
+				+ (builtUpArea != null ? "builtUpArea=" + builtUpArea + ", "
+						: "")
+				+ (propertyStatus != null ? "propertyStatus=" + propertyStatus
+						+ ", " : "")
+				+ (statusChangeDate != null ? "statusChangeDate="
+						+ statusChangeDate + ", " : "")
+				+ (purchasePrice != null ? "purchasePrice=" + purchasePrice
+						+ ", " : "")
+				+ (discountAmount != null ? "discountAmount=" + discountAmount
+						+ ", " : "")
+				+ (redemptionAmount != null ? "redemptionAmount="
+						+ redemptionAmount + ", " : "")
+				+ (redemptionPaidTodate != null ? "redemptionPaidTodate="
+						+ redemptionPaidTodate + ", " : "")
+				+ (assessment != null ? "assessment=" + assessment + ", " : "")
+				+ (quitRent != null ? "quitRent=" + quitRent + ", " : "")
+				+ (legalFee != null ? "legalFee=" + legalFee + ", " : "")
+				+ (disbursementFee != null ? "disbursementFee="
+						+ disbursementFee + ", " : "")
+				+ (propertyTitleType != null ? "propertyTitleType="
+						+ propertyTitleType + ", " : "")
+				+ (strataTitleObtainedDate != null ? "strataTitleObtainedDate="
+						+ strataTitleObtainedDate + ", " : "")
+				+ (keyHandoverDate != null ? "keyHandoverDate="
+						+ keyHandoverDate + ", " : "")
+				+ (developmentStage != null ? "developmentStage="
+						+ developmentStage + ", " : "")
+				+ (changeUserId != null ? "changeUserId=" + changeUserId + ", "
+						: "")
+				+ (discountRate != null ? "discountRate=" + discountRate + ", "
+						: "")
+				+ (dncDate != null ? "dncDate=" + dncDate + ", " : "")
+				+ (customerName != null ? "customerName=" + customerName : "")
+				+ "]";
 	}
 	
 }

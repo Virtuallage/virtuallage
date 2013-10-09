@@ -7,8 +7,8 @@ package com.vipro.constant;
 
 public class TransactionStatusConst {
 
-	public static final String PENDING = "TCPEN";
+	public static final String PENDING = "TSPEN";
 	
-	public static final String COMPLETE = "TCCOM";
+	public static final String COMPLETE = "TSCOM";
 	
 }

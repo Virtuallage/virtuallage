@@ -62,7 +62,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private String searchName;
 	private List<Customer> searchCustList;
 	private Customer customer;
-	private long customerId;
+	private long editAddressId;
 	private Customer delCustomer;
 
 	/**
@@ -231,12 +231,12 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		this.customer = customer;
 	}
 	
-	public Long getCustomerId() {
-		return customerId;
+	public Long getEditAddressId() {
+		return editAddressId;
 	}
 
-	public void setProjectId(Long customerId) {
-		this.customerId = customerId;
+	public void setEditAddressId(long editAddressId) {
+		this.editAddressId = editAddressId;
 	}
 
 
@@ -333,6 +333,9 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String saveIndividual() {
 		try {
+			String fname = individual.getFullName();
+			individual.setFullName(fname.toUpperCase());
+			
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
@@ -341,11 +344,21 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
 			address.setCustomer(individual);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());
 			addressService.insert(address);
 
 			individual.setAddressId(address.getAddressId());
-
 			customerService.update(individual);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Individual", t.getMessage());
@@ -359,6 +372,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String saveCompany() {
 		try {
+			String fname = company.getFullName();
+			company.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
@@ -368,10 +383,21 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
 			address.setCustomer(company);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());			
 			addressService.insert(address);
 
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
+
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Company", t.getMessage());
@@ -385,11 +411,11 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	
 	public String toEditIndividual() {
 		try {
-			customerId = individual.getCustomerId();
+			editAddressId = individual.getAddressId();
 
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
-			address = addressService.findByCustomerId(customerId);
+			address = addressService.findById(editAddressId);
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
@@ -398,11 +424,11 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String toEditCompany() {
 		try {
-			customerId = company.getCustomerId();
+			editAddressId = company.getAddressId();
 
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
-			address = addressService.findByCustomerId(customerId);
+			address = addressService.findById(editAddressId);
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
@@ -411,6 +437,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	
 	public String editIndividual() {
 		try {
+			String fname = individual.getFullName();
+			individual.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
@@ -419,11 +447,21 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
 			address.setCustomer(individual);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());			
 			addressService.update(address);
 
 			individual.setAddressId(address.getAddressId());
-
 			customerService.update(individual);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Individual", t.getMessage());
@@ -437,6 +475,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String editCompany() {
 		try {
+			String fname = company.getFullName();
+			company.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
@@ -446,10 +486,21 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			AddressService addressService = (AddressService) SpringBeanUtil
 					.lookup(AddressService.class.getName());
 			address.setCustomer(company);
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());
 			addressService.update(address);
 
 			company.setAddressId(address.getAddressId());
 			customerService.update(company);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 			addErrorMessage("Add Company", t.getMessage());

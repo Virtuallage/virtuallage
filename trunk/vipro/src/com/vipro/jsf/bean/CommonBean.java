@@ -11,14 +11,20 @@ import org.springframework.security.core.context.SecurityContextImpl;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.dao.UserProfileDao;
-import com.vipro.data.Account;
 import com.vipro.data.CodeDet;
-import com.vipro.service.AccountService;
 import com.vipro.service.CodeService;
 import com.vipro.utils.spring.SpringBeanUtil;
+import com.vipro.constant.*;
 
 public class CommonBean {
 
+	public String getDateFormat(){
+		return CommonConst.DATE_FROMAT;
+	}
+	
+	public String getTimeZone(){
+		return CommonConst.TIME_ZONE;
+	}
 	
 	public String getCodeDesc(String codeType, String code) {
 		CodeService codeService = (CodeService) SpringBeanUtil.lookup(CodeService.class.getName());

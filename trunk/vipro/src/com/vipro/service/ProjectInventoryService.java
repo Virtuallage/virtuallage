@@ -3,6 +3,7 @@ package com.vipro.service;
 import java.util.List;
 
 import com.vipro.data.ProjectInventory;
+import com.vipro.dto.*;
 
 public interface ProjectInventoryService {
 
@@ -20,6 +21,8 @@ public interface ProjectInventoryService {
 	public void insert(ProjectInventory p);
 	
 	public void update(ProjectInventory p);
+	
+	public void updatePropertyUnit(PropertyUnitDetailsDTO dto);
 	
 	public void delete(Long inventoryId);
 	

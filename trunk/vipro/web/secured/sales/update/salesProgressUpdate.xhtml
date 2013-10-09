@@ -29,7 +29,8 @@ Sales Update
         	<p:column headerText="Action">
            		<p:commandButton actionListener="#{salesUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
            		<p:commandButton actionListener="#{salesUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Purchaser" style="display:#{salesUpdate.verifyAddCustomer()}"/>
-        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
+<!--        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
+  -->
            	</p:column> 
      	</p:dataTable><br />
    		<h:panelGrid columns="4" style="width:100%;">
@@ -181,7 +182,7 @@ Sales Update
 	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Name" for="searchName"/>
-			<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" autocomplete="off"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{salesUpdate.searchName}" style="text-transform:uppercase" autocomplete="off"/>
 
 			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>

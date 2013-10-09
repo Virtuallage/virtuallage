@@ -357,5 +357,52 @@ public class Customer implements java.io.Serializable {
 	public void setBusinessPartner(Long businessPartner) {
 		this.businessPartner = businessPartner;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer ["
+				+ (customerId != null ? "customerId=" + customerId + ", " : "")
+				+ (customerCategory != null ? "customerCategory="
+						+ customerCategory + ", " : "")
+				+ (identityType != null ? "identityType=" + identityType + ", "
+						: "")
+				+ (identityNo != null ? "identityNo=" + identityNo + ", " : "")
+				+ (title != null ? "title=" + title + ", " : "")
+				+ (fullName != null ? "fullName=" + fullName + ", " : "")
+				+ (contactPerson != null ? "contactPerson=" + contactPerson
+						+ ", " : "")
+				+ (specialHandling != null ? "specialHandling="
+						+ specialHandling + ", " : "")
+				+ (businessPartner != null ? "businessPartner="
+						+ businessPartner + ", " : "")
+				+ (race != null ? "race=" + race + ", " : "")
+				+ (bumiIndicator != null ? "bumiIndicator=" + bumiIndicator
+						+ ", " : "")
+				+ (sex != null ? "sex=" + sex + ", " : "")
+				+ (maritalStatus != null ? "maritalStatus=" + maritalStatus
+						+ ", " : "")
+				+ (employerName != null ? "employerName=" + employerName + ", "
+						: "")
+				+ (houseTelNo != null ? "houseTelNo=" + houseTelNo + ", " : "")
+				+ (officeTelNo != null ? "officeTelNo=" + officeTelNo + ", "
+						: "")
+				+ (faxNo != null ? "faxNo=" + faxNo + ", " : "")
+				+ (communicationType != null ? "communicationType="
+						+ communicationType + ", " : "")
+				+ (language != null ? "language=" + language + ", " : "")
+				+ (dateOfBirth != null ? "dateOfBirth=" + dateOfBirth + ", "
+						: "")
+				+ (createdBy != null ? "createdBy=" + createdBy + ", " : "")
+				+ (dateCreated != null ? "dateCreated=" + dateCreated + ", "
+						: "")
+				+ (addressId != null ? "addressId=" + addressId + ", " : "")
+				+ (email != null ? "email=" + email + ", " : "")
+				+ (mobileNo != null ? "mobileNo=" + mobileNo + ", " : "")
+				+ (remarks != null ? "remarks=" + remarks + ", " : "")
+				+ (citizenship != null ? "citizenship=" + citizenship : "")
+				+ "]";
+	}
+	
+	
 	
 }

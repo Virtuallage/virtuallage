@@ -73,8 +73,7 @@ Project Setup
 		<p:inputText id="address1" value="#{projectSetup.project.address1}" maxlength="20" required="true" />
 		<p:outputLabel value="Address Line 2" for="address2"/>
 		<p:inputText id="address2" value="#{projectSetup.project.address2}" maxlength="20" />
-		
-		
+			
 		<p:outputLabel value="Address Line 3" for="address3"/>
 		<p:inputText id="address3" value="#{projectSetup.project.address3}" maxlength="20" />
 		<p:outputLabel value="Address Line 4" for="address4"/>
@@ -100,6 +99,11 @@ Project Setup
 		<p:inputText id="tel" value="#{projectSetup.project.projectOfficeTelNo}" maxlength="15" autocomplete="off"/>
 		<p:outputLabel value="Project Office Fax" for="fax"/>
 		<p:inputText id="fax" value="#{projectSetup.project.projectOfficeFaxNo}" maxlength="15" autocomplete="off"/>
+
+		<p:outputLabel value="Valid From" for="validfr"/>
+		<p:calendar id="validfr" value="#{projectSetup.project.startDate}" pattern="dd/MM/yyyy" showOn="button" required="false"/>
+		<p:outputLabel value="Valid Till" for="validto"/>
+		<p:calendar id="validto" value="#{projectSetup.project.endDate}" pattern="dd/MM/yyyy" showOn="button" required="false"/>
 
 		<p:outputLabel value="Location Longtitude" for="locationLongtitude"/>
 		<p:inputText id="locationLongtitude" value="#{projectSetup.project.locationLongtitude}" autocomplete="off"/>

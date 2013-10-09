@@ -21,12 +21,15 @@
 		<property name="registrationDate" type="date">
 			<column name="registration_date" length="10" />
 		</property>
+		<property name="companyCode" type="string">
+			<column name="company_code" length="10" />
+		</property>
 		<property name="companyName" type="string">
 			<column name="company_name" length="60" />
 		</property>
-		<property name="address" type="string">
-			<column name="address" length="100" />
-		</property>
+        <property name="addressId" type="long">
+            <column name="address_id" />
+        </property>
 		<property name="contactPersonTitle" type="string">
 			<column name="contact_person_title" length="10" />
 		</property>

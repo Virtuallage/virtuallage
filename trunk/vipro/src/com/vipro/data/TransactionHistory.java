@@ -16,6 +16,7 @@ public class TransactionHistory implements java.io.Serializable {
 	private Date transactionDate;
 	private String transactionDescription;
 	private String refNo;
+	private String invoiceNo;
 	private Date postingDate;
 	private Date statementDate;
 	private String status;
@@ -24,6 +25,7 @@ public class TransactionHistory implements java.io.Serializable {
 	private String paymentMethod;
 	private String bank;
 	private String cardChequeNo;
+	private Long txnReversalId;
 
 	public TransactionHistory() {
 	}
@@ -148,6 +150,22 @@ public class TransactionHistory implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public Long getTxnReversalId() {
+		return txnReversalId;
+	}
+
+	public void setTxnReversalId(Long txnReversalId) {
+		this.txnReversalId = txnReversalId;
 	}
 
 }

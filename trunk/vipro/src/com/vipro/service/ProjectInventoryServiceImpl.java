@@ -1,18 +1,25 @@
 package com.vipro.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.vipro.dao.AddressDao;
 import com.vipro.dao.ProjectInventoryDao;
 import com.vipro.data.ProjectInventory;
+import com.vipro.dto.*;
+import com.vipro.jsf.bean.CommonBean;
 
 @Service("com.vipro.service.ProjectInventoryService")
 public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 
 	@Autowired
 	private ProjectInventoryDao projectInventoryDao;
+	@Autowired
+	private AddressDao addressDao;
 
 	public ProjectInventoryDao getProjectInventoryDao() {
 		return projectInventoryDao;
@@ -48,6 +55,18 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 		projectInventoryDao.update(p);
 
 	}
+	
+	@Override
+	@Transactional
+	public void updatePropertyUnit(PropertyUnitDetailsDTO  dto){
+		if(dto.getAddress().getAddressId() == null){
+			dto.getAddress().setCreatedBy(CommonBean.getCurrentUser().getUsername());
+			dto.getAddress().setCreatedOn(new Date());
+		}
+		addressDao.update(dto.getAddress());
+		dto.getProjectInvetory().setPropertyAddress(dto.getAddress());
+		projectInventoryDao.update(dto.getProjectInvetory());		
+	}
 
 	@Override
 	public void delete(Long inventoryId) {
@@ -77,5 +96,13 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	@Override
 	public List<ProjectInventory> getLockedUnit(Long projectId, Long userId) {
 		return projectInventoryDao.findLockedUnit(projectId, userId);
+	}
+
+	public AddressDao getAddressDao() {
+		return addressDao;
+	}
+
+	public void setAddressDao(AddressDao addressDao) {
+		this.addressDao = addressDao;
 	}
 }

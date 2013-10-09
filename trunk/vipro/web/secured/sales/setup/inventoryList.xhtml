@@ -44,14 +44,20 @@ Project Setup
            <h:outputText value="#{c.layoutType}"/>
         </p:column>  
         
-        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}">  
-           	<h:outputText value="#{c.builtUpArea}">
+        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}" style="text-align:right">  
+           	<h:outputText value="#{c.builtUpArea}" >
           	 	<f:convertNumber pattern="#,##0"/>
            	</h:outputText>
         </p:column>  
         
-        <p:column headerText="Price" sortBy="#{c.purchasePrice}">  
-           	<h:outputText value="#{c.purchasePrice}">
+        <p:column headerText="Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
+           	<h:outputText value="#{c.purchasePrice}" >
+           		<f:convertNumber type="currency" currencySymbol="" />
+           	</h:outputText>
+        </p:column>
+        
+        <p:column headerText="Discount" sortBy="#{c.discountRate}" style="text-align:right">  
+           	<h:outputText value="#{c.discountRate}" >
            		<f:convertNumber type="currency" currencySymbol="" />
            	</h:outputText>
         </p:column>

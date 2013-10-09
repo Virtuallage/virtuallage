@@ -23,6 +23,9 @@
         <property name="refNo" type="string">
             <column name="ref_no" length="20" />
         </property>
+        <property name="invoiceNo" type="string">
+            <column name="invoice_no" length="10" />
+        </property>
         <property name="postingDate" type="date">
             <column name="posting_date" length="10" />
         </property>
@@ -44,6 +47,9 @@
         </property>
         <property name="cardChequeNo" type="string">
             <column name="card_cheque_no" length="20" />
+        </property>
+        <property name="txnReversalId" type="long">
+            <column name="txn_reversal_id" />
         </property>
     </class>
 </hibernate-mapping>

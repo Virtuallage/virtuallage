@@ -28,7 +28,7 @@ Add Individuals
 				<h:inputText value="Individual" disabled="true"/>
 				
 				<p:outputLabel value="Purchaser Name" for="name"/>
-				<p:inputText id="name" value="#{customerRegister.individual.fullName}" maxlength="60" style="width:300px" required="true" autocomplete="off"/>
+				<p:inputText id="name" value="#{customerRegister.individual.fullName}" maxlength="60" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Title" for="title"/>
 				<p:selectOneMenu id="title" value="#{customerRegister.individual.title}" required="true">
 						<f:selectItems value="#{customerRegister.listTitle}"/>
@@ -64,26 +64,26 @@ Add Individuals
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Date of birth" for="dob"/>
-				<p:calendar id="dob" value="#{customerRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="false"/>
+				<p:calendar id="dob" value="#{customerRegister.individual.dateOfBirth}" pattern="dd/MM/yyyy" showOn="button" required="false"/>
 				<p:outputLabel value="Citizenship" for="citizenship"/>
 				<p:selectOneMenu id="citizenship" value="#{customerRegister.individual.citizenship}" required="false">
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Address 1" for="addr1"/>
-				<p:inputText id="addr1" value="#{customerRegister.address.addressLine1}" maxlength="40" style="width:300px" required="true" autocomplete="off"/>
+				<p:inputText id="addr1" value="#{customerRegister.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Address 2" for="addr2"/>
-				<p:inputText id="addr2" value="#{customerRegister.address.addressLine2}" maxlength="40" style="width:300px" autocomplete="off"/>
+				<p:inputText id="addr2" value="#{customerRegister.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
-				<p:inputText id="addr3" value="#{customerRegister.address.addressLine3}" maxlength="40" style="width:300px" autocomplete="off"/>
+				<p:inputText id="addr3" value="#{customerRegister.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				<p:outputLabel value="Address 4" for="addr4"/>
-				<p:inputText id="addr4" value="#{customerRegister.address.addressLine4}" maxlength="40" style="width:300px" autocomplete="off"/>
+				<p:inputText id="addr4" value="#{customerRegister.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{customerRegister.address.postcode}" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:inputText id="city" value="#{customerRegister.address.city}" maxlength="20" autocomplete="off"/>
+				<p:inputText id="city" value="#{customerRegister.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off"/>
 				
 				<p:outputLabel value="State" for="state" required="true"/>
 				<p:selectOneMenu id="state" value="#{customerRegister.address.state}"  required="true">
