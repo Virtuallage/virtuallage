@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Add Business Partner
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Business Partner Information Creation" style="width:95%">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="2" style="width:100%;text-align:left;">
+				<p:outputLabel value="Business Registration No"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.businessRegistrationNo}" style="width:200px" />
+				<p:outputLabel value="Trading Name"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px" />
+				<p:outputLabel value="Address"/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine1}" style="width:400px" />
+				<p:outputLabel value=""/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine2}" style="width:400px" />
+				<p:outputLabel value=""/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine3}" style="width:400px" />
+				<p:outputLabel value=""/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine4}" style="width:400px" />
+				<p:outputLabel value="Postcode"/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.postcode}" style="width:200px" />
+				<p:outputLabel value="City"/>
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.city}" style="width:200px" />
+				<p:outputLabel value="State"/>
+				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.partnerAddress.state}" style="width:200px">
+						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Contact Person Title" for="contactPersonTitle"/>
+				<p:selectOneMenu id="contactPersonTitle" value="#{propertyUnitUpdate.partner.contactPersonTitle}" style="width:200px">
+						<f:selectItems value="#{propertyUnitUpdate.listContactPersonTitle}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Contact Person Name"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.contactPersonName}" style="width:200px" />
+				<p:outputLabel value="Office Tel No"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.officeTel}" style="width:200px" />
+				<p:outputLabel value="Office Fax No"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.faxNo}" style="width:200px" />
+				<p:outputLabel value="Mobile No"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.mobileNo}" style="width:200px" />
+				<p:outputLabel value="Email Address"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.emailAddress}" style="width:200px" />
+
+			</h:panelGrid>
+			
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{propertyUnitUpdate.selectAccount}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+			<p:commandButton value="Add" ajax="false" action="#{propertyUnitUpdate.addBusinessPartner}" icon="ui-icon-disk"/>
+			
+			
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		

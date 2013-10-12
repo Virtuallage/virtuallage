@@ -27,9 +27,9 @@
 		<property name="companyName" type="string">
 			<column name="company_name" length="60" />
 		</property>
-        <property name="addressId" type="long">
-            <column name="address_id" />
-        </property>
+		<many-to-one name="address" class="com.vipro.data.Address" fetch="select" lazy="false">
+            <column name="address_id" not-null="true" />
+        </many-to-one>
 		<property name="contactPersonTitle" type="string">
 			<column name="contact_person_title" length="10" />
 		</property>

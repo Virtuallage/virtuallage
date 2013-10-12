@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Update #{propertyUnitUpdate.project.projectName}" style="width:95%;">  
+    
+<p:focus context="panel"/> 
+   	<h:form id="custAccountForm">
+   		<p:dataTable id="availableCustomers" var="c" value="#{propertyUnitUpdate.availableCustomers}" paginator="false">   
+        	<p:column headerText="Purchaser Name" style="width:35%;">  
+            	<h:outputText value="#{c.getFullName()}" />
+        	</p:column>  
+        	<p:column headerText="ID. No" style="width:35%;">  
+            	<h:outputText value="#{c.getIdentityNo()}" />
+        	</p:column>
+        	<p:column headerText="Action">
+           		<p:commandButton actionListener="#{propertyUnitUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
+           		<p:commandButton actionListener="#{propertyUnitUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Purchaser" style="display:#{propertyUnitUpdate.verifyAddCustomer()}"/>
+        		<p:commandButton action="#{propertyUnitUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{propertyUnitUpdate.verifyDeleteCustomer()}"/>
+           	</p:column> 
+     	</p:dataTable><br />
+   		<h:panelGrid columns="4" style="width:100%;">
+   			<p:outputLabel value="Unit No"/>
+			<h:inputText value="#{propertyUnitUpdate.account.projectInventory.unitNo}"  style="width:200px" disabled="true" />
+   			<p:outputLabel value="Sales Person"/>
+			<h:inputText value="#{propertyUnitUpdate.account.salesPerson}" style="width:200px" disabled="true" />
+			
+			<p:outputLabel value="Selling Price"/>
+			<h:inputText value="#{propertyUnitUpdate.account.purchasePrice}" style="width:200px" disabled="true">
+				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Property Type"/>
+			<p:selectOneMenu id="propertyType" value="#{propertyUnitUpdate.account.projectInventory.project.propertyType}" style="width:200px" disabled="true">
+				<f:selectItems value="#{propertyUnitUpdate.propertyTypes}" />
+			</p:selectOneMenu>
+				 			
+   			<p:outputLabel value="Discount Price"/>
+			<h:panelGroup>
+	   			<h:inputText value="#{propertyUnitUpdate.account.discountedAmount}" style="width:200px" disabled="true">
+	   				<f:convertNumber type="currency" currencySymbol="" />
+	   			</h:inputText>
+	   			&nbsp;&nbsp;
+	   			<h:outputLabel value="#{propertyUnitUpdate.account.projectInventory.discountRate}" style="width:50px">  			
+	   				<f:convertNumber type="currency" currencySymbol="" />
+   					<p:outputLabel value="%"/>	   				
+ 	   			</h:outputLabel>			
+ 
+ 			</h:panelGroup>
+    			<p:outputLabel value="Purchase Type"/>
+   			<p:selectOneMenu id="purchaseType" value="#{propertyUnitUpdate.account.purchaseType}" style="width:200px">
+						<f:selectItems value="#{propertyUnitUpdate.purchaseTypes}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Net Price"/>
+   			<h:inputText value="#{propertyUnitUpdate.account.netPrice}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Bank Name"/>
+   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
+			</p:selectOneMenu>
+   			
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Loan Amount"/>
+			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off"
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>	
+
+			<p:outputLabel value="SPA Signed Date"/>
+   			<p:calendar id="spaSignedDate" value="#{propertyUnitUpdate.account.spaSignedDate}" pattern="dd/MM/yyyy" showOn="button"/> 
+			<p:outputLabel value="SPA Stamped Date"/>
+			<h:panelGroup>
+				<p:calendar id="stampedDate" value="#{propertyUnitUpdate.account.spaStampedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="spaUploadDialogButton" value="Upload" actionListener="#{propertyUnitUpdate.setSPADocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="spaViewDialogButton" value="View" actionListener="#{propertyUnitUpdate.listSPADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value="Solicitor"/>
+			<h:panelGroup>
+   				<p:selectOneMenu id="spaSolicitorId" value="#{propertyUnitUpdate.account.spaSolicitorId}" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listSolicitors}" />
+						<p:ajax event="change" update="spaAddressName,spaAddAddressButton,spaAddressLine1,spaAddressLine2,spaAddressLine3,spaAddressLine4,spaPostcode,spaCity,spaState" listener="#{propertyUnitUpdate.updateSPAAddress}"/>
+				</p:selectOneMenu>&nbsp;&nbsp;
+				<p:commandButton id="spaAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('SPA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.spaSolicitorId)}" icon="ui-icon-plus" />
+   			</h:panelGroup>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="spaVerifiedBy" value="#{propertyUnitUpdate.verifyByUserId(propertyUnitUpdate.account.spaVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="spaVerifiedByViewDialogButton" value="Verify" actionListener="#{propertyUnitUpdate.setSPADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{propertyUnitUpdate.verifyByDocumentType('SPA')}"/>
+			</h:panelGroup>
+			<p:outputLabel id="spaAddressName" value="Address"/>
+   			<h:inputText id="spaAddressLine1" value="#{propertyUnitUpdate.spaSoliAddress.addressLine1}" style="width:200px;" disabled="true" />
+   			<p:outputLabel value="Ref No"/>
+   			<h:inputText value="#{propertyUnitUpdate.account.spaRefNo}" style="width:200px"/>
+			<p:outputLabel value=""/>
+   			<h:inputText id="spaAddressLine2" value="#{propertyUnitUpdate.spaSoliAddress.addressLine2}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.addressLine2)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="spaAddressLine3" value="#{propertyUnitUpdate.spaSoliAddress.addressLine3}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.addressLine3)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="spaAddressLine4" value="#{propertyUnitUpdate.spaSoliAddress.addressLine4}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.addressLine4)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:panelGroup>
+   				<h:inputText id="spaPostcode" value="#{propertyUnitUpdate.spaSoliAddress.postcode}" style="width:80px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.postcode)}" disabled="true" />
+   				&nbsp;
+   				<h:inputText id="spaCity" value="#{propertyUnitUpdate.spaSoliAddress.city}" style="width:100px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.city)}" disabled="true" />
+   			</h:panelGroup>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="spaState" value="#{propertyUnitUpdate.getCodeDesc('ST', propertyUnitUpdate.spaSoliAddress.state)}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.spaSoliAddress.state)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+			
+			<p:outputLabel value="LO Date"/>
+   			<p:calendar id="loDate" value="#{propertyUnitUpdate.account.loSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+			<p:outputLabel value="LO Accepted Date"/>
+			<h:panelGroup>
+				<p:calendar id="loAcceptedDate" value="#{propertyUnitUpdate.account.loVerifiedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+				&nbsp;&nbsp;
+  				<p:commandButton id="loUploadDialogButton" value="Upload" actionListener="#{propertyUnitUpdate.setLODocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="loViewDialogButton" value="View" actionListener="#{propertyUnitUpdate.listLODocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+
+   			<p:outputLabel value="Financier"/>
+			<h:panelGroup>
+   				<p:selectOneMenu id="financierId" value="#{propertyUnitUpdate.account.financierId}" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
+						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState" listener="#{propertyUnitUpdate.updateLOAddress}"/>
+				</p:selectOneMenu>&nbsp;&nbsp;
+				<p:commandButton id="loAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
+   			</h:panelGroup>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="loVerifiedBy" value="#{propertyUnitUpdate.verifyByUserId(propertyUnitUpdate.account.loVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="loVerifiedByViewDialogButton" value="Verify" actionListener="#{propertyUnitUpdate.setLODocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{propertyUnitUpdate.verifyByDocumentType('LO')}"/>
+			</h:panelGroup>
+			<p:outputLabel id="loAddressName" value="Address" />
+   			<h:inputText id="loAddressLine1" value="#{propertyUnitUpdate.loFinancierAddress.addressLine1}" style="width:200px;" disabled="true" />
+   				<p:outputLabel value="Ref No"/>
+   			<h:inputText value="#{propertyUnitUpdate.account.financierRef}" style="width:200px" />
+			<p:outputLabel value=""/>
+   			<h:inputText id="loAddressLine2" value="#{propertyUnitUpdate.loFinancierAddress.addressLine2}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.addressLine2)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="loAddressLine3" value="#{propertyUnitUpdate.loFinancierAddress.addressLine3}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.addressLine3)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="loAddressLine4" value="#{propertyUnitUpdate.loFinancierAddress.addressLine4}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.addressLine4)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:panelGroup>
+   				<h:inputText id="loPostcode" value="#{propertyUnitUpdate.loFinancierAddress.postcode}" style="width:80px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.postcode)}" disabled="true" />
+   				&nbsp;
+   				<h:inputText id="loCity" value="#{propertyUnitUpdate.loFinancierAddress.city}" style="width:100px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.city)}" disabled="true" />
+   			</h:panelGroup>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="loState" value="#{propertyUnitUpdate.getCodeDesc('ST', propertyUnitUpdate.loFinancierAddress.state)}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.loFinancierAddress.state)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+			
+			<p:outputLabel value="LA Signed Date"/>
+   			<p:calendar id="laSignedDate" value="#{propertyUnitUpdate.account.laSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+			<p:outputLabel value="LA Stamped Date"/>
+			<h:panelGroup>
+				<p:calendar id="laStampedDate" value="#{propertyUnitUpdate.account.laStampedDate}" pattern="dd/MM/yyyy" showOn="button"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="laUploadDialogButton" value="Upload" actionListener="#{propertyUnitUpdate.setLADocumentType}" oncomplete="uploadDialog.show()" icon="ui-icon-arrowstop-1-n" />
+				<p:commandButton id="laViewDialogButton" value="View" actionListener="#{propertyUnitUpdate.listLADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value="Solicitor"/>
+			<h:panelGroup>
+   				<p:selectOneMenu id="laSolicitorId" value="#{propertyUnitUpdate.account.laSolicitorId}" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listSolicitors}" />
+						<p:ajax event="change" update="laAddressName,laAddAddressButton,laAddressLine1,laAddressLine2,laAddressLine3,laAddressLine4,laPostcode,laCity,laState" listener="#{propertyUnitUpdate.updateLAAddress}"/>
+				</p:selectOneMenu>
+   				&nbsp;&nbsp;
+				<p:commandButton id="laAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('LA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.laSolicitorId)}" icon="ui-icon-plus" />
+   			</h:panelGroup>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="laVerifiedBy" value="#{propertyUnitUpdate.verifyByUserId(propertyUnitUpdate.account.laVerifiedBy)}" style="width:200px" disabled="true"/>
+				&nbsp;&nbsp;
+				<p:commandButton id="laVerifiedByViewDialogButton" value="Verify" actionListener="#{propertyUnitUpdate.setLADocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{propertyUnitUpdate.verifyByDocumentType('LA')}"/>     
+			</h:panelGroup>
+			<p:outputLabel id="laAddressName" value="Address" />
+   			<h:inputText id="laAddressLine1" value="#{propertyUnitUpdate.laSoliAddress.addressLine1}" style="width:200px;" disabled="true" />
+   				<p:outputLabel value="Ref No"/>
+   			<h:inputText value="#{propertyUnitUpdate.account.laRefNo}" style="width:200px"/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="laAddressLine2" value="#{propertyUnitUpdate.laSoliAddress.addressLine2}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.addressLine2)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="laAddressLine3" value="#{propertyUnitUpdate.laSoliAddress.addressLine3}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.addressLine3)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="laAddressLine4" value="#{propertyUnitUpdate.laSoliAddress.addressLine4}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.addressLine4)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:panelGroup>
+   				<h:inputText id="laPostcode" value="#{propertyUnitUpdate.laSoliAddress.postcode}" style="width:80px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.postcode)}" disabled="true" />
+   				&nbsp;
+   				<h:inputText id="laCity" value="#{propertyUnitUpdate.laSoliAddress.city}" style="width:100px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.city)}" disabled="true" />
+   			</h:panelGroup>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<h:inputText id="laState" value="#{propertyUnitUpdate.getCodeDesc('ST', propertyUnitUpdate.laSoliAddress.state)}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.state)}" disabled="true" />
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			
+   		</h:panelGrid>
+   		
+   		<p:dialog id="uploadDialog" header="Upload" widgetVar="uploadDialog" modal="true" >
+   			<p:fileUpload mode="advanced" sizeLimit="10000000" update="messages" multiple="true" fileUploadListener="#{propertyUnitUpdate.upload}" oncomplete="uploadDialog.hide()"/>
+		</p:dialog>
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  modal="true" >
+			<p:dataTable id="documentReferenceTable" var="d" value="#{propertyUnitUpdate.documentReferences}">  
+            	<p:column headerText="File">  
+                	<h:outputText value="#{d.filename}" />  
+            	</p:column>  
+            	<p:column headerText="Action">
+  					<p:commandButton id="downloadLink" value="Download" ajax="false"  icon="ui-icon-arrowstop-1-s"> 
+  						<f:setPropertyActionListener value="#{d}" target="#{propertyUnitUpdate.documentReference}" /> 
+    					<p:fileDownload value="#{propertyUnitUpdate.file}" />  
+    				</p:commandButton>
+            	</p:column>   
+        	</p:dataTable>  
+		</p:dialog>
+		<p:dialog id="verifyDialog" header="Confirmation" widgetVar="verifyDialog"  modal="true" resizable="false">  
+			<h:panelGrid columns="1" style="text-align:center">
+				<p:outputLabel value="Are you confirm?"/>
+				<h:panelGroup>
+        			<p:commandButton value="Yes" actionListener="#{propertyUnitUpdate.verify}" update="spaVerifiedBy,loVerifiedBy,laVerifiedBy" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="verifyDialog.hide()" />
+        			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="verifyDialog.hide()"/> 
+        		</h:panelGroup>
+        	</h:panelGrid>
+        </p:dialog>
+		<p:growl id="messages" showDetail="true"/>
+				
+   		<p:commandButton value="Back" action="#{propertyUnitUpdate.listAccounts}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Save" action="#{propertyUnitUpdate.update}" ajax="false" icon="ui-icon-disk"/>  &nbsp;&nbsp;
+	</h:form> 
+	
+<p:focus id="btnSearchCust" for="btnSearchCust"/> 
+
+<h:form id="searchCustForm">
+	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Name" for="searchName"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{propertyUnitUpdate.searchName}" autocomplete="off"/>
+
+			<p:outputLabel value="ID No." for="searchIdNo"/>
+			<h:panelGroup>
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{propertyUnitUpdate.searchIdNo}" autocomplete="off"/>			
+				&nbsp;
+				<p:commandButton  value="Search" action="#{propertyUnitUpdate.searchCustomer}" update="searchCustForm:custs"/>
+			</h:panelGroup>
+		</h:panelGrid>
+		
+		<br/>
+		
+		<p:dataTable id="custs" var="c" value="#{propertyUnitUpdate.searchCustList}" style="width:90%;">  
+	        <p:column headerText="Purchaser Name" style="width:50%">  
+	            <h:outputText value="#{c.fullName}" />  
+	        </p:column>  
+	        <p:column headerText="Id Type" style="width:15%">  
+	            <h:outputText value="#{c.identityType}" />
+	        </p:column>  
+	        <p:column headerText="Id No." style="width:25%">  
+	            <h:outputText value="#{c.identityNo}" />  
+	        </p:column>  
+	     
+	        <p:column headerText="Action" style="width:10%">  
+	           <p:commandButton id="selectButton" ajax="false" action="#{propertyUnitUpdate.changeSelectedCustomer}"
+	           		oncomplete="dlgSearchCust.hide()" icon="ui-icon-check" title="Select Purchaser">  
+	                <f:setPropertyActionListener value="#{c}" target="#{propertyUnitUpdate.selectedCustomer}" />  
+	            </p:commandButton>  
+	        </p:column>  
+		</p:dataTable>  
+
+		<br/>
+		<p:commandButton value="Add Invidual" ajax="false" immediate="true" 
+			action="#{propertyUnitUpdate.toAddIndividual}" icon="ui-icon-plus"/>
+		&nbsp;
+		<p:commandButton value="Add Company" ajax="false" immediate="true" 
+			action="#{propertyUnitUpdate.toAddCompany}" icon="ui-icon-plus"/>
+		&nbsp; 
+		<p:commandButton value="Close" onclick="dlgSearchCust.hide();"/>
+	
+	</p:dialog>				
+</h:form>	
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

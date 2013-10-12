@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Add Individuals
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Add Individual" style="width:95%">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="4" style="width:100%;text-align:left;">
+				<p:outputLabel value="Purchaser ID"/>
+				<p:outputLabel value="#{propertyUnitUpdate.individual.customerId}"/>
+				<p:outputLabel value="Type"/>
+				<p:outputLabel value="Individual"/>
+				
+				<p:outputLabel value="Purchaser Name" for="name"/>
+				<p:inputText id="name" value="#{propertyUnitUpdate.individual.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				<p:outputLabel value="Title" for="title"/>
+				<p:selectOneMenu id="title" value="#{propertyUnitUpdate.individual.title}">
+						<f:selectItems value="#{propertyUnitUpdate.listTitle}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="ID Type" for="idtype"/>
+				<p:selectOneMenu id="idtype" value="#{propertyUnitUpdate.individual.identityType}" required="true">
+					<f:selectItems value="#{propertyUnitUpdate.listIdType}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="ID No" for="idno"/>
+				<p:inputText id="idno" value="#{propertyUnitUpdate.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+
+				<p:outputLabel value="Race" for="race"/>
+				<p:selectOneMenu id="race" value="#{propertyUnitUpdate.individual.race}" required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listRace}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
+				<p:selectOneMenu id="bumi" value="#{propertyUnitUpdate.individual.bumiIndicator}" required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listBumi}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Marital Status" for="marital"/>
+				<p:selectOneMenu id="marital" value="#{propertyUnitUpdate.individual.maritalStatus}">
+						<f:selectItems value="#{propertyUnitUpdate.listMaritalStatus}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Sex" for="sex"/>
+				<p:selectOneMenu id="sex" value="#{propertyUnitUpdate.individual.sex}" required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listGender}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Date of birth" for="dob"/>
+				<p:calendar id="dob" value="#{propertyUnitUpdate.individual.dateOfBirth}" pattern="dd/MM/yyyy" required="true"/>
+				<p:outputLabel value="Citizenship" for="citizenship"/>
+				<p:selectOneMenu id="citizenship" value="citizenship" required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listCountry}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Address 1" for="addr1"/>
+				<p:inputText id="addr1" value="#{propertyUnitUpdate.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
+				<p:outputLabel value="Address 2" for="addr2"/>
+				<p:inputText id="addr2" value="#{propertyUnitUpdate.address.addressLine2}" maxlength="40" autocomplete="off"/>
+				
+				<p:outputLabel value="Address 3" for="addr3"/>
+				<p:inputText id="addr3" value="#{propertyUnitUpdate.address.addressLine3}" maxlength="40" autocomplete="off"/>
+				<p:outputLabel value="Address 4" for="addr4"/>
+				<p:inputText id="addr4" value="#{propertyUnitUpdate.address.addressLine4}" maxlength="40" autocomplete="off"/>
+				
+				<p:outputLabel value="Post Code" for="postcode" required="true"/>
+				<p:inputText id="postcode" value="#{propertyUnitUpdate.address.postcode}" maxlength="10" autocomplete="off"/>
+				<p:outputLabel value="City" for="city" required="true"/>
+				<p:selectOneMenu id="city" value="#{propertyUnitUpdate.address.city}"  required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listCity}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="State" for="state" required="true"/>
+				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.address.state}"  required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Country" for="country"/>
+				<p:selectOneMenu id="country" value="#{propertyUnitUpdate.address.country}"  required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listCountry}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="House Tel No" for="tel"/>
+				<p:inputText  id="tel" value="#{propertyUnitUpdate.individual.houseTelNo}" maxlength="15" autocomplete="off"/>
+				<p:outputLabel value="Mobile No" for="mobile"/>
+				<p:inputText  id="mobile" value="#{propertyUnitUpdate.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+
+				<p:outputLabel value="Office Tel No" for="offtel"/>
+				<p:inputText id="offtel" value="#{propertyUnitUpdate.individual.officeTelNo}" maxlength="15" autocomplete="off"/>
+				<p:outputLabel value="Fax No" for="fax"/>
+				<p:inputText id="fax" value="#{propertyUnitUpdate.individual.faxNo}" maxlength="15" autocomplete="off"/>
+				
+				<p:outputLabel value="Email Address" for="email"/>
+				<p:inputText id="email" value="#{propertyUnitUpdate.individual.email}" maxlength="30" autocomplete="off"/>
+				<p:outputLabel value="Special Handling" for="special"/>
+				<p:selectOneMenu id="special" value="#{propertyUnitUpdate.individual.specialHandling}"  required="false">
+						<f:selectItems value="#{propertyUnitUpdate.listSpecial}"/>
+				</p:selectOneMenu>	
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="Remarks"/>
+			   	<h:inputTextarea value="#{propertyUnitUpdate.individual.remarks}" cols="100" rows="3" />
+		   	</h:panelGrid>
+			
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{propertyUnitUpdate.selectAccount}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+			<p:commandButton value="Save" ajax="false" action="#{propertyUnitUpdate.saveIndividual}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		

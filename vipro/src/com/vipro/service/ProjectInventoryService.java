@@ -12,6 +12,8 @@ public interface ProjectInventoryService {
 	
 	public List<ProjectInventory> getInventories(Long projectId, String UnitNo);
 	
+	public List<ProjectInventory> getAvailableInventories(Long projectId, String UnitNo);
+	
 	public List<ProjectInventory> getLockedUnit(Long projectId, Long userId);
 	
 	public List<ProjectInventory> getAvailableInventories(Long projectId);

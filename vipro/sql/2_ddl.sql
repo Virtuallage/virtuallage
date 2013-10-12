@@ -259,3 +259,18 @@ ALTER TABLE vipro.project
 
 -- 290613 by MAX
 ALTER TABLE `vipro`.`document_reference` CHANGE COLUMN `created_by` `created_by` VARCHAR(100) NULL DEFAULT NULL  ;
+
+
+-- 121013 by MAX
+ALTER TABLE `vipro`.`business_partner` CHANGE COLUMN `address` `address_id` BIGINT NULL  ;
+
+ALTER TABLE `vipro`.`business_partner` 
+  ADD CONSTRAINT `FK_business_partner_2`
+  FOREIGN KEY (`address_id` )
+  REFERENCES `vipro`.`address` (`address_id` )
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT
+, ADD INDEX `FK_business_partner_2_idx` (`address_id` ASC) ;
+
+ALTER TABLE `vipro`.`address` CHANGE COLUMN `customer_id` `customer_id` BIGINT(20) NULL  ;
+
