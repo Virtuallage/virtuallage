@@ -110,6 +110,9 @@
         <property name="spaSolicitorId" type="java.lang.Long">
             <column name="spa_solicitor_id" />
         </property>
+        <property name="spaRefNo" type="string">
+            <column name="spa_ref_no" length="20" />
+        </property>
         <property name="loSignedDate" type="date">
             <column name="LO_signed_date" length="10" />
         </property>
@@ -118,6 +121,9 @@
         </property>
         <property name="loVerifiedBy" type="java.lang.Long">
             <column name="LO_verified_by" />
+        </property>
+        <property name="financierId" type="java.lang.Long">
+            <column name="financier_id" />
         </property>
         <property name="laSignedDate" type="date">
             <column name="LA_signed_date" length="10" />
@@ -133,6 +139,9 @@
         </property>
         <property name="laSolicitorId" type="java.lang.Long">
             <column name="LA_solicitor_id" />
+        </property>
+        <property name="laRefNo" type="string">
+            <column name="la_ref_no" length="20" />
         </property>
         <property name="adviseSignedDate" type="date">
             <column name="advise_signed_date" length="10" />
@@ -266,15 +275,6 @@
         </set>
         <property name="cancelDocId" type="java.lang.Long">
             <column name="cancel_doc_id" />
-        </property>
-        <property name="spaRefNo" type="string">
-            <column name="spa_ref_no" length="20"/>
-        </property>
-        <property name="financierId" type="java.lang.Long">
-            <column name="financier_id" />
-        </property>
-        <property name="laRefNo" type="string">
-            <column name="la_ref_no" length="20"/>
         </property>
         <property name="changedBy" type="java.lang.Long">
             <column name="changed_by" />

@@ -13,7 +13,7 @@ public interface UserGroupConst extends CommonConst {
 	
 	public static final String SALES="SALES";
 	
-	public static final String SYS_ADMIN="SYS_ADMIN";
+	public static final String SALES_ADM="SALES_ADM";
 	
 	public static final String MANAGEMENT="MANAGEMENT";
 

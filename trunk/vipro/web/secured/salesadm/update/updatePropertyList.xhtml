@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Update Selection List" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:panelGrid style="width:100%" styleClass="no-borders" >
+		<p:row>
+			<p:column style="width:15%;text-align:left;">
+				<h:outputText value="Project Name" />
+			</p:column>
+			<p:column style="width:30%;text-align:left;">
+					<p:selectOneMenu id="projectList" value="#{propertyUnitUpdate.projectId}" 
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listProject}" />
+					</p:selectOneMenu>
+			</p:column>
+			<p:column style="width:10%;text-align:left">
+				<p:outputLabel value="Unit No" for="unitNo"/>
+			</p:column>
+			<p:column style="width:20%;text-align:left">
+				<p:inputText id="unitNo" length="30" size="10" value="#{propertyUnitUpdate.unitNo}" autocomplete="off"/>
+			</p:column>
+			<p:column style="width:25%;text-align:left;">
+				<p:commandButton value="Search" action="#{propertyUnitUpdate.listAccounts}" update="accountsDataTable" icon="ui-icon-search"/>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<br />
+	<p:dataTable var="c" value="#{propertyUnitUpdate.accounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15" id="accountsDataTable"> 
+              
+        <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
+	 		<h:outputText value="#{c.customer.fullName}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}"/>
+	    </p:column> 
+	        
+        <p:column headerText="Unit No" sortBy="#{c.projectInventory.unitNo}">  
+	 		<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}"/>
+	    </p:column> 
+	    
+	 	<p:column headerText="Selling Price (RM)" sortBy="#{c.purchasePrice}" style="text-align:right">  
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>  
+	        
+	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}" style="text-align:center">  
+	  		<h:outputText value="#{c.datePurchased}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	  		</h:outputText>
+	 	</p:column>  
+	        
+	  	<p:column headerText="SPA Date" sortBy="#{c.spaSignedDate}" style="text-align:center">  
+	  		<h:outputText value="#{c.spaSignedDate}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	  		</h:outputText>
+		</p:column>
+	        
+	 	<p:column headerText="LO Date" sortBy="#{c.loSignedDate}" style="text-align:center">  
+	  		<h:outputText value="#{c.loSignedDate}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	  		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="LA Date" sortBy="#{c.laSignedDate}" style="text-align:center">  
+	  		<h:outputText value="#{c.laSignedDate}" style="color:#{propertyUnitUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	  		</h:outputText>
+		</p:column>
+	        
+	  	<p:column headerText="Actions">
+			<p:commandButton action="#{propertyUnitUpdate.selectAccount}" ajax="false" icon="ui-icon-pencil" title="Edit">
+	  			<f:setPropertyActionListener value="#{c}" target="#{propertyUnitUpdate.account}" />  
+			</p:commandButton>  
+	    </p:column>	
+
+	</p:dataTable>
+      
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

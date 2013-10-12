@@ -2,6 +2,7 @@ package com.vipro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.vipro.dao.AddressDao;
 import com.vipro.data.Address;
@@ -29,6 +30,11 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public Address findByCustomerId(Long customerId) {
 		return addressDao.findById(customerId);
+	}
+	
+	@Override
+	public List<Address> findAll() {
+		return addressDao.findAll();
 	}
 
 	@Override
