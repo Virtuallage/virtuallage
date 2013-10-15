@@ -19,4 +19,5 @@ public interface CustomerService {
 	public void update(Customer c);
 	
 	public Customer findByCustId(Long custId);
+	public Customer findCustomerWithAddressByCustId(Long custId);
 }

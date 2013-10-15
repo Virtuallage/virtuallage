@@ -10,6 +10,7 @@ import com.vipro.common.DaoImpl;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
+import com.vipro.constant.*;
 import com.vipro.data.ProgressiveBilling;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
@@ -95,7 +96,10 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		String name = "";
 		if(id != null){
 			UserProfile u = getHibernateTemplate().get(UserProfile.class, id);
-			name = u.getName();
+			if(u != null ){
+				name = u.getName();
+			}
+			
 		}
 		return name;
 		}
@@ -103,26 +107,47 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 	public List<ProgressiveBillingUnitSeachDTO> getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(Long projectId, String UnitNo) {
 		List<ProgressiveBillingUnitSeachDTO> resultList = new ArrayList<ProgressiveBillingUnitSeachDTO>();
 		StringBuilder query = new StringBuilder(
-				" select distinct pi, pi.project, a.customer,a, pb from ProgressiveBilling pb inner join pb.account a inner join a.projectInventory pi"
-						+ " where pi.project.projectId=?  ");
+				" select distinct pi, pi.project, a.customer, a , cd.description from ProjectInventory pi ,CodeDet cd,  Account a " )
+		.append(" where pi.project.projectId=? and pi.propertyStatus = cd.id.code ")
+		.append(" and pi.inventoryId = a.projectInventory.inventoryId ")
+		.append(" and pi.propertyStatus = ? ");
+				
 		if (!StringUtils.isEmpty(UnitNo)) {
-			query.append(" and upper(pi.unitNo) Like'" + UnitNo.toUpperCase()
-					+ "%'");
+			query.append(" and upper(pi.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%' ");
 		}
+	
+		query.append(" order by pi.unitNo ");		
 
-		
-		List<Object[]> list = getHibernateTemplate().find(query.toString(), projectId);
+		List<Object[]> list = getHibernateTemplate().find(query.toString(), projectId, PropertyUnitStatusConst.STATUS_SOLD);
 		if (list != null && list.size() > 0) {
 
 
 			for (Object[] ob : list) {
+				
 				ProgressiveBillingUnitSeachDTO dto = new ProgressiveBillingUnitSeachDTO(
 						(ProjectInventory) ob[0], (Project) ob[1],
-						(Customer) ob[3], (Account) ob[2], (ProgressiveBilling)ob[4]);
+						(Customer) ob[2], (Account) ob[3]);
+				dto.setStatusDesc((String)ob[4]);
+				dto.setStageNo(getProgressiveBillingStage(dto.getAccount().getAccountId()));
 				resultList.add(dto);
 			}	
 			}
 		return resultList;
 	}
 	
+	private String getProgressiveBillingStage(Long account_id) {
+		String stage = "0";
+		if(account_id != null){
+			
+			StringBuilder query = new StringBuilder(
+					" select max(pb.stageNo)  from  ProgressiveBilling pb " )
+			.append(" where pb.account.accountId = ? ");		
+		
+			List<String> list = getHibernateTemplate().find(query.toString(),account_id);
+			if (list != null && !list.isEmpty()) {
+				stage = list.get(0) == null ? "0":list.get(0);
+			}			
+		}
+		return stage;
+		}
 }

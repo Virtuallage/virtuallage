@@ -15,7 +15,7 @@ Sales Update
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Sales Update #{propertyUnitUpdate.project.projectName}" style="width:95%;">  
+<p:panel id="panel" header="Sales Admin Update #{propertyUnitUpdate.project.projectName}" style="width:95%;">  
     
 <p:focus context="panel"/> 
    	<h:form id="custAccountForm">
@@ -27,7 +27,7 @@ Sales Update
             	<h:outputText value="#{c.getIdentityNo()}" />
         	</p:column>
         	<p:column headerText="Action">
-           		<p:commandButton actionListener="#{propertyUnitUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
+             	<p:commandButton actionListener="#{propertyUnitUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
            		<p:commandButton actionListener="#{propertyUnitUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Purchaser" style="display:#{propertyUnitUpdate.verifyAddCustomer()}"/>
         		<p:commandButton action="#{propertyUnitUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{propertyUnitUpdate.verifyDeleteCustomer()}"/>
            	</p:column> 
@@ -60,7 +60,7 @@ Sales Update
  
  			</h:panelGroup>
     			<p:outputLabel value="Purchase Type"/>
-   			<p:selectOneMenu id="purchaseType" value="#{propertyUnitUpdate.account.purchaseType}" style="width:200px">
+   			<p:selectOneMenu id="purchaseType" value="#{propertyUnitUpdate.account.purchaseType}" style="width:200px" disabled="true">
 						<f:selectItems value="#{propertyUnitUpdate.purchaseTypes}" />
 			</p:selectOneMenu>
 
@@ -69,14 +69,14 @@ Sales Update
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<p:outputLabel value="Bank Name"/>
-   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px">  
+   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px" disabled="true">  
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 			</p:selectOneMenu>
    			
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Loan Amount"/>
-			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off"
+			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off" disabled="true"
    				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>	

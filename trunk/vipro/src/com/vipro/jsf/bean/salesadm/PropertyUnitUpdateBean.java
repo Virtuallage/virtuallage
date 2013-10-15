@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 
 import com.vipro.constant.CodeConst;
@@ -111,6 +112,9 @@ public class PropertyUnitUpdateBean extends CommonBean implements Serializable{
 		try{
 			String selectedProjectIdStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("puListForm:projectList_input");
 			if(selectedProjectIdStr != null){
+				final DataTable d = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				        .findComponent(":puListForm:dt");
+				    d.setFirst(0);
 				selectedProjectId = Long.parseLong(selectedProjectIdStr);
 				dtoList = this.projectService.getPropertyUnitDetailsDTOListByProjectIdAndUnit(selectedProjectId,this.unit);
 			}

@@ -2,10 +2,11 @@ package com.vipro.dto;
 
 import java.io.Serializable;
 
+import com.vipro.data.Address;
 import com.vipro.data.Account;
 import com.vipro.data.Customer;
 import com.vipro.data.ProgressiveBilling;
-import com.vipro.data.Project;
+import com.vipro.data.*;
 import com.vipro.data.ProjectInventory;
 
 public class ProgressiveBillingUnitSeachDTO implements Serializable{
@@ -18,12 +19,38 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 	private Project project = new Project();
 	private Customer customer = new Customer();
 	private Account account = new Account();
+	private Address address = new Address();
+//	private BillingModel billingModel = new BillingModel();
 	private ProgressiveBilling progressiveBilling = new ProgressiveBilling();
+	private String stageNo = "0";
+	private String statusDesc = "";
 	
 	
 	public ProgressiveBillingUnitSeachDTO() {
 		super();
 	}
+	
+	
+	public ProgressiveBillingUnitSeachDTO(ProjectInventory projectInvetory,
+			Project project, Customer customer, Account account) {
+		super();
+		this.projectInvetory = projectInvetory;
+		this.project = project;
+		this.customer = customer;
+		this.account = account;
+	}
+
+	public ProgressiveBillingUnitSeachDTO(ProjectInventory projectInvetory,
+			Project project, Customer customer, Account account, String stage, String statusDesc) {
+		super();
+		this.projectInvetory = projectInvetory;
+		this.project = project;
+		this.customer = customer;
+		this.account = account;
+		this.stageNo = stage;
+		this.statusDesc = statusDesc;
+	}
+
 	public ProgressiveBillingUnitSeachDTO(ProjectInventory projectInvetory,
 			Project project, Customer customer, Account account, ProgressiveBilling progressiveBilling) {
 		super();
@@ -59,7 +86,7 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "PropertyUnitDetailsDTO ["
+		return "ProgressiveBillingUnitSearchDTO ["
 				
 				+ (project != null ? "\n\n------------project=" + project.getProjectName() + ", " : "")
 				+ (account != null ? "\n\n------------account=" + account.getAccountId(): "")
@@ -73,6 +100,32 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 	}
 	public void setProgressiveBilling(ProgressiveBilling progressiveBilling) {
 		this.progressiveBilling = progressiveBilling;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+
+	public String getStageNo() {
+		return stageNo;
+	}
+
+
+	public void setStageNo(String stageNo) {
+		this.stageNo = stageNo;
+	}
+
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 	
 	

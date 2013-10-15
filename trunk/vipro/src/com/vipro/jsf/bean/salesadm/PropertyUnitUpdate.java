@@ -624,7 +624,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
 			if(dataList != null && dataList.size() > 0) {
 				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
-						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN) ||
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_ADM))
 				{
 					accounts.addAll(dataList);
 				}
