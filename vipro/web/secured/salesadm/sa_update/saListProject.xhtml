@@ -20,7 +20,7 @@ Property Information Update
 <p:focus context="panel"/> 
       
 	<h:form>  
-    <p:dataTable var="c" value="#{projectSetup.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
+    <p:dataTable var="c" value="#{projectUpdate.projects}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15" >   
         <p:column headerText="Project Code" sortBy="#{c.projectCode}">  
@@ -39,21 +39,21 @@ Property Information Update
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Property Type" sortBy="#{projectSetup.getCodeDesc('PT', c.propertyType)}">  
-           <h:outputText value="#{projectSetup.getCodeDesc('PT', c.propertyType)}"/>
+        <p:column headerText="Property Type" sortBy="#{projectUpdate.getCodeDesc('PT', c.propertyType)}">  
+           <h:outputText value="#{projectUpdate.getCodeDesc('PT', c.propertyType)}"/>
         </p:column>  
         
-        <p:column headerText="Status" sortBy="#{projectSetup.getCodeDesc('SS', c.status)}">  
-           <h:outputText value="#{projectSetup.getCodeDesc('SS', c.status)}"/>
+        <p:column headerText="Status" sortBy="#{projectUpdate.getCodeDesc('SS', c.status)}">  
+           <h:outputText value="#{projectUpdate.getCodeDesc('SS', c.status)}"/>
         </p:column>
         
         <p:column headerText="Action">  
            <p:commandButton action="#{projectUpdate.saEditProject}" ajax="false" icon="ui-icon-pencil" title="Edit Project">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  
+           		 <f:setPropertyActionListener value="#{c}" target="#{projectUpdate.project}" />  
            </p:commandButton>
            &nbsp;
            <p:commandButton action="#{projectUpdate.toInventoryList}" ajax="false" icon="ui-icon-folder-open" title="Inventory List">
-           		 <f:setPropertyActionListener value="#{c}" target="#{projectSetup.project}" />  
+           		 <f:setPropertyActionListener value="#{c}" target="#{projectUpdate.project}" />  
            </p:commandButton>
         </p:column>
 

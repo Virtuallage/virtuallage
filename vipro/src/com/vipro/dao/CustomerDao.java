@@ -14,4 +14,6 @@ public interface CustomerDao extends Dao<Customer> {
 	public List<Customer> findByIdNo(String idNo);
 	
 	public Customer findById(Long custId);
+	public Customer findCustomerWithAddressByCustId(Long custId);
+	
 }

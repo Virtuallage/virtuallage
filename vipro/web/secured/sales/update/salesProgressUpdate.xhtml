@@ -29,8 +29,8 @@ Sales Update
         	<p:column headerText="Action">
            		<p:commandButton actionListener="#{salesUpdate.setCustomerId(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-person" title="Change Purchaser" />
            		<p:commandButton actionListener="#{salesUpdate.setCustomerNo(c.getCustomerId())}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" title="Add Purchaser" style="display:#{salesUpdate.verifyAddCustomer()}"/>
-<!--        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
-  -->
+        		<p:commandButton action="#{salesUpdate.deleteByCustomerId(c.getCustomerId())}" ajax="false" icon="ui-icon-trash" title="Delete Purchaser" style="display:#{salesUpdate.verifyDeleteCustomer()}"/>
+ 
            	</p:column> 
      	</p:dataTable><br />
    		<h:panelGrid columns="4" style="width:100%;">

@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -19,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -95,12 +97,13 @@ public class AdviseUpdateBean extends CommonBean implements Serializable{
 	        boolean success = false; 
 	        AccountService service = (AccountService)SpringBeanUtil.lookup(AccountService.class.getName());
 	        
+	        getSelectedDto().getAccount().setAdviseVerifiedDate(new Date());
+	        getSelectedDto().getAccount().setAdviseVerifiedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());
 	        service.update(getSelectedDto().getAccount());
 	        
 	        setSelectedDto(new AdviseUpdateDetailsDTO());
+	        refreshProjectSearch();
 	        
-	        searchProject();
-
 	        CommonBean.addInfoMessage("Update Successful."," The Advise information has been updated successfully.");
 	        success = true;
 	        context.addCallbackParam("success", success);  
@@ -125,6 +128,9 @@ public class AdviseUpdateBean extends CommonBean implements Serializable{
 		try{
 			String selectedProjectIdStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("puListForm:projectList_input");
 			if(selectedProjectIdStr != null){
+				final DataTable d = (DataTable) FacesContext.getCurrentInstance().getViewRoot()
+				        .findComponent(":puListForm:dt");
+				    d.setFirst(0);
 				selectedProjectId = Long.parseLong(selectedProjectIdStr);
 				dtoList = this.projectService.getAdviseUpdateDetailsDTOListByProjectIdAndUnit(selectedProjectId,this.unit);
 			}

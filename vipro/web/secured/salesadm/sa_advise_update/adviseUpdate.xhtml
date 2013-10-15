@@ -43,8 +43,8 @@
 				</p:outputPanel>
  	 	 	<p:outputPanel id="resultsPanel" rendered = "#{adviseUpdateBean.selectedProjectId != null}" >
  	 	 	
- 		 	 	<p:dataTable var="dto" value="#{adviseUpdateBean.dtoList}" draggableColumns="true" resizableColumns="false" paginatorPosition="bottom" paginatorAlwaysVisible="false"
- 		 	 			paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" tableStyle="width:100%"
+ 		 	 	<p:dataTable id="dt" var="dto" value="#{adviseUpdateBean.dtoList}" draggableColumns="true" resizableColumns="false" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+ 		 	 			paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" tableStyle="width:100%" 
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  >  
                  
     			    <p:column headerText="Unit No" sortBy="#{dto.projectInvetory.unitNo}">  
@@ -60,12 +60,12 @@
         			</p:column>
         			 <p:column headerText="Purchased Date" sortBy="#{dto.account.datePurchased}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.datePurchased}" >
-            				<f:convertDateTime type="date" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
             			</h:outputText>  
         			</p:column>
         			 <p:column headerText="Advise Date" sortBy="#{dto.account.adviseSignedDate}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.adviseSignedDate}" >
-            				<f:convertDateTime type="date" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
             			</h:outputText>    
         			</p:column>
         			<p:column style="width:4%">  
@@ -93,9 +93,9 @@
 				        
 				 	        <p:outputLabel  value="Purchaser Name" />
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.customer.fullName}" disabled="true"/>
-				            <p:outputLabel  value="" />
-				            <p:outputLabel  value="" />		
-				        
+				             <p:outputLabel  value="Registration No." />
+				            <p:inputText value="#{adviseUpdateBean.selectedDto.account.registrationNo}" disabled="false" style="width:35%"/>
+	
 				            <p:outputLabel  value="Block No" />
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.projectInvetory.blockNo}" disabled="true" style="width:35%"/>
 				            <p:outputLabel  value="Level" />
@@ -107,19 +107,28 @@
 				            <p:outputLabel  value="" />		
 				            					           
 				            <p:outputLabel  value="Advise Date" />
-				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseSignedDate}" id="popupButtonCal1" timeZone="#{adviseUpdateBean.timeZone}" showOn="button" style="width:50%" />
-				            <p:commandButton id="upBtn" update=":uploadForm" oncomplete="upDialog.show()" title="Upload" value="Upload"/>
-				            <p:commandButton id="downBtn" update=":downloadForm" oncomplete="downDialog.show()" title="View" value="View"/>
+				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseSignedDate}" id="popupButtonCal1" 
+				            	pattern="#{adviseUpdateBean.dateFormat}"	timeZone="#{adviseUpdateBean.timeZone}" showOn="button" style="width:50%" />
+				            <h:panelGroup>	
+					            <p:commandButton id="upBtn" update=":uploadForm" oncomplete="upDialog.show()" title="Upload" value="Upload"/>
+					            <p:commandButton id="downBtn" update=":downloadForm" oncomplete="downDialog.show()" title="View" value="View"/>
+				            </h:panelGroup>
+				            <p:outputLabel  value="" />
 				            
 				            <p:outputLabel  value="Advise Accepted Date" />
-				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseStampedDate}" id="popupButtonCal2" showOn="button" timeZone="#{adviseUpdateBean.timeZone}" style="width:50%" />
+				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseStampedDate}" id="popupButtonCal2" showOn="button" 
+				            	pattern="#{adviseUpdateBean.dateFormat}"
+				            	timeZone="#{adviseUpdateBean.timeZone}" style="width:50%" />
 				            <p:outputLabel  value="" />
 				            <p:outputLabel  value="" />	
 				            
 				            <p:outputLabel  value="Advise Update By" />
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.verifiedBy}" disabled="true" />
-				            <p:outputLabel  value="" />
-				            <p:outputLabel  value="" />		
+				            <p:outputLabel  value="Advise Update Date" />
+				            <p:inputText  value="#{adviseUpdateBean.selectedDto.account.adviseVerifiedDate}" disabled="true" >
+            						<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            				</p:inputText>  
+				            		
 				           				            	
 				            				            			            
 				            <p:outputLabel value=""/>
@@ -153,9 +162,24 @@
 				        hideEffect="explode">
 				         <p:messages id="messages" showDetail="true" />
 				        <p:growl id="growl12" showDetail="true" life="3000" autoUpdate="false" />
-						<p:fileUpload mode="advanced" style="width:95%;height:95%"
-							fileUploadListener="#{adviseUpdateBean.handleFileUpload}"  update="growl12" 
+					    
+						<p:fileUpload mode="advanced" style="width:95%"
+							fileUploadListener="#{adviseUpdateBean.handleFileUpload}"  update="growl12,downloadDataTable2" 
 							allowTypes="/(\.|\/)(doc|docx|pdf|xls|xlsx)$/"  />
+							<br/>
+							<p:dataTable id="downloadDataTable2" 
+	                    			value="#{adviseUpdateBean.allUploadedFiles}"
+	                    			var="file" widgetVar="downlaodFile"
+	                    			emptyMessage="NO Files Uploaded"
+	                    			style="width:95%; border:2 !important; border-color:white !important;">
+	                    
+	                    		<p:column>
+	            					<f:facet name="header">
+	                					Uploaded Files 
+	            					</f:facet>
+	             					<h:outputText value="#{file.name}" /> 
+	        					</p:column>
+	                		</p:dataTable>
 					</p:dialog>
 				</h:form>
 				<h:form id="downloadForm" >

@@ -1,17 +1,12 @@
 package com.vipro.jsf.bean.salesadm;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
-
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
@@ -19,10 +14,8 @@ import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.SalesCommission;
 import com.vipro.jsf.bean.CommonBean;
-import com.vipro.service.DiscountService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
-import com.vipro.service.SalesCommissionService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 

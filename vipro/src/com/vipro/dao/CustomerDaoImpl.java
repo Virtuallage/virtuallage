@@ -36,5 +36,13 @@ public class CustomerDaoImpl extends DaoImpl<Customer> implements CustomerDao {
 	public Customer findById(Long custId) {
 		return getHibernateTemplate().get(Customer.class, custId);
 	}
+	
+	@Override
+	public Customer findCustomerWithAddressByCustId(Long custId) {
+		String query = "select o from Customer o left join fetch o.addresses  where o.customerId = ?";
+		List<Customer> list = getHibernateTemplate().find(query, custId );
+		return list.get(0);
+	}
 
+	
 }
