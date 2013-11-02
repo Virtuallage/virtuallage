@@ -9,6 +9,8 @@ public class CodeDet implements java.io.Serializable {
 
 	private CodeDetId id;
 	private CodeHeader codeHeader;
+	private String codeHeaderId;	
+	private String code;
 	private String description;
 	private String status;
 
@@ -58,6 +60,22 @@ public class CodeDet implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCodeHeaderId() {
+		return codeHeaderId;
+	}
+
+	public void setCodeHeaderId(String codeHeaderId) {
+		this.codeHeaderId = codeHeaderId;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

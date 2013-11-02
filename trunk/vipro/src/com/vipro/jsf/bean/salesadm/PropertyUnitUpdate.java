@@ -997,9 +997,17 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		return null;
 	}
 	
+	public void setCustomerId(Long customerId) {
+		setCustomerId(customerId.toString());
+	}
+	
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 		this.customerNo = "";
+	}
+	
+	public void setCustomerNo(Long customerId) {
+		setCustomerNo(customerId.toString());
 	}
 	
 	public void setCustomerNo(String customerId) {
@@ -1020,6 +1028,10 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	
 	public void changeSelectedCustomer() {
 		setAccountCustomer(selectedCustomer);
+	}
+	
+	public void deleteByCustomerId(Long customerId) {
+		deleteByCustomerId(customerId.toString());
 	}
 	
 	public void deleteByCustomerId(String customerId) {
@@ -1081,12 +1093,26 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	
 	public String saveIndividual() {
 		try {
+			String fname = individual.getFullName();
+			individual.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
 			customerService.insert(individual);
 
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
+			
 			address.setCustomer(individual);
+
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());
 			addressService.insert(address);
 
 			individual.setAddressId(address.getAddressId());
@@ -1105,12 +1131,27 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 	public String saveCompany() {
 		try {
+			String fname = company.getFullName();
+			company.setFullName(fname.toUpperCase());
+			String cname = company.getContactPerson();
+			company.setContactPerson(cname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil.lookup(AddressService.class.getName());
 			address.setCustomer(company);
+			
+			String aline1 = address.getAddressLine1();
+			address.setAddressLine1(aline1.toUpperCase());
+			String aline2 = address.getAddressLine2();
+			address.setAddressLine2(aline2.toUpperCase());
+			String aline3 = address.getAddressLine3();
+			address.setAddressLine3(aline3.toUpperCase());
+			String aline4 = address.getAddressLine4();
+			address.setAddressLine4(aline4.toUpperCase());
+			String acity = address.getCity();
+			address.setCity(acity.toUpperCase());
 			addressService.insert(address);
 
 			company.setAddressId(address.getAddressId());
@@ -1144,6 +1185,16 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		
 		partnerAddress.setCreatedOn(new Date());
 		partnerAddress.setCreatedBy(userProfile.getUsername());
+		String aline1 = partnerAddress.getAddressLine1();
+		partnerAddress.setAddressLine1(aline1.toUpperCase());
+		String aline2 = partnerAddress.getAddressLine2();
+		partnerAddress.setAddressLine2(aline2.toUpperCase());
+		String aline3 = partnerAddress.getAddressLine3();
+		partnerAddress.setAddressLine3(aline3.toUpperCase());
+		String aline4 = partnerAddress.getAddressLine4();
+		partnerAddress.setAddressLine4(aline4.toUpperCase());
+		String acity = partnerAddress.getCity();
+		partnerAddress.setCity(acity.toUpperCase());		
 		addressService.insert(partnerAddress);
 		
 		if(this.partnerDocumentType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
@@ -1162,6 +1213,14 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		Project currentProject = projectService.findById(projectId);
 		partner.setInstitution(currentProject.getInstitution());
 		partner.setStatus(CommonConst.STATUS_ACTIVE);
+
+		String fname = partner.getContactPersonName();
+		partner.setContactPersonName(fname.toUpperCase());
+		String cname = partner.getCompanyName();
+		partner.setCompanyName(cname.toUpperCase());
+		String regno = partner.getBusinessRegistrationNo();
+		partner.setBusinessRegistrationNo(regno.toUpperCase());
+		
 		businessPartnerService.insert(partner);
 
 		if(this.partnerDocumentType.equalsIgnoreCase(DocumentTypeConst.SPA)) {

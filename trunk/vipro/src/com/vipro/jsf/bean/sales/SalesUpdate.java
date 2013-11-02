@@ -833,37 +833,41 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		return null;
 	}
 	
+	public void setCustomerId(Long customerId) {
+		setCustomerId(customerId.toString());
+	}
+	
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 		this.customerNo = "";
 	}
 	
+	public void setCustomerNo(Long customerId) {
+		setCustomerNo(customerId.toString());
+	}
+	
 	public void setCustomerNo(String customerId) {
 		this.customerId = "";
 		
-		if(account.getCustomer2() != null) {
-			if (account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-				this.customerNo = "2";
-			}
-		} else if(account.getCustomer3() != null) { 
-			if (account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-				this.customerNo = "3";
-			}
-		} else if(account.getCustomer4() != null) { 
-			if(account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-				this.customerNo = "4";
-			}
-		} else if(account.getCustomer5() != null) { 
-			if(account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
-				this.customerNo = "5";
-			}
-		} else {
+		if (account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "2";
+		}else if (account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "3";
+		}else if(account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "4";
+		}else if(account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) {
+			this.customerNo = "5";
+		}else {
 			this.customerNo = "1";
 		}
 	}
 	
 	public void changeSelectedCustomer() {
 		setAccountCustomer(selectedCustomer);
+	}
+	
+	public void deleteByCustomerId(Long customerId) {
+		deleteByCustomerId(customerId.toString());
 	}
 	
 	public void deleteByCustomerId(String customerId) {
@@ -894,29 +898,18 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public void setAccountCustomer(Customer customer)
 	{
-		if(customerNo == null) {
-			this.customerNo = "";
-		}
-		if(account.getCustomer2() != null) { 
-			if((account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("1")) {
-				account.setCustomer2(customer);
-				setCustomerName2(customer.getFullName());
-			}
-		} else if(account.getCustomer3() != null) { 
-			if((account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("2")) {
-				account.setCustomer3(customer);
-				setCustomerName3(customer.getFullName());
-			}
-		} else if(account.getCustomer4() != null) { 
-			if((account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("3")) {
-				account.setCustomer4(customer);
-				setCustomerName4(customer.getFullName());
-			}
-		} else if(account.getCustomer5() != null) { 
-			if ((account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("4")) {
-				account.setCustomer5(customer);
-				setCustomerName5(customer.getFullName());
-			}
+		if((account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("1")) {
+			account.setCustomer2(customer);
+			setCustomerName2(customer.getFullName());
+		}else if((account.getCustomer3() != null && account.getCustomer3().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("2")) {
+			account.setCustomer3(customer);
+			setCustomerName3(customer.getFullName());
+		}else if((account.getCustomer4() != null && account.getCustomer4().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("3")) {
+			account.setCustomer4(customer);
+			setCustomerName4(customer.getFullName());
+		}else if ((account.getCustomer5() != null && account.getCustomer5().getCustomerId().toString().equalsIgnoreCase(customerId)) || customerNo.equalsIgnoreCase("4")) {
+			account.setCustomer5(customer);
+			setCustomerName5(customer.getFullName());
 		} else {
 			account.setCustomer(customer);
 			setCustomerName(customer.getFullName());

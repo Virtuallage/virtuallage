@@ -38,5 +38,6 @@ public interface CommonConst {
 	public static final String TIME_ZONE = "MYT";
 	
 	public static final String ADVISE_FOLDER_NAME = "ADVISE";
+	public static final String PROGRESSIVE_BILL_FOLDER_NAME = "BILL";
 	
 }

@@ -88,6 +88,8 @@ public final class CodeUtil {
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_BOOKED, "Booked") );
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_SOLD_CONFIRMED, "Sold"));
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_RESERVED, "Reserved"));
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_LOCKED, "Locked"));
+		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_CANCELLING, "Cancelling"));
 		
 		return list;
 	}

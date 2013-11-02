@@ -16,6 +16,9 @@
         </many-to-one>
         <property name="developerId" type="java.lang.Long">
             <column name="developer_id" />
+        </property> 
+        <property name="dueDays" type="java.lang.Integer">
+            <column name="due_days" />
         </property>
         <property name="landProprietorId" type="java.lang.Long">
             <column name="land_proprietor_id" />
@@ -65,6 +68,9 @@
         <property name="personInCharge" type="string">
             <column name="person_in_charge" length="30" />
         </property>
+        <property name="picId" type="java.lang.Long">
+            <column name="pic_id" />
+        </property> 
         <property name="picMobileNo" type="string">
             <column name="pic_mobile_no" length="20" />
         </property>

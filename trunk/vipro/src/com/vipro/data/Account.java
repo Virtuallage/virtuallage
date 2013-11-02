@@ -46,17 +46,14 @@ public class Account implements java.io.Serializable {
 	private Long spaVerifiedBy;
 	private Date spaVerifiedDate;
 	private Long spaSolicitorId;
-	private String spaRefNo;
 	private Date loSignedDate;
 	private Date loVerifiedDate;
 	private Long loVerifiedBy;
-	private Long financierId;
 	private Date laSignedDate;
 	private Date laStampedDate;
 	private Long laVerifiedBy;
 	private Date laVerifiedDate;
 	private Long laSolicitorId;
-	private String laRefNo;
 	private Date adviseSignedDate;
 	private Date adviseStampedDate;
 	private Long adviseVerifiedBy;
@@ -97,6 +94,9 @@ public class Account implements java.io.Serializable {
 	private Set accountAgings = new HashSet(0);
 	
 	private Long cancelDocId;
+	private Long financierId;
+	private String spaRefNo;
+	private Long laRefNo;
 	private String campaignCode;
 	private String financierRef;
 
@@ -118,10 +118,10 @@ public class Account implements java.io.Serializable {
 			BigDecimal totalPaymentTodate, Long redemptionBankId,
 			BigDecimal bankRedemptionSum, BigDecimal bankRedemptionTodate,
 			Date spaSignedDate, Date spaStampedDate, Long spaVerifiedBy,
-			Date spaVerifiedDate, Long spaSolicitorId, String spaRefNo, Date loSignedDate,
-			Date loVerifiedDate, Long loVerifiedBy, Long financierId, Date laSignedDate,
+			Date spaVerifiedDate, Long spaSolicitorId, Date loSignedDate,
+			Date loVerifiedDate, Long loVerifiedBy, Date laSignedDate,
 			Date laStampedDate, Long laVerifiedBy, Date laVerifiedDate,
-			Long laSolicitorId, String laRefNo, Date adviseSignedDate, Date adviseStampedDate,
+			Long laSolicitorId, Date adviseSignedDate, Date adviseStampedDate,
 			Long adviseVerifiedBy, Date adviseVerifiedDate,
 			Date maintenanceStartDate, Date maintenanceEndDate,
 			BigDecimal maintenanceFee, Character maintenanceBilingAddress,
@@ -157,17 +157,14 @@ public class Account implements java.io.Serializable {
 		this.spaVerifiedBy = spaVerifiedBy;
 		this.spaVerifiedDate = spaVerifiedDate;
 		this.spaSolicitorId = spaSolicitorId;
-		this.spaRefNo = spaRefNo;
 		this.loSignedDate = loSignedDate;
 		this.loVerifiedDate = loVerifiedDate;
 		this.loVerifiedBy = loVerifiedBy;
-		this.financierId = financierId;
 		this.laSignedDate = laSignedDate;
 		this.laStampedDate = laStampedDate;
 		this.laVerifiedBy = laVerifiedBy;
 		this.laVerifiedDate = laVerifiedDate;
 		this.laSolicitorId = laSolicitorId;
-		this.laRefNo = laRefNo;
 		this.adviseSignedDate = adviseSignedDate;
 		this.adviseStampedDate = adviseStampedDate;
 		this.adviseVerifiedBy = adviseVerifiedBy;
@@ -233,6 +230,11 @@ public class Account implements java.io.Serializable {
 		return accountBalance;
 	}
 
+	public BigDecimal getAccountBalanceNotNull() {
+		if(accountBalance == null)
+			return new BigDecimal(0l);
+		return accountBalance;
+	}
 	public void setAccountBalance(BigDecimal accountBalance) {
 		this.accountBalance = accountBalance;
 	}
@@ -492,14 +494,6 @@ public class Account implements java.io.Serializable {
 	public void setSpaSolicitorId(Long spaSolicitorId) {
 		this.spaSolicitorId = spaSolicitorId;
 	}
-	
-	public String getSpaRefNo() {
-		return this.spaRefNo;
-	}
-	
-	public void setSpaRefNo(String spaRefNo) {
-		this.spaRefNo = spaRefNo;
-	}
 
 	public Date getLoSignedDate() {
 		return this.loSignedDate;
@@ -523,14 +517,6 @@ public class Account implements java.io.Serializable {
 
 	public void setLoVerifiedBy(Long loVerifiedBy) {
 		this.loVerifiedBy = loVerifiedBy;
-	}
-	
-	public Long getFinancierId() {
-		return this.financierId;
-	}
-
-	public void setFinancierId(Long financierId) {
-		this.financierId = financierId;
 	}
 
 	public Date getLaSignedDate() {
@@ -571,14 +557,6 @@ public class Account implements java.io.Serializable {
 
 	public void setLaSolicitorId(Long laSolicitorId) {
 		this.laSolicitorId = laSolicitorId;
-	}
-	
-	public String getLaRefNo() {
-		return this.laRefNo;
-	}
-	
-	public void setLaRefNo(String laRefNo) {
-		this.laRefNo = laRefNo;
 	}
 
 	public Date getAdviseSignedDate() {
@@ -883,6 +861,30 @@ public class Account implements java.io.Serializable {
 
 	public void setFinancierRef(String financierRef) {
 		this.financierRef = financierRef;
+	}
+
+	public String getSpaRefNo() {
+		return spaRefNo;
+	}
+
+	public void setSpaRefNo(String spaRefNo) {
+		this.spaRefNo = spaRefNo;
+	}
+
+	public Long getFinancierId() {
+		return financierId;
+	}
+
+	public void setFinancierId(Long financierId) {
+		this.financierId = financierId;
+	}
+
+	public Long getLaRefNo() {
+		return laRefNo;
+	}
+
+	public void setLaRefNo(Long laRefNo) {
+		this.laRefNo = laRefNo;
 	}
 
 	@Override

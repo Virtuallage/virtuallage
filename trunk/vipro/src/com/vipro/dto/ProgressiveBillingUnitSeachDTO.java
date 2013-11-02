@@ -1,12 +1,13 @@
 package com.vipro.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.vipro.data.Address;
 import com.vipro.data.Account;
+import com.vipro.data.Address;
 import com.vipro.data.Customer;
-import com.vipro.data.ProgressiveBilling;
-import com.vipro.data.*;
+import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 
 public class ProgressiveBillingUnitSeachDTO implements Serializable{
@@ -20,10 +21,10 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 	private Customer customer = new Customer();
 	private Account account = new Account();
 	private Address address = new Address();
-//	private BillingModel billingModel = new BillingModel();
-	private ProgressiveBilling progressiveBilling = new ProgressiveBilling();
+	private List<BillingModelStageDTO> stageDtoList = new ArrayList<BillingModelStageDTO>();
 	private String stageNo = "0";
 	private String statusDesc = "";
+	
 	
 	
 	public ProgressiveBillingUnitSeachDTO() {
@@ -39,27 +40,7 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 		this.customer = customer;
 		this.account = account;
 	}
-
-	public ProgressiveBillingUnitSeachDTO(ProjectInventory projectInvetory,
-			Project project, Customer customer, Account account, String stage, String statusDesc) {
-		super();
-		this.projectInvetory = projectInvetory;
-		this.project = project;
-		this.customer = customer;
-		this.account = account;
-		this.stageNo = stage;
-		this.statusDesc = statusDesc;
-	}
-
-	public ProgressiveBillingUnitSeachDTO(ProjectInventory projectInvetory,
-			Project project, Customer customer, Account account, ProgressiveBilling progressiveBilling) {
-		super();
-		this.projectInvetory = projectInvetory;
-		this.project = project;
-		this.customer = customer;
-		this.account = account;
-		this.progressiveBilling = progressiveBilling;
-	}
+	
 	public ProjectInventory getProjectInvetory() {
 		return projectInvetory;
 	}
@@ -95,12 +76,7 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 						+ projectInvetory + ", " : "")
 				 + "]";
 	}
-	public ProgressiveBilling getProgressiveBilling() {
-		return progressiveBilling;
-	}
-	public void setProgressiveBilling(ProgressiveBilling progressiveBilling) {
-		this.progressiveBilling = progressiveBilling;
-	}
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -127,6 +103,15 @@ public class ProgressiveBillingUnitSeachDTO implements Serializable{
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
 	}
-	
+
+
+	public List<BillingModelStageDTO> getStageDtoList() {
+		return stageDtoList;
+	}
+
+
+	public void setStageDtoList(List<BillingModelStageDTO> stageDtoList) {
+		this.stageDtoList = stageDtoList;
+	}
 	
 }

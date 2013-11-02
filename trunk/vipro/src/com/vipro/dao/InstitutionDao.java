@@ -1,5 +1,7 @@
 package com.vipro.dao;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.vipro.common.Dao;
@@ -17,5 +19,9 @@ public interface InstitutionDao extends Dao<Institution>{
 	public List<Institution> findAllActive();
 	
 	public List<Institution> findAll();
+	
+	public boolean isOffDay(int dayOfWeek, Long instId);
+	
+	public boolean isHoliday(Date date, Long instId);
 	
 }

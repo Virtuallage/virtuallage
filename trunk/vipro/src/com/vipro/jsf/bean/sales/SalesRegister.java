@@ -647,7 +647,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			if (lockedUnit.size() > 0) {
 				setLockedInventory(lockedUnit.set(0, getInventory())); 
 				addInfoMessage(
-						"You Have Locked: " + lockedInventory.getUnitNo(),
+						"Warning: You Have Locked Unit No " + lockedInventory.getUnitNo(),
 						"Please unlock this unit before procedding.");
 				return null;
 			}
@@ -827,8 +827,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 			deleteButton.setStyle("display: none");
 			
 			addInfoMessage(
-					"Sales Registration",
-					"Sales Registration Saved. Registration No is "
+					"Saved",
+					"Sales Registration Saved Successfully. Registration No is "
 							+ account.getAccountId());
 			
 //BILL 18/6/13 Move this to after paying the booking fee.		
@@ -849,8 +849,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		if (!StringUtils.hasText(searchIdNo)
 				&& !StringUtils.hasText(searchName)) {
 			setSearchCustList(null);
-			addErrorMessage("Search Customer",
-					"Please enter customer name or Id No.");
+			addErrorMessage("Info",
+					"Please enter either customer name or Id No for search.");
 			return null;
 		}
 
@@ -1032,7 +1032,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		setSelectedCustomer(purchaser);
 		// addSelectedCustomer();
 		
-		addInfoMessage("Record Saved", "Purchaser information successfully saved.");
+		addInfoMessage("Saved", "Purchaser information successfully saved.");
 		
 		return "salesRegistration";
 	}	
@@ -1045,7 +1045,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	public String toPay() {
 		try {
 			if (account==null || account.getAccountId()==null) {
-				addErrorMessage("Booking Fee", "Please save before proceed with booking payment");
+				addErrorMessage("Warning", "Please save before proceed with booking payment.");
 				return null;
 			}
 			
@@ -1123,7 +1123,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			// new update disc & nett amount into account plus other account fields
 			account.setDiscountedAmount(inventory.getDiscountAmount());
 			account.setNetPrice(account.getPurchasePrice().subtract(account.getDiscountedAmount()));
-			account.setTotalPaymentTodate(account.getBookPymtAmount());
+// Bill			account.setTotalPaymentTodate(account.getBookPymtAmount());
 			account.setRegistrationFee(account.getBookPymtAmount());
 			// account.setAccountBalance(account.getPurchasePrice().subtract(account.getBookPymtAmount()));
 			
@@ -1157,7 +1157,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			return null;
 		}
 		
-		addInfoMessage("Booking Fee", "Transaction saved");
+		addInfoMessage("Saved", "Booking Fee Transaction Created Successfully.");
 		salesRegTabView.setActiveIndex(1);
 		
 		return "salesRegistration";
@@ -1202,8 +1202,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		}
 		
 		if (account.getCustomer()==null) {
-			addErrorMessage("Invalid Purchaser",
-					"You need at least 1 purchaser for sales registration!");
+			addErrorMessage("Warning",
+					"Invalid Purchaser! You need at least 1 purchaser for sales registration.");
 			return null;
 		}
 		
@@ -1280,7 +1280,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		previewButton.setStyle("");
 		receiptButton.setStyle("");
 		
-		addInfoMessage("Document Generated", "Registration Form & Receipt Generated.");
+		addInfoMessage("Generated", "Registration Form & Receipt Generated.");
 		
 		return "salesRegistration";
 	}

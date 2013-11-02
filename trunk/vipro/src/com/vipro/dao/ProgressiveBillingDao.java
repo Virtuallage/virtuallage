@@ -11,4 +11,6 @@ public interface ProgressiveBillingDao extends Dao<ProgressiveBilling>{
 		
 	public ProgressiveBilling findById(Long id);
 	
+	public ProgressiveBilling findByStageAndAccountId(Long accountId, String stageNo);
+	
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.BillingModel" table="billing_model" catalog="vipro">
+        <id name="modelId" type="java.lang.Long">
+            <column name="model_id" />
+            <generator class="identity" />
+        </id>
+        <property name="billingModelCode" type="string">
+            <column name="billing_model_code" length="1" />
+        </property>
+        <property name="billingSeq" type="java.lang.Integer">
+            <column name="billing_seq" />
+        </property>
+        <property name="stage" type="string">
+            <column name="stage" length="5" />
+        </property>       
+        <property name="description" type="string">
+            <column name="description" length="120" />
+        </property>       
+        <property name="billingPercentage" type="big_decimal">
+            <column name="billing_percentage" precision="7" />
+        </property>
+        <property name="changedBy" type="java.lang.Long">
+            <column name="changed_by" />
+        </property>
+        <property name="dateChanged" type="date">
+            <column name="date_changed" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

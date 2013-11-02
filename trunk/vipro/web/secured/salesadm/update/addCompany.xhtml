@@ -28,16 +28,16 @@ Add Company
 				<p:outputLabel value="Company"/>
 				
 				<p:outputLabel value="Contact Person Name" for="contactp"/>
-				<p:inputText id="contactp" value="#{propertyUnitUpdate.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
+				<p:inputText id="contactp" value="#{propertyUnitUpdate.company.contactPerson}" style="text-transform:uppercase" maxlength="30" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
 				<p:selectOneMenu id="title" value="#{propertyUnitUpdate.company.title}">
 						<f:selectItems value="#{propertyUnitUpdate.listTitle}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Company Name" for="name"/>
-				<p:inputText id="name" value="#{propertyUnitUpdate.company.fullName}" maxlength="60" required="true" autocomplete="off"/>
+				<p:inputText id="name" value="#{propertyUnitUpdate.company.fullName}" style="text-transform:uppercase" maxlength="60" required="true" autocomplete="off"/>
 				<p:outputLabel value="Business Reg. No." for="regno"/>
-				<p:inputText id="regno" value="#{propertyUnitUpdate.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+				<p:inputText id="regno" value="#{propertyUnitUpdate.company.identityNo}" style="text-transform:uppercase" maxlength="15" required="true" autocomplete="off"/>
 			
 				<p:outputLabel value="Bumi/Non Bumi" for="bumi"/>
 				<p:selectOneMenu id="bumi" value="#{propertyUnitUpdate.company.bumiIndicator}" >
@@ -47,58 +47,48 @@ Add Company
 				<p:outputLabel value="" />
 			
 				<p:outputLabel value="Address 1" for="addr1"/>
-				<p:inputText id="addr1" value="#{propertyUnitUpdate.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
+				<p:inputText id="addr1" value="#{propertyUnitUpdate.address.addressLine1}" style="text-transform:uppercase" maxlength="40" required="true" autocomplete="off"/>
 				<p:outputLabel value="Address 2" for="addr2"/>
-				<p:inputText id="addr2" value="#{propertyUnitUpdate.address.addressLine2}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr2" value="#{propertyUnitUpdate.address.addressLine2}" style="text-transform:uppercase" maxlength="40" autocomplete="off"/>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
-				<p:inputText id="addr3" value="#{propertyUnitUpdate.address.addressLine3}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr3" value="#{propertyUnitUpdate.address.addressLine3}" style="text-transform:uppercase" maxlength="40" autocomplete="off"/>
 				<p:outputLabel value="Address 4" for="addr3"/>
-				<p:inputText id="addr4" value="#{propertyUnitUpdate.address.addressLine4}" maxlength="40" autocomplete="off"/>
+				<p:inputText id="addr4" value="#{propertyUnitUpdate.address.addressLine4}" style="text-transform:uppercase" maxlength="40" autocomplete="off"/>
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{propertyUnitUpdate.address.postcode}" maxlength="10" autocomplete="off"/>
-				<p:outputLabel value="" />
-				<p:outputLabel value="" />
-				
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:selectOneMenu id="city" value="#{propertyUnitUpdate.address.city}"  required="true">
-						<f:selectItems value="#{propertyUnitUpdate.listCity}"/>
-				</p:selectOneMenu>
+				<p:inputText id="city" value="#{propertyUnitUpdate.address.city}" maxlength="20" style="text-transform:uppercase" required="true" autocomplete="off"/>
+
 				<p:outputLabel value="State" for="state" required="true"/>
 				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.address.state}"  required="true">
 						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
-				</p:selectOneMenu>
-				
-				
+				</p:selectOneMenu>			
 				<p:outputLabel value="Country" for="country"/>
 				<p:selectOneMenu id="country" value="#{propertyUnitUpdate.address.country}"  required="true">
 						<f:selectItems value="#{propertyUnitUpdate.listCountry}"/>
 				</p:selectOneMenu>
+
 				<p:outputLabel value="House Tel No" for="tel"/>
 				<p:inputText  id="tel" value="#{propertyUnitUpdate.company.houseTelNo}" maxlength="15" autocomplete="off"/>
-				
 				<p:outputLabel value="Office Tel No" for="offtel"/>
 				<p:inputText id="offtel" value="#{propertyUnitUpdate.company.officeTelNo}" maxlength="15" autocomplete="off"/>
+
 				<p:outputLabel value="Fax No" for="fax"/>
 				<p:inputText id="fax" value="#{propertyUnitUpdate.company.faxNo}" maxlength="15" autocomplete="off"/>
-				
 				<p:outputLabel value="Email" for="email"/>
 				<p:inputText id="email" value="#{propertyUnitUpdate.company.email}" maxlength="30" autocomplete="off"/>
+
 				<p:outputLabel value="Mobile No" for="mobile" required="true"/>
 				<p:inputText id="mobile" value="#{propertyUnitUpdate.company.mobileNo}" maxlength="15" autocomplete="off"/>
-				
 				<p:outputLabel value="Special Handling" for="special"/>
 				<p:selectOneMenu id="special" value="#{propertyUnitUpdate.company.specialHandling}"  required="false">
 						<f:selectItems value="#{propertyUnitUpdate.listSpecial}"/>
 				</p:selectOneMenu>	
 			</h:panelGrid>
 
-			<h:panelGrid columns="2" style="width:100%">
-			   	<p:outputLabel value="Remarks"/>
-			   	<h:inputTextarea value="#{propertyUnitUpdate.company.remarks}" cols="100" rows="3" />
-		   	</h:panelGrid>
-			
+
 			<br/>
 			
 			<p:commandButton value="Back" ajax="false" action="#{propertyUnitUpdate.selectAccount}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;

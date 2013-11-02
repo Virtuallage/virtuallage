@@ -19,6 +19,7 @@ public class Project implements java.io.Serializable {
 	private Account account;
 	private Institution institution;
 	private Long developerId;
+	private Integer dueDays;
 	private Long landProprietorId;
 	private String developerName;
 	private String landProprietorName;
@@ -37,6 +38,7 @@ public class Project implements java.io.Serializable {
 	private String projectOfficeTelNo;
 	private String projectOfficeFaxNo;
 	private String personInCharge;
+	private Long picId;
 	private String picMobileNo;
 	private String locationLongtitude;
 	private String locationLatitude;
@@ -579,6 +581,25 @@ public class Project implements java.io.Serializable {
 						: "")
 				+ (status != null ? "status=" + status + ", " : "")
 				 + "]";
+	}
+
+	public Integer getDueDays() {
+		if(dueDays == null){
+			dueDays = 0;
+		}
+		return dueDays;
+	}
+
+	public void setDueDays(Integer dueDays) {
+		this.dueDays = dueDays;
+	}
+
+	public Long getPicId() {
+		return picId;
+	}
+
+	public void setPicId(Long picId) {
+		this.picId = picId;
 	}
 
 	
