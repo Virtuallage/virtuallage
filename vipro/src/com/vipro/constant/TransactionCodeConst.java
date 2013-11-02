@@ -21,4 +21,6 @@ public interface TransactionCodeConst {
 	
 	public final static String COMMISSION_FEE = "400004";
 	
+	public final static String ADD_PROGRESSIVE_BILLING = "500001";
+	
 }

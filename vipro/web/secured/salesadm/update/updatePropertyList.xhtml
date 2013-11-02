@@ -35,7 +35,7 @@ Sales Update
 				<p:outputLabel value="Unit No" for="unitNo"/>
 			</p:column>
 			<p:column style="width:20%;text-align:left">
-				<p:inputText id="unitNo" length="30" size="10" value="#{propertyUnitUpdate.unitNo}" autocomplete="off"/>
+				<p:inputText id="unitNo" length="30" size="10" value="#{propertyUnitUpdate.unitNo}" style="text-transform:uppercase" autocomplete="off"/>
 			</p:column>
 			<p:column style="width:25%;text-align:left;">
 				<p:commandButton value="Search" action="#{propertyUnitUpdate.listAccounts}" update="accountsDataTable" icon="ui-icon-search"/>

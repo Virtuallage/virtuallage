@@ -23,21 +23,21 @@ Add Business Partner
 
 			<h:panelGrid columns="2" style="width:100%;text-align:left;">
 				<p:outputLabel value="Business Registration No"/>
-				<p:inputText value="#{propertyUnitUpdate.partner.businessRegistrationNo}" style="width:200px" />
+				<p:inputText value="#{propertyUnitUpdate.partner.businessRegistrationNo}" style="width:200px; text-transform:uppercase" />
 				<p:outputLabel value="Trading Name"/>
-				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px" />
+				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value="Address"/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine1}" style="width:400px" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine1}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value=""/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine2}" style="width:400px" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine2}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value=""/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine3}" style="width:400px" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine3}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value=""/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine4}" style="width:400px" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine4}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value="Postcode"/>
 				<p:inputText value="#{propertyUnitUpdate.partnerAddress.postcode}" style="width:200px" />
 				<p:outputLabel value="City"/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.city}" style="width:200px" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.city}" style="width:200px; text-transform:uppercase" />
 				<p:outputLabel value="State"/>
 				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.partnerAddress.state}" style="width:200px">
 						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
@@ -47,7 +47,7 @@ Add Business Partner
 						<f:selectItems value="#{propertyUnitUpdate.listContactPersonTitle}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Contact Person Name"/>
-				<p:inputText value="#{propertyUnitUpdate.partner.contactPersonName}" style="width:200px" />
+				<p:inputText value="#{propertyUnitUpdate.partner.contactPersonName}" style="width:200px; text-transform:uppercase" />
 				<p:outputLabel value="Office Tel No"/>
 				<p:inputText value="#{propertyUnitUpdate.partner.officeTel}" style="width:200px" />
 				<p:outputLabel value="Office Fax No"/>

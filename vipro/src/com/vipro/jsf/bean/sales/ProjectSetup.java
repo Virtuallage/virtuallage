@@ -12,8 +12,10 @@ import javax.faces.model.SelectItem;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
+import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
@@ -365,6 +367,11 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			if(project.getStatus() == null) {
 				project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
 			}
+
+			project.setDateChanged(new Date());
+			AuthUser user = getCurrentUser();
+			project.setChangedBy(user.getUserProfile().getUserId());
+			
 			projectService.insert(project);
 
 			listProject();
@@ -373,7 +380,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			commission = new SalesCommission();
 
 			refreshCommissionDiscount();
-			addInfoMessage("Project", "Project Saved");
+			addInfoMessage("Saved", "Project Record Saved Successfully.");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
@@ -541,11 +548,11 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 			if (inventory != null) {
 				inventoryService.delete(inventory.getInventoryId());
-				addInfoMessage("Property Unit", "Property Unit Deleted");
+				addInfoMessage("Deleted", "Property Unit Deleted Successfully.");
 			}
 		} catch (Throwable t) {
 			if (t instanceof DataIntegrityViolationException) {
-				addErrorMessage("Property Unit",
+				addErrorMessage("Warning",
 						"This property is currently purchased. Deletion not allowed.");
 			} else {
 				addErrorMessage("Property Unit", t.getMessage());
@@ -560,8 +567,13 @@ public class ProjectSetup extends CommonBean implements Serializable {
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setProject(project);
 			validateInventoryKey(inventoryService);
+			
+			inventory.setStatusChangeDate(new Date());
+			AuthUser user = getCurrentUser();
+			inventory.setChangeUserId(user.getUserProfile().getUserId());
+			
 			inventoryService.update(inventory);
-			addInfoMessage("Property Unit", "Property Unit Saved");
+			addInfoMessage("Saved", "Property Unit Saved Successfully.");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 			return null;
@@ -584,8 +596,14 @@ public class ProjectSetup extends CommonBean implements Serializable {
 			inventory.setInventoryId(null);
 			inventory.setProject(project);
 			validateInventoryKey(inventoryService);
+			
+			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_AVAILABLE);
+			inventory.setStatusChangeDate(new Date());
+			AuthUser user = getCurrentUser();
+			inventory.setChangeUserId(user.getUserProfile().getUserId());
+			
 			inventoryService.insert(inventory);
-			addInfoMessage("Property Unit", "Property Unit Added");
+			addInfoMessage("Added", "Property Unit Added Successfully.");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 			inventory.setInventoryId(inventoryId);

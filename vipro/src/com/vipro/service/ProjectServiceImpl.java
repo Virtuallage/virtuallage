@@ -13,7 +13,9 @@ import com.vipro.dao.ProjectDao;
 import com.vipro.dao.ProjectInventoryDao;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
-import com.vipro.dto.AdviseUpdateDetailsDTO;import com.vipro.dto.ProgressiveBillingUnitSeachDTO;import com.vipro.dto.PropertyUnitDetailsDTO;
+import com.vipro.dto.AdviseUpdateDetailsDTO;
+import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
+import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
 
@@ -27,6 +29,7 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 	private ProjectDao projectDao;
 	@Autowired
 	private ProjectInventoryDao projectInventoryDao;
+	
 
 	public ProjectDao getProjectDao() {
 		return projectDao;

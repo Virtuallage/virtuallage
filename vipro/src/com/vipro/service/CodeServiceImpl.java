@@ -1,5 +1,6 @@
 package com.vipro.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,8 +15,12 @@ import com.vipro.data.CodeDet;
 import com.vipro.data.CodeHeader;
 
 @Service("com.vipro.service.CodeService")
-public class CodeServiceImpl implements CodeService {
+public class CodeServiceImpl implements CodeService,Serializable  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9168979124094738771L;
 	@Autowired
 	private CodeDao codeDao;
 
@@ -89,4 +94,55 @@ public class CodeServiceImpl implements CodeService {
 		return null;
 	}
 
+	@Override
+	public List<CodeHeader> findAllCodeHdrs() {
+		return codeDao.findAllHdrs();
+	}
+
+	@Override
+	public void insert(CodeHeader h) {
+		codeDao.insert(h);
+	}
+
+	@Override
+	public void update(CodeHeader h) {
+		codeDao.update(h);
+	}
+
+	@Override
+	public void deleteCodeHeader(String codeHeaderId) {
+		CodeHeader h = codeDao.findById(codeHeaderId);
+		codeDao.delete(h);
+	}
+	
+	@Override
+	public List<CodeDet> getCodeDets(String codeHeaderId) {
+		return codeDao.findByHeaderId(codeHeaderId);
+	}
+
+
+	@Override
+	public void insert(CodeDet d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(CodeDet d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCodeDet(String codeHeaderId, String code) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CodeDet> getCodeDets(Long codeHeaderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

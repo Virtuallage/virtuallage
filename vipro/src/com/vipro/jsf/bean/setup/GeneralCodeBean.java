@@ -1,5 +1,7 @@
 package com.vipro.jsf.bean.setup;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,43 +9,38 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.log.Log;
 import org.primefaces.event.RowEditEvent;
+import org.springframework.dao.DataIntegrityViolationException;
 
-import com.vipro.constant.CodeConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.data.CodeDet;
-import com.vipro.data.CodeDetId;
 import com.vipro.data.CodeHeader;
-import com.vipro.jsf.bean.PageConst;
+import com.vipro.jsf.bean.CommonBean;
+import com.vipro.service.CodeService;
 import com.vipro.utils.spring.CodeUtil;
-
+import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "generalCodeBean")
 @SessionScoped
-public class GeneralCodeBean implements PageConst {
-
-	private String codeType;
-	private CodeDet selectedCodeDet;
-	private CodeDet newCodeDet;
-	
-	private List<SelectItem> codeHeaderList;
+public class GeneralCodeBean extends CommonBean implements Serializable {
+	/**
+	 * code header related properties
+	 */
+	private List<CodeHeader> codeHeaders;
+	private CodeHeader codeHeader;
+	private String codeHeaderId;
+	/**
+	 * code details related properties
+	 */
+	private List<CodeDet> codeDets;
+	private CodeDet codeDet;
 	private List<SelectItem> statusList;
 	
-	private List<CodeDet> codeDetList;
-	
-	public List<SelectItem> getCodeHeaderList() {
-		return codeHeaderList;
-	}
-
-	public void setCodeHeaderList(List<SelectItem> codeHeaderList) {
-		this.codeHeaderList = codeHeaderList;
-	}
-
-	public List<CodeDet> getCodeDetList() {
-		return codeDetList;
-	}
-
-	public void setCodeDetList(List<CodeDet> codeDetList) {
-		this.codeDetList = codeDetList;
+	@PostConstruct
+	public void init() {
+		statusList = CodeUtil.getCodes("SS");
+		listHeader();
 	}
 	
 	public List<SelectItem> getStatusList() {
@@ -54,79 +51,177 @@ public class GeneralCodeBean implements PageConst {
 		this.statusList = statusList;
 	}
 
-	public String getCodeType() {
-		return codeType;
+	public CodeHeader getCodeHeader() {
+		return codeHeader;
 	}
 
-	public void setCodeType(String codeType) {
-		this.codeType = codeType;
+	public void setCodeHeader(CodeHeader codeHeader) {
+		this.codeHeader = codeHeader;
 	}
 
-	public CodeDet getSelectedCodeDet() {
-		return selectedCodeDet;
+	public List<CodeHeader> getCodeHeaders() {
+		return codeHeaders;
 	}
 
-	public void setSelectedCodeDet(CodeDet selectedCodeDet) {
-		this.selectedCodeDet = selectedCodeDet;
+	public void setCodeHeaders(List<CodeHeader> codeHeaders) {
+		this.codeHeaders = codeHeaders;
+	}
+	
+	public List<CodeDet> getCodeDets() {
+		return codeDets;
 	}
 
-	public CodeDet getNewCodeDet() {
-		if (newCodeDet == null) {
-			newCodeDet = new CodeDet(new CodeDetId(), new CodeHeader());
+	public void setCodeDets(List<CodeDet> codeDets) {
+		this.codeDets = codeDets;
+	}
+
+	public CodeDet getCodeDet() {
+		return codeDet;
+	}
+
+	public void setCodeDet(CodeDet codeDet) {
+		this.codeDet = codeDet;
+	}
+	
+	public String getCodeHeaderId() {
+		return codeHeaderId;
+	}
+
+	public void setCodeHeaderId(String codeHeaderId) {
+		this.codeHeaderId = codeHeaderId;
+	}
+	
+	public String listHeader() {
+		CodeService codeService = (CodeService) SpringBeanUtil
+				.lookup(CodeService.class.getName());
+		setCodeHeaders(codeService.findAllCodeHdrs());
+
+		return "codeHeader";
+	}
+
+	public String addNewHeader() {
+		codeHeader = new CodeHeader();
+		return "newHeader";
+	}
+
+	public String editHeader() {
+		try {
+			setCodeHeaderId(codeHeader.getCodeHeaderId());
+			
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
-		return newCodeDet;
+
+		return "newHeader";
+	}
+	
+	public String saveHeader() {
+		try {
+			String hId = codeHeader.getCodeHeaderId();
+			codeHeader.setCodeHeaderId(hId.toUpperCase());
+			String hName = codeHeader.getName();
+			codeHeader.setName(hName.toUpperCase());
+
+			CodeService codeService = (CodeService) SpringBeanUtil
+					.lookup(CodeService.class.getName());
+			
+			codeService.insert(codeHeader);
+
+			listHeader();
+
+			addInfoMessage("Saved", "Common Code Header Record Saved Successfully.");
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+
+		return "codeHeader";
 	}
 
-	public void setNewCodeDet(CodeDet newCodeDet) {
-		this.newCodeDet = newCodeDet;
+	public String toCodeDetList() {
+		try {
+			if (codeHeader != null) {
+				codeHeaderId = codeHeader.getCodeHeaderId();
+			}
+			CodeService codeService = (CodeService) SpringBeanUtil
+					.lookup(CodeService.class.getName());
+			setCodeDets(codeService.getCodeDets(codeHeaderId));
+			
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		return "codeDetList";
 	}
 
-	@PostConstruct
-	public void init() {
-		codeHeaderList = CodeUtil.getCodeHeaders();
-		statusList = CodeUtil.getCodes(CodeConst.STATUS);
+	public String addCodeDet() {
+		codeDet = new CodeDet();
+		return "editCodeDet";
 	}
 	
-    public void onSearch() {
-    	codeDetList = CodeUtil.getCodeDetailList(codeType);
-    	CodeHeader codeHeader = CodeUtil.getCodeHeader(codeType);
-    	if (codeHeader != null) {
-	    	CodeDetId codeDetId = new CodeDetId(codeHeader.getCodeHeaderId(), "");
-	    	newCodeDet = new CodeDet(codeDetId, codeHeader);
-    	}
-    }
+	public String editCodeDet() {
+
+		return "editCodeDet";
+	}
 	
-    public void onEdit(RowEditEvent event) {  
-    	System.out.println("ONEDIT");
-    	
-//        FacesMessage msg = new FacesMessage("Car Edited", ((Car) event.getObject()).getModel());  
-//  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
-      
-    public void onCancel(RowEditEvent event) {
-    	System.out.println("ONCANCEL");
-//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
-//  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
+
+	public String deleteCodeDet() {
+		try {
+			CodeService codeService = (CodeService) SpringBeanUtil
+					.lookup(CodeService.class.getName());
+
+			if (codeDet != null) {
+				codeService.deleteCodeDet(codeDet.getCodeHeaderId(), codeDet.getCode());
+				addInfoMessage("Deleted", "Common Code Value Deleted Successfully.");
+			}
+		} catch (Throwable t) {
+			if (t instanceof DataIntegrityViolationException) {
+				addErrorMessage("Warning",
+						"Deletion not allowed for this Common Code Value.");
+			} else {
+				addErrorMessage("Common Code Value", t.getMessage());
+			}
+		}
+		return toCodeDetList();
+	}
 	
-    public void onDelete() {
-    	System.out.println("ONDELETE");
-//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
-//  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    } 
-    
-    public void onAdd() {
-    	System.out.println("ONADD");
-    	CodeHeader codeHeader = CodeUtil.getCodeHeader(codeType);
-    	if (codeHeader != null) {
-	    	CodeDetId codeDetId = new CodeDetId(codeHeader.getCodeHeaderId(), "");
-	    	newCodeDet = new CodeDet(codeDetId, codeHeader);
-    	}
-//        FacesMessage msg = new FacesMessage("Car Cancelled", ((Car) event.getObject()).getModel());  
-//  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
+	public String saveCodeDet() {
+		try {
+			CodeService codeService = (CodeService) SpringBeanUtil
+					.lookup(CodeService.class.getName());
+			codeDet.setCodeHeader(codeHeader);
+			
+			codeService.update(codeDet);
+			
+			addInfoMessage("Saved", "Common Code Value Saved Successfully.");
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+			return null;
+		}
+		return toCodeDetList();
+	}
+	
+	public String saveCodedetAsNew() {
+		try {
+			String hId = codeHeader.getCodeHeaderId();
+			codeHeader.setCodeHeaderId(hId.toUpperCase());
+			String hName = codeHeader.getName();
+			codeHeader.setName(hName.toUpperCase());
+			
+			CodeService codeService = (CodeService) SpringBeanUtil
+					.lookup(CodeService.class.getName());
+			codeDet.setCodeHeaderId(null);
+			codeDet.setCode(null);
+			codeDet.setCodeHeader(codeHeader);
+			
+			codeDet.setStatus(CommonConst.STATUS_ACTIVE);
+			
+			codeService.insert(codeDet);
+
+			addInfoMessage("Added", "Common Code Value Added Successfully.");
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+			return null;
+		}
+		return editCodeDet();
+	}
+	
 }

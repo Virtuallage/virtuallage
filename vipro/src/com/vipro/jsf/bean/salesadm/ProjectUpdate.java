@@ -1,12 +1,15 @@
 package com.vipro.jsf.bean.salesadm;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import org.springframework.beans.BeanUtils;
+
+import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.data.Discount;
@@ -264,67 +267,21 @@ public class ProjectUpdate extends CommonBean implements Serializable {
 			if(project.getStatus() == null) {
 				project.setStatus(ProjectStatusConst.STATUS_ACTIVE);
 			}
+			
+			project.setDateChanged(new Date());
+			AuthUser user = getCurrentUser();
+			project.setChangedBy(user.getUserProfile().getUserId());
+			
 			projectService.insert(project);
 
 			listProject();
 
-			addInfoMessage("Project", "Project Saved");
+			addInfoMessage("Saved", "Project Information Changed Saved Successfully.");
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
 
 		return "saListProject";
-	}
-
-	public String toInventoryList() {
-		try {
-			if (project != null) {
-				projectId = project.getProjectId();
-			}
-
-			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-					.lookup(ProjectInventoryService.class.getName());
-			inventories = inventoryService.getInventories(projectId);
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-		}
-		return "saListInventory";
-	}
-
-	public String editInventory() {
-		inventory.setDiscountRate(project.getDiscountRate());
-		return "saEditInventory";
-	}
-
-	public String saveInventory() {
-		try {
-			ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil
-					.lookup(ProjectInventoryService.class.getName());
-			inventory.setProject(project);
-			validateInventoryKey(inventoryService);
-			inventoryService.update(inventory);
-			addInfoMessage("Property Unit", "Property Unit Saved");
-		} catch (Throwable t) {
-			addErrorMessage(t.getClass().getName(), t.getMessage());
-			return null;
-		}
-		return toInventoryList();
-	}
-
-	public void validateInventoryKey(ProjectInventoryService inventoryService) throws Throwable {
-		ProjectInventory inventoryDb = inventoryService.findByCompositeKey(inventory.getProject().getProjectId(),
-				inventory.getBlockNo(), inventory.getUnitNo(),
-				inventory.getLevel());
-		if (inventoryDb != null) {
-			if ((!inventoryDb.getInventoryId().equals(inventory.getInventoryId())) ||
-				inventory.getInventoryId() == null) {
-				throw new Throwable(
-						"Inventory of given Block No, Unit No and Level has already been created for Project");
-			} else {
-				BeanUtils.copyProperties(inventory, inventoryDb);
-				inventory = inventoryDb;
-			}
-		}
 	}
 
 	public List<SelectItem> getReportGroups() {

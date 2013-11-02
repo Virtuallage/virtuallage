@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_address_subreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="address_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="company_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     address.`address_line_1` AS address_address_line_1,
+     address.`address_line_2` AS address_address_line_2,
+     address.`address_line_3` AS address_address_line_3,
+     address.`address_line_4` AS address_address_line_4,
+     address.`postcode` AS address_postcode,
+     address.`city` AS address_city,
+     address.`state` AS address_state,
+     code_det.`description` AS state_description
+FROM
+     `address` address,
+     `code_det` code_det
+WHERE
+     address_id = $P{address_id}
+ AND code_det.`code` = state
+ AND code_det.`code_header_id` = 'ST']]>
+	</queryString>
+	<field name="address_address_line_1" class="java.lang.String"/>
+	<field name="address_address_line_2" class="java.lang.String"/>
+	<field name="address_address_line_3" class="java.lang.String"/>
+	<field name="address_address_line_4" class="java.lang.String"/>
+	<field name="address_postcode" class="java.lang.String"/>
+	<field name="address_city" class="java.lang.String"/>
+	<field name="address_state" class="java.lang.String"/>
+	<field name="state_description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="76" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="555" height="17"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{company_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="21" width="555" height="47" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{address_address_line_1}+" "+$F{address_address_line_2}+" "+$F{address_address_line_3}+" "+$F{address_address_line_4}+"\n"+$F{address_postcode}+" "+$F{address_city}+" "+$F{state_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -2,7 +2,10 @@ package com.vipro.service;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -292,6 +295,31 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		downloadDocument(reportData, "SalesByStaffAgentReport"+extension);
+		
+	}  
+	
+	@Override
+	public void generateProgressBillingLetterReport(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("projectId", reportDTO.getProjectId());
+		params.put("invoiceNo", reportDTO.getBlocksTitle());
+		String reportPath = JasperConst.PROGRESS_BILLING_LETTER_REPORT;
+		
+		String extension = "";
+		if(reportDTO.getReportFormatId() == 1L){
+			extension = ".xlsx";
+		}else if(reportDTO.getReportFormatId() == 2L){
+			extension = ".pdf";
+		}
+		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
+		if(reportData != null){
+			File file = new File(path+"PROGRESSIVE_BILLING_LETTER_"+InvoiceNo.trim()+extension);
+			FileOutputStream fileOuputStream = new FileOutputStream(file);
+			fileOuputStream.write(reportData);
+		    fileOuputStream.close();
+		//    downloadDocument(reportData, "PROGRESSIVE_BILLING_LETTER"+extension);
+			
+		}
 		
 	}  
 	

@@ -1,9 +1,16 @@
 package com.vipro.jsf.bean.salesadm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -13,15 +20,23 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import com.vipro.constant.CodeConst;
 import com.vipro.constant.CommonConst;
-import com.vipro.data.*;
-import com.vipro.utils.spring.*;
+import com.vipro.constant.JasperConst;
+import com.vipro.data.Address;
+import com.vipro.data.Customer;
+import com.vipro.data.Project;
+import com.vipro.dto.BillingModelStageDTO;
 import com.vipro.dto.ChangeAddressDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.jsf.bean.CommonBean;
-import com.vipro.service.*;
+import com.vipro.service.CustomerService;
+import com.vipro.service.ProgressiveBillingService;
+import com.vipro.service.ProjectService;
+import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
 @ManagedBean(name = "progressiveBillingUnitSearchBean")
@@ -44,6 +59,11 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	private Address corrAddress = new Address();
 	private List<ChangeAddressDTO> addressDTOList = new ArrayList<ChangeAddressDTO>();
 	private ChangeAddressDTO corrDTO = new ChangeAddressDTO( true);
+	private BigDecimal percent = new BigDecimal(100);
+	private List<BillingModelStageDTO> selectedStageDtoList = new ArrayList<BillingModelStageDTO>();
+	private Long invoiceNo = new Long(1l);
+	private StreamedContent fileToDownload;
+	
 	
 	public ProgressiveBillingUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
@@ -77,8 +97,6 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			if(selectedProjectIdStr != null){
 				selectedProjectId = Long.parseLong(selectedProjectIdStr);
 				dtoList = this.projectService.getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(selectedProjectId,this.unit);
-								
-				System.out.println("Size is  :"+dtoList.size());
 			}
 			
 		}catch(Exception ex){
@@ -87,23 +105,72 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		return null;
 	}
 	
-		public void onSave(ActionEvent actionEvent) {
-			// RequestContext context = RequestContext.getCurrentInstance();
-			// boolean success = false;
-			// AccountService service =
-			// (AccountService)SpringBeanUtil.lookup(AccountService.class.getName());
-			//
-			// service.update(getSelectedDto().getAccount());
-			//
-			// setSelectedDto(new AdviseUpdateDetailsDTO());
-			//
-			// searchProject();
-			//
-			// CommonBean.addInfoMessage("Update Successful."," The Advise information has been updated successfully.");
-			// success = true;
-			// context.addCallbackParam("success", success);
+		public void onView(ActionEvent actionEvent) {
+			
 		}
 	
+		private File getBaseFolder(Long accountId){
+			File baseFolder = new File(CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
+			if(accountId != null){
+				 baseFolder = new File(JasperConst.ACCOUNTS_FOLDER+"/"+accountId.toString()+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
+				 if(!baseFolder.exists()){
+					 baseFolder.mkdirs();
+					}
+			}
+				 return baseFolder;
+		}
+		
+		
+		
+		
+		 public List<StreamedContent> getAllUploadedFiles() {
+			 List<StreamedContent> fileList = new ArrayList<StreamedContent>();
+			 
+			 if(getSelectedDto().getAccount().getAccountId() != null){
+				 File baseFolder =  getBaseFolder(getSelectedDto().getAccount().getAccountId());
+			 
+			 File[] filesArray = baseFolder.listFiles();
+
+			 if (filesArray != null) {
+			     for (File ufile : filesArray) {
+			     InputStream stream = null;
+			     try {
+			    	 String filePath = ufile.getAbsolutePath();
+			         stream = new FileInputStream(filePath);
+			         MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+					 String mimeType = mimeTypesMap.getContentType(filePath);
+			         StreamedContent file = new DefaultStreamedContent(stream,mimeType,ufile.getName());
+			         fileList.add(file);
+			     } catch (FileNotFoundException e) {
+			         e.printStackTrace();
+			     }
+			     try {
+			         stream.close();
+			     } catch (IOException e) {
+			         // TODO Auto-generated catch block
+			         e.printStackTrace();
+			     }
+			     }
+			 }
+
+			 }
+			 return fileList;
+			 }
+		 public void prepareFileToDownload(final StreamedContent arq) {
+				try{
+					 if(getSelectedDto().getAccount().getAccountId() != null){
+						 File baseFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());					 
+						 String fileName =baseFolder.getPath()+"/"+arq.getName();
+						MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+						String mimeType = mimeTypesMap.getContentType(fileName);
+						InputStream stream = new FileInputStream(fileName);
+						this.fileToDownload = new DefaultStreamedContent(stream,mimeType,arq.getName());
+					 }
+				}catch(IOException e){
+					e.printStackTrace();
+				}
+				}
+		 
 		public void onClose(ActionEvent actionEvent) {
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = true;
@@ -182,7 +249,12 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	}
 		
 	public String onDtoSelection(){
-		CustomerService cusService = (CustomerService)SpringBeanUtil.lookup(CustomerService.class.getName());	
+		CustomerService cusService = (CustomerService)SpringBeanUtil.lookup(CustomerService.class.getName());
+		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		
+		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
+				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
+
 		setCorrAddress(new Address());
 		//this.corrAddress = adrService.findByCustomerId((getSelectedDto().getAccount().getCorrAddrCustId()));
 		clearAddressChange();
@@ -223,6 +295,73 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		}
 		CommonBean.addInfoMessage("Check box clicked."," Corr Address is Changed");
     }  
+	
+	/************** Billing Actions *********************/
+	public void onBillAction() {
+		 boolean isTrue = false;		
+		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
+		 BillingModelStageDTO sumDTO = new BillingModelStageDTO();
+		 BigDecimal amountTtl = new BigDecimal(0);
+		 BigDecimal percentTtl = new BigDecimal(0);
+		for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
+			 if(dto.isBillMe()){
+				 isTrue = true;
+				 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
+				 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
+				// System.out.println("==============is True for :"+dto.getBillingModel().getStage());
+				 selectedStageDtoList.add(dto);				 
+			 }
+			 
+		}
+		if(!selectedStageDtoList.isEmpty()){
+			sumDTO.getBillingModel().setBillingPercentage(percentTtl);
+			sumDTO.getProgressiveBilling().setAmountBilled(amountTtl);
+			sumDTO.getBillingModel().setDescription("Total");
+			selectedStageDtoList.add(sumDTO);
+			
+			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+			
+			this.setInvoiceNo(pbService.getLatestPBSeqNo());
+			
+		}
+		
+		
+		if(!isTrue){
+		 CommonBean.addInfoMessage("Please select any stage to Bill"," Change Address window closed.");
+		}
+	}
+	
+	public void onCancelBillConfirmation(){
+		 RequestContext context = RequestContext.getCurrentInstance();
+		 boolean success = true;
+		 getSelectedStageDtoList().clear();
+		 setInvoiceNo(new Long(1l));
+		 CommonBean.addInfoMessage("Billing Stages Window Closed.","");
+		 context.addCallbackParam("success2", success);
+	}
+	
+	public void onConfirmBill(){
+		 RequestContext context = RequestContext.getCurrentInstance();
+		 boolean success = true;
+		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		
+		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNoFormated(), getSelectedDto());
+		
+		
+		if(isSucessfull){
+			pbService.printProgressiveLetter(getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+		}
+		//Update StageDTOList from DB.
+		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
+				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
+
+		CommonBean.addInfoMessage("Progressive Billing Processed Successfully.","TheProgressive Billing letter is ready for printing.");
+		
+		getSelectedStageDtoList().clear();
+		setInvoiceNo(new Long(01));
+		context.addCallbackParam("success2", success);
+	}
+	
 	public Project getProject() {
 		return project;
 	}
@@ -313,6 +452,43 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 
 	public void setStatesSIList(List<SelectItem> statesSIList) {
 		this.statesSIList = statesSIList;
+	}
+
+	public BigDecimal getPercent() {
+		return percent;
+	}
+
+	public void setPercent(BigDecimal percent) {
+		this.percent = percent;
+	}
+
+	public List<BillingModelStageDTO> getSelectedStageDtoList() {
+		return selectedStageDtoList;
+	}
+
+	public void setSelectedStageDtoList(
+			List<BillingModelStageDTO> selectedStageDtoList) {
+		this.selectedStageDtoList = selectedStageDtoList;
+	}
+
+	public Long getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public String getInvoiceNoFormated() {
+		return String.format("PB%06d%n", this.invoiceNo);
+	}
+	
+	public void setInvoiceNo(Long invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public StreamedContent getFileToDownload() {
+		return fileToDownload;
+	}
+
+	public void setFileToDownload(StreamedContent fileToDownload) {
+		this.fileToDownload = fileToDownload;
 	}
 	
 }

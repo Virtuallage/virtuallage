@@ -41,6 +41,8 @@ public class JasperConst {
 	
 	public static final String SALES_SUMMARY_TOTAL_LOAN_OFFERED = TOMCAT_HOME + "/vipro/report/TotalLoanOfferedReport.jasper";
 	
+	public static final String PROGRESS_BILLING_LETTER_REPORT = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetter.jasper";
+	
 	public static final String ACCOUNTS_FOLDER = TOMCAT_HOME + "/vipro/accounts";
 
 

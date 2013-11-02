@@ -1,0 +1,503 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Progressive Billing Unit Search</title>
+</h:head>
+
+<body>
+	<ui:composition template="/template/main_template.xhtml">
+		<ui:define name="content">
+			<p:panel id="panel" header="Progressive Billing Unit Search"
+				style="width:95%">
+				<h:form id="pbUSearchForm">
+					<input type="hidden" name="selectedProjectId"
+						value="#{progressiveBillingUnitSearchBean.selectedProjectId}" />
+					<p:outputPanel id="searchPanel" styleClass="no-borders">
+						<p:focus context="pbUSearchForm" />
+
+						<p:growl id="growlForm" showDetail="true" life="3000"
+							autoUpdate="false" />
+						<p:panelGrid style="width:100%; background-color: lightgrey;"
+							styleClass="no-borders">
+							<p:row>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="projectName">
+									<p:outputLabel value="Project Name" />
+								</p:column>
+								<p:column
+									style="width:40%;text-align:left;vertical-align:middle">
+									<p:selectOneMenu id="projectList"
+										value="#{progressiveBillingUnitSearchBean.selectedProjectId}"
+										requiredMessage="Project Name is mandatory" required="true"
+										style="width:100%" for="projectName">
+										<f:selectItems
+											value="#{progressiveBillingUnitSearchBean.projects}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="UnitNoLbl">
+									<p:outputLabel value="Unit No" />
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:inputText id="unitTxt"
+										value="#{progressiveBillingUnitSearchBean.unit}" />
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:commandButton value="Search"
+										action="#{progressiveBillingUnitSearchBean.searchProject}"
+										ajax="false" process="projectList,unitTxt"
+										update=":pbUSearchForm:resultsPanel" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<br />
+					</p:outputPanel>
+					<p:outputPanel id="resultsPanel"
+						rendered="#{progressiveBillingUnitSearchBean.selectedProjectId != null}">
+
+						<p:dataTable var="dto"
+							value="#{progressiveBillingUnitSearchBean.dtoList}"
+							draggableColumns="true" resizableColumns="false"
+							paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+							tableStyle="width:100%"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+							<p:column headerText="Unit No"
+								sortBy="#{dto.projectInvetory.unitNo}">
+								<p:outputLabel value="#{dto.projectInvetory.unitNo}" />
+							</p:column>
+							<p:column headerText="Purchaser Name"
+								sortBy="#{dto.customer.fullName}">
+								<p:outputLabel value="#{dto.customer.fullName}" />
+							</p:column>
+							<p:column headerText="PT No" sortBy="#{dto.projectInvetory.ptNo}">
+								<p:outputLabel value="#{dto.projectInvetory.ptNo}" />
+							</p:column>
+							<p:column headerText="HSD No"
+								sortBy="#{dto.projectInvetory.hsdNo}">
+								<p:outputLabel value="#{dto.projectInvetory.hsdNo}" />
+							</p:column>
+							<p:column headerText="Stage" sortBy="#{dto.stageNo}"
+								style="text-align:center">
+								<p:outputLabel value="#{dto.stageNo}" />
+							</p:column>
+							<p:column headerText="Selling Price"
+								sortBy="#{dto.projectInvetory.purchasePrice}"
+								style="text-align:right">
+								<h:outputText value="#{dto.projectInvetory.purchasePrice}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Billed ToDate"
+								sortBy="#{dto.account.totalPaymentTodate}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.totalPaymentTodate}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Status"
+								sortBy="#{dto.projectInvetory.propertyStatus}"
+								style="text-align:center">
+								<p:outputLabel value="#{dto.statusDesc}" />
+							</p:column>
+
+							<p:column style="width:4%">
+								<p:commandButton id="selectDTOBtn"
+									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
+									icon="ui-icon-search" title="View"
+									action="#{progressiveBillingUnitSearchBean.onDtoSelection}">
+									<f:setPropertyActionListener value="#{dto}"
+										target="#{progressiveBillingUnitSearchBean.selectedDto}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+
+
+				<h:form id="dialogForm">
+					<p:outputPanel id="dialogPanel">
+						<p:dialog id="tDialog" header="Progressive Billing"
+							widgetVar="dlg" modal="true" height="550" width="950"
+							showEffect="explode" hideEffect="explode">
+
+							<p:growl id="growl" showDetail="true" life="3000"
+								autoUpdate="false" />
+							<h:panelGrid id="display" columns="4" cellpadding="4"
+								width="100%">
+
+								<p:outputLabel value="Project Name" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.project.projectName}"
+									disabled="true" />
+								<p:outputLabel value="Project Code" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.project.projectCode}"
+									disabled="true" />
+
+
+								<p:outputLabel value="Purchaser Name" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.customer.fullName}"
+									disabled="true" />
+								<p:outputLabel value="Unit No" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.projectInvetory.unitNo}"
+									disabled="true" style="width:50%" />
+
+								<p:outputLabel value="PT No" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.projectInvetory.ptNo}"
+									disabled="true" style="width:50%" />
+								<p:outputLabel value="HSD No" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.projectInvetory.hsdNo}"
+									disabled="true" style="width:50%" />
+
+								<p:outputLabel value="Billing Address 1" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine1}"
+									disabled="true" />
+								<p:outputLabel value="Billing Address 2" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine2}"
+									disabled="true" />
+
+								<p:outputLabel value="Billing Address 3" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine3}"
+									disabled="true" />
+								<p:outputLabel value="Billing Address 4" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine4}"
+									disabled="true" />
+
+								<p:outputLabel value="Post Code" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.postcode}"
+									disabled="true" style="width:50%" />
+								<p:outputLabel value="City" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.city}"
+									disabled="true" />
+
+								<p:outputLabel id="stateTxt" value="State" />
+								
+								<p:selectOneMenu id="stateTypeList2"
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"
+									requiredMessage="Please Select Any State" required="false"
+									style="width:100%" for="stateTxt" disabled="true">
+									<f:selectItems value="#{progressiveBillingUnitSearchBean.statesSIList}" />
+								</p:selectOneMenu>								
+								<p:outputLabel value="" />
+								<p:commandButton id="selectDTOBtn2"
+									update=":dialogAddresForm:dialogAddressPanel"
+									oncomplete="dlg2.show()" title="Change Address"
+									actionListener="#{progressiveBillingUnitSearchBean.onChangeAddress}"
+									value="Change Address" />
+							</h:panelGrid>
+							<h:inputHidden value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"/>
+							<p:dataTable id="stagesDT" var="dto" value="#{progressiveBillingUnitSearchBean.selectedDto.stageDtoList}" scrollable="false" scrollHeight="180" >
+										<p:column headerText="Stage" style="width:7%">
+											<h:outputText  value="#{dto.billingModel.stage}" />
+										</p:column>
+
+										<p:column headerText="Description" style="width:35%">
+											<p:outputLabel value="#{dto.billingModel.description}" />
+										</p:column>
+										<p:column headerText="Percentage" style="width:10%">
+											<p:outputLabel value="#{dto.billingModel.billingPercentage}%" />
+										</p:column>
+										
+										<p:column headerText="Amount" style="width:18%; text-align:right">
+											<h:outputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.purchasePrice.multiply(dto.billingModel.billingPercentage).divide(progressiveBillingUnitSearchBean.percent)}" style="text-align:right">
+												<f:convertNumber pattern="#,###,##0.00" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Status" style="width:13%">
+											<p:outputLabel value="#{dto.status}" />
+										</p:column>
+										<p:column headerText="Action" style="width:22%" >
+											  <p:selectBooleanButton value="#{dto.billMe}" onLabel="Bill This"  
+										  		offLabel="Pending" onIcon="ui-icon-check" offIcon="ui-icon-close" 
+										  		rendered="#{dto.status.equals('Pending')}"
+										  		/> 
+										</p:column>
+									</p:dataTable>
+									<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
+										<h:panelGroup>	
+										<p:commandButton value="Back"
+											actionListener="#{progressiveBillingUnitSearchBean.onClose}"
+											ajax="true" partialSubmit="true"
+											update="growl,:pbUSearchForm:resultsPanel"
+											style="margin-top:20px;margin-right:5px"
+											oncomplete="handleSaveRequest(xhr, status, args)" />
+										<p:commandButton id="downBtn" update="downloadDialog" oncomplete="downDialog.show()" title="View" value="View" style="margin-right:5px"/>										
+										<p:commandButton value="Bill" disabled="false" 
+												actionListener="#{progressiveBillingUnitSearchBean.onBillAction}"
+												ajax="true" update="growl,dialogPanel3" style="margin-top:20px"
+												oncomplete="dlg3.show()" title="Bill"									
+												 />
+										</h:panelGroup>
+								</h:panelGrid>
+						</p:dialog>
+						</p:outputPanel>
+		
+		 	 	 		<p:dialog id="downloadDialog" header="View" widgetVar="downDialog"
+						        modal="true" height="250" width="700"  showEffect="explode"
+						        hideEffect="explode">
+				        
+						        	<p:dataTable id="downloadDataTable" 
+		                    			value="#{progressiveBillingUnitSearchBean.allUploadedFiles}"
+		                    			var="file" widgetVar="downlaodFile"
+		                    			emptyMessage="NO Files Uploaded"
+		                    			style="width:95%; border:2 !important; border-color:white !important;">
+		                    
+		                    		<p:column>
+		            					<f:facet name="header">
+		                					File Name
+		            					</f:facet>
+		             					<h:outputText value="#{file.name}" /> 
+		        					</p:column>
+				                    <p:column headerText="Action">
+				                    
+				                    <p:commandButton id="downloadLink" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)"  update="growl12" 
+				        				icon="ui-icon-arrowthichk-s" actionListener="#{progressiveBillingUnitSearchBean.prepareFileToDownload(file)}">  
+				    					<p:fileDownload value="#{progressiveBillingUnitSearchBean.fileToDownload}" />  
+									</p:commandButton>
+				                    </p:column>
+				                </p:dataTable>
+						</p:dialog>
+						
+						<p:outputPanel id="dialogPanel3">
+						<p:dialog id="t3Dialog" header="Progressive Billing Confirmation"
+							widgetVar="dlg3" modal="true" height="550" width="950"
+							showEffect="explode" hideEffect="explode">
+							
+							<br/>
+							<div style="text-align:left; margin-bottom:20px">
+								<h:outputText  style="font-weight:bold" value=" Please confirm the billing for the following stage(s) for Unit No: #{progressiveBillingUnitSearchBean.selectedDto.projectInvetory.unitNo}" />
+							</div>
+							<br/>
+							<p:dataTable var="dto" value="#{progressiveBillingUnitSearchBean.selectedStageDtoList}" 
+								scrollable="false" scrollHeight="180"  rowIndexVar="row">
+										<p:column headerText="Stage" style="width:7%" >
+											<h:outputText  value="#{dto.billingModel.stage}" />
+										</p:column>
+
+										<p:column headerText="Description" style="width:35%" >
+											<p:outputLabel value="#{dto.billingModel.description}"  rendered="#{row+1 != progressiveBillingUnitSearchBean.selectedStageDtoList.size()}" />
+											<p:outputLabel value="#{dto.billingModel.description}"  style="font-weight:bold; float:right" rendered="#{row+1 == progressiveBillingUnitSearchBean.selectedStageDtoList.size()}" />
+										</p:column>
+										<p:column headerText="Percentage" style="width:10%" >
+											<p:outputLabel value="#{dto.billingModel.billingPercentage}%" style="float:right" rendered="#{row+1 != progressiveBillingUnitSearchBean.selectedStageDtoList.size()}" />
+											<p:outputLabel value="#{dto.billingModel.billingPercentage}%"  style="font-weight:bold; float:right" rendered="#{row+1 == progressiveBillingUnitSearchBean.selectedStageDtoList.size()}" />
+										</p:column>
+										<p:column headerText="Amount" style="width:18%; text-align:right" >
+											<h:outputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.purchasePrice.multiply(dto.billingModel.billingPercentage).divide(progressiveBillingUnitSearchBean.percent)}"
+												 rendered="#{row+1 != progressiveBillingUnitSearchBean.selectedStageDtoList.size()}" 
+												 style="text-align:right">
+												<f:convertNumber pattern="#,###,##0.00" />
+											</h:outputText>
+											<h:outputText value="#{dto.progressiveBilling.amountBilled}" style="font-weight:bold;text-align:right" rendered="#{row+1 == progressiveBillingUnitSearchBean.selectedStageDtoList.size()}">
+												<f:convertNumber pattern="#,###,##0.00" />
+											</h:outputText>
+										</p:column>										
+									</p:dataTable>
+									<br/>
+									<h:outputLabel value="Invoice No "/>
+									<p:inputText value="#{progressiveBillingUnitSearchBean.invoiceNoFormated}" disabled="true"  />
+									<br/>
+									<h:panelGrid id="displaybtns2" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
+										<h:panelGroup>	
+										<p:commandButton value="Cancel"
+											action="#{progressiveBillingUnitSearchBean.onCancelBillConfirmation}"
+											ajax="true" partialSubmit="true"
+											update="growl,:pbUSearchForm:resultsPanel"
+											style="margin-top:20px;"
+											oncomplete="handleConfirmBillRequest(xhr, status, args)" />
+										<p:commandButton value="Confirm" disabled="false"
+												actionListener="#{progressiveBillingUnitSearchBean.onConfirmBill}"
+												ajax="true" update="growl,stagesDT" style="margin-top:20px"
+												oncomplete="handleConfirmBillRequest(xhr, status, args)" />
+										</h:panelGroup>
+								</h:panelGrid>
+						</p:dialog>
+						</p:outputPanel>
+						
+						
+						
+						
+						<script type="text/javascript">
+							function handleSaveRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success ) {
+									dlg.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleConfirmBillRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success2 ) {
+									dlg3.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg3.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+						</script>
+				</h:form>
+				<h:form id="dialogAddresForm">
+					<p:outputPanel id="dialogAddressPanel">
+						<p:dialog id="tDialog" header="Progressive Billing Change Address"
+							widgetVar="dlg2" modal="true" height="550" width="750"
+							showEffect="explode" hideEffect="explode">
+
+							<p:growl id="growl2" showDetail="true" life="3000"
+								autoUpdate="false" />
+							<h:panelGrid id="display" columns="4" cellpadding="4"
+								width="100%">
+
+								<p:outputLabel value="Project Name" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.project.projectName}"
+									disabled="true" />
+								<p:outputLabel value="Project Code" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.project.projectCode}"
+									disabled="true" />
+
+								<p:outputLabel value="Unit No" />
+								<p:inputText
+									value="#{progressiveBillingUnitSearchBean.selectedDto.projectInvetory.unitNo}"
+									disabled="true" style="width:50%" />
+								<p:outputLabel value="" />
+							</h:panelGrid>
+
+							<p:outputPanel id="listAddressPanel">
+							<p:dataTable var="adrDto" value="#{progressiveBillingUnitSearchBean.addressDTOList}" rowIndexVar="row">
+										<p:column headerText="No.">
+											<h:outputText id="SrNo" value="#{row +1}" />
+										</p:column>
+
+										<p:column headerText="Purchaser Name">
+											<p:outputLabel value="#{adrDto.customer.fullName}" />
+										</p:column>
+
+										<p:column headerText="Corr Address" style="text-align:center">
+											<p:selectBooleanCheckbox id="corrID" disabled="#{progressiveBillingUnitSearchBean.addressDTOList.size() == 1}"
+													value="#{adrDto.corrAddress}" 
+													valueChangeListener="#{progressiveBillingUnitSearchBean.corrAddressChecked}">
+													<p:ajax update=":dialogAddresForm:listAddressPanel" />
+													<f:attribute name="index" value="#{row}"  />  
+												</p:selectBooleanCheckbox>
+										</p:column>
+
+										<p:column headerText="Address Line 1">
+											<p:outputLabel value="#{adrDto.address.addressLine1}" />
+										</p:column>
+									</p:dataTable>
+									<br/>
+								<ui:repeat var="addressDto"
+									value="#{progressiveBillingUnitSearchBean.addressDTOList}">
+									<h:panelGrid columns="4" cellpadding="4" width="100%"
+										rendered="#{addressDto.corrAddress }">
+										<p:outputLabel value="Billing Address 1" />
+										<p:inputText value="#{addressDto.address.addressLine1}" />
+										<p:outputLabel value="Billing Address 2" />
+										<p:inputText value="#{addressDto.address.addressLine2}" />
+
+										<p:outputLabel value="Billing Address 3" />
+										<p:inputText value="#{addressDto.address.addressLine3}" />
+										<p:outputLabel value="Billing Address 4" />
+										<p:inputText value="#{addressDto.address.addressLine4}" />
+
+										<p:outputLabel value="Post Code" />
+										<p:inputText value="#{addressDto.address.postcode}"
+											style="width:50%" />
+										<p:outputLabel value="City" />
+										<p:inputText value="#{addressDto.address.city}" />
+
+										<p:outputLabel id="stateTxt2" value="State" />
+										<p:selectOneMenu id="stateTypeList2"
+											value="#{addressDto.address.state}"
+											requiredMessage="Please Select Any State" required="false"
+											style="width:100%" for="stateTxt2">
+											<f:selectItems value="#{progressiveBillingUnitSearchBean.statesSIList}" />
+										</p:selectOneMenu>
+
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+
+										<p:outputLabel value="Email" />
+										<p:inputText value="#{addressDto.customer.email}" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+									</h:panelGrid>
+									<h:inputHidden value="#{addressDto.address.state}"/>
+
+								</ui:repeat>
+
+							</p:outputPanel>
+							<h:panelGrid id="display4" columns="4" cellpadding="4"
+								width="100%">
+								<p:outputLabel value="" />
+								<p:commandButton value="Cancel"
+									actionListener="#{progressiveBillingUnitSearchBean.onCloseChangeAddress}"
+									ajax="true" partialSubmit="true"
+									update="growl2,:pbUSearchForm:resultsPanel"
+									style="margin-top:20px;float:right"
+									oncomplete="handleSaveRequest2(xhr, status, args)" />
+								<p:commandButton value="Save"
+									actionListener="#{progressiveBillingUnitSearchBean.onSaveChangeAddress}"
+									ajax="true" update="growl2,:dialogForm:display"
+									style="margin-top:20px"
+									oncomplete="handleSaveRequest2(xhr, status, args)" />
+								<p:outputLabel value="" />
+							</h:panelGrid>
+						</p:dialog>
+						<script type="text/javascript">
+							function handleSaveRequest2(xhr, status, args) {
+								if (args.validationFailed || !args.success) {
+									dlg2.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg2.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+						</script>
+					</p:outputPanel>
+
+				</h:form>
+
+
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,6 +1,5 @@
 -- Change existing table fields
 alter table vipro.business_partner add company_code VARCHAR(10) after registration_date;
-alter table vipro.business_partner change address address_id BIGINT;
 
 alter table vipro.transaction_history add txn_reversal_id BIGINT after card_cheque_no;
 alter table vipro.transaction_history add invoice_no VARCHAR(10) after ref_no;

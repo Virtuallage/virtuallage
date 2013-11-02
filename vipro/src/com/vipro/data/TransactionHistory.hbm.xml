@@ -21,7 +21,7 @@
             <column name="transaction_description" length="40" />
         </property>
         <property name="refNo" type="string">
-            <column name="ref_no" length="20" />
+            <column name="ref_no" length="50" />
         </property>
         <property name="invoiceNo" type="string">
             <column name="invoice_no" length="10" />
