@@ -60,12 +60,12 @@
         			</p:column>
         			 <p:column headerText="Purchased Date" sortBy="#{dto.account.datePurchased}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.datePurchased}" >
-            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
             			</h:outputText>  
         			</p:column>
         			 <p:column headerText="Advise Date" sortBy="#{dto.account.adviseSignedDate}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.adviseSignedDate}" >
-            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            				<f:convertDateTime pattern="#{adviseUpdateBean.dateFormat}" ></f:convertDateTime>
             			</h:outputText>    
         			</p:column>
         			<p:column style="width:4%">  
@@ -94,7 +94,7 @@
 				 	        <p:outputLabel  value="Purchaser Name" />
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.customer.fullName}" disabled="true"/>
 				             <p:outputLabel  value="Registration No." />
-				            <p:inputText value="#{adviseUpdateBean.selectedDto.account.registrationNo}" disabled="false" style="width:35%"/>
+				            <p:inputText value="#{adviseUpdateBean.selectedDto.account.accountId}" disabled="true" style="width:35%"/>
 	
 				            <p:outputLabel  value="Block No" />
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.projectInvetory.blockNo}" disabled="true" style="width:35%"/>
@@ -108,7 +108,7 @@
 				            					           
 				            <p:outputLabel  value="Advise Date" />
 				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseSignedDate}" id="popupButtonCal1" 
-				            	pattern="#{adviseUpdateBean.dateFormat}"	timeZone="#{adviseUpdateBean.timeZone}" showOn="button" style="width:50%" />
+				            	pattern="dd/MM/yyyy" showOn="button" style="width:50%" />
 				            <h:panelGroup>	
 					            <p:commandButton id="upBtn" update=":uploadForm" oncomplete="upDialog.show()" title="Upload" value="Upload"/>
 					            <p:commandButton id="downBtn" update=":downloadForm" oncomplete="downDialog.show()" title="View" value="View"/>
@@ -118,7 +118,7 @@
 				            <p:outputLabel  value="Advise Accepted Date" />
 				            <p:calendar value="#{adviseUpdateBean.selectedDto.account.adviseStampedDate}" id="popupButtonCal2" showOn="button" 
 				            	pattern="#{adviseUpdateBean.dateFormat}"
-				            	timeZone="#{adviseUpdateBean.timeZone}" style="width:50%" />
+				            	 style="width:50%" />
 				            <p:outputLabel  value="" />
 				            <p:outputLabel  value="" />	
 				            
@@ -126,7 +126,7 @@
 				            <p:inputText value="#{adviseUpdateBean.selectedDto.verifiedBy}" disabled="true" />
 				            <p:outputLabel  value="Advise Update Date" />
 				            <p:inputText  value="#{adviseUpdateBean.selectedDto.account.adviseVerifiedDate}" disabled="true" >
-            						<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" timeZone="#{adviseUpdateBean.timeZone}"/>
+            						<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
             				</p:inputText>  
 				            		
 				           				            	

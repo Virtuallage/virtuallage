@@ -60,22 +60,22 @@
         			</p:column>
         			 <p:column headerText="Purchased Date" sortBy="#{dto.account.datePurchased}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.datePurchased}"  >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" timeZone="#{propertyUnitUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
             			</h:outputText>     
         			</p:column>
         			 <p:column headerText="SPA Date" sortBy="#{dto.account.spaSignedDate}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.spaSignedDate}"  >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" timeZone="#{propertyUnitUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
             			</h:outputText>      
         			</p:column>
         			 <p:column headerText="LO Date" sortBy="#{dto.account.loSignedDate}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.loSignedDate}" >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" timeZone="#{propertyUnitUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
             			</h:outputText>     
         			</p:column>
         			 <p:column headerText="LA Date" sortBy="#{dto.account.laSignedDate}" style="text-align:center">  
             			<h:outputText  value="#{dto.account.laSignedDate}"  >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" timeZone="#{propertyUnitUpdateBean.timeZone}"/>
+            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
             			</h:outputText>     
         			</p:column>
         			
@@ -161,7 +161,7 @@
 								<f:selectItems value="#{propertyUnitUpdateBean.statesSIList}"/>
 							</p:selectOneMenu>
 				            <p:outputLabel  value="Handover Date" />
-				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.keyHandoverDate}" id="popupButtonCal1"  timeZone="#{propertyUnitUpdateBean.timeZone}" showOn="button" style="width:50%"/>
+				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.keyHandoverDate}" id="popupButtonCal1"   showOn="button" style="width:50%"/>
 				            
 				             <p:outputLabel id="titleTypeTxt"  value="Title Type" />
 				             <p:selectOneMenu id="titleTypeList" value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.propertyTitleType}"  requiredMessage="Please Select Any Title Type"
@@ -169,7 +169,7 @@
 								<f:selectItems value="#{propertyUnitUpdateBean.titlTypesSIList}"/>
 							</p:selectOneMenu>				     
 				            <p:outputLabel  value="Strata Title Date" />
-				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.strataTitleObtainedDate}" id="popupButtonCal2" timeZone="#{propertyUnitUpdateBean.timeZone}" showOn="button" style="width:50%"/>
+				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.strataTitleObtainedDate}" id="popupButtonCal2"  showOn="button" style="width:50%"/>
 				           
 
 							 <p:outputLabel  value="Disbursment Fee" />
@@ -188,7 +188,7 @@
 				            	<f:convertNumber pattern="#,###,##0.00"   />
             				</p:inputText>  
 				            <p:outputLabel  value="DMC Date" />
-				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.dncDate}" id="popupButtonCal3" showOn="button" timeZone="#{propertyUnitUpdateBean.timeZone}" />
+				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.dncDate}" id="popupButtonCal3" showOn="button"  />
 				            	
 				            				            			            
 				            <p:outputLabel value=""/>

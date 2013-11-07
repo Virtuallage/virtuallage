@@ -19,6 +19,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -26,6 +27,7 @@ import org.primefaces.model.StreamedContent;
 import com.vipro.constant.CodeConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.JasperConst;
+import com.vipro.constant.ProgressiveBillingConst;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
@@ -295,6 +297,35 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		}
 		CommonBean.addInfoMessage("Check box clicked."," Corr Address is Changed");
     }  
+	
+	public void onStageSelection(ValueChangeEvent event) {  
+		boolean newValue = (Boolean) event.getNewValue();	
+		int index = (Integer) event.getComponent().getAttributes().get("index");
+		if(newValue){
+			if(index > 0){
+				BillingModelStageDTO prevDto =  getSelectedDto().getStageDtoList().get(index-1);
+				if(!prevDto.isBillMe() && !ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())){
+					CommonBean.addErrorMessage("Cannot Skip Stages", "All Previous Stages must be selected before this!");
+					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
+					 chckbox.setValue(false);;
+				}
+				
+			}
+		}else{
+			if (index < getSelectedDto().getStageDtoList().size()) {
+				for (int i = index+1; i < getSelectedDto().getStageDtoList()
+						.size(); i++) {
+					BillingModelStageDTO nextDto = getSelectedDto()
+							.getStageDtoList().get(i);
+					if (nextDto.isBillMe()) {
+						nextDto.setBillMe(false);
+					} else {
+						break;
+					}
+				}
+			}
+		}
+	}
 	
 	/************** Billing Actions *********************/
 	public void onBillAction() {

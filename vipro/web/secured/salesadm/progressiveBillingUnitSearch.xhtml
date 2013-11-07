@@ -209,12 +209,12 @@
 									value="Change Address" />
 							</h:panelGrid>
 							<h:inputHidden value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"/>
-							<p:dataTable id="stagesDT" var="dto" value="#{progressiveBillingUnitSearchBean.selectedDto.stageDtoList}" scrollable="false" scrollHeight="180" >
+							<p:dataTable id="stagesDT" rowIndexVar="index" var="dto" value="#{progressiveBillingUnitSearchBean.selectedDto.stageDtoList}" scrollable="false" scrollHeight="180" >
 										<p:column headerText="Stage" style="width:7%">
 											<h:outputText  value="#{dto.billingModel.stage}" />
 										</p:column>
 
-										<p:column headerText="Description" style="width:35%">
+										<p:column headerText="Description" style="width:45%">
 											<p:outputLabel value="#{dto.billingModel.description}" />
 										</p:column>
 										<p:column headerText="Percentage" style="width:10%">
@@ -229,11 +229,14 @@
 										<p:column headerText="Status" style="width:13%">
 											<p:outputLabel value="#{dto.status}" />
 										</p:column>
-										<p:column headerText="Action" style="width:22%" >
-											  <p:selectBooleanButton value="#{dto.billMe}" onLabel="Bill This"  
-										  		offLabel="Pending" onIcon="ui-icon-check" offIcon="ui-icon-close" 
-										  		rendered="#{dto.status.equals('Pending')}"
-										  		/> 
+										<p:column headerText="Action" style="width:10%; text-align:center" >
+											  
+												<p:selectBooleanCheckbox id="stageId" rendered="#{dto.status.equals('Pending')}"
+													value="#{dto.billMe}" 
+													valueChangeListener="#{progressiveBillingUnitSearchBean.onStageSelection}">
+													<p:ajax update=":dialogForm:growl,:dialogForm:stagesDT" />
+													<f:attribute name="index" value="#{index}"  />  
+												</p:selectBooleanCheckbox>
 										</p:column>
 									</p:dataTable>
 									<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
@@ -489,6 +492,13 @@
 									// PF('dlg').hide();  
 									// $('#loginLink').fadeOut();  
 								}
+							}
+							
+							
+							function onValueChange(checked, index ){
+								
+								alert(checked+"-----------"+index);
+								
 							}
 						</script>
 					</p:outputPanel>

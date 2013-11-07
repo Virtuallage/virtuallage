@@ -51,3 +51,7 @@
     background: none !important;
     border: none !important;
 }
+
+.ui-fileupload .cancel {
+        display: none;
+   }
