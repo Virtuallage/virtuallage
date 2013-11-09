@@ -274,3 +274,10 @@ ALTER TABLE `vipro`.`business_partner`
 
 ALTER TABLE `vipro`.`address` CHANGE COLUMN `customer_id` `customer_id` BIGINT(20) NULL  ;
 
+-- 101113 by MAX
+ALTER TABLE `vipro`.`sales_commission_history` ADD COLUMN `project_id` BIGINT(20) NULL  AFTER `account_id` ;
+ALTER TABLE `vipro`.`sales_commission_history` CHANGE COLUMN `date_approved` `date_approved` DATE NULL  , ADD COLUMN `changed_by` BIGINT(20) NULL DEFAULT NULL  AFTER `claim_status` , ADD COLUMN `date_changed` DATE NULL  AFTER `changed_by` ;
+
+
+
+
