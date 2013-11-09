@@ -12,6 +12,7 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	private Long commissionId;
 	private Account account;
+	private Long projectId;
 	private Long batchNo;
 	private BigDecimal purchasePrice;
 	private BigDecimal claimPercent;
@@ -21,13 +22,16 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	private Date dateSubmitted;
 	private Long approvedBy;
 	private Date dateApproved;
+	private Long changedBy;
+	private Date dateChanged;
 	
 	public SalesCommissionHistory() {
 	}
 
-	public SalesCommissionHistory(Account account, BigDecimal purchasePrice, BigDecimal claimPercent, BigDecimal claimAmount, String claimStatus,
-			Long submittedBy, Date dateSubmitted, Long approvedBy, Date dateApproved) {
+	public SalesCommissionHistory(Account account, Long projectId, BigDecimal purchasePrice, BigDecimal claimPercent, BigDecimal claimAmount, String claimStatus,
+			Long submittedBy, Date dateSubmitted, Long approvedBy, Date dateApproved, Long changedBy, Date dateChanged) {
 		this.account = account;
+		this.projectId = projectId;
 		this.purchasePrice = purchasePrice;
 		this.claimPercent = claimPercent;
 		this.claimAmount = claimAmount;
@@ -36,6 +40,8 @@ public class SalesCommissionHistory implements java.io.Serializable {
 		this.dateSubmitted = dateSubmitted;
 		this.approvedBy = approvedBy;
 		this.dateApproved = dateApproved;
+		this.changedBy = changedBy;
+		this.dateChanged = dateChanged;
 	}
 
 	public Long getCommissionId() {
@@ -52,6 +58,14 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+	
+	public Long getProjectId() {
+		return this.projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
 	}
 	
 	public BigDecimal getPurchasePrice() {
@@ -124,6 +138,22 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	public void setBatchNo(Long batchNo) {
 		this.batchNo = batchNo;
+	}
+	
+	public Long getChangedBy() {
+		return changedBy;
+	}
+
+	public void setChangedBy(Long changedBy) {
+		this.changedBy = changedBy;
+	}
+
+	public Date getDateChanged() {
+		return dateChanged;
+	}
+
+	public void setDateChanged(Date dateChanged) {
+		this.dateChanged = dateChanged;
 	}
 	
 }

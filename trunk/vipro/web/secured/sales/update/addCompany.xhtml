@@ -28,14 +28,14 @@ Add Company
 				<p:outputLabel value="Company"/>
 				
 				<p:outputLabel value="Contact Person Name" for="contactp"/>
-				<p:inputText id="contactp" value="#{salesUpdate.company.contactPerson}" maxlength="30" style="text-transform:uppercase" autocomplete="off" required="true"/>
+				<p:inputText id="contactp" value="#{salesUpdate.company.contactPerson}" maxlength="30" autocomplete="off" required="true"/>
 				<p:outputLabel value="Title" for="title"/>
 				<p:selectOneMenu id="title" value="#{salesUpdate.company.title}">
 						<f:selectItems value="#{salesUpdate.listTitle}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Company Name" for="name"/>
-				<p:inputText id="name" value="#{salesUpdate.company.fullName}" maxlength="60" style="text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:inputText id="name" value="#{salesUpdate.company.fullName}" maxlength="60" required="true" autocomplete="off"/>
 				<p:outputLabel value="Business Reg. No." for="regno"/>
 				<p:inputText id="regno" value="#{salesUpdate.company.identityNo}" maxlength="15" required="true" autocomplete="off"/>
 			
@@ -47,14 +47,14 @@ Add Company
 				<p:outputLabel value="" />
 			
 				<p:outputLabel value="Address 1" for="addr1"/>
-				<p:inputText id="addr1" value="#{salesUpdate.address.addressLine1}" maxlength="40" style="text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:inputText id="addr1" value="#{salesUpdate.address.addressLine1}" maxlength="40" required="true" autocomplete="off"/>
 				<p:outputLabel value="Address 2" for="addr2"/>
-				<p:inputText id="addr2" value="#{salesUpdate.address.addressLine2}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="addr2" value="#{salesUpdate.address.addressLine2}" maxlength="40" autocomplete="off"/>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
-				<p:inputText id="addr3" value="#{salesUpdate.address.addressLine3}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="addr3" value="#{salesUpdate.address.addressLine3}" maxlength="40" autocomplete="off"/>
 				<p:outputLabel value="Address 4" for="addr3"/>
-				<p:inputText id="addr4" value="#{salesUpdate.address.addressLine4}" maxlength="40" style="text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="addr4" value="#{salesUpdate.address.addressLine4}" maxlength="40" autocomplete="off"/>
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{salesUpdate.address.postcode}" maxlength="10" autocomplete="off"/>
@@ -62,7 +62,7 @@ Add Company
 				<p:outputLabel value="" />
 				
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:selectOneMenu id="city" value="#{salesUpdate.address.city}" style="text-transform:uppercase" required="true">
+				<p:selectOneMenu id="city" value="#{salesUpdate.address.city}"  required="true">
 						<f:selectItems value="#{salesUpdate.listCity}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="State" for="state" required="true"/>
@@ -94,11 +94,10 @@ Add Company
 				</p:selectOneMenu>	
 			</h:panelGrid>
 
-<!-- Remark off requested by Hasrina on 7 Oct 2013, only PIC allow to capture this remark -->
-<!--			<h:panelGrid columns="2" style="width:100%">  -->
-<!--			   	<p:outputLabel value="Remarks"/>  -->
-<!--			   	<h:inputTextarea value="#{salesUpdate.company.remarks}" cols="100" rows="3" />  -->
-<!--		   	</h:panelGrid>  -->
+			<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="Remarks"/>
+			   	<h:inputTextarea value="#{salesUpdate.company.remarks}" cols="100" rows="3" />
+		   	</h:panelGrid>
 			
 			<br/>
 			

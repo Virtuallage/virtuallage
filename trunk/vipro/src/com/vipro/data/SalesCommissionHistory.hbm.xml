@@ -11,6 +11,9 @@
         <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
             <column name="account_id" not-null="true" />
         </many-to-one>
+        <property name="projectId" type="java.lang.Long">
+            <column name="project_id" />
+        </property>
         <property name="batchNo" type="java.lang.Long">
             <column name="batch_no" />
         </property>
@@ -37,6 +40,12 @@
         </property>
         <property name="dateApproved" type="date">
             <column name="date_approved" length="10" />
+        </property>
+        <property name="changedBy" type="java.lang.Long">
+            <column name="changed_by" />
+        </property>
+        <property name="dateChanged" type="date">
+            <column name="date_changed" length="10" />
         </property>
     </class>
 </hibernate-mapping>

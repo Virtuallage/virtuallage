@@ -19,10 +19,27 @@ Sales Commission
     
 <p:focus context="panel" /> 
       
-	<h:form>  
-	<p:dataTable var="c" value="#{salesCommission.accounts}" paginator="true" rows="10"  paginatorPosition="bottom" listener="#{salesCommission.listAccounts}"
+	<h:form> 
+	<p:panelGrid style="width:100%" styleClass="no-borders" >
+		<p:row>
+			<p:column style="width:20%;text-align:left;">
+				<h:outputText value="Project Name" />
+			</p:column>
+			<p:column style="width:20%;text-align:left;">
+					<p:selectOneMenu id="projectList" value="#{salesCommission.projectId}" 
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{salesCommission.listProject}" />
+					</p:selectOneMenu>
+			</p:column>
+			<p:column style="width:60%;text-align:left;">
+				<p:commandButton value="Search" action="#{salesCommission.listAccounts}" update="accountsDataTable" icon="ui-icon-search"/>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<br /> 
+	<p:dataTable var="c" value="#{salesCommission.accounts}" paginator="true" rows="10"  paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                 rowsPerPageTemplate="5,10,15"> 
+                 rowsPerPageTemplate="5,10,15" id="accountsDataTable"> 
         
         <p:column headerText="Purchaser" sortBy="#{c.customer.fullName}">  
 	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}"/>

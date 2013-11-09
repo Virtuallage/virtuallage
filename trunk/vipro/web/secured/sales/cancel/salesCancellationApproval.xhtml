@@ -45,7 +45,7 @@ Sales Cancellation Approval
    			<h:inputText value="#{salesCancelApproval.getCodeDesc('PM', salesCancelApproval.account.bookPymtMethod)}" style="width:200px" disabled="true"/>
    			
    			<p:outputLabel value="Reason for Cancellation *" for="reasonForCancellation"/>
-   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancelApproval.salesCancellationHistory.cancelledReason}" style="width:200px">  
+   			<p:selectOneMenu id="reasonForCancellation" value="#{salesCancelApproval.salesCancellationHistory.cancelledReason}" style="width:200px" disabled="#{salesCancelApproval.disabledMode()}">  
 				<f:selectItems value="#{salesCancelApproval.cancelReasons}" />
 			</p:selectOneMenu>
 			<p:outputLabel value="Letter"/>
@@ -55,7 +55,7 @@ Sales Cancellation Approval
 
    			<p:outputLabel value="Admin charges" for="cancelFee"/>
    			<p:inputText id="cancelFee" value="#{salesCancelApproval.salesCancellationHistory.cancelFee}" style="width:200px" autocomplete="off" 
-   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;" disabled="#{salesCancelApproval.disabledMode()}">
    				<f:convertNumber type="currency" currencySymbol="" />
    				<p:ajax event="keyup" update="netRefund" listener="#{salesCancelApproval.updateNetRefund}"/>
                 <!--<f:convertNumber maxFractionDigits="2" />
@@ -68,8 +68,8 @@ Sales Cancellation Approval
    			
    			
    			<p:outputLabel value="Tax" for="cancelTax"/>
-   			<p:inputText id="cancelTax" value="#{salesCancelApproval.salesCancellationHistory.cancelTax}" style="width:200px" autocomplete="off"
-   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+   			<p:inputText id="cancelTax" value="#{salesCancelApproval.salesCancellationHistory.cancelTax}" style="width:200px" autocomplete="off" 
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;" disabled="#{salesCancelApproval.disabledMode()}">
    				<f:convertNumber type="currency" currencySymbol="" />
    				<p:ajax event="keyup" update="netRefund" listener="#{salesCancelApproval.updateNetRefund}"/>
    			</p:inputText>
@@ -125,36 +125,54 @@ Sales Cancellation Approval
 	
 	<h:form id="confirmationForm">
 		<p:dialog header="Cancellation Approval Confirmation" widgetVar="dlgConfirmationAdjHeader" width="600"  modal="true" showEffect="fade" hideEffect="fade"> 
-			<h:panelGrid columns="4" style="width:100%;">
-				<p:outputLabel value="Adjustment Date"/>
-   				<h:inputText id="adjustmentDate" value="#{salesCancelApproval.adjHeader.dateApproved}" style="width:100px" disabled="true">
-   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
-   				</h:inputText>
-   				<p:outputLabel value="Discount Rate Changed"/>
-   				<h:inputText id="discountRateChanged" value="#{salesCancelApproval.adjLog.discountRateAft}" style="width:100px" disabled="true" />
-   				
-   				<p:outputLabel value="Adjusted by Amount" style="width:300px"/>
-   				<h:inputText id="adjustedByAmount" value="#{salesCancelApproval.adjHeader.adjAmount}" style="width:100px" disabled="true">
-   					<f:convertNumber type="currency" currencySymbol="" />
-   				</h:inputText>
-   				<p:outputLabel value="Adjusted by Percentage" style="width:300px"/>
-   				<h:inputText id="adjustedByPercentage" value="#{salesCancelApproval.adjHeader.adjPercent}" style="width:100px" disabled="true" />
-			</h:panelGrid>
+			<p:dataTable id="adjHeaders" var="c" value="#{salesCancelApproval.adjHeaders}" paginator="false">   
+        		<p:column headerText="Adj Date" style="width:30%;">  
+            		<h:outputText value="#{c.dateApproved}">
+            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+            		</h:outputText>
+        		</p:column>  
+        		<p:column headerText="Adj Percentage" style="width:35%;">  
+            		<h:outputText value="#{c.adjPercent}" />
+        		</p:column>
+        		<p:column headerText="Adj Amount">
+        			<h:outputText value="#{c.adjAmount}">
+        				<f:convertNumber type="currency" currencySymbol="" />
+        			</h:outputText>
+           		</p:column> 
+     		</p:dataTable>
+
 			<br/><br/>
 			<h:panelGrid columns="3" style="width:100%;">
+				<p:outputLabel value="Total Adjust Amount"/>
+				<p:outputLabel value=""/>
+   				<h:inputText id="totalAdjustAmount" value="#{salesCancelApproval.totalAdjustedAmount}" style="width:100px" disabled="true">
+   					<f:convertNumber type="currency" currencySymbol="" />
+   				</h:inputText>
+   				
+   				<p:outputLabel value="Current Discount Rate"/>
+   				<p:outputLabel value=""/>
+   				<p:inputText id="discountRateChanged" value="#{salesCancelApproval.project.discountRate}" style="width:100px">
+   					<p:ajax event="keyup" update="nettPriceAfter,discountPriceAfter" listener="#{salesCancelApproval.updateNettPrice}"/>
+   				</p:inputText>
+   				
+   				<h:panelGroup>
+   					<br/>
+   				</h:panelGroup>
+   				<h:panelGroup />
+   				<h:panelGroup />
+   				
 				<p:outputLabel value=""/>
 				<p:outputLabel value="Before"/>
 				<p:outputLabel value="After"/>
-				
+
 				<p:outputLabel value="Purchase Price"/>
 				<h:inputText id="purchasePriceBefore" value="#{salesCancelApproval.adjLog.purchasePriceBef}" style="width:100px" disabled="true">
 					<f:convertNumber type="currency" currencySymbol="" />
 				</h:inputText>
-				<p:inputText id="purchasePriceAfter" value="#{salesCancelApproval.adjLog.purchasePriceAft}" style="width:100px" autocomplete="off"
+				<p:inputText id="purchasePriceAfter" value="#{salesCancelApproval.adjLog.purchasePriceAft}" style="width:100px" autocomplete="off" 
    				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    					<f:convertNumber type="currency" currencySymbol="" />
-   					<p:ajax event="keyup" update="nettPriceAfter" listener="#{salesCancelApproval.updateNettPrice}"/>
-   					<p:ajax event="keyup" update="discountPriceAfter"/>
+   					<p:ajax event="keyup" update="nettPriceAfter,discountPriceAfter" listener="#{salesCancelApproval.updateNettPrice}"/>
    				</p:inputText>
 				
 				<p:outputLabel value="Discount Price"/>

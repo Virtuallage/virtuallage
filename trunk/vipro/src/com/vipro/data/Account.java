@@ -96,7 +96,7 @@ public class Account implements java.io.Serializable {
 	private Long cancelDocId;
 	private Long financierId;
 	private String spaRefNo;
-	private Long laRefNo;
+	private String laRefNo;
 	private String campaignCode;
 	private String financierRef;
 
@@ -879,11 +879,11 @@ public class Account implements java.io.Serializable {
 		this.financierId = financierId;
 	}
 
-	public Long getLaRefNo() {
+	public String getLaRefNo() {
 		return laRefNo;
 	}
 
-	public void setLaRefNo(Long laRefNo) {
+	public void setLaRefNo(String laRefNo) {
 		this.laRefNo = laRefNo;
 	}
 

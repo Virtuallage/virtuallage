@@ -16,5 +16,9 @@ public interface ClaimStatusConst extends CommonConst {
 	public static final String STATUS_PENDING_APPROVAL="COPEN";
 	
 	public static final String STATUS_APPROVED="COAPP";
+	
+	public static final String STATUS_VERIFIED="COVER";
+	
+	public static final String STATUS_REJECTED="COREJ";
 
 }
