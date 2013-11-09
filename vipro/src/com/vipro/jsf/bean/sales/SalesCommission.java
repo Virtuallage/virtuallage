@@ -66,6 +66,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 public class SalesCommission extends CommonBean implements Serializable{
 
 	private List<Project> projects;
+	private List<SelectItem> listProject;
 	private List<ProjectInventory> inventories;
 	private List<Account> accounts;
 	private List<Account> salesCommissionAccounts;
@@ -99,6 +100,15 @@ public class SalesCommission extends CommonBean implements Serializable{
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
+	}
+	
+	public List<SelectItem> getListProject() {
+		listProject = CodeUtil.getProjectAsItems();
+		return listProject;
+	}
+
+	public void setListProject(List<SelectItem> listProject) {
+		this.listProject = listProject;
 	}
 
 	public List<ProjectInventory> getInventories() {
@@ -173,24 +183,75 @@ public class SalesCommission extends CommonBean implements Serializable{
 	public void setTotalClaimAmount(BigDecimal totalClaimAmount) {
 		this.totalClaimAmount = totalClaimAmount;
 	}
+	
+	public String listProject() {
+		ProjectService projectService = (ProjectService) SpringBeanUtil
+				.lookup(ProjectService.class.getName());
+		projects = projectService.findAllProjects();
+		
+		return "salesCommission";
+	}
 
 	public String listAccounts(){
+		listProject = CodeUtil.getProjectAsItems();
+		
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		
+		inventories = inventoryService.getAvailableInventories(projectId);
 
 		AuthUser user = getCurrentUser();
 		Long userId = user.getUserProfile().getUserId();
 		UserProfile userProfile = userProfileService.findById(userId);
+		
+		/*for(ProjectInventory projectInventory: inventories)
+		{
+			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
+			if(dataList != null && dataList.size() > 0) {
+				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
+				{
+					accounts.addAll(dataList);
+				}
+				else
+				{
+					for(Account data: dataList) {
+						if(data.getAttendedBy().equals(userId))
+						{
+							accounts.add(data);
+						}
+					}
+				}
+			}
+		}*/
+		
+		accounts = new ArrayList<Account>(); 
+		List<Account> accountList = new ArrayList<Account>();
 		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
 				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
-			accounts = accountService.findAllAvailable();
+			accountList = accountService.findAllAvailable();
 		}
 		else
 		{
-			accounts = accountService.findByAvailableUserId(userId);
+			accountList = accountService.findByAvailableUserId(userId);
 		}
+		
+		for(ProjectInventory projectInventory: inventories)
+		{
+			List<Account> dataList = accountService.findByProjectInventoryId(projectInventory.getInventoryId());
+			for(Account dl: dataList) {
+				for(Account al: accountList) {
+					if(dl.equals(al)) {
+						accounts.add(al);
+					}
+					
+				}
+			}
+		}
+		
 
 		salesCommissionHistorys = salesCommissionHistoryService.findAll();
 				
@@ -443,6 +504,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 					salesCommissionHistory.setSubmittedBy(user.getUserProfile().getUserId());
 				
 				salesCommissionHistory.setPurchasePrice(account.getPurchasePrice());
+				salesCommissionHistory.setProjectId(projectId);
 				salesCommissionHistoryService.update(salesCommissionHistory);
 			}
 			

@@ -24,28 +24,32 @@ Sales Commission Approval
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15"> 
         
-        <p:column headerText="Sales Person" sortBy="#{salesUpdate.verifyByUserId(c.submittedBy)}">  
-	    	<h:outputText value="#{salesUpdate.verifyByUserId(c.submittedBy)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}"/>
+        <p:column headerText="Sales Person" sortBy="#{salesCommissionApproval.verifyByUserId(c.submittedBy)}">  
+	    	<h:outputText value="#{salesCommissionApproval.verifyByUserId(c.submittedBy)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}"/>
+		</p:column>
+		
+		<p:column headerText="Project Name" sortBy="#{salesCommissionApproval.GetProjectNameBy(c.projectId)}">  
+	    	<h:outputText value="#{salesCommissionApproval.GetProjectNameBy(c.projectId)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}"/>
 		</p:column>
 		
 		<p:column headerText="Batch No" sortBy="#{c.batchNo}">  
 	    	<h:outputText value="#{c.batchNo}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}"/>
 		</p:column>
 		   
-        <p:column headerText="Total Sales" sortBy="#{c.purchasePrice}" style="text-align:right">  
-	 		<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}">
-	    		<f:convertNumber type="currency" currencySymbol="" />
-	    	</h:outputText>
-	    </p:column> 
-	    
-	 	<p:column headerText="Total Commission" sortBy="#{c.claimAmount}" style="text-align:right">  
+	 	<p:column headerText="Claim Amount" sortBy="#{c.claimAmount}" style="text-align:right">  
 	    	<h:outputText value="#{c.claimAmount}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	    	</h:outputText>
 		</p:column>
 		
-	 	<p:column headerText="Status" sortBy="#{salesCommissionApproval.getCodeDesc('CO', c.claimStatus)}">  
-	  		<h:outputText value="#{salesCommissionApproval.getCodeDesc('CO', c.claimStatus)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}">
+	 	<p:column headerText="Reviewed By" sortBy="#{salesCommissionApproval.verifyByUserId(c.changedBy)}">  
+	  		<h:outputText value="#{salesCommissionApproval.verifyByUserId(c.changedBy)}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}">
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Date Reviewed" sortBy="#{c.dateChanged}">  
+	  		<h:outputText value="#{c.dateChanged}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.submittedBy)}">
+	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>
 		

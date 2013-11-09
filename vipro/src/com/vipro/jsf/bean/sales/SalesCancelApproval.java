@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -84,11 +85,14 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 	private DocumentReference documentReference;
 	private SalesCancellationHistory salesCancellationHistory;
 	private AdjHeader adjHeader;
+	private List<AdjHeader> adjHeaders;
 	private AdjLog adjLog;
 	private String dialogConfirmationName;
 		
 	private double TaxCharge = 0.02;
 	private double AdminFee = 500;
+	
+	private BigDecimal totalAdjustedAmount = new BigDecimal(0);
 
 	private StreamedContent file;  
 	private CommandButton approveButton;
@@ -196,6 +200,14 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 		this.adjHeader = adjHeader;
 	}
 	
+	public List<AdjHeader> getAdjHeaders() {
+		return adjHeaders;
+	}
+
+	public void setAdjHeaders(List<AdjHeader> adjHeaders) {
+		this.adjHeaders = adjHeaders;
+	}
+	
 	public AdjLog getAdjLog() {
 		return adjLog;
 	}
@@ -218,6 +230,14 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 
 	public void setAttendedBy(UserProfile attendedBy) {
 		this.attendedBy = attendedBy;
+	}
+	
+	public BigDecimal getTotalAdjustedAmount() {
+		return this.totalAdjustedAmount;
+	}
+	
+	public void setTotalAdjustedAmount(BigDecimal totalAdjustedAmount) {
+		this.totalAdjustedAmount = totalAdjustedAmount;
 	}
 	
 	public StreamedContent getFile() {  
@@ -420,9 +440,11 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 		
 		if(adjLog != null) {
 			double purchasePriceAft = adjLog.getPurchasePriceAft()!=null ? adjLog.getPurchasePriceAft().doubleValue() : 0.0d;
-			double discountRateAft = adjLog.getDiscountRateAft()!=null ? adjLog.getDiscountRateAft().doubleValue() : 0.0d;
+			//double discountRateAft = adjLog.getDiscountRateAft()!=null ? adjLog.getDiscountRateAft().doubleValue() : 0.0d;
+			double discountRate = project.getDiscountRate() != null ? project.getDiscountRate().doubleValue() : 0.0d;
 			
-			double discountAmountAft = purchasePriceAft * discountRateAft / 100;
+			//double discountAmountAft = purchasePriceAft * discountRateAft / 100;
+			double discountAmountAft = purchasePriceAft * discountRate / 100;
 			double netAdjAft = purchasePriceAft - discountAmountAft;
 			
 			adjLog.setDiscountAmountAft(new BigDecimal(discountAmountAft));
@@ -431,14 +453,25 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 		
 		return "salesCancellationApproval";
 	}
+	
+	public String disabledMode() {
+		String mode = "true";
+		if(salesCancellationHistory != null && salesCancellationHistory.getStatus().equalsIgnoreCase(CancelStatusConst.SUBMIT_CANCEL)) {
+			mode = "false";
+		}
+		
+		return mode;
+	}
 
 	public String selectInventory() {
 		try {
 			customers = new ArrayList<Customer>();
 			account = null;
 			salesCancellationHistory = new SalesCancellationHistory();
+			adjHeaders = new ArrayList<AdjHeader>();
 			adjHeader = null;
-			adjLog = null;
+			adjLog = new AdjLog();
+			totalAdjustedAmount = new BigDecimal(0);
 	
 			AuthUser user = getCurrentUser();
 			if (user != null)
@@ -498,28 +531,63 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			}
 			
 			approveButton.setStyle("display: none");
-			if(salesCancellationHistory != null && !salesCancellationHistory.getStatus().equalsIgnoreCase(CancelStatusConst.APPROVE_CANCEL)) {
+			if(salesCancellationHistory != null && salesCancellationHistory.getStatus().equalsIgnoreCase(CancelStatusConst.SUBMIT_CANCEL)) {
 				approveButton.setStyle("");
 			}
 			
-			AdjHeaderService adjHeaderService = (AdjHeaderService) SpringBeanUtil.lookup(AdjHeaderService.class.getName());
-			List<AdjHeader> adjHeaders = adjHeaderService.findByProjectId(projectId);
+			dialogConfirmationName = "dlgConfirmationAdjHeader.show()";
 			
-			for(AdjHeader adj: adjHeaders) {
-				adjHeader = adj;
+			AdjHeaderService adjHeaderService = (AdjHeaderService) SpringBeanUtil.lookup(AdjHeaderService.class.getName());
+			adjHeaders = adjHeaderService.findByProjectId(projectId);
+			
+			double purchasePriceBef = inventory.getPurchasePrice()!=null ? inventory.getPurchasePrice().doubleValue() : 0.0d;
+			double discountAmountBef = inventory.getDiscountAmount() != null ? inventory.getDiscountAmount().doubleValue() : 0.0d;
+			double netAdjBef = purchasePriceBef - discountAmountBef;
+
+			int index = 0;
+			double adjPurchasePrice = purchasePriceBef;
+			double totalAdjPrice = 0;
+			for(AdjHeader header: adjHeaders) {
+				if(header.getAdjAmount() != null) {
+					adjPurchasePrice += header.getAdjAmount().doubleValue();
+					totalAdjPrice += header.getAdjAmount().doubleValue();
+				} else {
+					if(header.getAdjPercent() != null) {
+						double newAdjAmount = adjPurchasePrice * header.getAdjPercent().doubleValue() / 100;
+						header.setAdjAmount(new BigDecimal(newAdjAmount)) ;
+						
+						adjPurchasePrice += newAdjAmount;
+						totalAdjPrice += newAdjAmount;
+						adjHeaders.set(index, header);
+					}
+				}
+				index++;
 			}
+			
+			totalAdjustedAmount = new BigDecimal(totalAdjPrice);
+
+			adjLog.setProjectInventory(inventory);
+			adjLog.setPurchasePriceBef(new BigDecimal(purchasePriceBef));
+			adjLog.setDiscountAmountBef(new BigDecimal(discountAmountBef));
+			adjLog.setNetAdjBef(new BigDecimal(netAdjBef));
+			
+			adjLog.setPurchasePriceAft(new BigDecimal(adjPurchasePrice));
+			updateNettPrice();
+			
+			/*for(AdjHeader adj: adjHeaders) {
+				adjHeader = adj;
+			} 
 			
 			dialogConfirmationName = "dlgConfirmation.show()";
 			if(adjHeader != null) {
 				dialogConfirmationName = "dlgConfirmationAdjHeader.show()";
-				
 				AdjLogService adjLogService = (AdjLogService) SpringBeanUtil.lookup(AdjLogService.class.getName());
 				List<AdjLog> adjLogs = adjLogService.findByAdjHeaderId(adjHeader.getAdjHeaderId());
 				
 				for(AdjLog log: adjLogs) {
 					adjLog = log;
 				}
-			}
+			}*/
 
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -601,6 +669,9 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				inventory.setDiscountRate(adjLog.getDiscountRateAft());
 			}
 			inventoryService.update(inventory);
+			
+			ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+			projectService.update(project);
 			
 			SalesCancellationService salesCancellationService = (SalesCancellationService) SpringBeanUtil.lookup(SalesCancellationService.class.getName());
 			salesCancellationHistory.setStatus(CancelStatusConst.APPROVE_CANCEL);

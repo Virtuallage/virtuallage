@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Commission
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Commission Claim Verification for #{salesUpdate.verifyByUserId(salesCommissionVerification.salesCommissionHistory.submittedBy)}" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:dataTable var="c" value="#{salesCommissionVerification.salesCommissionAccounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15"> 
+        
+        <p:column headerText="Purchaser&lt;br/&gt;Unit No" sortBy="#{c.customer.fullName}">  
+	    	<h:outputText value="#{c.customer.fullName}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}"/><br />
+	    	<h:outputText value="#{c.projectInventory.unitNo}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}"/>
+		</p:column>
+		
+		<p:column headerText="Selling Price" sortBy="#{c.purchasePrice}" style="text-align:right">  
+	    	<h:outputText value="#{c.purchasePrice}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>
+
+	 	<p:column headerText="Discount Amount" sortBy="#{c.discountedAmount}" style="text-align:right">  
+	    	<h:outputText value="#{c.discountedAmount}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Nett Price" sortBy="#{c.netPrice}" style="text-align:right">  
+	    	<h:outputText value="#{c.netPrice}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
+	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	    	</h:outputText><br />
+	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Collection To-Date" sortBy="#{c.totalPaymentTodate}" style="text-align:right">  
+	    	<h:outputText value="#{c.totalPaymentTodate}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Total Commission" sortBy="#{c.commissionAmount}" style="text-align:right">  
+	    	<h:outputText value="#{c.commissionAmount}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}">
+	    		<f:convertNumber type="currency" currencySymbol="" />
+	    	</h:outputText>
+		</p:column>
+		
+		<p:column headerText="%" sortBy="" style="text-align:right">  
+	    	<h:outputText value="#{salesCommissionVerification.GetClaimPercentByAccountId(c.accountId)}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}"/>
+		</p:column>
+		
+		<p:column headerText="Amount" sortBy="" style="text-align:right">  
+	    	<h:outputText value="#{salesCommissionVerification.PriceDecimalFormat(salesCommissionVerification.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}"/>
+		</p:column>
+		
+		<p:column headerText="Actions">
+			<p:commandButton action="#{salesCommissionVerification.selectAccount}" ajax="false" icon="ui-icon-check" title="Select">
+	  			<f:setPropertyActionListener value="#{c}" target="#{salesCommissionVerification.salesCommissionAccount}" />  
+			</p:commandButton>  
+		</p:column>	
+		
+	</p:dataTable>
+	<br/>
+	<h:panelGrid columns="1" style="width:100%;text-align:right;" >
+		<p:outputLabel value="Total    ">
+		&nbsp;
+			<p:inputText value="#{salesCommissionVerification.totalClaimAmount}" style="width:120px;" readonly="true">
+				<f:convertNumber type="currency" currencySymbol="RM "/>
+			</p:inputText>
+		</p:outputLabel>
+	</h:panelGrid>
+	<br />
+	
+	<p:commandButton value="Back" action="salesCommissionVerification" ajax="false" icon="ui-icon-arrowreturn-1-w"/>
+    	
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>

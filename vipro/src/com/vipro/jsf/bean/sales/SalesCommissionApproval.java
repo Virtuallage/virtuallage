@@ -21,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 
 import org.primefaces.component.commandbutton.CommandButton;
 
+import com.vipro.data.Project;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -32,6 +33,7 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AccountService;
+import com.vipro.service.ProjectService;
 import com.vipro.service.SalesCommissionHistoryService;
 import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
@@ -196,6 +198,30 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		return verified;
 	}
 	
+	public String GetProjectNameBy(String projectId) {
+		String result = "";
+		
+		try {
+			long id = Long.valueOf(projectId);
+			result = GetProjectNameBy(id);
+		} catch (Exception ex) {}
+		
+		return result;
+	}
+	
+	public String GetProjectNameBy(Long projectId) {
+		String result = "";
+		
+		ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+		Project project = projectService.findById(projectId);
+		
+		if(project != null) {
+			result = project.getProjectName();
+		}
+		
+		return result;
+	}
+
 	public String listAccounts(){
 		salesCommissionHistorys = new ArrayList<SalesCommissionHistory>();
 		
@@ -217,17 +243,23 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 			{
 				float totalPurchasePrice = 0;
 				float totalClaimAmount = 0;
+				boolean isVerified = false;
 				SalesCommissionHistory historyBatchNo = new SalesCommissionHistory();
 				for(int x=0; x< historyBatchNoList.size(); x++)
 				{
 					historyBatchNo = historyBatchNoList.get(x);
-					totalPurchasePrice = totalPurchasePrice + Float.valueOf(historyBatchNo.getPurchasePrice().toString());
-					historyBatchNo.setPurchasePrice(new BigDecimal(totalPurchasePrice));
-					
-					totalClaimAmount = totalClaimAmount + Float.valueOf(historyBatchNo.getClaimAmount().toString());
-					historyBatchNo.setClaimAmount(new BigDecimal(totalClaimAmount));
+					if(historyBatchNo.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_VERIFIED)) {
+						isVerified = true;
+						totalPurchasePrice = totalPurchasePrice + Float.valueOf(historyBatchNo.getPurchasePrice().toString());
+						historyBatchNo.setPurchasePrice(new BigDecimal(totalPurchasePrice));
+						
+						totalClaimAmount = totalClaimAmount + Float.valueOf(historyBatchNo.getClaimAmount().toString());
+						historyBatchNo.setClaimAmount(new BigDecimal(totalClaimAmount));
+					}
 				}
-				salesCommissionHistorys.add(historyBatchNo);
+				if(isVerified) {
+					salesCommissionHistorys.add(historyBatchNo);
+				}
 			}
 		}
 			
@@ -246,18 +278,20 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		for(SalesCommissionHistory history: historyList) {
 			Long accountId = history.getAccount().getAccountId();
 			Account account = accountService.findById(accountId);
-			salesCommissionAccounts.add(account);
-
+			
+			if(history.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_VERIFIED)) {
+				salesCommissionAccounts.add(account);
+			}
 		}
 		
-		if(salesCommissionHistory.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_SUBMITTED))
+		/*if(salesCommissionHistory.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_VERIFIED))
 		{
 			approveButton.setStyle("");
 		}
 		else
 		{
 			approveButton.setStyle("display: none");
-		}
+		}*/
 		
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
 			addInfoMessage("Sales Commission Approval", "There is nothing claim to approve.");
@@ -296,7 +330,10 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					SalesCommissionHistory history = historys.get(0);
 					history.setApprovedBy(userId);
 					history.setDateApproved(currentDate);
+					history.setChangedBy(userId);
+					history.setDateChanged(currentDate);
 					history.setClaimStatus(ClaimStatusConst.STATUS_APPROVED);
+					
 					salesCommissionHistoryService.update(history);
 				}
 

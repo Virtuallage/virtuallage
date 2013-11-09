@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Sales Commission Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Sales Commission Update" style="width:95%;">  
+    
+<p:focus context="panel"/> 
+   	<h:form id="custAccountForm">
+   		<p:dataTable id="availableCustomers" var="c" value="#{salesCommissionVerification.availableCustomers}" paginator="false">   
+        	<p:column headerText="Purchaser Name" style="width:50%;">  
+            	<h:outputText value="#{c.getFullName()}" />
+        	</p:column>  
+        	<p:column headerText="ID. No" >  
+            	<h:outputText value="#{c.getIdentityNo()}" />
+        	</p:column> 
+     	</p:dataTable><br />
+   		<h:panelGrid columns="4" style="width:100%;">
+   			<p:outputLabel value="Unit No"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.projectInventory.unitNo}"  style="width:200px" disabled="true" />
+   			<p:outputLabel value="Sales Person"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.salesPerson}" style="width:200px" disabled="true" />
+			
+			<p:outputLabel value="Selling Price"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.purchasePrice}" style="width:200px" disabled="true">
+				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Property Type"/>
+			<p:selectOneMenu id="propertyType" value="#{salesCommissionVerification.project.propertyType}" style="width:200px" disabled="true">
+				<f:selectItems value="#{salesCommissionVerification.propertyTypes}" />
+			</p:selectOneMenu>
+				 			
+   			<p:outputLabel value="Discount Price"/>
+			<h:panelGroup>
+	   			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.discountedAmount}" style="width:200px" disabled="true">
+	   				<f:convertNumber type="currency" currencySymbol="" />
+	   			</h:inputText>
+	   			&nbsp;&nbsp;
+	   			<h:outputLabel value="#{salesCommissionVerification.salesCommissionAccount.projectInventory.discountRate}" style="width:50px">  			
+	   				<f:convertNumber type="currency" currencySymbol="" />
+   					<p:outputLabel value="%"/>	   				
+ 	   			</h:outputLabel>
+ 			</h:panelGroup>
+ 			
+    		<p:outputLabel value="Purchase Type"/>
+			<p:selectOneMenu id="purchaseType" value="#{salesCommissionVerification.salesCommissionAccount.purchaseType}" style="width:200px" disabled="true">
+				<f:selectItems value="#{salesCommissionVerification.purchaseTypes}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Net Price"/>
+   			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.netPrice}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>
+   			<p:outputLabel value="Bank Name"/>
+   			<p:selectOneMenu id="bankName" value="#{salesCommissionVerification.salesCommissionAccount.panelBankId}" style="width:200px" disabled="true">  
+				<f:selectItems value="#{salesCommissionVerification.listPanelBanks}" />
+			</p:selectOneMenu>
+						
+   			<p:outputLabel value="SPA Signed Date"/>
+   			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.spaSignedDate}" style="width:200px" disabled="true">
+   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   			</h:inputText> 
+   			<p:outputLabel value="Loan Amount"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.loanAmount}" style="width:200px" disabled="true">
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>	
+
+			<p:outputLabel value="Solicitor"/>
+   			<p:selectOneMenu id="spaSolicitorId" value="#{salesCommissionVerification.salesCommissionAccount.spaSolicitorId}" style="width:200px" disabled="true">  
+				<f:selectItems value="#{salesCommissionVerification.listSolicitors}" />
+			</p:selectOneMenu>
+			<p:outputLabel value="SPA Stamped Date"/>
+			<h:panelGroup>
+				<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.spaStampedDate}" style="width:200px" disabled="true">
+   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   				</h:inputText> 
+				&nbsp;&nbsp;
+				<p:commandButton id="spaViewDialogButton" value="View" actionListener="#{salesCommissionVerification.listSPADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+			   			
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="spaVerifiedBy" value="#{salesCommissionVerification.verifyByUserId(salesCommissionVerification.salesCommissionAccount.spaVerifiedBy)}" style="width:200px" disabled="true"/>
+			</h:panelGroup>
+			
+			<p:outputLabel value="LO Date"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.loSignedDate}" style="width:200px" disabled="true">
+   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   			</h:inputText>
+			<p:outputLabel value="LO Accepted Date"/>
+			<h:panelGroup>
+				<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.loVerifiedDate}" style="width:200px" disabled="true">
+   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   				</h:inputText>
+				&nbsp;&nbsp;
+  				<p:commandButton id="loViewDialogButton" value="View" actionListener="#{salesCommissionVerification.listLODocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value=""/>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="loVerifiedBy" value="#{salesCommissionVerification.verifyByUserId(salesCommissionVerification.salesCommissionAccount.loVerifiedBy)}" style="width:200px" disabled="true"/>
+			</h:panelGroup>
+			
+			<p:outputLabel value="LA Signed Date"/>
+			<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.laSignedDate}" style="width:200px" disabled="true">
+   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   			</h:inputText>
+   			<p:outputLabel value="LA Stamped Date"/>
+			<h:panelGroup>
+				<h:inputText value="#{salesCommissionVerification.salesCommissionAccount.laStampedDate}" style="width:200px" disabled="true">
+   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+   				</h:inputText>
+				&nbsp;&nbsp;
+				<p:commandButton id="laViewDialogButton" value="View" actionListener="#{salesCommissionVerification.listLADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
+			</h:panelGroup>
+   			
+   			<p:outputLabel value="Solicitor"/>
+   			<p:selectOneMenu id="laSolicitorId" value="#{salesCommissionVerification.salesCommissionAccount.laSolicitorId}" style="width:200px" disabled="true">  
+				<f:selectItems value="#{salesCommissionVerification.listSolicitors}" />
+			</p:selectOneMenu>
+   			<p:outputLabel value="Verified by"/>
+   			<h:panelGroup>
+				<h:inputText id="laVerifiedBy" value="#{salesCommissionVerification.verifyByUserId(salesCommissionVerification.salesCommissionAccount.laVerifiedBy)}" style="width:200px" disabled="true"/>
+			</h:panelGroup>
+
+   		</h:panelGrid>
+   		
+		<p:dialog id="viewDialog" header="View" widgetVar="viewDialog"  modal="true" >
+			<p:dataTable id="documentReferenceTable" var="d" value="#{salesCommissionVerification.documentReferences}">  
+            	<p:column headerText="File">  
+                	<h:outputText value="#{d.filename}" />  
+            	</p:column>  
+            	<p:column headerText="Action">
+  					<p:commandButton id="downloadLink" value="Download" ajax="false"  icon="ui-icon-arrowstop-1-s"> 
+  						<f:setPropertyActionListener value="#{d}" target="#{salesCommissionVerification.documentReference}" /> 
+    					<p:fileDownload value="#{salesCommissionVerification.file}" />  
+    				</p:commandButton>
+            	</p:column>   
+        	</p:dataTable>  
+		</p:dialog>
+
+		<p:growl id="messages" showDetail="true"/>
+				
+   		<p:commandButton value="Back" action="#{salesCommissionVerification.back}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Reject" action="#{salesCommissionVerification.reject}" ajax="false" icon="ui-icon-circle-close"/>  &nbsp;&nbsp;
+   		<p:commandButton value="Approve" action="#{salesCommissionVerification.approve}" ajax="false" icon="ui-icon-circle-check"/>  &nbsp;&nbsp;
+	</h:form> 
+	
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
