@@ -196,3 +196,11 @@ insert into vipro.code_det values ('ORIENTATION', 'EAST', 'East', 'ACTV');
 insert into vipro.code_det values ('ORIENTATION', 'WEST', 'West', 'ACTV');
 insert into vipro.code_det values ('ORIENTATION', 'NORTH', 'North', 'ACTV');
 insert into vipro.code_det values ('ORIENTATION', 'SOUTH', 'South', 'ACTV');
+
+-- 101113 by MAX
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('CO', 'COVER', 'Verified', 'SSACT');
+
+
+
+
+
