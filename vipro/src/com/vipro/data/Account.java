@@ -79,6 +79,8 @@ public class Account implements java.io.Serializable {
 	private String bookPymtMethod;
 	private String bookPymtCardChqNo;
 	private String bookPymtBank;
+	private Long borrowerId1;
+	private Long borrowerId2;
 	
 	private BigDecimal cancelFee;
 	private BigDecimal cancelTax;
@@ -1020,6 +1022,22 @@ public class Account implements java.io.Serializable {
 						: "")
 				+ (financierRef != null ? "financierRef=" + financierRef : "")
 				+ "]";
+	}
+
+	public Long getBorrowerId1() {
+		return borrowerId1;
+	}
+
+	public void setBorrowerId1(Long borrowerId1) {
+		this.borrowerId1 = borrowerId1;
+	}
+
+	public Long getBorrowerId2() {
+		return borrowerId2;
+	}
+
+	public void setBorrowerId2(Long borrowerId2) {
+		this.borrowerId2 = borrowerId2;
 	}
 
 }

@@ -608,7 +608,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 		
 		if (account != null && salesCancellationHistory != null) {
 			if (!StringUtils.hasText(salesCancellationHistory.getCancelledReason())) {
-				addErrorMessage("Failed to confirm approval", "Please select a reason for cancellation.");
+				addErrorMessage("Warning!", "Failed to confirm cancellation, please select the reason for cancellation.");
 				return "salesCancellationApproval";
 			}
 			
@@ -679,10 +679,10 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			salesCancellationHistory.setDateApproved(currentDate);
 			salesCancellationService.update(salesCancellationHistory);
 			
-			addInfoMessage("Sales Cancellation Approval", "Approval Confirmed.");
+			addInfoMessage("Information.", "Sales Cancellation Approval Completed Successfully.");
 			return listPropertyUnits();
 		} else {
-			addErrorMessage("Sales Cancellation Approval", "Failed to confirm approval.");
+			addErrorMessage("Warning!", "Failed to approve the sales cancellation.");
 			return "salesCancellationApproval";
 		}
 	}

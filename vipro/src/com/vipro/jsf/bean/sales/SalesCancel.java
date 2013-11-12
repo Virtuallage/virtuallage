@@ -516,10 +516,10 @@ public class SalesCancel extends CommonBean implements Serializable{
 			salesCancellationHistory.setStatus(CancelStatusConst.SUBMIT_CANCEL);
 			
 			salesCancellationService.update(salesCancellationHistory);
-			addInfoMessage("Sales Cancellation", "Cancellation Pending Approval.");
+			addInfoMessage("Info.", "Sales Cancellation Submitted Pending Approval.");
 			return listPropertyUnits();
 		} else {
-			addErrorMessage("Sales Cancellation", "Failed to cancel.");
+			addErrorMessage("Warning!", "Sales Cancellation Failed.");
 			return "salesCancellation";
 		}
 	}

@@ -6,30 +6,25 @@
 	<parameter name="projectId" class="java.lang.Long"/>
 	<parameter name="blocksTitle" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     COALESCE(COUNT(a.account_id)) AS noOfLoans,
-     COALESCE(SUM(a.loan_amount)) AS totalAmount,
-     i.`institution_name`,
-     p.`project_name`,
-     bp.`company_name` AS bankName
-FROM
-     `account` a INNER JOIN `project_inventory` pin ON a.`inventory_id` = pin.`inventory_id`
-     INNER JOIN `business_partner` bp ON a.`panel_bank_id` = bp.`partner_id`,
-     `project` p INNER JOIN `institution` i ON p.`institution_id` = i.`institution_id`
-WHERE
-     p.project_id = $P{projectId}
- AND pin.project_id = $P{projectId}
- AND a.purchase_type <> 'PUCSH'
- AND (a.account_status IN ('SSNEW','SSACT'))
-GROUP BY
-     bp.company_name]]>
+		<![CDATA[SELECT i.institution_name,p.project_name,
+  bp.company_name AS bankName,
+  COALESCE(COUNT(a.account_id)) AS noOfLoans,
+  COALESCE(SUM(a.loan_amount)) AS totalAmount
+FROM account a,
+  business_partner bp,
+  project_inventory pin,project p,
+  institution i
+WHERE a.inventory_id = pin.inventory_id
+    AND p.project_id = $P{projectId}
+    AND pin.project_id = $P{projectId}
+    AND a.purchase_type <> 'PUCSH'
+    AND a.panel_bank_id = bp.partner_id
+    AND p.institution_id = i.institution_id
+    AND (a.account_status IN('SSNEW', 'SSACT'))
+GROUP BY bp.company_name]]>
 	</queryString>
-	<field name="institution_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="institution_name" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
 	<field name="bankName" class="java.lang.String"/>
 	<field name="noOfLoans" class="java.lang.Long"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>

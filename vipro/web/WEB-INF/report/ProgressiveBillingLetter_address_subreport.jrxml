@@ -43,12 +43,14 @@ WHERE
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{company_name}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="21" width="555" height="47" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{address_address_line_1}+" "+$F{address_address_line_2}+" "+$F{address_address_line_3}+" "+$F{address_address_line_4}+"\n"+$F{address_postcode}+" "+$F{address_city}+" "+$F{state_description}]]></textFieldExpression>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_address_line_1}+" "+$F{address_address_line_2}+" "+$F{address_address_line_3}+" "+$F{address_address_line_4}+"\n"+$F{address_postcode}+" "+$F{address_city}+" "+$F{state_description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

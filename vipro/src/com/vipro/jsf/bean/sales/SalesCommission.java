@@ -452,7 +452,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 		}
 
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
-			addInfoMessage("Sales Commission", "There is nothing to claim.");
+			addInfoMessage("Warning!", "No Sales Commission is availeble to claim.");
 			return listAccounts();
 		}
 

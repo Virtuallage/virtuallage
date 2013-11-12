@@ -288,5 +288,11 @@
         <property name="financierRef" type="string">
             <column name="financier_ref" length="20" />
         </property>
+        <property name="borrowerId1" type="java.lang.Long">
+            <column name="borrower_id1" />
+        </property>
+        <property name="borrowerId2" type="java.lang.Long">
+            <column name="borrower_id2" />
+        </property>
     </class>
 </hibernate-mapping>
