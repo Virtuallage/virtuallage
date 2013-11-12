@@ -32,7 +32,7 @@
 							<p:outputLabel  value="Unit No"/>
 						</p:column>
 						<p:column style="width:15%;text-align:left;vertical-align:middle">
-							 <p:inputText id="unitTxt" value="#{adviseUpdateBean.unit}"/>
+							 <p:inputText id="unitTxt" value="#{adviseUpdateBean.unit}" style="text-transform:uppercase"/>
 						</p:column>
 						<p:column  style="width:15%;text-align:left;vertical-align:middle">
 							 <p:commandButton value = "Search" action="#{adviseUpdateBean.searchProject}" ajax="false" process="projectList,unitTxt" update=":puListForm:resultsPanel"/>.

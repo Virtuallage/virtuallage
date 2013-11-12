@@ -302,7 +302,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 	public void generateProgressBillingLetterReport(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("projectId", reportDTO.getProjectId());
-		params.put("invoiceNo", reportDTO.getBlocksTitle());
+		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
 		String reportPath = JasperConst.PROGRESS_BILLING_LETTER_REPORT;
 		
 		String extension = "";

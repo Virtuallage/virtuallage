@@ -278,6 +278,8 @@ ALTER TABLE `vipro`.`address` CHANGE COLUMN `customer_id` `customer_id` BIGINT(2
 ALTER TABLE `vipro`.`sales_commission_history` ADD COLUMN `project_id` BIGINT(20) NULL  AFTER `account_id` ;
 ALTER TABLE `vipro`.`sales_commission_history` CHANGE COLUMN `date_approved` `date_approved` DATE NULL  , ADD COLUMN `changed_by` BIGINT(20) NULL DEFAULT NULL  AFTER `claim_status` , ADD COLUMN `date_changed` DATE NULL  AFTER `changed_by` ;
 
-
+-- 121113 by Bill
+alter table vipro.account add borrower_id1 BIGINT after customer_id5;
+alter table vipro.account add borrower_id2 BIGINT after borrower_id1;
 
 
