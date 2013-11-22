@@ -337,13 +337,12 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				for(int x=0; x< historyBatchNoList.size(); x++)
 				{
 					historyBatchNo = historyBatchNoList.get(x);
-					totalPurchasePrice = totalPurchasePrice + Float.valueOf(historyBatchNo.getPurchasePrice().toString());
-					historyBatchNo.setPurchasePrice(new BigDecimal(totalPurchasePrice));
-					
-					totalClaimAmount = totalClaimAmount + Float.valueOf(historyBatchNo.getClaimAmount().toString());
-					historyBatchNo.setClaimAmount(new BigDecimal(totalClaimAmount));
-					
 					if(historyBatchNo.getClaimStatus().equals(ClaimStatusConst.STATUS_SUBMITTED)) {
+						totalPurchasePrice = totalPurchasePrice + Float.valueOf(historyBatchNo.getPurchasePrice().toString());
+						historyBatchNo.setPurchasePrice(new BigDecimal(totalPurchasePrice));
+						
+						totalClaimAmount = totalClaimAmount + Float.valueOf(historyBatchNo.getClaimAmount().toString());
+						historyBatchNo.setClaimAmount(new BigDecimal(totalClaimAmount));
 						isSubmitted = true;
 					}
 				}
@@ -409,6 +408,32 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 		return "salesCommissionConfirmationVerification";
 	}
 	
+	public String submitAgain() {
+
+		salesCommissionAccounts = new ArrayList<Account>();
+		totalClaimAmount = new BigDecimal(0);
+		
+		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+		SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
+		List<SalesCommissionHistory> historyList = salesCommissionHistoryService.findByBatchNo(salesCommissionHistory.getBatchNo());
+		
+		for(SalesCommissionHistory history: historyList) {
+			Long accountId = history.getAccount().getAccountId();
+			Account account = accountService.findById(accountId);
+			
+			if(history.getClaimStatus().equalsIgnoreCase(ClaimStatusConst.STATUS_SUBMITTED)) {
+				salesCommissionAccounts.add(account);
+			}
+		}
+		
+		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
+			return listAccounts();
+		} else {
+			return "salesCommissionConfirmationVerification";
+		}
+	
+	}
+	
 	public String back() {
 		return "salesCommissionConfirmationVerification";
 	}
@@ -432,7 +457,8 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				salesCommissionHistoryService.update(history);
 				
 				addInfoMessage("Sales Commission Verification", "Commission Rejected.");
-				return listAccounts();
+				return submitAgain();
+				//return listAccounts();
 			}
 		}
 		
@@ -460,7 +486,8 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				
 				salesCommissionHistoryService.update(history);
 				addInfoMessage("Sales Commission Verification", "Commission Approved.");
-				return listAccounts();
+				return submitAgain();
+				//return listAccounts();
 			}
 
 		}

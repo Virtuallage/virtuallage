@@ -46,6 +46,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -129,6 +130,12 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private BusinessPartner partner;
 	private String partnerDocumentType;
 	private String tradingName;
+	
+	private String customerType = "0";
+	private Customer borrower1;
+	private Customer borrower2;
+	private CommandButton borrower1Button;
+	private CommandButton borrower2Button;
 		
 	@PostConstruct
 	public void init() {
@@ -147,6 +154,25 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
 		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
 		listContactPersonTitle = CodeUtil.getCodes("XX");
+		
+		borrower1Button = new CommandButton();
+		borrower2Button = new CommandButton();
+	}
+	
+	public CommandButton getBorrower1Button() {
+		return borrower1Button;
+	}
+
+	public void setBorrower1Button(CommandButton borrower1Button) {
+		this.borrower1Button = borrower1Button;
+	}
+	
+	public CommandButton getBorrower2Button() {
+		return borrower2Button;
+	}
+
+	public void setBorrower2Button(CommandButton borrower2Button) {
+		this.borrower2Button = borrower2Button;
 	}
 	
 	public List<SelectItem> getListPanelBanks() {
@@ -527,6 +553,22 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	public void setCompany(Customer company) {
 		this.company = company;
 	}
+	
+	public Customer getBorrower1() {
+		return borrower1;
+	}
+
+	public void setBorrower1(Customer borrower1) {
+		this.borrower1 = borrower1;
+	}
+	
+	public Customer getBorrower2() {
+		return borrower2;
+	}
+
+	public void setBorrower2(Customer borrower2) {
+		this.borrower2 = borrower2;
+	}
 
 	public StreamedContent getFile() {  
 		
@@ -613,6 +655,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			inventories = inventoryService.getAvailableInventories(projectId);
 		}
 		
+		borrower1 = null;
+		borrower2 = null;
 		accounts = new ArrayList<Account>();
 		
 		AuthUser user = getCurrentUser();
@@ -666,6 +710,28 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		updateSPAAddress();
 		updateLOAddress();
 		updateLAAddress();
+		
+		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+		
+		if(borrower1 == null) {
+			if(account.getBorrowerId1() != null) {
+				borrower1 = customerService.findByCustId(account.getBorrowerId1());
+			}
+		}
+		
+		if(borrower2 == null) {
+			if(account.getBorrowerId2() != null) {
+				borrower2 = customerService.findByCustId(account.getBorrowerId2());
+			}
+		}
+		
+		if(account.getPurchaseType() != null && account.getPurchaseType().length() > 0 && !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+			borrower1Button.setStyle("");
+			borrower2Button.setStyle("");
+		} else {
+			borrower1Button.setStyle("display: none");
+			borrower2Button.setStyle("display: none");
+		}
 		
 		return "salesProgressUpdate";
 	}
@@ -855,41 +921,57 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	}
 	
 	public String update() {
-		
-		if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
-			if(account.getPanelBankId() == null || account.getPanelBankId() == 0) {
-				addErrorMessage("Bank Name is required",
-						"Please select bank name.");
+
+		if (account != null) {
+			
+			if(account.getPurchaseType() == null || account.getPurchaseType().length() == 0) {
+				addErrorMessage("Warning!", "Please inform Sales Staff to update Financing Information.");
 				return "salesProgressUpdate";
 			}
 			
-			double loanAmount = account.getLoanAmount() != null? account.getLoanAmount().doubleValue() : 0;
-			if(loanAmount == 0) {
-				addErrorMessage("Load Amount is required",
-						"Please key in load amount.");
+			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+				if(account.getPanelBankId() == null || account.getPanelBankId() == 0) {
+					addErrorMessage("Bank Name is required",
+							"Please select bank name.");
+					return "salesProgressUpdate";
+				}
+				
+				double loanAmount = account.getLoanAmount() != null? account.getLoanAmount().doubleValue() : 0;
+				if(loanAmount == 0) {
+					addErrorMessage("Load Amount is required",
+							"Please key in load amount.");
+					return "salesProgressUpdate";
+				}
+			}
+			
+			if (account.getSpaSignedDate() == null || account.getSpaSolicitorId() == 0) {
+				addErrorMessage("Invalid SPA Solicitor",
+						"Please select SPA Signed Date and Solicitor from the dropdown list.");
 				return "salesProgressUpdate";
 			}
-		}
-		
-		if (account.getSpaSignedDate() == null || account.getSpaSolicitorId() == 0) {
-			addErrorMessage("Invalid SPA Solicitor",
-					"Please select SPA Signed Date and Solicitor from the dropdown list.");
-			return "salesProgressUpdate";
-		}
-		
-		if (account.getLoSignedDate() == null || account.getFinancierId() == 0) {
-			addErrorMessage("Invalid LO Financier",
-					"Please select LO Signed Date and Financier from the dropdown list.");
-			return "salesProgressUpdate";
-		}
-		
-		if (account.getLaSignedDate() == null || account.getLaSolicitorId() == 0) {
-			addErrorMessage("Invalid LA Solicitor",
-					"Please select LA Signed Date and Solicitor from the dropdown list.");
-			return "salesProgressUpdate";
-		}
-		
-		if (account != null) {
+			
+			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+				if (account.getLoSignedDate() == null || account.getFinancierId() == 0) {
+					addErrorMessage("Invalid LO Financier",
+							"Please select LO Signed Date and Financier from the dropdown list.");
+					return "salesProgressUpdate";
+				}
+				
+				if (account.getLaSignedDate() == null || account.getLaSolicitorId() == 0) {
+					addErrorMessage("Invalid LA Solicitor",
+							"Please select LA Signed Date and Solicitor from the dropdown list.");
+					return "salesProgressUpdate";
+				}
+			}
+			
+			if(borrower1 != null) {
+				account.setBorrowerId1(borrower1.getCustomerId());
+			}
+			
+			if(borrower2 != null) {
+				account.setBorrowerId2(borrower2.getCustomerId());
+			}
+			
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 			
 			accountService.update(account);
@@ -997,11 +1079,16 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		return null;
 	}
 	
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+	
 	public void setCustomerId(Long customerId) {
 		setCustomerId(customerId.toString());
 	}
 	
 	public void setCustomerId(String customerId) {
+		setCustomerType("0");
 		this.customerId = customerId;
 		this.customerNo = "";
 	}
@@ -1011,6 +1098,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	}
 	
 	public void setCustomerNo(String customerId) {
+		setCustomerType("0");
 		this.customerId = "";
 		
 		if(account.getCustomer2() != null && account.getCustomer2().getCustomerId().toString().equalsIgnoreCase(customerId)) {
@@ -1027,7 +1115,13 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	}
 	
 	public void changeSelectedCustomer() {
-		setAccountCustomer(selectedCustomer);
+		if(this.customerType.equalsIgnoreCase("1")) {
+			setBorrower1Customer(selectedCustomer);
+		} else if(this.customerType.equalsIgnoreCase("2")) {
+			setBorrower2Customer(selectedCustomer);
+		} else {
+			setAccountCustomer(selectedCustomer);
+		}
 	}
 	
 	public void deleteByCustomerId(Long customerId) {
@@ -1068,6 +1162,18 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			setCustomerName(customer.getFullName());
 		}
 
+		selectAccount();
+	}
+	
+	public void setBorrower1Customer(Customer customer)
+	{
+		borrower1 = customer;
+		selectAccount();
+	}
+	
+	public void setBorrower2Customer(Customer customer)
+	{
+		borrower2 = customer;
 		selectAccount();
 	}
 	
@@ -1124,7 +1230,13 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		setAccountCustomer(individual);
+		if(this.customerType.equalsIgnoreCase("1")) {
+			setBorrower1Customer(individual);
+		} else if(this.customerType.equalsIgnoreCase("2")) {
+			setBorrower2Customer(individual);
+		} else {
+			setAccountCustomer(individual);
+		}
 		
 		return "salesProgressUpdate";
 	}
@@ -1162,7 +1274,13 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			return null;
 		}
 		
-		setAccountCustomer(company);
+		if(this.customerType.equalsIgnoreCase("1")) {
+			setBorrower1Customer(company);
+		} else if(this.customerType.equalsIgnoreCase("2")) {
+			setBorrower2Customer(company);
+		} else {
+			setAccountCustomer(company);
+		}
 		
 		return "salesProgressUpdate";
 	}
