@@ -49,11 +49,11 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 
 	private BigDecimal totalClaimAmount;
 	private SalesCommissionHistory salesCommissionHistory;
-	private CommandButton approveButton;
+	//private CommandButton approveButton;
 
 	@PostConstruct
 	public void init() {
-		approveButton = new CommandButton();
+		//approveButton = new CommandButton();
 	}
 	
 	public List<Account> getSalesCommissionAccounts() {
@@ -81,13 +81,13 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		this.salesCommissionHistory = salesCommissionHistory;
 	}
 
-	public CommandButton getApproveButton() {
+	/*public CommandButton getApproveButton() {
 		return approveButton;
 	}
 
 	public void setApproveButton(CommandButton approveButton) {
 		this.approveButton = approveButton;
-	}
+	}*/
 	
 	public BigDecimal getTotalClaimAmount() {
 		return totalClaimAmount;
@@ -308,19 +308,6 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 			Date currentDate = new Date();
 			for(Account salesCommissionAccount: salesCommissionAccounts)
 			{
-				TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
-				TransactionHistory transactionHistory = new TransactionHistory();
-				TransactionCode code = new TransactionCode();
-				code.setTransactionCode(TransactionCodeConst.COMMISSION_FEE);
-				transactionHistory.setTransactionCode(code);
-				transactionHistory.setTransactionDate(currentDate);
-				transactionHistory.setTransactionDescription("Commission Fee");
-				transactionHistory.setStatus(TransactionStatusConst.PENDING);
-				transactionHistory.setAmount(totalClaimAmount);
-				transactionHistory.setAccount(salesCommissionAccount);
-				transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
-				transactionHistoryService.insert(transactionHistory);
-				
 				AuthUser user = getCurrentUser();
 				Long userId = user.getUserProfile().getUserId();
 				SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
@@ -335,6 +322,19 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					history.setClaimStatus(ClaimStatusConst.STATUS_APPROVED);
 					
 					salesCommissionHistoryService.update(history);
+					
+					TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
+					TransactionHistory transactionHistory = new TransactionHistory();
+					TransactionCode code = new TransactionCode();
+					code.setTransactionCode(TransactionCodeConst.COMMISSION_FEE);
+					transactionHistory.setTransactionCode(code);
+					transactionHistory.setTransactionDate(currentDate);
+					transactionHistory.setTransactionDescription("Commission Fee");
+					transactionHistory.setStatus(TransactionStatusConst.PENDING);
+					transactionHistory.setAmount(history.getClaimAmount());
+					transactionHistory.setAccount(salesCommissionAccount);
+					transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
+					transactionHistoryService.insert(transactionHistory);
 				}
 
 			}

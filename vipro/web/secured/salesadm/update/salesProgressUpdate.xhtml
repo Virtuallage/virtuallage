@@ -69,14 +69,14 @@ Sales Update
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<p:outputLabel value="Bank Name"/>
-   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px" disabled="true">  
+   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px">  
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 			</p:selectOneMenu>
    			
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Loan Amount"/>
-			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off" disabled="true"
+			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off"
    				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>	
@@ -97,7 +97,7 @@ Sales Update
 						<f:selectItems value="#{propertyUnitUpdate.listSolicitors}" />
 						<p:ajax event="change" update="spaAddressName,spaAddAddressButton,spaAddressLine1,spaAddressLine2,spaAddressLine3,spaAddressLine4,spaPostcode,spaCity,spaState" listener="#{propertyUnitUpdate.updateSPAAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
-				<p:commandButton id="spaAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('SPA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.spaSolicitorId)}" icon="ui-icon-plus" />
+				<p:commandButton id="spaAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('SPA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.spaSolicitorId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>
@@ -150,7 +150,7 @@ Sales Update
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState" listener="#{propertyUnitUpdate.updateLOAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
-				<p:commandButton id="loAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
+				<p:commandButton id="loAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>
@@ -204,7 +204,7 @@ Sales Update
 						<p:ajax event="change" update="laAddressName,laAddAddressButton,laAddressLine1,laAddressLine2,laAddressLine3,laAddressLine4,laPostcode,laCity,laState" listener="#{propertyUnitUpdate.updateLAAddress}"/>
 				</p:selectOneMenu>
    				&nbsp;&nbsp;
-				<p:commandButton id="laAddAddressButton" value="Add" action="#{propertyUnitUpdate.toBusinessPartner('LA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.laSolicitorId)}" icon="ui-icon-plus" />
+				<p:commandButton id="laAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('LA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.laSolicitorId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>
@@ -240,6 +240,24 @@ Sales Update
    			<h:inputText id="laState" value="#{propertyUnitUpdate.getCodeDesc('ST', propertyUnitUpdate.laSoliAddress.state)}" style="width:200px;display:#{propertyUnitUpdate.verifyEmptyString(propertyUnitUpdate.laSoliAddress.state)}" disabled="true" />
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
+   			
+   			<p:outputLabel value="Borrower 1 Name"/>
+   			<h:panelGroup>
+				<h:inputText value="#{propertyUnitUpdate.borrower1.fullName}"  style="width:200px" disabled="true" />
+				&nbsp;&nbsp;
+    			<p:commandButton id="borrower1Button" value="Add" title="Add Borrower" actionListener="#{propertyUnitUpdate.setCustomerType('1')}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" binding="#{propertyUnitUpdate.borrower1Button}" />
+			</h:panelGroup>
+   			<p:outputLabel value="Borrower 2 Name"/>
+   			<h:panelGroup>
+				<h:inputText value="#{propertyUnitUpdate.borrower2.fullName}" style="width:200px" disabled="true" />
+				&nbsp;&nbsp;
+    			<p:commandButton id="borrower2Button" value="Add" title="Add Borrower" actionListener="#{propertyUnitUpdate.setCustomerType('2')}" oncomplete="dlgSearchCust.show()" icon="ui-icon-plus" binding="#{propertyUnitUpdate.borrower2Button}" />
+			</h:panelGroup>
+			
+			<p:outputLabel value="Borrower 1 ID No"/>
+			<h:inputText value="#{propertyUnitUpdate.borrower1.identityNo}"  style="width:200px" disabled="true" />
+			<p:outputLabel value="Borrower 2 ID No"/>
+			<h:inputText value="#{propertyUnitUpdate.borrower2.identityNo}" style="width:200px" disabled="true" />
    			
    		</h:panelGrid>
    		

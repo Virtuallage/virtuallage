@@ -131,10 +131,10 @@ Sales Cancellation Approval
             			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
             		</h:outputText>
         		</p:column>  
-        		<p:column headerText="Adj Percentage" style="width:35%;">  
+        		<p:column headerText="Adj Percentage" style="width:35%;text-align:right;">  
             		<h:outputText value="#{c.adjPercent}" />
         		</p:column>
-        		<p:column headerText="Adj Amount">
+        		<p:column headerText="Adj Amount" style="text-align:right;">
         			<h:outputText value="#{c.adjAmount}">
         				<f:convertNumber type="currency" currencySymbol="" />
         			</h:outputText>

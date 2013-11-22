@@ -449,6 +449,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			
 			adjLog.setDiscountAmountAft(new BigDecimal(discountAmountAft));
 			adjLog.setNetAdjAft(new BigDecimal(netAdjAft));
+			adjLog.setDiscountRateAft(new BigDecimal(discountRate));
 		}
 		
 		return "salesCancellationApproval";
@@ -538,30 +539,31 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			dialogConfirmationName = "dlgConfirmationAdjHeader.show()";
 			
 			AdjHeaderService adjHeaderService = (AdjHeaderService) SpringBeanUtil.lookup(AdjHeaderService.class.getName());
-			adjHeaders = adjHeaderService.findByProjectId(projectId);
+			List<AdjHeader> adjHeaderList = adjHeaderService.findByProjectId(projectId);
 			
 			double purchasePriceBef = inventory.getPurchasePrice()!=null ? inventory.getPurchasePrice().doubleValue() : 0.0d;
 			double discountAmountBef = inventory.getDiscountAmount() != null ? inventory.getDiscountAmount().doubleValue() : 0.0d;
 			double netAdjBef = purchasePriceBef - discountAmountBef;
 
-			int index = 0;
 			double adjPurchasePrice = purchasePriceBef;
 			double totalAdjPrice = 0;
-			for(AdjHeader header: adjHeaders) {
-				if(header.getAdjAmount() != null) {
-					adjPurchasePrice += header.getAdjAmount().doubleValue();
-					totalAdjPrice += header.getAdjAmount().doubleValue();
-				} else {
-					if(header.getAdjPercent() != null) {
-						double newAdjAmount = adjPurchasePrice * header.getAdjPercent().doubleValue() / 100;
-						header.setAdjAmount(new BigDecimal(newAdjAmount)) ;
-						
-						adjPurchasePrice += newAdjAmount;
-						totalAdjPrice += newAdjAmount;
-						adjHeaders.set(index, header);
+			for(AdjHeader header: adjHeaderList) {
+				if(header.getDateApproved() != null && account.getDatePurchased() != null 
+						&& header.getDateApproved().compareTo(account.getDatePurchased()) >= 0) {
+					if(header.getAdjAmount() != null) {
+						adjPurchasePrice += header.getAdjAmount().doubleValue();
+						totalAdjPrice += header.getAdjAmount().doubleValue();
+					} else {
+						if(header.getAdjPercent() != null) {
+							double newAdjAmount = adjPurchasePrice * header.getAdjPercent().doubleValue() / 100;
+							header.setAdjAmount(new BigDecimal(newAdjAmount)) ;
+							
+							adjPurchasePrice += newAdjAmount;
+							totalAdjPrice += newAdjAmount;
+						}
 					}
+					adjHeaders.add(header);
 				}
-				index++;
 			}
 			
 			totalAdjustedAmount = new BigDecimal(totalAdjPrice);
@@ -618,37 +620,48 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			
 			TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
 			TransactionHistory transactionHistory = new TransactionHistory();
-			TransactionCode codeCancelFeeRefund = new TransactionCode();
-			codeCancelFeeRefund.setTransactionCode(TransactionCodeConst.CANCEL_FEE_REV);
-			transactionHistory.setTransactionCode(codeCancelFeeRefund);
-			transactionHistory.setTransactionDate(currentDate);
-			transactionHistory.setTransactionDescription("Cancellation Refund");
-			transactionHistory.setStatus(TransactionStatusConst.PENDING);
-			transactionHistory.setAmount(salesCancellationHistory.getCancelNetRefundAmt());
-			transactionHistory.setAccount(account);
-			transactionHistoryService.insert(transactionHistory);
 			
-			transactionHistory = new TransactionHistory();
-			TransactionCode codeCancelAdminFee = new TransactionCode();
-			codeCancelAdminFee.setTransactionCode(TransactionCodeConst.CANCEL_ADMIN_FEE);
-			transactionHistory.setTransactionCode(codeCancelAdminFee);
-			transactionHistory.setTransactionDate(currentDate);
-			transactionHistory.setTransactionDescription("Cancellation Admin Fee");
-			transactionHistory.setStatus(TransactionStatusConst.PENDING);
-			transactionHistory.setAmount(salesCancellationHistory.getCancelFee());
-			transactionHistory.setAccount(account);
-			transactionHistoryService.insert(transactionHistory);
+			double netRefundAmt = salesCancellationHistory.getCancelNetRefundAmt()!=null ? salesCancellationHistory.getCancelNetRefundAmt().doubleValue() : 0.0d;
+			if(netRefundAmt > 0) {
+				transactionHistory = new TransactionHistory();
+				TransactionCode codeCancelFeeRefund = new TransactionCode();
+				codeCancelFeeRefund.setTransactionCode(TransactionCodeConst.CANCEL_FEE_REV);
+				transactionHistory.setTransactionCode(codeCancelFeeRefund);
+				transactionHistory.setTransactionDate(currentDate);
+				transactionHistory.setTransactionDescription("Cancellation Refund");
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setAmount(salesCancellationHistory.getCancelNetRefundAmt());
+				transactionHistory.setAccount(account);
+				transactionHistoryService.insert(transactionHistory);
+			}
 			
-			transactionHistory = new TransactionHistory();
-			TransactionCode codeCancelTax = new TransactionCode();
-			codeCancelTax.setTransactionCode(TransactionCodeConst.CANCEL_TAX);
-			transactionHistory.setTransactionCode(codeCancelTax);
-			transactionHistory.setTransactionDate(currentDate);
-			transactionHistory.setTransactionDescription("Cancellation Tax");
-			transactionHistory.setStatus(TransactionStatusConst.PENDING);
-			transactionHistory.setAmount(salesCancellationHistory.getCancelTax());
-			transactionHistory.setAccount(account);
-			transactionHistoryService.insert(transactionHistory);
+			double cancelFee = salesCancellationHistory.getCancelFee()!=null ? salesCancellationHistory.getCancelFee().doubleValue() : 0.0d;
+			if(cancelFee > 0) {
+				transactionHistory = new TransactionHistory();
+				TransactionCode codeCancelAdminFee = new TransactionCode();
+				codeCancelAdminFee.setTransactionCode(TransactionCodeConst.CANCEL_ADMIN_FEE);
+				transactionHistory.setTransactionCode(codeCancelAdminFee);
+				transactionHistory.setTransactionDate(currentDate);
+				transactionHistory.setTransactionDescription("Cancellation Admin Fee");
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setAmount(salesCancellationHistory.getCancelFee());
+				transactionHistory.setAccount(account);
+				transactionHistoryService.insert(transactionHistory);
+			}
+			
+			double cancelTax = salesCancellationHistory.getCancelTax()!=null ? salesCancellationHistory.getCancelTax().doubleValue() : 0.0d;
+			if(cancelTax > 0) {
+				transactionHistory = new TransactionHistory();
+				TransactionCode codeCancelTax = new TransactionCode();
+				codeCancelTax.setTransactionCode(TransactionCodeConst.CANCEL_TAX);
+				transactionHistory.setTransactionCode(codeCancelTax);
+				transactionHistory.setTransactionDate(currentDate);
+				transactionHistory.setTransactionDescription("Cancellation Tax");
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setAmount(salesCancellationHistory.getCancelTax());
+				transactionHistory.setAccount(account);
+				transactionHistoryService.insert(transactionHistory);
+			}
 			
 			AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 			account.setAccountStatus(AccountStatusConst.STATUS_CANCELLED);
@@ -670,8 +683,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			}
 			inventoryService.update(inventory);
 			
-			ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
-			projectService.update(project);
+			//ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+			//projectService.update(project);
 			
 			SalesCancellationService salesCancellationService = (SalesCancellationService) SpringBeanUtil.lookup(SalesCancellationService.class.getName());
 			salesCancellationHistory.setStatus(CancelStatusConst.APPROVE_CANCEL);
