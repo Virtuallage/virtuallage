@@ -43,6 +43,8 @@ public class JasperConst {
 	
 	public static final String PROGRESS_BILLING_LETTER_REPORT = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetter.jasper";
 	
+	public static final String RENOTICE_LETTER_REPORT = TOMCAT_HOME + "/vipro/report/RenoticeLetter.jasper";
+	
 	public static final String ACCOUNTS_FOLDER = TOMCAT_HOME + "/vipro/accounts";
 
 
