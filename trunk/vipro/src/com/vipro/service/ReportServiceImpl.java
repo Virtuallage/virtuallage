@@ -303,6 +303,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("projectId", reportDTO.getProjectId());
 		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
+		params.put("ttlAmount", reportDTO.getInstitutionName());
 		String reportPath = JasperConst.PROGRESS_BILLING_LETTER_REPORT;
 		
 		String extension = "";
@@ -314,6 +315,32 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
 			File file = new File(path+"PROGRESSIVE_BILLING_LETTER_"+InvoiceNo.trim()+extension);
+			FileOutputStream fileOuputStream = new FileOutputStream(file);
+			fileOuputStream.write(reportData);
+		    fileOuputStream.close();
+		//    downloadDocument(reportData, "PROGRESSIVE_BILLING_LETTER"+extension);
+			
+		}
+		
+	}  
+	
+	@Override
+	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("projectId", reportDTO.getProjectId());
+		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
+		params.put("ttlAmount", reportDTO.getInstitutionName());
+		String reportPath = JasperConst.RENOTICE_LETTER_REPORT;
+		
+		String extension = "";
+		if(reportDTO.getReportFormatId() == 1L){
+			extension = ".xlsx";
+		}else if(reportDTO.getReportFormatId() == 2L){
+			extension = ".pdf";
+		}
+		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
+		if(reportData != null){
+			File file = new File(path+"RENOTICE_BILLING_LETTER_"+InvoiceNo.trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();

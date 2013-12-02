@@ -23,4 +23,12 @@ public interface TransactionCodeConst {
 	
 	public final static String ADD_PROGRESSIVE_BILLING = "500001";
 	
+	public final static String RENOTICE_BILLING = "500002";
+	
+	public final static String REVERSAL_PROGRESSIVE_BILLING = "510001";
+	
+	public final static String PAYMENT_FROM_PURCHASER = "100002";
+	
+	public final static String REVERSAL_PAYMENT_FROM_PURCHASER = "110002";
+	
 }

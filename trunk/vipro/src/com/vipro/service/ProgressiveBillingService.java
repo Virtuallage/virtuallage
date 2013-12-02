@@ -25,7 +25,11 @@ public interface ProgressiveBillingService {
 			Long projectId, String billingModelCode, Long accountId); 
 	
 	public Long getLatestPBSeqNo();
+	public Long getLatestRBSeqNo();
 	
-	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
-	public void printProgressiveLetter(Long projectId , String invoiceNo,String accountId);
+	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
+	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
+	
+	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId);
+	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo,String accountId);
 }

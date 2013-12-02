@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_subreport_brorrower" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="account_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[9]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.account_id, ifNull(c1.full_name,'') c1, IFNULL(c2.full_name,'') c2
+FROM account a LEFT JOIN customer c1 ON a.borrower_id1 = c1.customer_id
+LEFT JOIN customer c2 ON a.borrower_id2 = c2.customer_id
+WHERE a.account_id =$P{account_id}]]>
+	</queryString>
+	<field name="account_id" class="java.lang.Long"/>
+	<field name="c1" class="java.lang.String"/>
+	<field name="c2" class="java.lang.String"/>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="358" height="12"/>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1}+( $F{c2}.equals("") ? " " : $F{c1}.equals("")? $F{c2}: " & "+$F{c2} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

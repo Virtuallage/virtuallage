@@ -147,12 +147,22 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 
 	@Override
-	public void printProgressiveLetter(Long projectId , String invoiceNo, String accountId){
+	public Long getLatestRBSeqNo() {
+		Long no = new Long(0l);
+		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE);
+		no = seq.getNextSeq() + 1 ;
+		//seq.setNextSeq(no);
+		seqNoDao.updateSeqNo(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, no);
+		return no;
+	}
+	@Override
+	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo, String accountId){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
 		reportDTO.setReportFormatId(new Long(2l));
 		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
 		try {
 			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
 			
@@ -170,17 +180,167 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			ex.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId){
+		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setProjectId(projectId);
+		reportDTO.setReportFormatId(new Long(2l));
+		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
+		try {
+			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
+			
+			 File baseFolder = new File(path);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
+			
+			rs.generateRenoticeLetterReport(reportDTO,invoiceNo,path);
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	@Override
+	@Transactional
+	public boolean generateRenoticesForSelectedStages(
+			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto) {
+		boolean isSucessfull = false;
+		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
+			Account act = selectedDto.getAccount();		
+			
+			//1. Progressive Billing Reversal
+			List<TransactionHistory> thList = transactionHistoryDao.findTransactionHistoryByAccountIdAndTcode(act.getAccountId(),TransactionCodeConst.ADD_PROGRESSIVE_BILLING);
+			if(!thList.isEmpty()){
+				BigDecimal txAmountSum = new BigDecimal(0);
+				for (TransactionHistory transactionHistory : thList) {
+					TransactionHistory tx = new TransactionHistory();
+					tx.setTransactionCode(new TransactionCode(
+							TransactionCodeConst.REVERSAL_PROGRESSIVE_BILLING));
+					tx.setTransactionDescription("Progressive Billing Reversal");
+					tx.setAmount(transactionHistory.getAmount());
+					tx.setTxnReversalId(transactionHistory.getTransactionId());
+					tx.setStatus(TransactionStatusConst.TRANSACTION_POSTED);
+					tx.setPostingDate(new Date());
+					tx.setInvoiceNo(transactionHistory.getInvoiceNo());
+					tx.setRefNo(transactionHistory.getRefNo());
+					tx.setAccount(act);
+					tx.setTransactionDate(new Date());
+					
+					txAmountSum = txAmountSum.add(tx.getAmount());
+					transactionHistoryDao.insert(tx);
+				}			
+				if (!txAmountSum.equals(new BigDecimal(0))) {
+					act.setAccountBalance(act.getAccountBalanceNotNull().subtract(txAmountSum));
+					//accountDao.update(act);
+				}
+			}
+			
+			//2. Payment Reversal
+			List<TransactionHistory> paymentThList = transactionHistoryDao.findTransactionHistoryByAccountIdAndTcode(act.getAccountId(),TransactionCodeConst.PAYMENT_FROM_PURCHASER);
+			if(!paymentThList.isEmpty()){
+			
+				BigDecimal paymentAmountSum = new BigDecimal(0);
+				for (TransactionHistory transactionHistory : paymentThList) {
+					TransactionHistory tx = new TransactionHistory();
+					tx.setTransactionCode(new TransactionCode(
+							TransactionCodeConst.REVERSAL_PAYMENT_FROM_PURCHASER));
+					tx.setTransactionDescription("Payment Reversal");
+					tx.setAmount(transactionHistory.getAmount());
+					tx.setTxnReversalId(transactionHistory.getTransactionId());
+					tx.setStatus(TransactionStatusConst.TRANSACTION_POSTED);
+					tx.setPostingDate(new Date());
+					tx.setInvoiceNo(transactionHistory.getInvoiceNo());
+					tx.setRefNo(transactionHistory.getRefNo());
+					tx.setAccount(act);
+					tx.setTransactionDate(new Date());
+					
+					paymentAmountSum = paymentAmountSum.add(tx.getAmount());
+					transactionHistoryDao.insert(tx);
+				}	
+				if (!paymentAmountSum.equals(new BigDecimal(0))) {
+					act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().subtract(paymentAmountSum));
+					//accountDao.update(act);
+				}
+			}
+			
+			
+			//3. Create new TransactionHistory Renotice record
+			String refNo = "";
+			Account a = new Account();
+			a.setAccountId(act.getAccountId());
+			if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
+				refNo = getRefNo(selectedDto.getProject().getDeveloperId());
+				refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
+
+				BillingModelStageDTO sumDTO = stageDtoList.remove(stageDtoList.size() -1 );
+				
+				TransactionHistory tx = new TransactionHistory();
+				tx.setTransactionCode(new TransactionCode(TransactionCodeConst.RENOTICE_BILLING));
+				tx.setTransactionDescription("Renotice Billing ");
+				tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled());
+				tx.setInvoiceNo(invoiceNo);
+				tx.setStatus(TransactionStatusConst.PENDING);
+				tx.setRefNo(refNo);
+				tx.setAccount(a);
+				tx.setTransactionDate(new Date());				
+				transactionHistoryDao.insert(tx);
+			
+			}
+			
+			//4.a Update Existing ProgressiveBilling records
+			progressiveBillingDao.updateProgressiveBillingStatus(act.getAccountId(), ProgressiveBillingConst.PB_STATUS_CANCEL, new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PAID});
+			
+			//4.b Create a new progressive billing record for every selected stages
+			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
+			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), userProfile);
+			for (BillingModelStageDTO stageDto : stageDtoList) {
+				ProgressiveBilling pb = new ProgressiveBilling();
+				pb.setAccount(a);
+				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));
+				pb.setDateBilled(new Date());
+				pb.setInvoiceNo(invoiceNo);
+				pb.setPercentage(stageDto.getBillingModel().getBillingPercentage());
+				pb.setStageNo(stageDto.getBillingModel().getStage());
+				pb.setStageDescription(stageDto.getBillingModel().getDescription());
+				pb.setSeqNo(new Byte(stageDto.getBillingModel().getBillingSeq().toString()));
+				pb.setStatus(ProgressiveBillingConst.STATUS_ACTIVE);
+				pb.setDueDate(dueDate); 
+				
+				progressiveBillingDao.insert(pb);
+			}// end for
+			
+			//5 Update Account table using the total amount 
+			BillingModelStageDTO sumDTO = stageDtoList.remove(stageDtoList.size() -1 );			
+			act.setAccountBalance(act.getAccountBalanceNotNull().add(sumDTO.getProgressiveBilling().getAmountBilled()));
+			act.setDateChanged(new Date());
+			act.setChangedBy(userProfile.getUserId());
+			accountDao.update(act);
+			isSucessfull = true;
+		}
+		
+		return isSucessfull;
+	}
+	
+	
+	
 	@Override
 	@Transactional
 	public boolean generateProgressiveBillForSelectedStages(
-			List<BillingModelStageDTO> stageDtoList, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto) {
+			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto) {
 		boolean isSucessfull = false;
 		
 		String refNo = "";
 
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			refNo = getRefNo(selectedDto.getProject().getDeveloperId());
-			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
+			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
 			Account act = selectedDto.getAccount();
 			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
 			

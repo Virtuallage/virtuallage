@@ -10,5 +10,7 @@ public interface TransactionHistoryDao extends Dao<TransactionHistory>{
 	
 	public List<TransactionHistory> findByAccountId(Long accountId);
 	
+	public List<TransactionHistory> findTransactionHistoryByAccountIdAndTcode(Long accountId, String transcationCode);
+	
 	public TransactionHistory findById(Long id);
 }

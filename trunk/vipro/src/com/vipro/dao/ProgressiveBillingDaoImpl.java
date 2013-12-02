@@ -30,6 +30,21 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		return pb;
 	}
 	
+	
+	@Override
+	public boolean updateProgressiveBillingStatus(Long accountId, String to, String[] from){
+		
+		String fStatus ="";
+		for (int i = 0; i < from.length; i++) {
+			fStatus = from[i]+",";
+		}
+		 fStatus = fStatus.substring(0, fStatus.length()-1);
+		 String hqlUpdate = "update ProgressiveBilling c set c.status = ? where c.account.accountId = ? and c.status in (?)";
+		 getHibernateTemplate().bulkUpdate(hqlUpdate,to,accountId,fStatus);
+		return true;
+	}
+	
+	
 	@Override
 	public ProgressiveBilling findById(Long id) {
 		return getHibernateTemplate().get(ProgressiveBilling.class, id);

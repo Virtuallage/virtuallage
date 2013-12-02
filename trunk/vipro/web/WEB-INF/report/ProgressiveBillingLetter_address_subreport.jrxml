@@ -37,21 +37,22 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="76" splitType="Stretch">
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="555" height="17"/>
+		<band height="37" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="555" height="14"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()    ]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="21" width="555" height="47" isRemoveLineWhenBlank="true"/>
+				<reportElement x="0" y="17" width="555" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Top">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_address_line_1}+" "+$F{address_address_line_2}+" "+$F{address_address_line_3}+" "+$F{address_address_line_4}+"\n"+$F{address_postcode}+" "+$F{address_city}+" "+$F{state_description}]]></textFieldExpression>
 			</textField>
 		</band>
+		<band height="4"/>
 	</detail>
 </jasperReport>

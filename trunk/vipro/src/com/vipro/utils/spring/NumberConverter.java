@@ -4,6 +4,28 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class NumberConverter {
+	public static String convertDigitTextOnly(BigDecimal number) {
+		DecimalFormat format = new DecimalFormat();
+		format.setMaximumFractionDigits(2);
+		format.setMinimumFractionDigits(2);
+		format.setGroupingUsed(false);
+		String result = format.format(number).toString();
+		System.out.println(result);
+		String[] fractions = result.split("\\.");
+		
+		String digitText = new String();
+		String decimalText = new String();
+		
+		digitText = convertUnit(Integer.parseInt(fractions[0]));
+		if(fractions.length == 2) {
+			System.out.println(fractions[1]);
+			decimalText = convertUnit(Integer.parseInt(fractions[1]));
+		}
+		
+		return digitText + decimalText + " Only.";
+	}
+
+
 	public static String convert(BigDecimal number) {
 		DecimalFormat format = new DecimalFormat();
 		format.setMaximumFractionDigits(2);

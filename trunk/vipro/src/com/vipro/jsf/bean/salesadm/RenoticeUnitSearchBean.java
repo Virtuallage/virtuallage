@@ -42,9 +42,9 @@ import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.NumberConverter;
 import com.vipro.utils.spring.SpringBeanUtil;
 
-@ManagedBean(name = "progressiveBillingUnitSearchBean")
+@ManagedBean(name = "renoticeUnitSearchBean")
 @ViewScoped
-public class ProgressiveBillingUnitSearchBean extends CommonBean implements Serializable{
+public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 
 	/**
 	 * 
@@ -69,7 +69,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	private StreamedContent fileToDownload;
 	
 	
-	public ProgressiveBillingUnitSearchBean() {
+	public RenoticeUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
 		String selectedProjectIdStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedProjectId");
 		if(selectedProjectIdStr != null && !selectedProjectIdStr.isEmpty()){
@@ -306,7 +306,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		if(newValue){
 			if(index > 0){
 				BillingModelStageDTO prevDto =  getSelectedDto().getStageDtoList().get(index-1);
-				if(!prevDto.isBillMe() && !(ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())||ProgressiveBillingConst.STAGE_PAID.equals(prevDto.getStatus()))){
+				if(!prevDto.isBillMe() && !ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())){
 					CommonBean.addErrorMessage("Cannot Skip Stages", "All Previous Stages must be selected before this!");
 					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
 					 chckbox.setValue(false);;
@@ -329,9 +329,10 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		}
 	}
 	
-	/************** Billing Actions *********************/
-	public void onBillAction() {
-		 boolean isTrue = false;		
+	/************** Renotice Actions *********************/
+	public void onRenoticeAction() {
+		 boolean isTrue = false, isRightSelection = false;	
+		 
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
 		 BillingModelStageDTO sumDTO = new BillingModelStageDTO();
@@ -340,9 +341,16 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
 			 if(dto.isBillMe()){
 				 isTrue = true;
-				 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
-				 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
-				 selectedStageDtoList.add(dto);				 
+				 if(ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus())){
+					 isRightSelection = true;
+					 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
+					 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
+					 // System.out.println("==============is True for :"+dto.getBillingModel().getStage());
+					 selectedStageDtoList.add(dto);				 
+				 }else{
+					 isRightSelection = false;
+					 break;
+				 }
 			 }
 			 
 		}
@@ -355,16 +363,18 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
-			this.setInvoiceNo(pbService.getLatestPBSeqNo());
+			this.setInvoiceNo(pbService.getLatestRBSeqNo());
 			
 		}
 		
-		
 		if(!isTrue){
-		 CommonBean.addInfoMessage("Invalid Selection"," Please select any stage to Bill.");
+			 CommonBean.addInfoMessage("Invalid Renotice Selection","Please select all paid and  billed for renotice billing.");
+		}else if(!isRightSelection){
+			CommonBean.addInfoMessage("Invalid Renotice Selection","Please select all paid & billed for renotice billing");
 		}else{
 			RequestContext.getCurrentInstance().execute("dlg3.show()");
 		}
+		
 	}
 	
 	public void onCancelBillConfirmation(){
@@ -372,7 +382,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		 boolean success = true;
 		 getSelectedStageDtoList().clear();
 		 setInvoiceNo(new Long(1l));
-		 CommonBean.addInfoMessage("Billing Stages Window Closed.","");
+		 CommonBean.addInfoMessage("Renotice Stages Window Closed.","");
 		 context.addCallbackParam("success2", success);
 	}
 	
@@ -381,18 +391,18 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		 boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 		
-		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
+		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
 		
 		
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
-			pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+			pbService.printRenoticeLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
 		}
 		//Update StageDTOList from DB.
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
 				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
 
-		CommonBean.addInfoMessage("Progressive Billing Processed Successfully.","The Progressive Billing letter is ready for printing.");
+		CommonBean.addInfoMessage("Renotice Processed Successfully.","The Renotice letter is ready for printing.");
 		
 		getSelectedStageDtoList().clear();
 		setInvoiceNo(new Long(01));
@@ -513,7 +523,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	}
 
 	public String getInvoiceNoFormated() {
-		return String.format("PB%06d%n", this.invoiceNo);
+		return String.format("RB%06d%n", this.invoiceNo);
 	}
 	
 	public void setInvoiceNo(Long invoiceNo) {

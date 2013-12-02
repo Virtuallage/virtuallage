@@ -428,6 +428,12 @@ public class Account implements java.io.Serializable {
 	public BigDecimal getTotalPaymentTodate() {
 		return this.totalPaymentTodate;
 	}
+	
+	public BigDecimal getTotalPaymentTodateNotNull() {
+		if(totalPaymentTodate == null)
+			return new BigDecimal(0l);
+		return totalPaymentTodate;
+	}
 
 	public void setTotalPaymentTodate(BigDecimal totalPaymentTodate) {
 		this.totalPaymentTodate = totalPaymentTodate;
