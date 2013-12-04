@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.customerservice;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
 import org.springframework.util.StringUtils;
 
+import com.vipro.auth.AuthUser;
+import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.JasperConst;
 import com.vipro.data.Account;
@@ -20,6 +23,7 @@ import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Discount;
 import com.vipro.data.SalesCommission;
+import com.vipro.data.UserProfile;
 import com.vipro.datamodel.CustomerDataModel;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AddressService;
@@ -50,7 +54,8 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private List<Customer> customers;
 	private CustomerDataModel customerDataModel;
 	private Account account;
-
+	private UserProfile attendedBy;
+	
 	private TabView salesRegTabView;
 	private Tab registrationTab;
 
@@ -64,6 +69,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private Customer customer;
 	private long editAddressId;
 	private Customer delCustomer;
+	private Long currentUserId = null;
 
 	/**
 	 * add customer
@@ -85,6 +91,12 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		listRace = CodeUtil.getCodes("RC");
 		listState = CodeUtil.getCodes("ST");
 		listSpecial = CodeUtil.getCodes("SH");
+		
+		AuthUser user = getCurrentUser();
+		if (user != null) {
+			attendedBy = user.getUserProfile();
+			setCurrentUserId(attendedBy.getUserId());
+		}
 	}
 
 	public List<SelectItem> getListState() {
@@ -167,6 +179,14 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		this.listLanguage = listLanguage;
 	}
 
+	public UserProfile getAttendedBy() {
+		return attendedBy;
+	}
+
+	public void setAttendedBy(UserProfile attendedBy) {
+		this.attendedBy = attendedBy;
+	}
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -339,6 +359,9 @@ public class CustomerRegister extends CommonBean implements Serializable {
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			individual.setCustomerCategory(CustomerTypeConst.INDIVIDUAL);
+			individual.setCustomerStatus(CommonConst.STATUS_NEW);		
+			individual.setDateCreated(new Date());
+			individual.setCreatedBy(getCurrentUserId());
 			customerService.insert(individual);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -378,6 +401,9 @@ public class CustomerRegister extends CommonBean implements Serializable {
 					.lookup(CustomerService.class.getName());
 			company.setCustomerCategory(CustomerTypeConst.COMPANY);
 			company.setIdentityType(CustomerTypeConst.BUSINESSREGISTRATION);
+			company.setCustomerStatus(CommonConst.STATUS_NEW);		
+			company.setDateCreated(new Date());
+			company.setCreatedBy(getCurrentUserId());
 			customerService.insert(company);
 
 			AddressService addressService = (AddressService) SpringBeanUtil
@@ -526,5 +552,13 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public void setListSpecial(List<SelectItem> listSpecial) {
 		this.listSpecial = listSpecial;
+	}
+
+	public Long getCurrentUserId() {
+		return currentUserId;
+	}
+
+	public void setCurrentUserId(Long currentUserId) {
+		this.currentUserId = currentUserId;
 	}
 }

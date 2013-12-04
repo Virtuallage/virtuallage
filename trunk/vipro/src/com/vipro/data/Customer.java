@@ -34,8 +34,9 @@ public class Customer implements java.io.Serializable {
 	private String communicationType;
 	private String language;
 	private Date dateOfBirth;
-	private String createdBy;
+	private Long createdBy;
 	private Date dateCreated;
+	private String customerStatus;
 	private Set addresses = new HashSet(0);
 	private Set accounts = new HashSet(0);
 	private Set joinAccounts = new HashSet(0);
@@ -62,7 +63,7 @@ public class Customer implements java.io.Serializable {
 			String bumiIndicator, String sex, String maritalStatus,
 			String employerName, String houseTelNo, String officeTelNo,
 			String faxNo, String communicationType, String language,
-			Date dateOfBirth, String createdBy, Date dateCreated,
+			Date dateOfBirth, Long createdBy, Date dateCreated,
 			Set addresses, Set accounts, Set joinAccounts, Set contacts,
 			Set vouchers) {
 		this.institution = institution;
@@ -270,11 +271,11 @@ public class Customer implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getCreatedBy() {
+	public Long getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -401,6 +402,14 @@ public class Customer implements java.io.Serializable {
 				+ (remarks != null ? "remarks=" + remarks + ", " : "")
 				+ (citizenship != null ? "citizenship=" + citizenship : "")
 				+ "]";
+	}
+
+	public String getCustomerStatus() {
+		return customerStatus;
+	}
+
+	public void setCustomerStatus(String customerStatus) {
+		this.customerStatus = customerStatus;
 	}
 	
 	

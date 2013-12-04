@@ -148,3 +148,9 @@ INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status
 -- 121113 by Bill
 alter table vipro.account add borrower_id1 BIGINT after customer_id5;
 alter table vipro.account add borrower_id2 BIGINT after borrower_id1;
+
+-- 031213 by Bill
+UPDATE vipro.customer SET created_by = NULL WHERE customer_id <= 300;
+ALTER TABLE vipro.customer CHANGE COLUMN created_by created_by BIGINT(20) NULL;
+
+

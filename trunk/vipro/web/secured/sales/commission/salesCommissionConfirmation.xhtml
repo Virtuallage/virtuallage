@@ -47,11 +47,11 @@ Sales Commission
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
-	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaSignedDate}">
+	    	<h:outputText value="#{c.spaSignedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText><br />
-	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.laSignedDate}" style="color:#{salesCommission.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>

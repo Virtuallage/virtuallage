@@ -414,7 +414,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 						{
 							salesCommissionAccounts.add(account);
 						}*/
-						if(records.size() > 1) {
+						if(records.size() >= 1) {
 							secondBillingDatePaid = records.get(1).getDatePaid();
 							if(secondBillingDatePaid != null)
 							{
@@ -424,15 +424,15 @@ public class SalesCommission extends CommonBean implements Serializable{
 					}
 				} else {
 					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null) {
-						Date secondBillingDatePaid = null;
-						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
-						if(records.size() > 0) {
+						/*Date secondBillingDatePaid = null;
+						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());*/
+						salesCommissionAccounts.add(account);
+						/*if(records.size() >= 0) {
 							secondBillingDatePaid = records.get(0).getDatePaid();
 							if(secondBillingDatePaid != null)
 							{
 								salesCommissionAccounts.add(account);
-							}
-						}
+						}*/
 					}
 				}
 			}

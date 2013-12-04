@@ -68,8 +68,8 @@
         <property name="dateOfBirth" type="date">
             <column name="date_of_birth" length="10" />
         </property>
-        <property name="createdBy" type="string">
-            <column name="created_by" length="20" />
+        <property name="createdBy" type="long">
+            <column name="created_by" />
         </property>
         <property name="dateCreated" type="date">
             <column name="date_created" length="10" />
@@ -88,6 +88,9 @@
         </property>
         <property name="citizenship" type="string">
             <column name="citizenship" length="5" />
+        </property>
+        <property name="customerStatus" type="string">
+            <column name="customer_status" length="5" />
         </property>
         
         <set name="addresses" table="address" inverse="true" lazy="false" fetch="select">
