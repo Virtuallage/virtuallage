@@ -10,7 +10,7 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 	
 <ui:define name="title">
-Sales Commission
+Sales Commission Approval
 </ui:define>
 
 <ui:define name="content">	
@@ -47,11 +47,11 @@ Sales Commission
 	    	</h:outputText>
 		</p:column>
 		
-		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaStampedDate}">
-	    	<h:outputText value="#{c.spaStampedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
+		<p:column headerText="SPA Date&lt;br/&gt;LA Date" sortBy="#{c.spaSignedDate}">
+	    	<h:outputText value="#{c.spaSignedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText><br />
-	    	<h:outputText value="#{c.laStampedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
+	    	<h:outputText value="#{c.laSignedDate}" style="color:#{salesCommissionApproval.GetFontColorByAttendedBy(c.attendedBy)}">
 	    		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	    	</h:outputText>
 		</p:column>
@@ -89,7 +89,7 @@ Sales Commission
 	<br />
 	
 	<p:commandButton value="Back" action="salesCommissionApproval" ajax="false" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
-    <p:commandButton value="Approve" action="#{salesCommissionApproval.confirm}" ajax="false" icon="ui-icon-circle-check" binding="#{salesCommissionApproval.approveButton}"/>
+    <p:commandButton value="Approve" action="#{salesCommissionApproval.confirm}" ajax="false" icon="ui-icon-circle-check"/>
     	
     <br/>
 
