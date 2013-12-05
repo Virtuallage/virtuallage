@@ -38,11 +38,12 @@ a.la_ref_no,
   cashCust.address_id cashCustAddress_id,
   cashCust.full_name customer_name,
   bp.address_id bp_address_id,
-  ifNULL(bp.company_name,'') companyName
+   IFNULL(bp.company_name,'') companyName,
+  IFNULL(bp2.company_name,'') companyName2
  FROM transaction_history t,
-  account a LEFT JOIN business_partner bp ON a.financier_id = bp.partner_id,
+  account a LEFT JOIN business_partner bp ON a.financier_id = bp.partner_id ,
   progressive_billing pb,
-  project p ,
+  project p LEFT JOIN business_partner bp2 ON p.developer_id = bp2.partner_id,
   project_inventory pin,
   institution i,
   customer cashCust,
@@ -85,6 +86,7 @@ AND t.invoice_no Like $P{invoiceNo}
 	<field name="customer_name" class="java.lang.String"/>
 	<field name="bp_address_id" class="java.lang.Long"/>
 	<field name="companyName" class="java.lang.String"/>
+	<field name="companyName2" class="java.lang.String"/>
 	<title>
 		<band height="43" splitType="Stretch">
 			<staticText>
@@ -468,12 +470,12 @@ AND t.invoice_no Like $P{invoiceNo}
 				</textElement>
 				<text><![CDATA[This document is computer generated, no signature is required.]]></text>
 			</staticText>
-			<textField pattern="RM #,##0.00" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement x="0" y="14" width="486" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["For "+$F{companyName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["For "+$F{companyName2}    ]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="25">
