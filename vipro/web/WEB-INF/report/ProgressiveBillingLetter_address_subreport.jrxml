@@ -43,7 +43,7 @@ WHERE
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()    ]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()                       ]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="17" width="555" height="20" isRemoveLineWhenBlank="true"/>

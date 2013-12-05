@@ -13,6 +13,7 @@
     	<p:submenu label="My Desk" icon="ui-icon-lightbulb">
     		<p:menuitem value="My Work Queue" url="/secured/mydesk/listCase.xhtml" action="#{myDesk.listCases}" icon="ui-icon-script"/>
     	</p:submenu>
+    	
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">
 	    		<p:menuitem value="Common Code Maintenance" url="/secured/setup/commonCode/codeHeader.xhtml" />  
@@ -32,6 +33,7 @@
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
     	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_SALES_ADM">
     	<p:submenu label="Sales Admin" icon="ui-icon-star">
 	   		<p:menuitem value="Project Master File Update" url="/secured/salesadm/sa_update/saListProject.xhtml" />
@@ -42,11 +44,16 @@
     		<p:menuitem value="Renotice" url="/secured/salesadm/renoticeUnitSearch.xhtml" />
     		<p:menuitem value="Payment Entry" url="#" />
     	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
     	</p:submenu>
     	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_ACCT">
     	<p:submenu label="Account" icon="ui-icon-star">
     		<p:menuitem value="Transaction Entry" url="#" />
@@ -63,6 +70,7 @@
     		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	</sec:authorize> 	
+    	
     	<sec:authorize ifAnyGranted="ROLE_SALES_PIC">
     	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
@@ -72,6 +80,25 @@
   	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
     		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
     		<p:menuitem value="Sales Commission - Verification" url="/secured/sales/commission/salesCommissionVerification.xhtml" />
+     	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Purchaser Information - Company" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    	</p:submenu>
+    	</sec:authorize>
+    	
+    	   	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
+    	<p:submenu label="Sales" icon="ui-icon-star">
+    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
+			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
+    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
+  	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
+    		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
 	   		<p:menuitem value="Sales Commission - Approval" url="/secured/sales/commission/salesCommissionApproval.xhtml" />
      	</p:submenu>
     	<p:submenu label="Customer Service" icon="ui-icon-star">
@@ -83,6 +110,7 @@
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
     	</p:submenu>
     	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System" icon="ui-icon-gear">
     		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" icon="ui-icon-person"/>  

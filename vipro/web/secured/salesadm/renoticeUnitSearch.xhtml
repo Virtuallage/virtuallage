@@ -47,7 +47,7 @@
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
 									<p:inputText id="unitTxt"
-										value="#{renoticeUnitSearchBean.unit}" />
+										value="#{renoticeUnitSearchBean.unit}" style="text-transform:uppercase"/>
 								</p:column>
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
@@ -425,20 +425,20 @@
 									<h:panelGrid columns="4" cellpadding="4" width="100%"
 										rendered="#{addressDto.corrAddress }">
 										<p:outputLabel value="Billing Address 1" />
-										<p:inputText value="#{addressDto.address.addressLine1}" />
+										<p:inputText value="#{addressDto.address.addressLine1}" style="text-transform:uppercase"/>
 										<p:outputLabel value="Billing Address 2" />
-										<p:inputText value="#{addressDto.address.addressLine2}" />
+										<p:inputText value="#{addressDto.address.addressLine2}" style="text-transform:uppercase"/>
 
 										<p:outputLabel value="Billing Address 3" />
-										<p:inputText value="#{addressDto.address.addressLine3}" />
+										<p:inputText value="#{addressDto.address.addressLine3}" style="text-transform:uppercase"/>
 										<p:outputLabel value="Billing Address 4" />
-										<p:inputText value="#{addressDto.address.addressLine4}" />
+										<p:inputText value="#{addressDto.address.addressLine4}" style="text-transform:uppercase"/>
 
 										<p:outputLabel value="Post Code" />
 										<p:inputText value="#{addressDto.address.postcode}"
 											style="width:50%" />
 										<p:outputLabel value="City" />
-										<p:inputText value="#{addressDto.address.city}" />
+										<p:inputText value="#{addressDto.address.city}" style="text-transform:uppercase"/>
 
 										<p:outputLabel id="stateTxt2" value="State" />
 										<p:selectOneMenu id="stateTypeList2"
