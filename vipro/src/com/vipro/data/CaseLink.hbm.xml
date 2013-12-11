@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 7, 2013 12:56:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.CaseLink" table="case_link" catalog="vipro">
+        <id name="caseId" type="java.lang.Long">
+            <column name="case_id" />
+            <generator class="identity" />
+        </id>
+        <property name="caseType" type="string">
+            <column name="case_type" length="10" />
+        </property>
+        <property name="caseLink" type="string">
+            <column name="case_link" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

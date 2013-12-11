@@ -18,7 +18,7 @@
             <column name="creator_id" not-null="true" />
         </many-to-one>
         <many-to-one name="assignee" class="com.vipro.data.UserProfile" fetch="select">
-            <column name="assignee_id" not-null="true" />
+            <column name="assignee_id" />
         </many-to-one>
         <property name="creationDate" type="date">
             <column name="creation_date" length="10" />
@@ -29,14 +29,14 @@
         <property name="subject" type="string">
             <column name="subject" length="60" />
         </property>
-        <property name="name" type="string">
-            <column name="name" length="60" />
+        <property name="projectId" type="java.lang.Long">
+            <column name="project_id" length="20"/>
         </property>
-        <property name="mobileNo" type="string">
-            <column name="mobile_no" length="20" />
+        <property name="unitNo" type="string">
+            <column name="unit_id" length="12" />
         </property>
-        <property name="email" type="string">
-            <column name="email" length="50" />
+        <property name="groupId" type="string">
+            <column name="assignee_group_id" length="10" />
         </property>
         <property name="dueDate" type="date">
             <column name="due_date" length="10" />

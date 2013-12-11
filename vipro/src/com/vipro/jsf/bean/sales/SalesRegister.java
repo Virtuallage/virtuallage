@@ -43,6 +43,7 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.datamodel.CustomerDataModel;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AccountService;
 import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
@@ -1084,7 +1085,6 @@ public class SalesRegister extends CommonBean implements Serializable {
 	}
 
 	public String payBooking() {
-		
 		if (!account.getBookPymtMethod().equalsIgnoreCase(CommonConst.CASH)) {
 			if (account.getBookPymtCardChqNo().equalsIgnoreCase("") && account.getBookPymtBank().equalsIgnoreCase("")) {
 				addErrorMessage("Invalid Fields",
@@ -1165,6 +1165,10 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		addInfoMessage("Saved", "Booking Fee Transaction Created Successfully.");
 		salesRegTabView.setActiveIndex(1);
+
+		CaseAlert caseAlert = new CaseAlert();
+		caseAlert.insertCase("CYPAY", projectId, inventory.getUnitNo(),
+				attendedBy, selectedCustomer, "CSSMT", null, null);
 		
 		return "salesRegistration";
 	//	return selectInventory();

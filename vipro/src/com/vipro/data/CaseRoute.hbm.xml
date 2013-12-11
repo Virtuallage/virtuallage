@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 7, 2013 12:56:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.vipro.data.CaseRoute" table="case_route" catalog="vipro">
+		<id name="caseId" type="java.lang.Long">
+			<column name="case_id" />
+			<generator class="identity" />
+		</id>
+		<property name="caseType" type="string">
+			<column name="case_type" length="10" />
+		</property>
+		<property name="status" type="string">
+			<column name="case_status" length="10" />
+		</property>
+		<property name="projectId" type="java.lang.Long">
+			<column name="project_id" length="20" />
+		</property>
+		<property name="groupId" type="string">
+			<column name="group_id" length="10" />
+		</property>
+		<property name="userId" type="java.lang.Long">
+			<column name="user_id" length="20" />
+		</property>
+		<property name="dueDay" type="java.lang.Integer">
+			<column name="due_day" length="3" />
+		</property>
+		<property name="tGroupId" type="string">
+			<column name="target_group_id" length="10" />
+		</property>
+		<property name="tUserId" type="java.lang.Long">
+			<column name="target_user_id" length="20" />
+		</property>
+		<property name="nextAction" type="string">
+			<column name="next_action" length="10" />
+		</property>
+		<property name="changedBy" type="java.lang.Long">
+			<column name="changed_by" length="20" />
+		</property>
+		<property name="lastChanged" type="date">
+			<column name="last_changed" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

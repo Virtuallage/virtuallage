@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextImpl;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.dao.UserProfileDao;
+import com.vipro.data.CaseLink;
 import com.vipro.data.CodeDet;
+import com.vipro.service.CaseLinkService;
 import com.vipro.service.CodeService;
 import com.vipro.utils.spring.SpringBeanUtil;
 import com.vipro.constant.*;
@@ -38,6 +40,20 @@ public class CommonBean {
 		}
 		
 		return code;
+	}
+	
+	public String getCaseLink(String caseType) {
+		CaseLinkService caseLinkService = (CaseLinkService) SpringBeanUtil.lookup(CaseLinkService.class.getName());
+		List<CaseLink> list = caseLinkService.getCaseLinkList(caseType);
+		
+
+		for (CaseLink d : list) {
+			if (d.getCaseType().equals(caseType)) {
+				return d.getCaseLink();
+			}
+		}
+		
+		return caseType;
 	}
 
 

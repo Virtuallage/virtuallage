@@ -51,6 +51,7 @@ import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AdjHeaderService;
 import com.vipro.service.AdjLogService;
 import com.vipro.service.AccountService;
@@ -96,7 +97,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 
 	private StreamedContent file;  
 	private CommandButton approveButton;
-
+	private UserProfile currentUser;
+	
 	@PostConstruct
 	public void init() {
 		approveButton = new CommandButton();
@@ -616,6 +618,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			
 			Date currentDate = new Date();
 			AuthUser user = getCurrentUser();
+			currentUser = user.getUserProfile();
 			long userId = user.getUserProfile().getUserId();
 			
 			TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
@@ -691,6 +694,10 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			salesCancellationHistory.setApprovedBy(userId);
 			salesCancellationHistory.setDateApproved(currentDate);
 			salesCancellationService.update(salesCancellationHistory);
+			
+			CaseAlert caseAlert = new CaseAlert();
+			caseAlert.updateCase("CYCAN", projectId, inventory.getUnitNo(),	
+					currentUser, null);
 			
 			addInfoMessage("Information.", "Sales Cancellation Approval Completed Successfully.");
 			return listPropertyUnits();
