@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.vipro.dao.CaseActivityDao;
 import com.vipro.dao.CaseDao;
+import com.vipro.dao.CaseRouteDao;
 import com.vipro.data.Case;
 import com.vipro.data.CaseActivity;
+import com.vipro.data.CaseRoute;
 
 @Service("com.vipro.service.CaseService")
 public class CaseServiceImpl implements CaseService {
@@ -19,6 +21,8 @@ public class CaseServiceImpl implements CaseService {
 	@Autowired
 	private CaseActivityDao caseActivityDao;
 	
+	@Autowired
+	private CaseRouteDao caseRouteDao;
 
 	public CaseDao getCaseDao() {
 		return caseDao;
@@ -40,8 +44,8 @@ public class CaseServiceImpl implements CaseService {
 	}
 
 
-	public List<Case> findByAssigneeId(Long assigneeId) {
-		return caseDao.findByAssigneeId(assigneeId);
+	public List<Case> findByAssigneeId(Long assigneeId, String assigneeGrp) {
+		return caseDao.findByAssigneeId(assigneeId, assigneeGrp);
 	}
 
 
@@ -78,6 +82,19 @@ public class CaseServiceImpl implements CaseService {
 	public void insertActivity(CaseActivity a) {
 		caseActivityDao.insert(a);
 		
+	}
+
+
+	@Override
+	public CaseRoute getCaseRoute(String caseType, String status,
+			Long projectId, String groupId, Long userId) {
+		return caseRouteDao.getCaseRoute(caseType, status, projectId, groupId, userId);
+	}
+
+
+	@Override
+	public Case findByProject(String caseType, Long projectId, String unitNo) {
+		return caseDao.findByProject(caseType, projectId, unitNo);
 	}
 	
 }

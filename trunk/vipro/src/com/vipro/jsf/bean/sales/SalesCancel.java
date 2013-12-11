@@ -48,6 +48,7 @@ import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AccountService;
 import com.vipro.service.SalesCancellationService;
 import com.vipro.service.DocumentReferenceService;
@@ -82,6 +83,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 	private TransactionHistory bookTrx;
 	private UserProfile attendedBy;
 	private DocumentReference documentReference;
+	private UserProfile currentUser;
 	
 	private double TaxCharge = 0.02;
 	private double AdminFee = 500;
@@ -507,6 +509,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			inventory.setStatusChangeDate(new Date());
 			
 			AuthUser user = getCurrentUser();
+			currentUser = user.getUserProfile();
 			inventory.setChangeUserId(user.getUserProfile().getUserId());
 			
 			inventoryService.update(inventory);
@@ -517,6 +520,16 @@ public class SalesCancel extends CommonBean implements Serializable{
 			
 			salesCancellationService.update(salesCancellationHistory);
 			addInfoMessage("Info.", "Sales Cancellation Submitted Pending Approval.");
+			
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+					.lookup(UserProfileService.class.getName());
+			UserProfile toUserProfile = userProfileService.findById(project.getPicId());
+			
+			CaseAlert caseAlert = new CaseAlert();
+			caseAlert.insertCase("CYCAN", projectId, inventory.getUnitNo(),
+					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
+			
+			
 			return listPropertyUnits();
 		} else {
 			addErrorMessage("Warning!", "Sales Cancellation Failed.");

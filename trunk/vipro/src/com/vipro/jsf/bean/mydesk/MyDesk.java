@@ -53,6 +53,7 @@ public class MyDesk extends CommonBean implements Serializable {
 	public MyDesk() {
 		caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
 				.getName());
+		refreshMyCases();
 	}
 
 	public List<CaseActivity> getHistories() {
@@ -86,16 +87,7 @@ public class MyDesk extends CommonBean implements Serializable {
 
 	public void setSelectedCustomer(Customer selectedCustomer) {
 		this.selectedCustomer = selectedCustomer;
-		newCase.setCustomer(selectedCustomer);
-		newCase.setName(selectedCustomer.getFullName());
-
-	
-		newCase.setMobileNo(selectedCustomer.getMobileNo());
-		
-
-	
-		newCase.setEmail(selectedCustomer.getEmail());
-		
+		newCase.setCustomer(selectedCustomer);	
 
 	}
 
@@ -187,7 +179,7 @@ public class MyDesk extends CommonBean implements Serializable {
 	private void refreshMyCases() {
 		AuthUser user = getCurrentUser();
 		UserProfile userProfile = user.getUserProfile();
-		myCases = caseService.findByAssigneeId(userProfile.getUserId());
+		myCases = caseService.findByAssigneeId(userProfile.getUserId(), userProfile.getUserGroup().getGroupId());
 	}
 
 	public Case getNewCase() {
@@ -198,13 +190,13 @@ public class MyDesk extends CommonBean implements Serializable {
 		this.newCase = newCase;
 	}
 
-	public String toNewCase() {
-		setNewCase(new Case());
-		getNewCase().setSender(getCurrentUser().getUserProfile());
-		getNewCase().setCreationDate(new Date());
-		getNewCase().setDueDate(new Date());
-		return "/secured/mydesk/newCase";
-	}
+//	public String toNewCase() {
+//		setNewCase(new Case());
+//		getNewCase().setSender(getCurrentUser().getUserProfile());
+//		getNewCase().setCreationDate(new Date());
+//		getNewCase().setDueDate(new Date());
+//		return "/secured/mydesk/newCase";
+//	}
 
 	public String insertCase() {
 		try {
@@ -217,7 +209,7 @@ public class MyDesk extends CommonBean implements Serializable {
 			UserProfile toUserProfile = userProfileService.findById(Long
 					.parseLong(toUserId));
 
-			newCase.setAssignee(toUserProfile);
+//			newCase.setAssignee(toUserProfile);
 
 			newCase.setStatus(CaseStatus.NEW);
 
@@ -292,6 +284,7 @@ public class MyDesk extends CommonBean implements Serializable {
 	}
 
 	public String cancel() {
+		refreshMyCases();
 		return "/secured/mydesk/listCase";
 	}
 

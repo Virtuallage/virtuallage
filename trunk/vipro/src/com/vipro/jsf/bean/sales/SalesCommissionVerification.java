@@ -41,6 +41,7 @@ import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AccountService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectService;
@@ -71,7 +72,8 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 	private List<SelectItem> propertyTypes;
 	private List<SelectItem> listSolicitors = null;
 	private List<SelectItem> listPanelBanks = null;
-
+	private UserProfile currentUser;
+	
 	@PostConstruct
 	public void init() {
 		
@@ -456,6 +458,11 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				
 				salesCommissionHistoryService.update(history);
 				
+				CaseAlert caseAlert = new CaseAlert();
+				caseAlert.updateCase("CYCOM", project.getProjectId(), 
+						salesCommissionAccount.getProjectInventory().getUnitNo(),	
+						currentUser, "CSREJ");
+				
 				addInfoMessage("Sales Commission Verification", "Commission Rejected.");
 				return submitAgain();
 				//return listAccounts();
@@ -471,6 +478,7 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 		if (salesCommissionAccount != null) {
 			Date currentDate = new Date();
 			AuthUser user = getCurrentUser();
+			currentUser = user.getUserProfile();
 			Long userId = user.getUserProfile().getUserId();
 			SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 			List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
@@ -485,6 +493,12 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				history.setClaimStatus(ClaimStatusConst.STATUS_VERIFIED);
 				
 				salesCommissionHistoryService.update(history);
+				
+				CaseAlert caseAlert = new CaseAlert();
+				caseAlert.updateCase("CYCOM", project.getProjectId(), 
+						salesCommissionAccount.getProjectInventory().getUnitNo(),	
+						currentUser, null);
+				
 				addInfoMessage("Sales Commission Verification", "Commission Approved.");
 				return submitAgain();
 				//return listAccounts();

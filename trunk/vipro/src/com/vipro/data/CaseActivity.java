@@ -17,6 +17,7 @@ public class CaseActivity  implements java.io.Serializable {
      private Date actionTime;
      private Date oldDueDate;
      private String note;
+     private String action;
 
     public CaseActivity() {
     }
@@ -85,6 +86,16 @@ public class CaseActivity  implements java.io.Serializable {
     public void setOldDueDate(Date oldDueDate) {
         this.oldDueDate = oldDueDate;
     }
+
+
+	public String getAction() {
+		return action;
+	}
+
+
+	public void setAction(String action) {
+		this.action = action;
+	}
 
 
 

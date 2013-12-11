@@ -26,5 +26,8 @@
         <property name="note" type="string">
             <column name="note" length="300"/>
         </property>
+        <property name="action" type="string">
+            <column name="action" length="5"/>
+        </property>
     </class>
 </hibernate-mapping>

@@ -12,7 +12,9 @@ import com.vipro.data.Case;
  */
 public interface CaseDao extends Dao<Case> {
 	
-	public List<Case> findByAssigneeId(Long assigneeId);
+	public List<Case> findByAssigneeId(Long assigneeId, String assigneeGrp);
 	 
 	public Case findById(Long caseId);
+	
+	public Case findByProject(String caseType, Long projectId, String unitNo);
 }

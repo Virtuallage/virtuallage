@@ -32,6 +32,7 @@ import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AccountService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.SalesCommissionHistoryService;
@@ -49,6 +50,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 
 	private BigDecimal totalClaimAmount;
 	private SalesCommissionHistory salesCommissionHistory;
+	private UserProfile currentUser;
 	//private CommandButton approveButton;
 
 	@PostConstruct
@@ -309,6 +311,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 			for(Account salesCommissionAccount: salesCommissionAccounts)
 			{
 				AuthUser user = getCurrentUser();
+				currentUser = user.getUserProfile();
 				Long userId = user.getUserProfile().getUserId();
 				SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 				List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
@@ -338,6 +341,11 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 				}
 
 			}
+			
+//			CaseAlert caseAlert = new CaseAlert();
+//			caseAlert.updateCase("CYCOM", salesCommissionHistory.getProjectId(), inventory.getUnitNo(),	
+//					currentUser, null);
+			
 			addInfoMessage("Sales Commission", "Commission Approved.");
 			return "salesCommissionApproval";
 			

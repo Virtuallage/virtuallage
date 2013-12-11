@@ -48,6 +48,7 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.data.ProgressiveBilling;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AccountService;
 import com.vipro.service.SalesCommissionHistoryService;
 import com.vipro.service.DocumentReferenceService;
@@ -80,7 +81,8 @@ public class SalesCommission extends CommonBean implements Serializable{
 	private Account account;
 	private Long accountId;
 	private BigDecimal totalClaimAmount;
-
+	private UserProfile currentUser;
+	
 	@PostConstruct
 	public void init() {
 		
@@ -500,6 +502,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 				salesCommissionHistory.setClaimAmount(claimAmount);
 
 				AuthUser user = getCurrentUser();
+				currentUser = user.getUserProfile();
 				if (user != null)
 					salesCommissionHistory.setSubmittedBy(user.getUserProfile().getUserId());
 				
@@ -509,6 +512,14 @@ public class SalesCommission extends CommonBean implements Serializable{
 			}
 			
 			addInfoMessage("Sales Commission", "Submitted Successful.");
+			
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+					.lookup(UserProfileService.class.getName());
+			UserProfile toUserProfile = userProfileService.findById(project.getPicId());
+			
+			CaseAlert caseAlert = new CaseAlert();
+			caseAlert.insertCase("CYCOM", projectId, inventory.getUnitNo(),
+					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
 			
 			return listAccounts();
 		} else {

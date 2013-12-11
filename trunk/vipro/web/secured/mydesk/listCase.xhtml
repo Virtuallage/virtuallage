@@ -52,17 +52,15 @@ My Work Queue
         </p:column>
         
         <p:column headerText="Status" sortBy="#{myDesk.getCodeDesc('CS', c.status)}"> 
-      		<h:outputText value="#{myDesk.getCodeDesc('CS', c.status)}"/>
+      		<h:outputText value="#{myDesk.getCodeDesc('CS',c.status)}"/>
         	 &nbsp;
-        	<p:commandButton  action="#{myDesk.openCase}" ajax="false" icon="ui-icon-search" title="View">
-           		 <f:setPropertyActionListener value="#{c}" target="#{myDesk.selectedCase}" />  
-           </p:commandButton>
+        	<p:commandButton action="#{myDesk.getCaseLink(c.caseType)}" ajax="false" icon="ui-icon-search" title="View">
+        	 </p:commandButton>
         </p:column>
     </p:dataTable>  
     
     <br/>
     
-    <p:commandButton action="#{myDesk.toNewCase}" value="Create a case" ajax="false"/>
 </h:form> 
 
 </p:panel>
