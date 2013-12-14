@@ -962,6 +962,49 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 							"Please select LA Signed Date and Solicitor from the dropdown list.");
 					return "salesProgressUpdate";
 				}
+			} else {
+				if (account.getLoSignedDate() != null) {
+					addErrorMessage("LO Informaion is not required",
+							"Please EMPTY LO Signed Date.");
+					return "salesProgressUpdate";
+				}
+				if (account.getLoSignedDate() != null) {
+					addErrorMessage("LO Informaion is not required",
+							"Please EMPTY LO Accepted Date.");
+					return "salesProgressUpdate";
+				}
+				if (account.getFinancierId() > 0) {
+					addErrorMessage("LO Informaion is not required",
+							"Please UNSELECT LO Financier from the dropdown list.");
+					return "salesProgressUpdate";
+				}
+				if (account.getFinancierRef() != null && account.getFinancierRef().length() > 0) {
+					addErrorMessage("LO Informaion is not required",
+							"Please EMPTY LO Ref No.");
+					return "salesProgressUpdate";
+				}
+				
+				if (account.getLaSignedDate() != null) {
+					addErrorMessage("LA Informaion is not required",
+							"Please EMPTY LA Signed Date.");
+					return "salesProgressUpdate";
+				}
+				if (account.getLaStampedDate() != null) {
+					addErrorMessage("LA Informaion is not required",
+							"Please EMPTY LA Stamped Date.");
+					return "salesProgressUpdate";
+				}
+				if (account.getLaSolicitorId() > 0) {
+					addErrorMessage("LA Informaion is not required",
+							"Please UNSELECT LA Solicitor from the dropdown list.");
+					return "salesProgressUpdate";
+				}
+				if (account.getLaRefNo() != null && account.getLaRefNo().length() > 0) {
+					addErrorMessage("LA Informaion is not required",
+							"Please EMPTY LA Ref No.");
+					return "salesProgressUpdate";
+				}
+				
 			}
 			
 			if(borrower1 != null) {
