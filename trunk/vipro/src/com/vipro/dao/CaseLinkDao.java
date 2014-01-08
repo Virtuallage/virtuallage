@@ -6,5 +6,5 @@ import com.vipro.common.Dao;
 import com.vipro.data.CaseLink;
 
 public interface CaseLinkDao extends Dao<CaseLink>{
-	public List<CaseLink> getCaseLinkList(String caseType);
+	public List<CaseLink> getCaseLinkList(String caseType, String caseStatus);
 }

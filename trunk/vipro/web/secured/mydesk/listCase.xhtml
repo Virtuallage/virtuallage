@@ -54,7 +54,7 @@ My Work Queue
         <p:column headerText="Status" sortBy="#{myDesk.getCodeDesc('CS', c.status)}"> 
       		<h:outputText value="#{myDesk.getCodeDesc('CS',c.status)}"/>
         	 &nbsp;
-        	<p:commandButton action="#{myDesk.getCaseLink(c.caseType)}" ajax="false" icon="ui-icon-search" title="View">
+        	<p:commandButton action="#{myDesk.getCaseLink(c.caseType, c.projectId, c.accountId, c.status)}" ajax="false" icon="ui-icon-search" title="View">
         	 </p:commandButton>
         </p:column>
     </p:dataTable>  

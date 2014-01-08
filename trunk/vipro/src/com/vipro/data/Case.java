@@ -20,7 +20,7 @@ public class Case implements java.io.Serializable {
 	private String caseType;
 	private String subject;
 	private Long projectId;
-	private String unitNo;
+	private Long accountId;
 	private String groupId;
 	private Date dueDate;
 	private boolean notification;
@@ -41,7 +41,7 @@ public class Case implements java.io.Serializable {
 
 	public Case(UserProfile sender, Customer customer, UserProfile creator,
 			UserProfile assignee, Date creationDate, String caseType,
-			String subject, Long projectId, String unitNo, String groupId,
+			String subject, Long projectId, Long accountId, String groupId,
 			Date dueDate, boolean notification, String status,
 			Set caseActivities) {
 		this.sender = sender;
@@ -52,7 +52,7 @@ public class Case implements java.io.Serializable {
 		this.caseType = caseType;
 		this.subject = subject;
 		this.projectId = projectId;
-		this.unitNo = unitNo;
+		this.accountId = accountId;
 		this.groupId = groupId;
 		this.dueDate = dueDate;
 		this.notification = notification;
@@ -132,12 +132,12 @@ public class Case implements java.io.Serializable {
 		this.projectId = projectId;
 	}
 
-	public String getUnitNo() {
-		return this.unitNo;
+	public Long getAccountId() {
+		return this.accountId;
 	}
 
-	public void setUnitNo(String unitNo) {
-		this.unitNo = unitNo;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public String getGroupId() {

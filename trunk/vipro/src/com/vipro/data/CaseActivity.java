@@ -36,7 +36,8 @@ public class CaseActivity  implements java.io.Serializable {
 	public CaseActivity(Case theCase) {
         this.theCase = theCase;
     }
-    public CaseActivity(Case theCase, UserProfile actionBy, String actionCode, Date actionTime, Date oldDueDate) {
+    
+	public CaseActivity(Case theCase, UserProfile actionBy, String actionCode, Date actionTime, Date oldDueDate) {
        this.theCase = theCase;
        this.actionBy = actionBy;
        this.actionCode = actionCode;

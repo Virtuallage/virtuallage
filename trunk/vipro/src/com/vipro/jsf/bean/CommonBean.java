@@ -13,6 +13,8 @@ import com.vipro.auth.AuthUser;
 import com.vipro.dao.UserProfileDao;
 import com.vipro.data.CaseLink;
 import com.vipro.data.CodeDet;
+import com.vipro.jsf.bean.mydesk.CaseAlert;
+import com.vipro.jsf.bean.mydesk.MyDesk;
 import com.vipro.service.CaseLinkService;
 import com.vipro.service.CodeService;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -42,20 +44,25 @@ public class CommonBean {
 		return code;
 	}
 	
-	public String getCaseLink(String caseType) {
+	public String getCaseLink(String caseType, Long projectId, Long accountId, String caseStatus) {
 		CaseLinkService caseLinkService = (CaseLinkService) SpringBeanUtil.lookup(CaseLinkService.class.getName());
-		List<CaseLink> list = caseLinkService.getCaseLinkList(caseType);
-		
+		List<CaseLink> list = caseLinkService.getCaseLinkList(caseType, caseStatus);
 
+		AuthUser user = getCurrentUser();
+		CaseAlert caseAlert = new CaseAlert();
+		caseAlert.openCase(caseType, projectId, accountId,
+				user.getUserProfile(), "CSOPN");
+		System.out.println("open");
 		for (CaseLink d : list) {
 			if (d.getCaseType().equals(caseType)) {
 				return d.getCaseLink();
 			}
 		}
 		
+		
+		
 		return caseType;
 	}
-
 
 	public static AuthUser getCurrentUser() {
 		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();

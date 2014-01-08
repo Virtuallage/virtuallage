@@ -23,5 +23,5 @@ public interface CaseService {
 	public CaseRoute getCaseRoute(String caseType, String status, 
 			Long projectId, String groupId, Long userId);
 	
-	public Case findByProject(String caseType, Long projectId, String unitNo);
+	public Case findByProject(String caseType, Long projectId, Long accountId);
 }

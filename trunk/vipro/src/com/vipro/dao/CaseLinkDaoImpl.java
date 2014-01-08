@@ -30,9 +30,9 @@ public class CaseLinkDaoImpl extends DaoImpl<CaseLink> implements CaseLinkDao{
 	}
 
 	@Override
-	public List<CaseLink> getCaseLinkList(String caseType) {
-		String query = "select o from CaseLink o where o.caseType=?";
-		List<CaseLink> caseLink = getHibernateTemplate().find(query, caseType);
+	public List<CaseLink> getCaseLinkList(String caseType, String caseStatus) {
+		String query = "select o from CaseLink o where o.caseType=? and o.caseStatus=?";
+		List<CaseLink> caseLink = getHibernateTemplate().find(query, caseType, caseStatus);
 		return caseLink;
 	}
 

@@ -526,9 +526,10 @@ public class SalesCancel extends CommonBean implements Serializable{
 			UserProfile toUserProfile = userProfileService.findById(project.getPicId());
 			
 			CaseAlert caseAlert = new CaseAlert();
-			caseAlert.insertCase("CYCAN", projectId, inventory.getUnitNo(),
+			caseAlert.insertCase("CYCAN", projectId, account.getAccountId(),
 					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
-			
+			caseAlert.cancelCase("CYPAY", projectId, account.getAccountId(),
+					currentUser, "CSCAN", toUserProfile, null);
 			
 			return listPropertyUnits();
 		} else {

@@ -27,6 +27,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.DocumentTypeConst;
@@ -80,6 +81,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 	private Project project;
 	private Account account;
 	private Long accountId;
+	private Customer accountCust;
 	private BigDecimal totalClaimAmount;
 	private UserProfile currentUser;
 	
@@ -509,18 +511,26 @@ public class SalesCommission extends CommonBean implements Serializable{
 				salesCommissionHistory.setPurchasePrice(account.getPurchasePrice());
 				salesCommissionHistory.setProjectId(projectId);
 				salesCommissionHistoryService.update(salesCommissionHistory);
+				
+				accountId = account.getAccountId();
+				accountCust = account.getCustomer();
+				
+				ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+				ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
+				UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+				AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+				
+				project = projectService.findById(projectId);
+				
+				UserProfile toUserProfile = userProfileService.findById(project.getPicId());
+
+				CaseAlert caseAlert = new CaseAlert();
+				caseAlert.insertCase("CYCOM", projectId, accountId,
+						currentUser, accountCust, "CSSMT", toUserProfile, null);
 			}
 			
 			addInfoMessage("Sales Commission", "Submitted Successful.");
-			
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-					.lookup(UserProfileService.class.getName());
-			UserProfile toUserProfile = userProfileService.findById(project.getPicId());
-			
-			CaseAlert caseAlert = new CaseAlert();
-			caseAlert.insertCase("CYCOM", projectId, inventory.getUnitNo(),
-					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
-			
+
 			return listAccounts();
 		} else {
 			addInfoMessage("Sales Commission", "Failed to submit.");

@@ -445,6 +445,7 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 		if (salesCommissionAccount != null) {
 			Date currentDate = new Date();
 			AuthUser user = getCurrentUser();
+			currentUser = user.getUserProfile();
 			Long userId = user.getUserProfile().getUserId();
 			SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 			List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
@@ -455,13 +456,11 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				history.setChangedBy(userId);
 				history.setDateChanged(currentDate);
 				history.setClaimStatus(ClaimStatusConst.STATUS_REJECTED);
-				
 				salesCommissionHistoryService.update(history);
 				
 				CaseAlert caseAlert = new CaseAlert();
-				caseAlert.updateCase("CYCOM", project.getProjectId(), 
-						salesCommissionAccount.getProjectInventory().getUnitNo(),	
-						currentUser, "CSREJ");
+				caseAlert.updateCase("CYCOM", project.getProjectId(), salesCommissionAccount.getAccountId(),
+						currentUser, "CSREJ", null, null);
 				
 				addInfoMessage("Sales Commission Verification", "Commission Rejected.");
 				return submitAgain();
@@ -494,10 +493,13 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				
 				salesCommissionHistoryService.update(history);
 				
+				System.out.println("/"+project.getProjectId()+"/"+salesCommissionAccount.getAccountId()+"/"+
+						currentUser);
+				
 				CaseAlert caseAlert = new CaseAlert();
 				caseAlert.updateCase("CYCOM", project.getProjectId(), 
-						salesCommissionAccount.getProjectInventory().getUnitNo(),	
-						currentUser, null);
+						salesCommissionAccount.getAccountId(),	
+						currentUser, "CSVER", null, null);
 				
 				addInfoMessage("Sales Commission Verification", "Commission Approved.");
 				return submitAgain();
