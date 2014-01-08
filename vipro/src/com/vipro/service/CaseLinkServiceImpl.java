@@ -23,8 +23,8 @@ public class CaseLinkServiceImpl implements CaseLinkService {
 
 
 	@Override
-	public List<CaseLink> getCaseLinkList(String caseType) {
-		return caseLinkDao.getCaseLinkList(caseType);
+	public List<CaseLink> getCaseLinkList(String caseType, String caseStatus) {
+		return caseLinkDao.getCaseLinkList(caseType, caseStatus);
 	}
 	
 }

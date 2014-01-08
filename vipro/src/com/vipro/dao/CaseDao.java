@@ -16,5 +16,5 @@ public interface CaseDao extends Dao<Case> {
 	 
 	public Case findById(Long caseId);
 	
-	public Case findByProject(String caseType, Long projectId, String unitNo);
+	public Case findByProject(String caseType, Long projectId, Long accountId);
 }

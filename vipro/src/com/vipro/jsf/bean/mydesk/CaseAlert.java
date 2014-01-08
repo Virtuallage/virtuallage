@@ -24,7 +24,7 @@ public class CaseAlert extends CommonBean{
 	private CaseService caseService;
 
 	public void insertCase(String caseType, Long projectId, 
-			String unitNo, UserProfile currentUser,  
+			Long accountId, UserProfile currentUser,  
 			Customer customer, String status, UserProfile assignee, String groupId) {
 		try {
 			caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
@@ -33,7 +33,7 @@ public class CaseAlert extends CommonBean{
 			newCase = new Case();
 			newCase.setCaseType(caseType);
 			newCase.setProjectId(projectId);
-			newCase.setUnitNo(unitNo);
+			newCase.setAccountId(accountId);
 			newCase.setCreator(currentUser);
 			newCase.setSender(currentUser);
 			newCase.setCustomer(customer);
@@ -62,20 +62,88 @@ public class CaseAlert extends CommonBean{
 			}
 
 			caseService.insert(newCase);
+			
+			caseActivity = new CaseActivity();
+			caseActivity.setCase(newCase);
+			caseActivity.setActionBy(currentUser);
+			caseActivity.setActionCode(caseType);
+			caseActivity.setActionTime(new Date());
+			caseActivity.setAction(status);
+			caseService.insertActivity(caseActivity);
+			
 		} catch (Throwable e) {
 			addErrorMessage("My Work Queue", "Error Saving Case. "
 					+ e.getMessage());
 		}
 	}
 
-	public void updateCase(String caseType, Long projectId, 
-			String unitNo, UserProfile currentUser,  
+	public void cancelCase(String caseType, Long projectId, 
+			Long accountId, UserProfile currentUser,  
+			String status, UserProfile assignee, String groupId) {
+		try {
+			caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
+					.getName());
+
+			newCase = caseService.findByProject(caseType, projectId, accountId);
+			
+			if(newCase.getStatus() != "CSCLS"){
+				newCase.setStatus(status);
+
+				caseActivity = new CaseActivity();
+				caseActivity.setCase(newCase);
+				caseActivity.setActionBy(currentUser);
+				caseActivity.setActionCode(caseType);
+				caseActivity.setActionTime(new Date());
+				caseActivity.setAction(status);
+				caseService.insertActivity(caseActivity);
+
+				caseService.update(newCase);
+			}
+			
+		} catch (Throwable e) {
+			addErrorMessage("My Work Queue", "Error cancel Case. "
+					+ e.getMessage());
+		}
+	}
+
+	public void openCase(String caseType, Long projectId, 
+			Long accountId, UserProfile currentUser,  
 			String status) {
 		try {
 			caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
 					.getName());
 
-			newCase = caseService.findByProject(caseType, projectId, unitNo);
+			newCase = caseService.findByProject(caseType, projectId, accountId);
+
+			if(newCase.getStatus().equalsIgnoreCase("CSSMT")){
+
+				newCase.setStatus("CSOPN");
+
+				caseActivity = new CaseActivity();
+				caseActivity.setCase(newCase);
+				caseActivity.setActionBy(currentUser);
+				caseActivity.setActionCode(caseType);
+				caseActivity.setActionTime(new Date());
+				caseActivity.setAction("CSOPN");
+				caseService.insertActivity(caseActivity);
+
+				caseService.update(newCase);
+			}
+			
+		} catch (Throwable e) {
+			addErrorMessage("My Work Queue", "Error cancel Case. "
+					+ e.getMessage());
+		}
+	}
+	
+	public void updateCase(String caseType, Long projectId, 
+			Long accountId, UserProfile currentUser,  
+			String status, UserProfile assignee, String groupId) {
+		try {
+			caseService = (CaseService) SpringBeanUtil.lookup(CaseService.class
+					.getName());
+
+			newCase = caseService.findByProject(caseType, projectId, accountId);
 			if(newCase==null){
 				newCase = new Case();
 			}else{
@@ -89,29 +157,38 @@ public class CaseAlert extends CommonBean{
 			}
 
 			newCase.setProjectId(projectId);
-			newCase.setUnitNo(unitNo);
+			newCase.setAccountId(accountId);
 
-			CaseRoute cr = caseService.getCaseRoute(caseType, status, projectId, 
-					currentUser.getUserGroup().getGroupId(), currentUser.getUserId());
+			if(assignee!=null){
+				newCase.setAssignee(assignee);
 
-			if(cr.gettUserId()!=null){
-				UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-						.lookup(UserProfileService.class.getName());
-				UserProfile toUserProfile = userProfileService.findById(cr.gettUserId());
-				newCase.setAssignee(toUserProfile);
+			}else if (groupId!=null){
+				newCase.setGroupId(groupId);
+
+			}else{
+				CaseRoute cr = caseService.getCaseRoute(caseType, status, projectId, 
+						currentUser.getUserGroup().getGroupId(), currentUser.getUserId());
+
+				if(cr.gettUserId()!=null){
+					UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+							.lookup(UserProfileService.class.getName());
+					UserProfile toUserProfile = userProfileService.findById(cr.gettUserId());
+					newCase.setAssignee(toUserProfile);
+				}
+				
+				newCase.setGroupId(cr.gettGroupId());
+
+				if(status!=null)
+					newCase.setStatus(status);
+				else
+					newCase.setStatus(cr.getNextAction());
+
+				if(status.equalsIgnoreCase("CSREJ"))
+					newCase.setAssignee(newCase.getSender());
 			}
-			newCase.setGroupId(cr.gettGroupId());
 
-			if(status!=null)
-				newCase.setStatus(status);
-			else
-				newCase.setStatus(cr.getNextAction());
-
-			if(status=="CSREJ")
-				newCase.setAssignee(newCase.getSender());
-			
 			newCase.setCreator(currentUser);
-			
+
 			caseService.update(newCase);
 		} catch (Throwable e) {
 			addErrorMessage("My Work Queue", "Error Update Case. "

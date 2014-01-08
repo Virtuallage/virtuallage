@@ -19,7 +19,7 @@ public class CaseDaoImpl extends DaoImpl<Case> implements CaseDao {
 	@Override
 	public List<Case> findByAssigneeId(Long assigneeId, String assigneeGrp) {
 		
-		String query = "select o from Case o where o.assignee.userId=? or o.groupId=?";
+		String query = "select o from Case o where (o.assignee.userId=? or o.groupId=?) and o.status <> 'CSCLS' and  o.status <> 'CSREJ'";
 		List<Case> cases = getHibernateTemplate().find(query, assigneeId, assigneeGrp);
 		return cases;
 	}
@@ -30,9 +30,9 @@ public class CaseDaoImpl extends DaoImpl<Case> implements CaseDao {
 	}
 
 	@Override
-	public Case findByProject(String caseType, Long projectId, String unitNo) {
-		String query = "select o from Case o where o.caseType=? and o.projectId=? and o.unitNo=?";
-		List<Case> cases = getHibernateTemplate().find(query, caseType, projectId, unitNo);
+	public Case findByProject(String caseType, Long projectId, Long accountId) {
+		String query = "select o from Case o where o.caseType=? and o.projectId=? and o.accountId=?";
+		List<Case> cases = getHibernateTemplate().find(query, caseType, projectId, accountId);
 		for (Case d : cases) {
 			return d;
 		}

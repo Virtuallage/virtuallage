@@ -93,8 +93,8 @@ public class CaseServiceImpl implements CaseService {
 
 
 	@Override
-	public Case findByProject(String caseType, Long projectId, String unitNo) {
-		return caseDao.findByProject(caseType, projectId, unitNo);
+	public Case findByProject(String caseType, Long projectId, Long accountId) {
+		return caseDao.findByProject(caseType, projectId, accountId);
 	}
 	
 }

@@ -1167,7 +1167,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		salesRegTabView.setActiveIndex(1);
 
 		CaseAlert caseAlert = new CaseAlert();
-		caseAlert.insertCase("CYPAY", projectId, inventory.getUnitNo(),
+		caseAlert.insertCase("CYPAY", projectId, account.getAccountId(),
 				attendedBy, selectedCustomer, "CSSMT", null, null);
 		
 		return "salesRegistration";

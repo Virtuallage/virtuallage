@@ -42,3 +42,20 @@ ALTER TABLE vipro.case
 ADD CONSTRAINT FK_case_2
   FOREIGN KEY (assignee_id)
   REFERENCES vipro.user_profile (user_id);
+  
+  
+----2014----
+UPDATE vipro.project SET pic_id='14' WHERE project_id='1';
+
+ALTER TABLE vipro.case 
+CHANGE COLUMN unit_id account_id BIGINT(20) NULL DEFAULT NULL ;
+
+ALTER TABLE vipro.case_link 
+ADD COLUMN case_status VARCHAR(10) NULL AFTER case_link;
+
+UPDATE vipro.code_det SET description='Opened' WHERE code_header_id='CS' andcode='CSOPN';
+
+INSERT INTO vipro.case_route (case_type, case_status, target_group_id, next_action) VALUES ('CYCOM', 'CSVER', 'PIC_ADM', 'CSAPP');
+INSERT INTO vipro.case_route (case_type, case_status, target_group_id, next_action) VALUES ('CYCOM', 'CSAPP', 'ACCT', 'CSPRO');
+INSERT INTO vipro.case_route (case_type, case_status) VALUES ('CYCOM', 'CSREJ');
+
