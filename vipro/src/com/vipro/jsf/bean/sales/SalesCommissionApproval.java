@@ -306,13 +306,14 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 	public String confirm() {
 		
 		if (salesCommissionAccounts != null) {
-			
+			Long accountId = null;
 			Date currentDate = new Date();
 			for(Account salesCommissionAccount: salesCommissionAccounts)
 			{
 				AuthUser user = getCurrentUser();
 				currentUser = user.getUserProfile();
 				Long userId = user.getUserProfile().getUserId();
+				accountId = salesCommissionAccount.getAccountId();
 				SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 				List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
 				if(historys != null && historys.size() > 0)
@@ -340,11 +341,10 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					transactionHistoryService.insert(transactionHistory);
 				}
 
+				CaseAlert caseAlert = new CaseAlert();
+				caseAlert.updateCase("CYCOM", salesCommissionHistory.getProjectId(), accountId,	
+						currentUser, "CSAPP", null, null);
 			}
-			
-//			CaseAlert caseAlert = new CaseAlert();
-//			caseAlert.updateCase("CYCOM", salesCommissionHistory.getProjectId(), inventory.getUnitNo(),	
-//					currentUser, null);
 			
 			addInfoMessage("Sales Commission", "Commission Approved.");
 			return "salesCommissionApproval";
