@@ -30,6 +30,7 @@ import org.primefaces.model.UploadedFile;
 import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CaseStatus;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.PurchaseTypeConst;
@@ -403,7 +404,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
 			if(status.equalsIgnoreCase("New")) {
 				if(account.getPurchaseType() != null && account.getPurchaseType().equals(PurchaseTypeConst.CASH)) {
-					if(account.getSpaSignedDate() != null) {
+					if(account.getSpaSignedDate() != null && account.getPurchaseType() != null) {
 						Date secondBillingDatePaid = null;
 						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());
 						/*int seqNo = 0;
@@ -419,7 +420,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 							salesCommissionAccounts.add(account);
 						}*/
 						if(records.size() >= 1) {
-							secondBillingDatePaid = records.get(1).getDatePaid();
+							secondBillingDatePaid = records.get(0).getDatePaid();
 							if(secondBillingDatePaid != null)
 							{
 								salesCommissionAccounts.add(account);
@@ -427,7 +428,8 @@ public class SalesCommission extends CommonBean implements Serializable{
 						}
 					}
 				} else {
-					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null) {
+					if(account.getSpaSignedDate() != null && account.getLaSignedDate() != null && account.getLoSignedDate() != null && 
+					   account.getPurchaseType() != null && account.getPanelBankId() != null && account.getLoanAmount() != null) {
 						/*Date secondBillingDatePaid = null;
 						List<ProgressiveBilling> records = progressiveBillingService.getProgressiveBilling(account.getAccountId());*/
 						salesCommissionAccounts.add(account);
@@ -443,14 +445,26 @@ public class SalesCommission extends CommonBean implements Serializable{
 		}
 
 		for(Account salesCommissionAccount: salesCommissionAccounts) {
-			Date currentDate = new Date();
+			Date currentDate = new Date(); 
+			if(salesCommissionAccount.getSpaSignedDate() != null && salesCommissionAccount.getLoSignedDate() != null) {
+				if(salesCommissionAccount.getSpaSignedDate().before(salesCommissionAccount.getLoSignedDate())) {
+					currentDate = salesCommissionAccount.getSpaSignedDate();
+				} else {
+					currentDate = salesCommissionAccount.getLoSignedDate(); 
+				}
+			} else if(salesCommissionAccount.getSpaSignedDate() != null) {
+				currentDate = salesCommissionAccount.getSpaSignedDate();
+			} else if(salesCommissionAccount.getLoSignedDate() != null) {
+				currentDate = salesCommissionAccount.getSpaSignedDate();
+			}
+			
 			Date purchasedDate = salesCommissionAccount.getDatePurchased();
 			Calendar currentCal = Calendar.getInstance();
 			currentCal.setTime(currentDate);
 	        Calendar purchasedCal = Calendar.getInstance();
 	        purchasedCal.setTime(purchasedDate);
 	        
-			if(DaysBetween(purchasedCal.getTime(), currentCal.getTime()) > 180) {
+			if(DaysBetween(purchasedCal.getTime(), currentCal.getTime()) > 90) {
 				claim50PercentAccounts.add(salesCommissionAccount);
 			}
 		}
@@ -525,7 +539,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 				UserProfile toUserProfile = userProfileService.findById(project.getPicId());
 
 				CaseAlert caseAlert = new CaseAlert();
-				caseAlert.insertCase("CYCOM", projectId, accountId,
+				caseAlert.insertCase(CaseStatus.COMMISSION_CLAIM, projectId, accountId,
 						currentUser, accountCust, "CSSMT", toUserProfile, null);
 			}
 			

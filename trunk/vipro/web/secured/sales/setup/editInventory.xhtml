@@ -36,8 +36,10 @@ Project Setup
 
 		<p:outputLabel value="Unit No" for="unitNo"/>
 		<p:inputText id="unitNo" value="#{projectSetup.inventory.unitNo}"  maxlength="12" autocomplete="off" style="text-transform:uppercase" required="true"/>
-		<p:outputLabel value="Layout Type" for="type"/>
-		<p:inputText id="type" value="#{projectSetup.inventory.layoutType}"  maxlength="5" autocomplete="off" style="text-transform:uppercase"/>
+		<p:outputLabel value="Layout Type" for="layoutType"/>
+		<p:selectOneMenu id="layoutType" value="#{projectSetup.inventory.layoutType}"> 
+			<f:selectItems value="#{projectSetup.layoutTypeList}" />
+		</p:selectOneMenu>
 
 		<p:outputLabel value="Build Up Area" for="buildUpArea"/>
 		<p:inputText id="buildUpArea" value="#{projectSetup.inventory.builtUpArea}" maxlength="10" autocomplete="off" required="true">
@@ -58,7 +60,10 @@ Project Setup
 		<p:selectOneMenu id="orientation" value="#{projectSetup.inventory.orientation}"> 
 			<f:selectItems value="#{projectSetup.orientationList}" />
 		</p:selectOneMenu>
-
+		<p:outputLabel value="Facing" for="facing"/>
+		<p:selectOneMenu id="facing" value="#{projectSetup.inventory.facing}"> 
+			<f:selectItems value="#{projectSetup.facingList}" />
+		</p:selectOneMenu>
 		<p:outputLabel value="Discount Amount" for="discountAmt"/>
 		<pe:inputNumber id="discountAmt" value="#{projectSetup.inventory.discountAmount}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" autocomplete="off" disabled="true">
                 <p:ajax update="nettAmt" event="blur" process="discountAmt"/>

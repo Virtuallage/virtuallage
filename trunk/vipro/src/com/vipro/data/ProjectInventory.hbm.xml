@@ -32,6 +32,9 @@
         <property name="orientation" type="string">
             <column name="orientation" length="5" />
         </property>
+        <property name="facing" type="string">
+            <column name="facing" length="5" />
+        </property>
         <property name="landArea" type="java.lang.Integer">
             <column name="land_area" />
         </property>
@@ -45,13 +48,13 @@
             <column name="status_change_date" length="10" />
         </property>
         <property name="purchasePrice" type="big_decimal">
-            <column name="purchase_price" precision="9" />
+            <column name="purchase_price" precision="11" />
         </property>
         <property name="discountAmount" type="big_decimal">
-            <column name="discount_amount" precision="9" />
+            <column name="discount_amount" precision="11" />
         </property>
         <property name="redemptionAmount" type="big_decimal">
-            <column name="redemption_amount" precision="9" />
+            <column name="redemption_amount" precision="11" />
         </property>
         <property name="redemptionPaidTodate" type="date">
             <column name="redemption_paid_todate" length="10" />

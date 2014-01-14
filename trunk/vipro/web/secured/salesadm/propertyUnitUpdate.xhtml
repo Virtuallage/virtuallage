@@ -23,7 +23,7 @@
 							<p:outputLabel  value="Project Name"/>
 						</p:column>
 						<p:column style="width:40%;text-align:left;vertical-align:middle">											
-							<p:selectOneMenu id="projectList" value="#{propertyUnitUpdateBean.selectedProjectId}"  requiredMessage="Project Name is mandatory"
+							<p:selectOneMenu id="projectList" value="#{propertyUnitUpdateBean.selectedProjectId}"  requiredMessage="Select One of the Project"
 								 required="true" style="width:100%" for="projectName">  
 								<f:selectItems value="#{propertyUnitUpdateBean.projects}"/>
 							</p:selectOneMenu>
@@ -63,24 +63,15 @@
             				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
             			</h:outputText>     
         			</p:column>
-        			 <p:column headerText="SPA Date" sortBy="#{dto.account.spaSignedDate}" style="text-align:center">  
-            			<h:outputText  value="#{dto.account.spaSignedDate}"  >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
-            			</h:outputText>      
+         			<p:column headerText="HSD No" sortBy="#{dto.projectInvetory.hsdNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.hsdNo}" />  
         			</p:column>
-        			 <p:column headerText="LO Date" sortBy="#{dto.account.loSignedDate}" style="text-align:center">  
-            			<h:outputText  value="#{dto.account.loSignedDate}" >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
-            			</h:outputText>     
-        			</p:column>
-        			 <p:column headerText="LA Date" sortBy="#{dto.account.laSignedDate}" style="text-align:center">  
-            			<h:outputText  value="#{dto.account.laSignedDate}"  >
-            				<f:convertDateTime type="date" pattern="#{propertyUnitUpdateBean.dateFormat}" />
-            			</h:outputText>     
+    			    <p:column headerText="PT No" sortBy="#{dto.projectInvetory.ptNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.ptNo}" />  
         			</p:column>
         			
-        			<p:column style="width:4%">  
-			                <p:commandButton id="selectDTOBtn" update=":dialogForm:dialogPanel" oncomplete="dlg.show()" icon="ui-icon-search" title="View" >  
+        			<p:column headerText="Action" style="width:4%">  
+			                <p:commandButton id="selectDTOBtn" update=":dialogForm:dialogPanel" oncomplete="dlg.show()" icon="ui-icon-pencil" title="Update This Unit" >  
 			                <f:setPropertyActionListener value="#{dto}" target="#{propertyUnitUpdateBean.selectedDto}" />  
 			            </p:commandButton>  
 			        </p:column> 
@@ -136,24 +127,24 @@
             				</p:inputText>  
 				            
 				            <p:outputLabel  value="HSD No"  />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.hsdNo}"  style="width:50%; text-transform:uppercase"/>
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.hsdNo}"  style="width:50%; text-transform:uppercase" maxlength="8"/>
 				            <p:outputLabel  value="PT No" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.ptNo}"   style="width:50%; text-transform:uppercase"/>
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.ptNo}"   style="width:50%; text-transform:uppercase" maxlength="8"/>
 				            
 				            <p:outputLabel  value="Address Line 1" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine1}" style="text-transform:uppercase"  />
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine1}" style="text-transform:uppercase" maxlength="40" />
 				            <p:outputLabel  value="Address Line 2" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine2}" style="text-transform:uppercase"  />
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine2}" style="text-transform:uppercase" maxlength="40" />
 				            
 				            <p:outputLabel  value="Address Line 3" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine3}" style="text-transform:uppercase"  />
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine3}" style="text-transform:uppercase" maxlength="40" />
 				            <p:outputLabel  value="Address Line 4" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine4}" style="text-transform:uppercase"  />
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.addressLine4}" style="text-transform:uppercase" maxlength="40" />
 				            
 				            <p:outputLabel  value="Post Code" />
 				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.postcode}"  style="width:50%"/>
 				            <p:outputLabel  value="City" />
-				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.city}" style="width:50%; text-transform:uppercase"/>
+				            <p:inputText value="#{propertyUnitUpdateBean.selectedDto.address.city}" style="width:50%; text-transform:uppercase" maxlength="20"/>
 				           
 				            <p:outputLabel id="stateTxt" value="State" />
 				            <p:selectOneMenu id="stateTypeList" value="#{propertyUnitUpdateBean.selectedDto.address.state}"  requiredMessage="Please Select Any State"

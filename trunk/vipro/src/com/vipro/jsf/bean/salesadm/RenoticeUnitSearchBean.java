@@ -306,7 +306,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		if(newValue){
 			if(index > 0){
 				BillingModelStageDTO prevDto =  getSelectedDto().getStageDtoList().get(index-1);
-				if(!prevDto.isBillMe() && !ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())){
+				if(!prevDto.isBillMe() && !ProgressiveBillingConst.STAGE_RENOTICED.equals(prevDto.getStatus())){
 					CommonBean.addErrorMessage("Cannot Skip Stages", "All Previous Stages must be selected before this!");
 					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
 					 chckbox.setValue(false);;
@@ -331,7 +331,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	
 	/************** Renotice Actions *********************/
 	public void onRenoticeAction() {
-		 boolean isTrue = false, isRightSelection = false;	
+		 boolean isRightSelection = false;	
 		 
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
@@ -339,22 +339,20 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		 BigDecimal amountTtl = new BigDecimal(0);
 		 BigDecimal percentTtl = new BigDecimal(0);
 		for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
-			 if(dto.isBillMe()){
-				 isTrue = true;
-				 if(ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus())){
+			if(!dto.isBillMe() && (ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus()))){
+				isRightSelection = false;
+				break;
+			}			
+			if(dto.isBillMe()){
 					 isRightSelection = true;
 					 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
 					 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
 					 // System.out.println("==============is True for :"+dto.getBillingModel().getStage());
 					 selectedStageDtoList.add(dto);				 
-				 }else{
-					 isRightSelection = false;
-					 break;
-				 }
 			 }
 			 
 		}
-		if(!selectedStageDtoList.isEmpty()){
+		if(!selectedStageDtoList.isEmpty() && isRightSelection){
 			sumDTO.getBillingModel().setBillingPercentage(percentTtl);
 			sumDTO.getProgressiveBilling().setAmountBilled(amountTtl);
 			sumDTO.getBillingModel().setDescription("Total");
@@ -367,9 +365,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			
 		}
 		
-		if(!isTrue){
-			 CommonBean.addInfoMessage("Invalid Renotice Selection","Please select all paid and  billed for renotice billing.");
-		}else if(!isRightSelection){
+		if(!isRightSelection){
 			CommonBean.addInfoMessage("Invalid Renotice Selection","Please select all paid & billed for renotice billing");
 		}else{
 			RequestContext.getCurrentInstance().execute("dlg3.show()");

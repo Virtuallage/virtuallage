@@ -76,7 +76,7 @@ Sales Commission
 	    	<h:outputText value="#{salesCommissionVerification.PriceDecimalFormat(salesCommissionVerification.GetClaimAmountByPercent(c.accountId, c.commissionAmount))}" style="color:#{salesCommissionVerification.GetFontColorByAttendedBy(c.attendedBy)}"/>
 		</p:column>
 		
-		<p:column headerText="Actions">
+		<p:column headerText="Action">
 			<p:commandButton action="#{salesCommissionVerification.selectAccount}" ajax="false" icon="ui-icon-check" title="Select">
 	  			<f:setPropertyActionListener value="#{c}" target="#{salesCommissionVerification.salesCommissionAccount}" />  
 			</p:commandButton>  

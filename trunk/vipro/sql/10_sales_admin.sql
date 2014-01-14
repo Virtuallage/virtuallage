@@ -104,12 +104,6 @@ INSERT INTO vipro.seq_no (seq_type, next_seq)
 INSERT INTO vipro.seq_no (seq_type, next_seq)
      VALUES ('SNRNB', 1);
 
--- Progressive Billing Status Code
-INSERT INTO code_header VALUES ('PB', 'Progressive Billing Status');
-INSERT INTO code_det VALUES ('PB', 'PBACT', 'Active', 'SSACT');
-INSERT INTO code_det VALUES ('PB', 'PBCLS', 'Closed - Refunded', 'SSACT');
-INSERT INTO code_det VALUES ('PB', 'PBCXN', 'Cancelled', 'SSACT');
-
 -- Add due days into Project File
 alter table vipro.project add due_days integer after developer_id;
 
@@ -121,9 +115,6 @@ ALTER TABLE vipro.project
       REFERENCES vipro.user_profile (user_id);
 
 update `vipro`.`project` set `due_days`='14' where `project_id`='1';
-
-insert into `vipro`.`transaction_code` ( `transaction_code`, `name`, `code_type`, `accounting_group`, `status` ) 
-     values (  '500001',  'Progressive Billing',  'DR',  NULL,  'SSACT' )
 
 ALTER TABLE `vipro`.`transaction_history` CHANGE `ref_no` `ref_no` VARCHAR(50) CHARSET latin1 COLLATE latin1_swedish_ci NULL;
 
@@ -153,11 +144,11 @@ alter table vipro.account add borrower_id2 BIGINT after borrower_id1;
 UPDATE vipro.customer SET created_by = NULL WHERE customer_id <= 300;
 ALTER TABLE vipro.customer CHANGE COLUMN created_by created_by BIGINT(20) NULL;
 
-INSERT INTO `vipro`.`transaction_code` (`transaction_code`, `name`, `code_type`, `accounting_group`, `status`) 
-    VALUES ('510001', 'Reversal Progressive Billing', 'DR', NULL, 'SSACT'); 
-
 -- 041213 by Bill Add new USer Group (Joyce only)
-INSERT INTO vipro.user_group VALUES ('PIC_ADM', 'Admin to Sales PIC Group', 'SSACT');
 UPDATE vipro.user_profile SET group_id = 'PIC_ADM' where user_id = 15;
 
+
+			
+
+     
 

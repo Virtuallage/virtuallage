@@ -79,12 +79,12 @@
 								sortBy="#{dto.customer.fullName}">
 								<p:outputLabel value="#{dto.customer.fullName}" />
 							</p:column>
-							<p:column headerText="PT No" sortBy="#{dto.projectInvetory.ptNo}">
-								<p:outputLabel value="#{dto.projectInvetory.ptNo}" />
-							</p:column>
 							<p:column headerText="HSD No"
 								sortBy="#{dto.projectInvetory.hsdNo}">
 								<p:outputLabel value="#{dto.projectInvetory.hsdNo}" />
+							</p:column>
+							<p:column headerText="PT No" sortBy="#{dto.projectInvetory.ptNo}">
+								<p:outputLabel value="#{dto.projectInvetory.ptNo}" />
 							</p:column>
 							<p:column headerText="Stage" sortBy="#{dto.stageNo}"
 								style="text-align:center">
@@ -112,10 +112,10 @@
 								<p:outputLabel value="#{dto.statusDesc}" />
 							</p:column>
 
-							<p:column style="width:4%">
-								<p:commandButton id="selectDTOBtn"
+							<p:column headerText="Action" style="width:4%">
+								<p:commandButton id="selectDTOBtn" 
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-search" title="View"
+									icon="ui-icon-check" title="Select this Unit for Billing"
 									action="#{progressiveBillingUnitSearchBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{progressiveBillingUnitSearchBean.selectedDto}" />

@@ -152,35 +152,35 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[Renotice No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="78" y="0" width="427" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="78" y="0" width="427" height="12"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{OurRef}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="d/M/yyyy" isBlankWhenNull="true">
-				<reportElement x="78" y="44" width="231" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="78" y="44" width="231" height="12"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{CurrentDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="78" y="12" width="427" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="78" y="12" width="427" height="12"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FinancierRef}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd MMMMM yyyy" isBlankWhenNull="true">
-				<reportElement x="78" y="26" width="427" height="12"/>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="78" y="26" width="427" height="12"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{la_ref_no}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{la_ref_no}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="382" y="44" width="123" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="382" y="44" width="123" height="12"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -254,14 +254,14 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[Unit No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="35" y="98" width="79" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="35" y="98" width="79" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[P.T. (D/M) No.     ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="35" y="110" width="79" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="35" y="113" width="79" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -289,42 +289,42 @@ AND t.invoice_no Like $P{invoiceNo}
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{ProjectName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="133" y="36" width="377" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="133" y="36" width="377" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PropertyTypeDesc}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="133" y="48" width="377" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="133" y="48" width="377" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{UnitNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="133" y="98" width="133" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="133" y="98" width="133" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PtNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="276" y="98" width="69" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="276" y="98" width="69" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[H.S.(D/M) No.    ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="356" y="98" width="154" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="356" y="98" width="154" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{HSDNo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="150" y="110" width="116" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="150" y="112" width="116" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -369,14 +369,14 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="117" y="98" width="13" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="117" y="98" width="13" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="117" y="110" width="13" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="117" y="112" width="13" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -397,7 +397,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="343" y="98" width="13" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="343" y="98" width="13" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -420,35 +420,35 @@ AND t.invoice_no Like $P{invoiceNo}
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_brorrower.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="276" y="110" width="67" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="276" y="112" width="67" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Loan Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="343" y="110" width="13" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="343" y="112" width="13" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="110" width="137" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="373" y="112" width="137" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{loan_amount}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="356" y="110" width="16" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="356" y="112" width="16" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{CurrencySymbol}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="133" y="110" width="16" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="133" y="112" width="16" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -487,7 +487,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[This document is computer generated, no signature is required.]]></text>
 			</staticText>
 			<textField pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement x="0" y="14" width="486" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="14" width="486" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -512,7 +512,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[CC :]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="35" y="4" width="241" height="24"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="35" y="4" width="241" height="24"/>
 				<subreportParameter name="partner_id">
 					<subreportParameterExpression><![CDATA[$F{spa_solicitor_id}]]></subreportParameterExpression>
 				</subreportParameter>

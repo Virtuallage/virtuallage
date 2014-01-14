@@ -40,10 +40,10 @@ Project Setup
             </h:outputText>
         </p:column>  
   
-        <p:column headerText="Type" sortBy="#{c.layoutType}">  
-           <h:outputText value="#{c.layoutType}"/>
+        <p:column headerText="Type" sortBy="#{projectSetup.getCodeDesc('LT', c.layoutType)}">  
+           <h:outputText value="#{projectSetup.getCodeDesc('LT', c.layoutType)}"/>
         </p:column>  
-        
+         
         <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}" style="text-align:right">  
            	<h:outputText value="#{c.builtUpArea}" >
           	 	<f:convertNumber pattern="#,##0"/>

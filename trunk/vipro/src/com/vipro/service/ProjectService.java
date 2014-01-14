@@ -3,9 +3,12 @@ package com.vipro.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+
+
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.dto.AdviseUpdateDetailsDTO;
+import com.vipro.dto.PaymentEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
@@ -21,6 +24,7 @@ public interface ProjectService {
 
 	public List<AdviseUpdateDetailsDTO> getAdviseUpdateDetailsDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
 	public List<ProgressiveBillingUnitSeachDTO> getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
+	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
 	public List<ProjectInventory> findInventories(Long projectId);
 	
 	public void insert(Project p);

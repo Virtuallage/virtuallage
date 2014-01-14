@@ -18,7 +18,7 @@ WHERE a.account_id =$P{account_id}]]>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="1" width="358" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="1" width="358" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>

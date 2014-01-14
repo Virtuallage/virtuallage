@@ -1,18 +1,20 @@
 package com.vipro.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.vipro.data.Account;
 import com.vipro.data.ProgressiveBilling;
 import com.vipro.dto.BillingModelStageDTO;
 import com.vipro.dto.ChangeAddressDTO;
+import com.vipro.dto.PaymentEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 
 public interface ProgressiveBillingService {
 
 	
 	public List<ProgressiveBilling> getProgressiveBilling(Long accountId);
-	
+		
 	public void insert(ProgressiveBilling p);
 	
 	public void update(ProgressiveBilling p);
@@ -29,6 +31,7 @@ public interface ProgressiveBillingService {
 	
 	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
 	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
+	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo);
 	
 	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId);
 	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo,String accountId);

@@ -86,7 +86,7 @@ public class CaseAlert extends CommonBean{
 
 			newCase = caseService.findByProject(caseType, projectId, accountId);
 			
-			if(newCase.getStatus() != "CSCLS"){
+			if(newCase.getStatus() != CaseStatus.CLOSED){
 				newCase.setStatus(status);
 
 				caseActivity = new CaseActivity();
@@ -115,16 +115,16 @@ public class CaseAlert extends CommonBean{
 
 			newCase = caseService.findByProject(caseType, projectId, accountId);
 
-			if(newCase.getStatus().equalsIgnoreCase("CSSMT")){
+			if(newCase.getStatus().equalsIgnoreCase(CaseStatus.SUBMITTED)){
 
-				newCase.setStatus("CSOPN");
+				newCase.setStatus(CaseStatus.OPEN);
 
 				caseActivity = new CaseActivity();
 				caseActivity.setCase(newCase);
 				caseActivity.setActionBy(currentUser);
 				caseActivity.setActionCode(caseType);
 				caseActivity.setActionTime(new Date());
-				caseActivity.setAction("CSOPN");
+				caseActivity.setAction(CaseStatus.OPEN);
 				caseService.insertActivity(caseActivity);
 
 				caseService.update(newCase);
@@ -183,7 +183,7 @@ public class CaseAlert extends CommonBean{
 				else
 					newCase.setStatus(cr.getNextAction());
 
-				if(status.equalsIgnoreCase("CSREJ"))
+				if(status.equalsIgnoreCase(CaseStatus.REJECTED))
 					newCase.setAssignee(newCase.getSender());
 			}
 

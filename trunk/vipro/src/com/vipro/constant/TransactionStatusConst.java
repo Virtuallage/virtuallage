@@ -14,4 +14,5 @@ public class TransactionStatusConst {
 	public static final String TRANSACTION_PENDING = "TSPEN";
 	
 	public static final String TRANSACTION_POSTED = "TSPOS";
+	public static final String TRANSACTION_COMPLETED = "TSCOM";
 }

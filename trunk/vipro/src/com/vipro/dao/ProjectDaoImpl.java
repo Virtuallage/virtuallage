@@ -14,8 +14,10 @@ import com.vipro.constant.*;
 import com.vipro.data.ProgressiveBilling;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.dto.AdviseUpdateDetailsDTO;
+import com.vipro.dto.PaymentEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 
@@ -86,6 +88,32 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		if (list != null && list.size()>0) {
 			for (Object[] ob : list) {
 				AdviseUpdateDetailsDTO dto = new AdviseUpdateDetailsDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2],findUserNameByUserId((Long)ob[4]));
+				resultList.add(dto);
+			}	
+		}
+		return resultList;
+	}
+	
+	
+	@Override
+	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		List<PaymentEntryDTO> resultList = new ArrayList<PaymentEntryDTO>();
+		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy, th from ProjectInventory o,  Account a, TransactionHistory th" +
+				" where o.project.projectId=?  ");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
+		query.append(" and a.accountId = th.account.accountId " )
+		.append(" and th.transactionCode.transactionCode IN ("+TransactionCodeConst.ADD_PROGRESSIVE_BILLING +","+TransactionCodeConst.RENOTICE_BILLING+" ) ")
+		.append(" and th.status in ( '"+TransactionStatusConst.TRANSACTION_PENDING+"', '"+TransactionStatusConst.TRANSACTION_POSTED+"' ) ")
+		.append(" and th.txnReversalId is NULL " );
+		
+		if (!StringUtils.isEmpty(UnitNo)){
+			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
+		}
+		query.append(" order by o.unitNo , th.invoiceNo ");
+		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
+		if (list != null && list.size()>0) {
+			for (Object[] ob : list) {
+				PaymentEntryDTO dto = new PaymentEntryDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2],findUserNameByUserId((Long)ob[4]),(TransactionHistory)ob[5]);
 				resultList.add(dto);
 			}	
 		}

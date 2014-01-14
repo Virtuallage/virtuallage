@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CaseStatus;
 import com.vipro.constant.CodeConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
@@ -72,6 +73,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listProject = null;
 	private List<SelectItem> listSpecial = null;
+	private List<SelectItem> listLayoutType = null;
 	
 	private List<SelectItem> listBank = null;
 	private List<SelectItem> listPaymentMethod = null;
@@ -156,6 +158,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		listMediaSource = CodeUtil.getCodes("ME");
 		listProject = CodeUtil.getProjectAsItems();
 		listSpecial = CodeUtil.getCodes("SH");		
+		listLayoutType = CodeUtil.getCodes("LT");		
 		listBank = CodeUtil.getCodes("BK");
 		listPaymentMethod = CodeUtil.getCodes("PM");
 	}
@@ -1113,7 +1116,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			
 			trx.setTransactionDate(new Date());
 			trx.setAccount(account);
-			trx.setTransactionDescription("Booking Fee");
+			trx.setTransactionDescription("BOOKING FEE");
 			trx.setStatus(TransactionStatusConst.PENDING);
 			trx.setAmount(account.getBookPymtAmount());
 			trx.setBank(account.getBookPymtBank());
@@ -1167,8 +1170,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		salesRegTabView.setActiveIndex(1);
 
 		CaseAlert caseAlert = new CaseAlert();
-		caseAlert.insertCase("CYPAY", projectId, account.getAccountId(),
-				attendedBy, selectedCustomer, "CSSMT", null, null);
+		caseAlert.insertCase(CaseStatus.PAID_BOOKING_FEE, projectId, account.getAccountId(),
+				attendedBy, selectedCustomer, CaseStatus.SUBMITTED, null, null);
 		
 		return "salesRegistration";
 	//	return selectInventory();
@@ -1415,5 +1418,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setListSpecial(List<SelectItem> listSpecial) {
 		this.listSpecial = listSpecial;
+	}
+
+	public List<SelectItem> getListLayoutType() {
+		return listLayoutType;
+	}
+
+	public void setListLayoutType(List<SelectItem> listLayoutType) {
+		this.listLayoutType = listLayoutType;
 	}
 }

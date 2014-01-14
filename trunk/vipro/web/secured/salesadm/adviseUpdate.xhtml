@@ -68,8 +68,8 @@
             				<f:convertDateTime pattern="#{adviseUpdateBean.dateFormat}" ></f:convertDateTime>
             			</h:outputText>    
         			</p:column>
-        			<p:column style="width:4%">  
-			                <p:commandButton id="selectDTOBtn" update=":dialogForm:dialogPanel" oncomplete="dlg.show()" icon="ui-icon-search" title="View" >  
+        			<p:column headerText="Action" style="width:4%">  
+			                <p:commandButton id="selectDTOBtn" update=":dialogForm:dialogPanel" oncomplete="dlg.show()" icon="ui-icon-pencil" title="Update Advise" >  
 			                	<f:setPropertyActionListener value="#{dto}" target="#{adviseUpdateBean.selectedDto}" />  
 			            </p:commandButton>  
 			        </p:column> 

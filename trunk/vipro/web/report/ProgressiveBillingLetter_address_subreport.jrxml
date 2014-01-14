@@ -39,14 +39,14 @@ WHERE
 	<detail>
 		<band height="37" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="555" height="14"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="14"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()                       ]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{company_name}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="17" width="555" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="17" width="555" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>

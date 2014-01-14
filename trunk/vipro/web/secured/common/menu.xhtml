@@ -11,9 +11,9 @@
     <h:form>
     <p:menubar autoDisplay="false">
     	<p:submenu label="My Desk" icon="ui-icon-lightbulb">
-    		<p:menuitem value="My Work Queue" target="/secured/mydesk/listCase.xhtml" 
+     		<p:menuitem value="My Work Queue" target="/secured/mydesk/listCase.xhtml" 
     		 ajax="false" action="#{myDesk.listCases}" icon="ui-icon-script"/>
-    	</p:submenu>
+     	</p:submenu>
     	
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Setup">
@@ -42,8 +42,8 @@
     		<p:menuitem value="Sales Info Update" url="/secured/salesadm/update/updatePropertyList.xhtml" />
     		<p:menuitem value="Advise Update" url="/secured/salesadm/adviseUpdate.xhtml" />
     		<p:menuitem value="Progessive Billing" url="/secured/salesadm/progressiveBillingUnitSearch.xhtml" />
-    		<p:menuitem value="Renotice" url="/secured/salesadm/renoticeUnitSearch.xhtml" />
-    		<p:menuitem value="Payment Entry" url="#" />
+       		<p:menuitem value="Renotice" url="/secured/salesadm/renoticeUnitSearch.xhtml" /> 
+	   	 	<p:menuitem value="Payment Entry" url="/secured/salesadm/paymentEntrySearch.xhtml"  />
     	</p:submenu>
     	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Purchaser Information - Individual" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />

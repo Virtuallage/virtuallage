@@ -37,10 +37,10 @@ Sales Registration
             <h:outputText value="#{c.unitNo}">
             </h:outputText>
         </p:column>  
-  
-        <p:column headerText="Type" sortBy="#{c.layoutType}">  
-           <h:outputText value="#{c.layoutType}"/>
-        </p:column>  
+                  
+        <p:column headerText="Type" sortBy="#{salesRegister.getCodeDesc('LT', c.layoutType)}">  
+           <h:outputText value="#{salesRegister.getCodeDesc('LT', c.layoutType)}"/>
+        </p:column>
         
         <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}" style="text-align:right">  
            <h:outputText value="#{c.builtUpArea}">
