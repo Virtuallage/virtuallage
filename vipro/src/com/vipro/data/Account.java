@@ -234,7 +234,7 @@ public class Account implements java.io.Serializable {
 
 	public BigDecimal getAccountBalanceNotNull() {
 		if(accountBalance == null)
-			return new BigDecimal(0l);
+			return BigDecimal.ZERO;
 		return accountBalance;
 	}
 	public void setAccountBalance(BigDecimal accountBalance) {
@@ -431,7 +431,7 @@ public class Account implements java.io.Serializable {
 	
 	public BigDecimal getTotalPaymentTodateNotNull() {
 		if(totalPaymentTodate == null)
-			return new BigDecimal(0l);
+			return BigDecimal.ZERO;
 		return totalPaymentTodate;
 	}
 
@@ -450,6 +450,11 @@ public class Account implements java.io.Serializable {
 	public BigDecimal getBankRedemptionSum() {
 		return this.bankRedemptionSum;
 	}
+	public BigDecimal getBankRedemptionSumNotNull() {
+		if(bankRedemptionSum == null)
+			return BigDecimal.ZERO;
+		return this.bankRedemptionSum;
+	}
 
 	public void setBankRedemptionSum(BigDecimal bankRedemptionSum) {
 		this.bankRedemptionSum = bankRedemptionSum;
@@ -457,6 +462,12 @@ public class Account implements java.io.Serializable {
 
 	public BigDecimal getBankRedemptionTodate() {
 		return this.bankRedemptionTodate;
+	}
+	
+	public BigDecimal getBankRedemptionTodateNotNull() {
+		if(bankRedemptionTodate == null)
+			return BigDecimal.ZERO;
+		return bankRedemptionTodate;
 	}
 
 	public void setBankRedemptionTodate(BigDecimal bankRedemptionTodate) {

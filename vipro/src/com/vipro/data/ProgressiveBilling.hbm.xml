@@ -11,6 +11,9 @@
         <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
             <column name="account_id" not-null="true" />
         </many-to-one>
+        <property name="txnReversalId" type="java.lang.Long">
+            <column name="txn_reversal_id"  />
+        </property>
         <property name="seqNo" type="java.lang.Byte">
             <column name="seq_no" precision="2" scale="0" />
         </property>
@@ -49,6 +52,9 @@
         </property>
         <property name="status" type="string">
             <column name="status" length="5" />
+        </property>
+        <property name="partialPaidAmount" type="big_decimal">
+            <column name="partial_paid_amount" precision="9" />
         </property>
     </class>
 </hibernate-mapping>

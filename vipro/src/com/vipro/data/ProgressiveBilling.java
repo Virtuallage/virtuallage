@@ -25,6 +25,8 @@ public class ProgressiveBilling implements java.io.Serializable {
 	private Date datePaid;
 	private BigDecimal overdueInterest;
 	private String status;
+	private Long txnReversalId;
+	private BigDecimal partialPaidAmount;
 
 	public ProgressiveBilling() {
 	}
@@ -53,6 +55,7 @@ public class ProgressiveBilling implements java.io.Serializable {
 		this.status = status;
 	}
 
+	
 	public Long getScheduleId() {
 		return this.scheduleId;
 	}
@@ -171,6 +174,28 @@ public class ProgressiveBilling implements java.io.Serializable {
 
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
+	}
+
+	public Long getTxnReversalId() {
+		return txnReversalId;
+	}
+
+	public void setTxnReversalId(Long txnReversalId) {
+		this.txnReversalId = txnReversalId;
+	}
+
+	public BigDecimal getPartialPaidAmountNotNull() {
+		if(partialPaidAmount == null){
+			return BigDecimal.ZERO;
+		}
+		return partialPaidAmount;
+	}
+	public BigDecimal getPartialPaidAmount() {
+		return partialPaidAmount;
+	}
+
+	public void setPartialPaidAmount(BigDecimal partialPaidAmount) {
+		this.partialPaidAmount = partialPaidAmount;
 	}
 
 }

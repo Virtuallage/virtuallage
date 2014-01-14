@@ -47,7 +47,7 @@
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
 									<p:inputText id="unitTxt"
-										value="#{renoticeUnitSearchBean.unit}" style="text-transform:uppercase"/>
+										value="#{renoticeUnitSearchBean.unit}" />
 								</p:column>
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
@@ -230,11 +230,13 @@
 											<p:outputLabel value="#{dto.status}" />
 										</p:column>
 										<p:column headerText="Action" style="width:10%; text-align:center" >											  
-												<p:selectBooleanCheckbox id="stageId" 
-													value="#{dto.billMe}" >
+												<p:selectBooleanCheckbox id="stageId" rendered="#{dto.status.equals('Billed') or dto.status.equals('Paid') }"
+													value="#{dto.billMe}" 
+													valueChangeListener="#{renoticeUnitSearchBean.onStageSelection}">
 													<p:ajax update=":dialogForm:growl,:dialogForm:stagesDT" />
 													<f:attribute name="index" value="#{index}"  />  
 												</p:selectBooleanCheckbox>
+												
 										</p:column>
 									</p:dataTable>
 									<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
@@ -425,20 +427,20 @@
 									<h:panelGrid columns="4" cellpadding="4" width="100%"
 										rendered="#{addressDto.corrAddress }">
 										<p:outputLabel value="Billing Address 1" />
-										<p:inputText value="#{addressDto.address.addressLine1}" style="text-transform:uppercase"/>
+										<p:inputText value="#{addressDto.address.addressLine1}" />
 										<p:outputLabel value="Billing Address 2" />
-										<p:inputText value="#{addressDto.address.addressLine2}" style="text-transform:uppercase"/>
+										<p:inputText value="#{addressDto.address.addressLine2}" />
 
 										<p:outputLabel value="Billing Address 3" />
-										<p:inputText value="#{addressDto.address.addressLine3}" style="text-transform:uppercase"/>
+										<p:inputText value="#{addressDto.address.addressLine3}" />
 										<p:outputLabel value="Billing Address 4" />
-										<p:inputText value="#{addressDto.address.addressLine4}" style="text-transform:uppercase"/>
+										<p:inputText value="#{addressDto.address.addressLine4}" />
 
 										<p:outputLabel value="Post Code" />
 										<p:inputText value="#{addressDto.address.postcode}"
 											style="width:50%" />
 										<p:outputLabel value="City" />
-										<p:inputText value="#{addressDto.address.city}" style="text-transform:uppercase"/>
+										<p:inputText value="#{addressDto.address.city}" />
 
 										<p:outputLabel id="stateTxt2" value="State" />
 										<p:selectOneMenu id="stateTypeList2"

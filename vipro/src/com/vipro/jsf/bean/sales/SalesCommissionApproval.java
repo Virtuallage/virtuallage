@@ -23,6 +23,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 
 import com.vipro.data.Project;
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.CaseStatus;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.ClaimStatusConst;
@@ -333,16 +334,16 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					code.setTransactionCode(TransactionCodeConst.COMMISSION_FEE);
 					transactionHistory.setTransactionCode(code);
 					transactionHistory.setTransactionDate(currentDate);
-					transactionHistory.setTransactionDescription("Commission Fee");
+					transactionHistory.setTransactionDescription("COMMISSION FEE");
 					transactionHistory.setStatus(TransactionStatusConst.PENDING);
-					transactionHistory.setAmount(totalClaimAmount);
+					transactionHistory.setAmount(history.getClaimAmount());
 					transactionHistory.setAccount(salesCommissionAccount);
 					transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
 					transactionHistoryService.insert(transactionHistory);
 				}
 
 				CaseAlert caseAlert = new CaseAlert();
-				caseAlert.updateCase("CYCOM", salesCommissionHistory.getProjectId(), accountId,	
+				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, salesCommissionHistory.getProjectId(), accountId,	
 						currentUser, "CSAPP", null, null);
 			}
 			

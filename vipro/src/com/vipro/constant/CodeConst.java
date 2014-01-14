@@ -21,4 +21,9 @@ public interface CodeConst {
 	public static final String STATUS = "SS";
 	
 	public static final String PROPERTY_TITLE = "PE";
+	
+	public static final String BANK_NAME = "BK";
+	
+	public static final String PAYMENT_METHOD = "PM";
+	
 }

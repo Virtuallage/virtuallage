@@ -16,6 +16,7 @@ import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
 import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
@@ -68,6 +69,8 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> propertyStatusList;
 	private List<SelectItem> titleTypeList;
 	private List<SelectItem> orientationList;
+	private List<SelectItem> layoutTypeList;
+	private List<SelectItem> facingList;
 
 	public ProjectSetup() {
 
@@ -83,6 +86,8 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		propertyStatusList = CodeUtil.getPropertyStatusAsItems();
 		titleTypeList = CodeUtil.getCodes("PL");
 		orientationList = CodeUtil.getCodes("OR");
+		layoutTypeList = CodeUtil.getCodes("LT");
+		facingList = CodeUtil.getCodes("FC");
 		statusList = CodeUtil.getCodes("SS");
 		institutions = CodeUtil.getInstitutionAsItems();
 		developers = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.DEVELOPER);
@@ -658,6 +663,22 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	public void setDevelopers(List<SelectItem> developers) {
 		this.developers = developers;
+	}
+
+	public List<SelectItem> getLayoutTypeList() {
+		return layoutTypeList;
+	}
+
+	public void setLayoutTypeList(List<SelectItem> layoutTypeList) {
+		this.layoutTypeList = layoutTypeList;
+	}
+
+	public List<SelectItem> getFacingList() {
+		return facingList;
+	}
+
+	public void setFacingList(List<SelectItem> facingList) {
+		this.facingList = facingList;
 	}
 
 }

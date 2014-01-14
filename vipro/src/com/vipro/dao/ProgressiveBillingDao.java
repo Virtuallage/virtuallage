@@ -9,7 +9,9 @@ public interface ProgressiveBillingDao extends Dao<ProgressiveBilling>{
 
 	public List<ProgressiveBilling> findByAccountId(Long accountId);
 	
-	public boolean updateProgressiveBillingStatus(Long accountId,String to, String[] from);
+	public List<ProgressiveBilling> findByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+	
+	public boolean updateProgressiveBillingStatus(Long accountId, String to, String[] from, String[] stagesNos, Long txReversalId);
 		
 	public ProgressiveBilling findById(Long id);
 	

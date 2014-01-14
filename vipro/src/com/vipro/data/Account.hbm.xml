@@ -45,13 +45,13 @@
             <column name="date_purchased" length="10" />
         </property>
         <property name="purchasePrice" type="big_decimal">
-            <column name="purchase_price" precision="9" />
+            <column name="purchase_price" precision="11" />
         </property>
           <property name="accountBalance" type="big_decimal">
-            <column name="account_balance" precision="9" />
+            <column name="account_balance" precision="11" />
         </property>
         <property name="discountedAmount" type="big_decimal">
-            <column name="discounted_amount" precision="7" />
+            <column name="discounted_amount" precision="11" />
         </property>
         <property name="commissionAmount" type="big_decimal">
             <column name="commission_amount" precision="7" />
@@ -60,7 +60,7 @@
             <column name="commission_paid_date" length="10" />
         </property>
         <property name="netPrice" type="big_decimal">
-            <column name="net_price" precision="9" />
+            <column name="net_price" precision="11" />
         </property>
         <property name="purchaseType" type="string">
             <column name="purchase_type" length="5" />
@@ -72,7 +72,7 @@
             <column name="panel_bank_id" />
         </property>
         <property name="loanAmount" type="big_decimal">
-            <column name="loan_amount" precision="9" />
+            <column name="loan_amount" precision="11" />
         </property>
         <property name="latePymtIntRate" type="big_decimal">
             <column name="late_pymt_int_rate" precision="5" />
@@ -84,16 +84,16 @@
             <column name="accrual_interest" precision="7" />
         </property>
         <property name="totalPaymentTodate" type="big_decimal">
-            <column name="total_payment_todate" precision="9" />
+            <column name="total_payment_todate" precision="11" />
         </property>
         <property name="redemptionBankId" type="java.lang.Long">
             <column name="redemption_bank_id" />
         </property>
         <property name="bankRedemptionSum" type="big_decimal">
-            <column name="bank_redemption_sum" precision="9" />
+            <column name="bank_redemption_sum" precision="11" />
         </property>
         <property name="bankRedemptionTodate" type="big_decimal">
-            <column name="bank_redemption_todate" precision="9" />
+            <column name="bank_redemption_todate" precision="11" />
         </property>
         <property name="spaSignedDate" type="date">
             <column name="spa_signed_date" length="10" />

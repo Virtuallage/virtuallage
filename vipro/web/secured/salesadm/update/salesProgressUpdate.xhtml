@@ -134,9 +134,9 @@ Sales Update
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
 			
-			<p:outputLabel value="LO Date"/>
+			<p:outputLabel value="LO Signed Date"/>
    			<p:calendar id="loDate" value="#{propertyUnitUpdate.account.loSignedDate}" pattern="dd/MM/yyyy" showOn="button"/>
-			<p:outputLabel value="LO Accepted Date"/>
+			<p:outputLabel value="LO Verified Date"/>
 			<h:panelGroup>
 				<p:calendar id="loAcceptedDate" value="#{propertyUnitUpdate.account.loVerifiedDate}" pattern="dd/MM/yyyy" showOn="button"/>
 				&nbsp;&nbsp;
@@ -298,11 +298,11 @@ Sales Update
 	<p:dialog header="Search Customer" widgetVar="dlgSearchCust"  modal="true" height="400" width="600"  showEffect="fade" hideEffect="fade"> 
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Name" for="searchName"/>
-			<p:inputText id="searchName" length="60" size="30" value="#{propertyUnitUpdate.searchName}" autocomplete="off"/>
+			<p:inputText id="searchName" length="60" size="30" value="#{propertyUnitUpdate.searchName}" autocomplete="off" style="text-transform:uppercase"/>
 
 			<p:outputLabel value="ID No." for="searchIdNo"/>
 			<h:panelGroup>
-				<p:inputText id="searchIdNo" length="15" size="20" value="#{propertyUnitUpdate.searchIdNo}" autocomplete="off"/>			
+				<p:inputText id="searchIdNo" length="15" size="20" value="#{propertyUnitUpdate.searchIdNo}" autocomplete="off" style="text-transform:uppercase"/>			
 				&nbsp;
 				<p:commandButton  value="Search" action="#{propertyUnitUpdate.searchCustomer}" update="searchCustForm:custs"/>
 			</h:panelGroup>

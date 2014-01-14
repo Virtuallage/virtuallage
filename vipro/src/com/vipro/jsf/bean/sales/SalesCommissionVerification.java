@@ -29,6 +29,7 @@ import org.primefaces.model.StreamedContent;
 import com.vipro.data.Project;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
+import com.vipro.constant.CaseStatus;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -459,8 +460,8 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				salesCommissionHistoryService.update(history);
 				
 				CaseAlert caseAlert = new CaseAlert();
-				caseAlert.updateCase("CYCOM", project.getProjectId(), salesCommissionAccount.getAccountId(),
-						currentUser, "CSREJ", null, null);
+				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, project.getProjectId(), salesCommissionAccount.getAccountId(),
+						currentUser, CaseStatus.REJECTED, null, null);
 				
 				addInfoMessage("Sales Commission Verification", "Commission Rejected.");
 				return submitAgain();
@@ -497,9 +498,9 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 						currentUser);
 				
 				CaseAlert caseAlert = new CaseAlert();
-				caseAlert.updateCase("CYCOM", project.getProjectId(), 
+				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, project.getProjectId(), 
 						salesCommissionAccount.getAccountId(),	
-						currentUser, "CSVER", null, null);
+						currentUser, CaseStatus.VERIFIED, null, null);
 				
 				addInfoMessage("Sales Commission Verification", "Commission Approved.");
 				return submitAgain();

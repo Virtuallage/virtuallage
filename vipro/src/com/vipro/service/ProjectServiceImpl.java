@@ -14,6 +14,7 @@ import com.vipro.dao.ProjectInventoryDao;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.dto.AdviseUpdateDetailsDTO;
+import com.vipro.dto.PaymentEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
@@ -384,4 +385,8 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 			Long projectId, String UnitNo) {
 		return projectDao.getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(projectId, UnitNo);
 		}
+	@Override
+	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		return projectDao.getPaymentEntryDTOListByProjectIdAndUnit(projectId, UnitNo);
+	}
 }

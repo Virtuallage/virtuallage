@@ -26,7 +26,7 @@ Sales Update
 				<h:outputText value="Project Name" />
 			</p:column>
 			<p:column style="width:30%;text-align:left;">
-					<p:selectOneMenu id="projectList" value="#{propertyUnitUpdate.projectId}" 
+					<p:selectOneMenu id="projectList" value="#{propertyUnitUpdate.projectId}" requiredMessage="Project Name is mandatory"
 						 required="true" style="width:200px">  
 						<f:selectItems value="#{propertyUnitUpdate.listProject}" />
 					</p:selectOneMenu>
@@ -85,7 +85,7 @@ Sales Update
 	  		</h:outputText>
 		</p:column>
 	        
-	  	<p:column headerText="Actions">
+	  	<p:column headerText="Action">
 			<p:commandButton action="#{propertyUnitUpdate.selectAccount}" ajax="false" icon="ui-icon-pencil" title="Edit">
 	  			<f:setPropertyActionListener value="#{c}" target="#{propertyUnitUpdate.account}" />  
 			</p:commandButton>  

@@ -28,7 +28,7 @@ AND co.code_header_id = 'ST']]>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="280" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="280" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -38,7 +38,7 @@ AND co.code_header_id = 'ST']]>
 		<band height="14">
 			<printWhenExpression><![CDATA[!$F{address_line_1}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="2" width="280" height="12">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="2" width="280" height="12">
 					<printWhenExpression><![CDATA[!$F{address_line_1}.equals( null )]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -50,7 +50,7 @@ AND co.code_header_id = 'ST']]>
 		<band height="12">
 			<printWhenExpression><![CDATA[!$F{address_line_2}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="280" height="12">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="280" height="12">
 					<printWhenExpression><![CDATA[!$F{address_line_2}.equals( null )]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -62,7 +62,7 @@ AND co.code_header_id = 'ST']]>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{address_line_3}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="280" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="280" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
@@ -72,7 +72,7 @@ AND co.code_header_id = 'ST']]>
 		<band height="12">
 			<printWhenExpression><![CDATA[!$F{address_line_4}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="0" y="0" width="280" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="280" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
@@ -81,14 +81,14 @@ AND co.code_header_id = 'ST']]>
 		</band>
 		<band height="29">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="280" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="280" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{postcode}+" "+$F{city}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="14" width="280" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="14" width="280" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
@@ -97,14 +97,14 @@ AND co.code_header_id = 'ST']]>
 		</band>
 		<band height="17">
 			<staticText>
-				<reportElement x="0" y="1" width="27" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="1" width="27" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ref: ]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="27" y="0" width="253" height="12"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="27" y="0" width="253" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>

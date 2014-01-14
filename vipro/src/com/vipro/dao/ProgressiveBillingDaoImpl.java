@@ -18,11 +18,23 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		return getHibernateTemplate().find(query, accountId);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<ProgressiveBilling> findByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
+		String fString ="";
+		for (int i = 0; i < statuses.length; i++) {
+			fString = fString+"'"+statuses[i]+"',";
+		}
+		fString = fString.substring(0, fString.length()-1);
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status in ("+fString+") ";
+		return getHibernateTemplate().find(query, accountId);
+		
+	}
+	
 	@Override
 	public ProgressiveBilling findByStageAndAccountId(Long accountId, String stageNo) {
 		ProgressiveBilling pb = new ProgressiveBilling();
 				
-		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.stageNo=?";
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.stageNo=? order by o.scheduleId desc";
 		List list = getHibernateTemplate().find(query, accountId,stageNo);
 		if(list != null && !list.isEmpty()){
 			pb = (ProgressiveBilling)list.get(0);
@@ -32,17 +44,27 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 	
 	
 	@Override
-	public boolean updateProgressiveBillingStatus(Long accountId, String to, String[] from){
+	public boolean updateProgressiveBillingStatus(Long accountId, String to, String[] from, String[] stagesNos , Long txReversalId){
 		
-		String fStatus ="";
-		for (int i = 0; i < from.length; i++) {
-			fStatus = from[i]+",";
+		String stageNoString ="";
+		for (int i = 0; i < stagesNos.length; i++) {
+			stageNoString = stageNoString+"'"+stagesNos[i]+"',";
 		}
-		 fStatus = fStatus.substring(0, fStatus.length()-1);
-		 String hqlUpdate = "update ProgressiveBilling c set c.status = ? where c.account.accountId = ? and c.status in (?)";
-		 getHibernateTemplate().bulkUpdate(hqlUpdate,to,accountId,fStatus);
+		stageNoString = stageNoString.substring(0, stageNoString.length()-1);
+		
+		String fString ="";
+		for (int i = 0; i < from.length; i++) {
+			fString = fString+"'"+from[i]+"',";
+		}
+		fString = fString.substring(0, fString.length()-1);
+		
+		 String hqlUpdate = "update ProgressiveBilling c set c.status = '"+to+"', c.txnReversalId = '"+txReversalId+"' where c.account.accountId ="+accountId+"  and c.stageNo in ("+stageNoString+") and c.status in ("+fString+") ";
+		int i =  getHibernateTemplate().bulkUpdate(hqlUpdate);
+		System.out.println(hqlUpdate+"\n--------------------------"+i);
 		return true;
 	}
+	
+	
 	
 	
 	@Override

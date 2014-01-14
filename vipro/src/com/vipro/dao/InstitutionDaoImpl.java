@@ -86,7 +86,7 @@ public class InstitutionDaoImpl extends DaoImpl<Institution> implements Institut
 
 	        public Object doInHibernate(Session s)
 	                throws HibernateException, SQLException {
-	        	String query = "select o."+dayField+" from Institution o where o.institution_Id=?";	
+	        	String query = "select o."+dayField+" from institution o where o.institution_Id=?";	
 	            SQLQuery sql=s.createSQLQuery( query);
 	                sql.setParameter(0, id);
 //	            sql.addScalar("r");

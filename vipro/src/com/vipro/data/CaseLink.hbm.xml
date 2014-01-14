@@ -15,7 +15,7 @@
             <column name="case_link" length="100" />
         </property>
         <property name="caseStatus" type="string">
-            <column name="case_status" length="10" />
+            <column name="case_status" length="5" />
         </property>
     </class>
 </hibernate-mapping>

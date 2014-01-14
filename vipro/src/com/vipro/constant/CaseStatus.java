@@ -7,12 +7,16 @@ package com.vipro.constant;
 
 public interface CaseStatus {
 	
-	public static final String NEW = "CSNEW";
-	
+	public static final String NEW = "CYNEW";
 	public static final String OPEN = "CSOPN";
-	
 	public static final String CLOSED = "CSCLS";
+	public static final String COMPLETED = "CSCOM";
+	public static final String SUBMITTED = "CSSMT";
+	public static final String REJECTED = "CSREJ";
+	public static final String VERIFIED = "CSVER";
 	
-	public static final String COMPLETED = "CCSCOM";
+	public static final String SALES_CANCELLED = "CYCAN";
+	public static final String COMMISSION_CLAIM = "CYCOM";
+	public static final String PAID_BOOKING_FEE = "CYPAY";
 	
 }

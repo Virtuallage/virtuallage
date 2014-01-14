@@ -85,6 +85,9 @@ public class PropertyUnitUpdateBean extends CommonBean implements Serializable{
 	        
 	        ProjectInventoryService service = (ProjectInventoryService)SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 	        
+	        selectedDto.getProjectInvetory().setHsdNo((selectedDto.getProjectInvetory().getHsdNo()).toUpperCase());
+	        selectedDto.getProjectInvetory().setPtNo((selectedDto.getProjectInvetory().getPtNo()).toUpperCase()); 
+	        
 	        service.updatePropertyUnit(getSelectedDto());
 	        
 	        setSelectedDto(new PropertyUnitDetailsDTO());
