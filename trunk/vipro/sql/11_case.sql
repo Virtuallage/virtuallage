@@ -95,4 +95,19 @@ INSERT INTO case_link
       value (2, 'CYCAN', '/secured/sales/cancel/cancelPropertyListApproval.xhtml');
 INSERT INTO case_link 
       value (3, 'CYCOM', '/secured/sales/commission/salesCommissionApproval.xhtml');
+      
+      
+----2014 Jan 17 AnnAnn----
+INSERT INTO vipro.code_det (code_header_id, code, description, status) VALUES ('CS', 'CSCAN', 'Cancelled', 'SSACT');
+INSERT INTO vipro.code_det (code_header_id, code, description, status) VALUES ('CS', 'CSCIP', 'Cancelling', 'SSACT');
+INSERT INTO vipro.case_link (case_type, case_status) VALUES ('CYPAY', 'CSSMT');
+INSERT INTO vipro.case_link (case_type, case_status) VALUES ('CYPAY', 'CSOPN');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCAN', '/secured/sales/cancel/cancelPropertyListApproval.xhtml', 'CSOPN');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCAN', '/secured/sales/cancel/cancelPropertyListApproval.xhtml', 'CSSMT');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCAN', '/secured/sales/cancel/cancelPropertyListApproval.xhtml', 'CSAPP');
+INSERT INTO vipro.case_link (case_type, case_status) VALUES ('CYPAY', 'CSCIP');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM', '/secured/sales/commission/salesCommissionVerification.xhtml', 'CSOPN');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM', '/secured/sales/commission/salesCommissionVerification.xhtml', 'CSSMT');
+INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM', '/secured/sales/commission/salesCommissionApproval.xhtml', 'CSVER');
+
 

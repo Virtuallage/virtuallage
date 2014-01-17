@@ -174,6 +174,8 @@ public class CaseAlert extends CommonBean{
 							.lookup(UserProfileService.class.getName());
 					UserProfile toUserProfile = userProfileService.findById(cr.gettUserId());
 					newCase.setAssignee(toUserProfile);
+				}else{
+					newCase.setAssignee(null);
 				}
 				
 				newCase.setGroupId(cr.gettGroupId());
