@@ -698,6 +698,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			CaseAlert caseAlert = new CaseAlert();
 			caseAlert.updateCase("CYCAN", projectId, account.getAccountId(),	
 					currentUser, "CSAPP", null, null);
+			caseAlert.cancelCase("CYPAY", projectId, account.getAccountId(),
+					currentUser, "CSCAN", null, null);
 			
 			addInfoMessage("Information.", "Sales Cancellation Approval Completed Successfully.");
 			return listPropertyUnits();

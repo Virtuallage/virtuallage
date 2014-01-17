@@ -529,7 +529,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			caseAlert.insertCase("CYCAN", projectId, account.getAccountId(),
 					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
 			caseAlert.cancelCase("CYPAY", projectId, account.getAccountId(),
-					currentUser, "CSCAN", toUserProfile, null);
+					currentUser, "CSCIP", toUserProfile, null);
 			
 			return listPropertyUnits();
 		} else {
