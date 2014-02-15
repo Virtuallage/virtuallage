@@ -18,12 +18,15 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
 import org.springframework.stereotype.Service;
@@ -240,6 +243,16 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 					reportData = output.toByteArray();
 				}else if(exportTo == 2L){
 					reportData = JasperExportManager.exportReportToPdf(jasperReport);
+				}else if(exportTo == 3L){
+					 JRDocxExporter exporter = new JRDocxExporter();
+					   ByteArrayOutputStream baos = new ByteArrayOutputStream();    
+					   exporter.setParameter(JRDocxExporterParameter.JASPER_PRINT, jasperReport);
+					   exporter.setParameter(JRDocxExporterParameter.OUTPUT_STREAM, baos);
+					   exporter.setParameter(JRDocxExporterParameter.FLEXIBLE_ROW_HEIGHT, Boolean.TRUE);
+	
+					   exporter.exportReport(); 
+					   return baos.toByteArray();
+					
 				}
 				connection.close();
 	
@@ -311,6 +324,8 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 			extension = ".xlsx";
 		}else if(reportDTO.getReportFormatId() == 2L){
 			extension = ".pdf";
+		}else if(reportDTO.getReportFormatId() == 3L){
+			extension = ".docx";
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
@@ -337,6 +352,8 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 			extension = ".xlsx";
 		}else if(reportDTO.getReportFormatId() == 2L){
 			extension = ".pdf";
+		}else if(reportDTO.getReportFormatId() == 3L){
+			extension = ".docx";
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){

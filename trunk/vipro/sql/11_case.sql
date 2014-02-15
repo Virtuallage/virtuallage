@@ -110,4 +110,22 @@ INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM',
 INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM', '/secured/sales/commission/salesCommissionVerification.xhtml', 'CSSMT');
 INSERT INTO vipro.case_link (case_type, case_link, case_status) VALUES ('CYCOM', '/secured/sales/commission/salesCommissionApproval.xhtml', 'CSVER');
 
-
+-- Added new fields by Bill --
+ALTER TABLE vipro.sales_commission_history
+ ADD COLUMN verified_by BIGINT(20) after date_submitted;
+ 
+ALTER TABLE vipro.sales_commission_history
+ ADD COLUMN date_verified DATE after verified_by;
+ 
+ALTER TABLE vipro.sales_cancellation_history
+ ADD COLUMN account_id BIGINT(20) after inventory_id;
+ 
+ALTER TABLE vipro.transaction_history
+ ADD COLUMN posted_by BIGINT(20) after posting_date;
+ 
+-- Added by Bill for project loading
+ALTER TABLE vipro.project_inventory
+ ADD COLUMN view VARCHAR(5) NULL AFTER facing;
+ 
+ 
+ Update Developer Initial (Business Partner)

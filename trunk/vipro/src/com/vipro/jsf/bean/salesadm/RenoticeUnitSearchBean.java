@@ -3,11 +3,14 @@ package com.vipro.jsf.bean.salesadm;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -21,6 +24,7 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -124,7 +128,28 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 				 return baseFolder;
 		}
 		
-		
+		public void handleFileUpload(FileUploadEvent event) {
+			try{
+					 
+				 if(getSelectedDto().getAccount().getAccountId() != null){
+					 
+					File targetFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());
+					InputStream inputStream = event.getFile().getInputstream();
+					OutputStream out = new FileOutputStream(new File(targetFolder,event.getFile().getFileName()));
+					int read = 0;
+					byte[] bytes = new byte[1024];
+					while((read = inputStream.read(bytes)) != -1){
+						out.write(bytes,0,read);
+					}
+					inputStream.close();
+					out.flush();
+					out.close();
+					CommonBean.addInfoMessage("Upload Successful."," The document is stored at "+targetFolder.getAbsolutePath());
+				 }
+			}catch(IOException io){
+				io.printStackTrace();
+			}
+		}
 		
 		
 		 public List<StreamedContent> getAllUploadedFiles() {
@@ -155,6 +180,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			         e.printStackTrace();
 			     }
 			     }
+			     Collections.reverse(fileList);
 			 }
 
 			 }
@@ -303,11 +329,31 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	public void onStageSelection(ValueChangeEvent event) {  
 		boolean newValue = (Boolean) event.getNewValue();	
 		int index = (Integer) event.getComponent().getAttributes().get("index");
+		
+		BillingModelStageDTO selectedDto = getSelectedDto().getStageDtoList().get(index);
+		selectedDto.setBillMe(newValue);
 		if(newValue){
 			if(index > 0){
-				BillingModelStageDTO prevDto =  getSelectedDto().getStageDtoList().get(index-1);
-				if(!prevDto.isBillMe() && !ProgressiveBillingConst.STAGE_RENOTICED.equals(prevDto.getStatus())){
-					CommonBean.addErrorMessage("Cannot Skip Stages", "All Previous Stages must be selected before this!");
+				boolean isFirstSelection = false, isSkip = false, wrongSelection = false;
+				for (int i = 0; i < getSelectedDto().getStageDtoList().size(); i++) {
+					BillingModelStageDTO dto =  getSelectedDto().getStageDtoList().get(i);
+					if(!ProgressiveBillingConst.STAGE_RENOTICED.equals(dto.getStatus())){
+						if(dto.isBillMe()){
+							if (isFirstSelection && isSkip) {
+								wrongSelection = true;
+								break;
+							} else {
+								isFirstSelection = true;
+							}														
+						}else{
+							if(isFirstSelection){
+								 isSkip = true;
+							}
+							}
+						}
+					}//end for					
+				if(wrongSelection){
+					CommonBean.addErrorMessage("Cannot Skip Stages", "Cannot Skip stages in between!");
 					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
 					 chckbox.setValue(false);;
 				}
@@ -339,10 +385,10 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		 BigDecimal amountTtl = new BigDecimal(0);
 		 BigDecimal percentTtl = new BigDecimal(0);
 		for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
-			if(!dto.isBillMe() && (ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus()))){
-				isRightSelection = false;
-				break;
-			}			
+//			if(!dto.isBillMe() && (ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus()))){
+//				isRightSelection = false;
+//				break;
+//			}			
 			if(dto.isBillMe()){
 					 isRightSelection = true;
 					 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
@@ -361,7 +407,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
-			this.setInvoiceNo(pbService.getLatestRBSeqNo());
+			this.setInvoiceNo(pbService.getLatestRBSeqNo(getSelectedDto().getProject().getProjectCode()));
 			
 		}
 		

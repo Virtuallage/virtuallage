@@ -9,7 +9,7 @@ import com.vipro.data.SeqNo;
  *
  */
 public interface SeqNoDao extends Dao<SeqNo> {
-	public SeqNo findById(String id);
-	public void updateSeqNo(String id, Long seqNo);
+	public SeqNo findById(String seqType,String projectCode);
+	public void updateSeqNo(String seqType, Long seqNo,String projectCode);
 	
 }

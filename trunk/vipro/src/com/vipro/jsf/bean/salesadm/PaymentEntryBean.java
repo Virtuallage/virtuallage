@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 
 import com.vipro.constant.CodeConst;
 import com.vipro.constant.CommonConst;
+import com.vipro.constant.ProgressiveBillingConst;
 import com.vipro.data.Project;
 import com.vipro.dto.PaymentEntryDTO;
 import com.vipro.jsf.bean.CommonBean;
@@ -105,27 +106,57 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			 context.addCallbackParam("success", success);
 		}
 		
-		
+		public void onWarningClose(ActionEvent actionEvent) {
+			 RequestContext context = RequestContext.getCurrentInstance();
+			 boolean success = true;
+			 CommonBean.addInfoMessage("Warning Closed."," Warning Window Closed.");
+			 context.addCallbackParam("success3", success);
+		}
 		
 		public void onSubmitAction(ActionEvent actionEvent) {	 
-			 if(paymentAmount.compareTo(getSelectedDto().getTransaction().getAmount()) != 0){				 
-				 RequestContext.getCurrentInstance().execute("dlg3.show()");
-			 }else {
-				 generatePaymentForInvoice();
-			 }
+			
+			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+			String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
+			
+			int res = paymentAmount.compareTo(getSelectedDto().getTransaction().getAmount());
+			
+			if (res == 1) {
+				RequestContext.getCurrentInstance().execute("dlg4.show()");
+			} else { // if equal or less check for remain amount.
+				BigDecimal dd = pbService
+						.getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(
+								getSelectedDto().getAccount().getAccountId(),
+								statuses, getSelectedDto().getTransaction()
+										.getInvoiceNo());
+				System.out
+						.println("---------------------------------------------------------");
+				System.out.println("Remaing amount is ::" + dd);
+	
+				int diff = paymentAmount.compareTo(dd);
+	
+				if (diff == -1) { // if less
+					RequestContext.getCurrentInstance().execute("dlg3.show()");
+				} else if (diff == 1) { // if greater
+					RequestContext.getCurrentInstance().execute("dlg4.show()");
+				} else { // if equal
+					generatePaymentForInvoice();
+				}
+			}
 		}
 			
 		private void generatePaymentForInvoice(){
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = false;
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			 success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo);
+			 success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate);
 			 
-			 System.out.println("--------------------"+selectedBank);
-			 System.out.println("--------------------"+selectedPaymentMethod);
-			 System.out.println("--------------------"+paymentAmount);
-			 
-			 if(success){
+			if(success){
+				Long txRevsalId= selectedDto.getTransaction().getTxnReversalId();
+				if( txRevsalId != null ){
+				  dtoList = this.projectService.getPaymentEntryDTOListByProjectIdAndUnit(selectedProjectId,this.unit);
+				//	dtoList.remove(selectedDto);
+				}
+				 setSelectedDto(new PaymentEntryDTO());
 				 CommonBean.addInfoMessage("Payment Submitted Successfully","The payment transaction has been submitted for processing.");
 				 context.addCallbackParam("success2", success);
 				 context.execute("dlg.hide()");
@@ -146,6 +177,12 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			 context.addCallbackParam("success2", success);
 		}
 	public String onDtoSelection(){
+		this.selectedBank = "";
+		this.selectedChkDate = new Date();
+		this.selectedPaymentMethod = "";
+		this.chequeNo="";
+		this.paymentAmount = getSelectedDto().getTransaction().getAmount();
+		
 		return null;
 	}
 	

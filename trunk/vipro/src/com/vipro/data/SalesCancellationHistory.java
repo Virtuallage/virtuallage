@@ -12,6 +12,7 @@ public class SalesCancellationHistory implements java.io.Serializable {
 
 	private Long cancellationId;
 	private ProjectInventory projectInventory;
+	private Account account;
 	private BigDecimal registrationFee;
 	private String cancelledReason;
 	private BigDecimal cancelFee;
@@ -146,5 +147,14 @@ public class SalesCancellationHistory implements java.io.Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-		
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	
 }

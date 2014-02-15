@@ -7,11 +7,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.constant.TransactionCodeConst;
+import com.vipro.constant.TransactionStatusConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
-import com.vipro.constant.*;
-import com.vipro.data.ProgressiveBilling;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.TransactionHistory;
@@ -56,7 +58,8 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		List<PropertyUnitDetailsDTO> resultList = new ArrayList<PropertyUnitDetailsDTO>();
 		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , propertyAddress from ProjectInventory o left outer join o.propertyAddress as propertyAddress, Account a " +
 				" where o.project.projectId=?  ");
-		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
 		if (!StringUtils.isEmpty(UnitNo)){
 			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%' ");
 		}
@@ -78,7 +81,8 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		List<AdviseUpdateDetailsDTO> resultList = new ArrayList<AdviseUpdateDetailsDTO>();
 		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy from ProjectInventory o,  Account a " +
 				" where o.project.projectId=?  ");
-		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
 		if (!StringUtils.isEmpty(UnitNo)){
 			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
 		}
@@ -98,8 +102,10 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 	@Override
 	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
 		List<PaymentEntryDTO> resultList = new ArrayList<PaymentEntryDTO>();
-		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy, th from ProjectInventory o,  Account a, TransactionHistory th" +
-				" where o.project.projectId=?  ");
+		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy, th from ProjectInventory o,  Account a, TransactionHistory th, ProgressiveBilling pb" +
+				" where o.project.projectId=? and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
+		query.append(" and th.invoiceNo = pb.invoiceNo and pb.txnReversalId is Null ");
 		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
 		query.append(" and a.accountId = th.account.accountId " )
 		.append(" and th.transactionCode.transactionCode IN ("+TransactionCodeConst.ADD_PROGRESSIVE_BILLING +","+TransactionCodeConst.RENOTICE_BILLING+" ) ")
@@ -109,7 +115,9 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		if (!StringUtils.isEmpty(UnitNo)){
 			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
 		}
-		query.append(" order by o.unitNo , th.invoiceNo ");
+		query.append(" order by  th.invoiceNo ");
+		
+		System.out.println("-------- Query Is :"+query);
 		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
 		if (list != null && list.size()>0) {
 			for (Object[] ob : list) {
@@ -138,7 +146,8 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 				" select distinct pi, pi.project, a.customer, a , cd.description from ProjectInventory pi ,CodeDet cd,  Account a " )
 		.append(" where pi.project.projectId=? and pi.propertyStatus = cd.id.code ")
 		.append(" and pi.inventoryId = a.projectInventory.inventoryId ")
-		.append(" and pi.propertyStatus = ? ");
+		.append(" and pi.propertyStatus = ? ")
+		.append(" and a.accountStatus <> '" + CommonConst.STATUS_CANCELLED + "'");
 				
 		if (!StringUtils.isEmpty(UnitNo)) {
 			query.append(" and upper(pi.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%' ");

@@ -38,6 +38,7 @@ import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.UserGroupConst;
 import com.vipro.constant.CancelStatusConst;
+import com.vipro.constant.CaseStatus;
 import com.vipro.data.Account;
 import com.vipro.data.SalesCancellationHistory;
 import com.vipro.data.Customer;
@@ -501,6 +502,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 			salesCancellationHistory.setCancelFee(account.getCancelFee());
 			salesCancellationHistory.setCancelTax(account.getCancelTax());
 			salesCancellationHistory.setCancelNetRefundAmt(account.getCancelNetRefundAmt());
+			salesCancellationHistory.setAccount(getAccount());
 			
 			ProjectInventoryService inventoryService=  (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 			inventory.setAccounts(null);
@@ -519,21 +521,21 @@ public class SalesCancel extends CommonBean implements Serializable{
 			salesCancellationHistory.setStatus(CancelStatusConst.SUBMIT_CANCEL);
 			
 			salesCancellationService.update(salesCancellationHistory);
-			addInfoMessage("Info.", "Sales Cancellation Submitted Pending Approval.");
+			addInfoMessage("Information", "Sales Cancellation Submitted Successfully for Approval.");
 			
 			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 					.lookup(UserProfileService.class.getName());
 			UserProfile toUserProfile = userProfileService.findById(project.getPicId());
 			
 			CaseAlert caseAlert = new CaseAlert();
-			caseAlert.insertCase("CYCAN", projectId, account.getAccountId(),
-					currentUser, account.getCustomer(), "CSSMT", toUserProfile, null);
-			caseAlert.cancelCase("CYPAY", projectId, account.getAccountId(),
-					currentUser, "CSCIP", toUserProfile, null);
-			
+			caseAlert.insertCase(CaseStatus.SALES_CANCELLED, projectId, account.getAccountId(),
+					currentUser, account.getCustomer(), CaseStatus.SUBMITTED, toUserProfile, null);
+/*			caseAlert.cancelCase(CaseStatus.PAID_BOOKING_FEE, projectId, account.getAccountId(),
+					currentUser, CaseStatus.CANCELLING, toUserProfile, null);
+*/			
 			return listPropertyUnits();
 		} else {
-			addErrorMessage("Warning!", "Sales Cancellation Failed.");
+			addErrorMessage("Warning!", "Sales Cancellation Submission Failed.");
 			return "salesCancellation";
 		}
 	}

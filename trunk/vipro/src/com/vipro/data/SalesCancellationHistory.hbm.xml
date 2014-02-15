@@ -11,6 +11,9 @@
         <many-to-one name="projectInventory" class="com.vipro.data.ProjectInventory" fetch="select" lazy="false">
             <column name="inventory_id" not-null="true" />
         </many-to-one>
+        <many-to-one name="account" class="com.vipro.data.Account" fetch="select">
+            <column name="account_id" not-null="true" />
+        </many-to-one>
         <property name="registrationFee" type="big_decimal">
             <column name="registration_fee" precision="7" />
         </property>
