@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RenoticeLetter_progresiveBilling" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RenoticeLetter_progresiveBilling" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -8,6 +8,9 @@
 	</parameter>
 	<parameter name="buyerPortion" class="java.math.BigDecimal"/>
 	<parameter name="latePaymentRate" class="java.math.BigDecimal"/>
+	<parameter name="account_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      progressive_billing.`stage_no` AS progressive_billing_stage_no,
@@ -18,7 +21,8 @@
 FROM
      `progressive_billing` progressive_billing
 WHERE
-     progressive_billing.`invoice_no` LIKE $P{invoice_no}]]>
+     progressive_billing.`invoice_no` LIKE $P{invoice_no}
+and progressive_billing.`account_id` = $P{account_id}]]>
 	</queryString>
 	<field name="progressive_billing_stage_no" class="java.lang.String"/>
 	<field name="progressive_billing_stage_description" class="java.lang.String"/>
@@ -35,38 +39,38 @@ WHERE
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement x="56" y="0" width="220" height="12"/>
+				<reportElement positionType="Float" x="56" y="0" width="220" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Particulars of Billing]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="0" width="60" height="12"/>
+				<reportElement positionType="Float" x="336" y="0" width="60" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Percentage % ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="396" y="0" width="141" height="12"/>
+				<reportElement positionType="Float" x="396" y="0" width="141" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Amount(RM)]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="14" width="536" height="1"/>
+				<reportElement positionType="Float" x="1" y="14" width="536" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="1" y="0" width="55" height="12"/>
+				<reportElement positionType="Float" x="1" y="0" width="55" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Stage]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="0" width="52" height="12"/>
+				<reportElement positionType="Float" x="280" y="0" width="52" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -77,35 +81,35 @@ WHERE
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="0" width="55" height="12"/>
+				<reportElement positionType="Float" x="1" y="0" width="55" height="12"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_no}+" "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="56" y="0" width="220" height="12"/>
+				<reportElement positionType="Float" x="56" y="0" width="220" height="12"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00 &apos;%&apos;" isBlankWhenNull="true">
-				<reportElement x="336" y="0" width="60" height="12"/>
+				<reportElement positionType="Float" x="336" y="0" width="60" height="12"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement x="396" y="0" width="141" height="12"/>
+				<reportElement positionType="Float" x="396" y="0" width="141" height="12"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_amount_billed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="280" y="1" width="52" height="12"/>
+				<reportElement positionType="Float" x="280" y="1" width="52" height="12"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -114,127 +118,127 @@ WHERE
 		</band>
 	</detail>
 	<summary>
-		<band height="142">
+		<band height="136">
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement x="396" y="10" width="141" height="12"/>
+				<reportElement positionType="Float" x="396" y="7" width="141" height="12"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_Amount}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="396" y="7" width="141" height="1"/>
+				<reportElement positionType="Float" x="396" y="4" width="141" height="1"/>
 			</line>
 			<line>
-				<reportElement x="396" y="26" width="141" height="1"/>
+				<reportElement positionType="Float" x="396" y="23" width="141" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="116" y="35" width="182" height="14"/>
+				<reportElement positionType="Float" x="116" y="28" width="182" height="14"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Buyer Portion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="35" width="23" height="14"/>
+				<reportElement positionType="Float" x="298" y="28" width="23" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="321" y="35" width="152" height="14"/>
+				<reportElement positionType="Float" x="321" y="28" width="152" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{buyerPortion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="298" y="49" width="23" height="14"/>
+				<reportElement positionType="Float" x="298" y="42" width="23" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="321" y="49" width="152" height="14"/>
+				<reportElement positionType="Float" x="321" y="42" width="152" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[new BigDecimal(0)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="115" y="49" width="182" height="14"/>
+				<reportElement positionType="Float" x="115" y="42" width="182" height="14"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Renotice Amount By Other Financier(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="64" width="23" height="14"/>
+				<reportElement positionType="Float" x="298" y="57" width="23" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="321" y="64" width="152" height="14"/>
+				<reportElement positionType="Float" x="321" y="57" width="152" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_Amount}.subtract( $P{buyerPortion} )]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="116" y="64" width="182" height="14"/>
+				<reportElement positionType="Float" x="116" y="57" width="182" height="14"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Renotice Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="79" width="23" height="14"/>
+				<reportElement positionType="Float" x="298" y="72" width="23" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="321" y="79" width="152" height="14"/>
+				<reportElement positionType="Float" x="321" y="72" width="152" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[new BigDecimal(0)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="116" y="79" width="182" height="14"/>
+				<reportElement positionType="Float" x="116" y="72" width="182" height="14"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Less Amount Paid By Financier]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="94" width="23" height="14"/>
+				<reportElement positionType="Float" x="298" y="87" width="23" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="116" y="94" width="182" height="14"/>
+				<reportElement positionType="Float" x="116" y="87" width="182" height="14"/>
 				<textElement verticalAlignment="Top">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Amount Due From Financier]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="321" y="94" width="152" height="14"/>
+				<reportElement positionType="Float" x="321" y="87" width="152" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_Amount}.subtract( $P{buyerPortion} )]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
-				<reportElement x="6" y="113" width="534" height="27"/>
+				<reportElement positionType="Float" x="1" y="106" width="536" height="27"/>
 				<textElement markup="none">
 					<font size="8"/>
 				</textElement>

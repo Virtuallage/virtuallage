@@ -47,7 +47,7 @@
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
 									<p:inputText id="unitTxt"
-										value="#{renoticeUnitSearchBean.unit}" />
+										value="#{renoticeUnitSearchBean.unit}" style="text-transform:uppercase"/>
 								</p:column>
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
@@ -86,7 +86,7 @@
 								sortBy="#{dto.projectInvetory.hsdNo}">
 								<p:outputLabel value="#{dto.projectInvetory.hsdNo}" />
 							</p:column>
-							<p:column headerText="Stage" sortBy="#{dto.stageNo}"
+							<p:column headerText="Last Stage" sortBy="#{dto.stageNo}"
 								style="text-align:center">
 								<p:outputLabel value="#{dto.stageNo}" />
 							</p:column>
@@ -98,7 +98,7 @@
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Billed ToDate"
+							<p:column headerText="Paid ToDate"
 								sortBy="#{dto.account.totalPaymentTodate}"
 								style="text-align:right">
 								<h:outputText value="#{dto.account.totalPaymentTodate}"
@@ -282,6 +282,7 @@
 									</p:commandButton>
 				                    </p:column>
 				                </p:dataTable>
+				                 <p:commandButton id="upBtn" update=":uploadForm" oncomplete="upDialog.show()" title="Upload Files" value="Upload Files" style="float: right;margin-right: 78px;margin-top: 15px;"/>
 						</p:dialog>
 						
 						<p:outputPanel id="dialogPanel3">
@@ -371,6 +372,33 @@
 							}
 						</script>
 				</h:form>
+				<h:form id="uploadForm" enctype="mulipart/form-data">
+ 	 	 		<p:dialog id="uploadDialog" header="Upload" widgetVar="upDialog"
+				        modal="true" height="250" width="750"  showEffect="explode"
+				        hideEffect="explode">
+				         <p:messages id="messages" showDetail="true" />
+				        <p:growl id="growl12" showDetail="true" life="3000" autoUpdate="false" />
+					    
+						<p:fileUpload mode="advanced" style="width:95%"
+							fileUploadListener="#{renoticeUnitSearchBean.handleFileUpload}"  update="growl12,downloadDataTable2,:dialogForm:downloadDataTable" 
+							allowTypes="/(\.|\/)(doc|docx|pdf|xls|xlsx)$/"  />
+							<br/>
+							<p:dataTable id="downloadDataTable2" 
+	                    			value="#{renoticeUnitSearchBean.allUploadedFiles}"
+	                    			var="file" widgetVar="downlaodFile"
+	                    			emptyMessage="NO Files Uploaded"
+	                    			style="width:95%; border:2 !important; border-color:white !important;">
+	                    
+	                    		<p:column>
+	            					<f:facet name="header">
+	                					Uploaded Files 
+	            					</f:facet>
+	             					<h:outputText value="#{file.name}" /> 
+	        					</p:column>
+	                		</p:dataTable>
+					</p:dialog>
+				</h:form>
+				
 				<h:form id="dialogAddresForm">
 					<p:outputPanel id="dialogAddressPanel">
 						<p:dialog id="tDialog" header="Progressive Billing Change Address"

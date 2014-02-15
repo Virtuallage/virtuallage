@@ -33,6 +33,7 @@ import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.AccountStatusConst;
+import com.vipro.constant.CaseStatus;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
@@ -631,7 +632,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				codeCancelFeeRefund.setTransactionCode(TransactionCodeConst.CANCEL_FEE_REV);
 				transactionHistory.setTransactionCode(codeCancelFeeRefund);
 				transactionHistory.setTransactionDate(currentDate);
-				transactionHistory.setTransactionDescription("Cancellation Refund");
+				transactionHistory.setTransactionDescription("CANCELLATION REFUND AMOUNT");
 				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelNetRefundAmt());
 				transactionHistory.setAccount(account);
@@ -645,7 +646,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				codeCancelAdminFee.setTransactionCode(TransactionCodeConst.CANCEL_ADMIN_FEE);
 				transactionHistory.setTransactionCode(codeCancelAdminFee);
 				transactionHistory.setTransactionDate(currentDate);
-				transactionHistory.setTransactionDescription("Cancellation Admin Fee");
+				transactionHistory.setTransactionDescription("CANCELLATION ADMIN FEE");
 				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelFee());
 				transactionHistory.setAccount(account);
@@ -659,7 +660,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				codeCancelTax.setTransactionCode(TransactionCodeConst.CANCEL_TAX);
 				transactionHistory.setTransactionCode(codeCancelTax);
 				transactionHistory.setTransactionDate(currentDate);
-				transactionHistory.setTransactionDescription("Cancellation Tax");
+				transactionHistory.setTransactionDescription("CANCELLATION TAX");
 				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelTax());
 				transactionHistory.setAccount(account);
@@ -696,11 +697,11 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 			salesCancellationService.update(salesCancellationHistory);
 			
 			CaseAlert caseAlert = new CaseAlert();
-			caseAlert.updateCase("CYCAN", projectId, account.getAccountId(),	
-					currentUser, "CSAPP", null, null);
-			caseAlert.cancelCase("CYPAY", projectId, account.getAccountId(),
-					currentUser, "CSCAN", null, null);
-			
+			caseAlert.updateCase(CaseStatus.SALES_CANCELLED, projectId, account.getAccountId(),	
+					currentUser, CaseStatus.APPROVED, null, null);
+/*			caseAlert.cancelCase(CaseStatus.PAID_BOOKING_FEE, projectId, account.getAccountId(),
+					currentUser, CaseStatus.CANCELLED, null, null);
+*/			
 			addInfoMessage("Information.", "Sales Cancellation Approval Completed Successfully.");
 			return listPropertyUnits();
 		} else {

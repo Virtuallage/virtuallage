@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class TransactionHistory implements java.io.Serializable {
 
+	private static final long serialVersionUID = -3781931447515023931L;
 	private Long transactionId;
 	private TransactionCode transactionCode;
 	private Account account;
@@ -18,7 +19,9 @@ public class TransactionHistory implements java.io.Serializable {
 	private String refNo;
 	private String invoiceNo;
 	private Date postingDate;
+	private Long postedBy;
 	private Date statementDate;
+	private Date chqDate;
 	private String status;
 	private BigDecimal amount;
 	
@@ -166,6 +169,22 @@ public class TransactionHistory implements java.io.Serializable {
 
 	public void setTxnReversalId(Long txnReversalId) {
 		this.txnReversalId = txnReversalId;
+	}
+	
+	public Long getPostedBy() {
+		return postedBy;
+	}
+
+	public void setPostedBy(Long postedBy) {
+		this.postedBy = postedBy;
+	}
+	
+	public Date getChqDate() {
+		return chqDate;
+	}
+
+	public void setChqDate(Date chqDate) {
+		this.chqDate = chqDate;
 	}
 
 }

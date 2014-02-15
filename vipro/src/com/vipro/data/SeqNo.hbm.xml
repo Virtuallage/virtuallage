@@ -4,12 +4,19 @@
 <!-- Generated Feb 3, 2013 6:50:09 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.vipro.data.SeqNo" table="seq_no" catalog="vipro">
-        <id name="SeqType"  type="string">
-            <column name="seq_type" />
-            <generator class="assigned" />
+    
+    <id name="seqId" type="java.lang.Long">
+            <column name="seq_id" />
+            <generator class="identity" />
         </id>
+        <property name="seqType"  type="string">
+            <column name="seq_type" />        
+        </property>
         <property name="nextSeq" type="java.lang.Long">
             <column name="next_seq" />
+        </property>
+        <property name="projectCode" type="string">
+            <column name="project_code" length="10" />
         </property>
     </class>
 </hibernate-mapping>

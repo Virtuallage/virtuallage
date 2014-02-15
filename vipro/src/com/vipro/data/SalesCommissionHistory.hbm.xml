@@ -35,6 +35,12 @@
         <property name="dateSubmitted" type="date">
             <column name="date_submitted" length="10" />
         </property>
+        <property name="verifiedBy" type="java.lang.Long">
+            <column name="verified_by" />
+        </property>
+        <property name="dateVerified" type="date">
+            <column name="date_verified" length="10" />
+        </property>
         <property name="approvedBy" type="java.lang.Long">
             <column name="approved_by" />
         </property>

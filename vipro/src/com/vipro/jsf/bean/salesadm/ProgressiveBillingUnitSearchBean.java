@@ -3,11 +3,14 @@ package com.vipro.jsf.bean.salesadm;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -21,6 +24,7 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -125,9 +129,30 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		}
 		
 		
+		public void handleFileUpload(FileUploadEvent event) {
+			try{
+					 
+				 if(getSelectedDto().getAccount().getAccountId() != null){
+					 
+					File targetFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());
+					InputStream inputStream = event.getFile().getInputstream();
+					OutputStream out = new FileOutputStream(new File(targetFolder,event.getFile().getFileName()));
+					int read = 0;
+					byte[] bytes = new byte[1024];
+					while((read = inputStream.read(bytes)) != -1){
+						out.write(bytes,0,read);
+					}
+					inputStream.close();
+					out.flush();
+					out.close();
+					CommonBean.addInfoMessage("Upload Successful."," The document is stored at "+targetFolder.getAbsolutePath());
+				 }
+			}catch(IOException io){
+				io.printStackTrace();
+			}
+		}
 		
-		
-		 public List<StreamedContent> getAllUploadedFiles() {
+		  public List<StreamedContent> getAllUploadedFiles() {
 			 List<StreamedContent> fileList = new ArrayList<StreamedContent>();
 			 
 			 if(getSelectedDto().getAccount().getAccountId() != null){
@@ -148,6 +173,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			     } catch (FileNotFoundException e) {
 			         e.printStackTrace();
 			     }
+			     
 			     try {
 			         stream.close();
 			     } catch (IOException e) {
@@ -155,6 +181,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			         e.printStackTrace();
 			     }
 			     }
+			     Collections.reverse(fileList);
 			 }
 
 			 }
@@ -306,7 +333,9 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		if(newValue){
 			if(index > 0){
 				BillingModelStageDTO prevDto =  getSelectedDto().getStageDtoList().get(index-1);
-				if(!prevDto.isBillMe() && !(ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())||ProgressiveBillingConst.STAGE_PAID.equals(prevDto.getStatus()))){
+				if(!prevDto.isBillMe() && !(ProgressiveBillingConst.STAGE_BILLED.equals(prevDto.getStatus())
+						||ProgressiveBillingConst.STAGE_PAID.equals(prevDto.getStatus())
+						||ProgressiveBillingConst.STAGE_RENOTICED.equals(prevDto.getStatus()))){
 					CommonBean.addErrorMessage("Cannot Skip Stages", "All Previous Stages must be selected before this!");
 					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
 					 chckbox.setValue(false);;
@@ -355,7 +384,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
-			this.setInvoiceNo(pbService.getLatestPBSeqNo());
+			this.setInvoiceNo(pbService.getLatestPBSeqNo(getSelectedDto().getProject().getProjectCode()));
 			
 		}
 		

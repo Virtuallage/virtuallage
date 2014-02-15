@@ -17,7 +17,8 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 
 	@Override
 	public List<Account> findAll() {
-		String query="select o from com.vipro.data.Account o";
+		String query="select o from com.vipro.data.Account o where o.accountStatus<>'" 
+				+ AccountStatusConst.STATUS_CANCELLED + "'";
 		return getHibernateTemplate().find(query);
 	}
 	
@@ -25,14 +26,16 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 	@Override
 	public List<Account> findAllAvailable() {
 		String query="select o from com.vipro.data.Account o where o.projectInventory.propertyStatus='" 
-				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
+				+ PropertyUnitStatusConst.STATUS_SOLD + "' and o.accountStatus<>'" 
+				+ AccountStatusConst.STATUS_CANCELLED + "'";
 		return getHibernateTemplate().find(query);
 	}
 
 	
 	@Override
 	public List<Account> findByProjectInventoryId(Long inventoryId) {
-		String query="select o from com.vipro.data.Account o where o.projectInventory.inventoryId=?";
+		String query="select o from com.vipro.data.Account o where o.projectInventory.inventoryId=? and o.accountStatus<>'" 
+				+ AccountStatusConst.STATUS_CANCELLED + "'";
 		List<Account> acc = getHibernateTemplate().find(query, inventoryId);
 		return acc;
 	}
@@ -49,7 +52,8 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 	
 	@Override
 	public List<Account> findByUserId(Long userId) {
-		String query="select o from com.vipro.data.Account o where o.attendedBy=?";
+		String query="select o from com.vipro.data.Account o where o.attendedBy=? and o.accountStatus<>'" 
+				+ AccountStatusConst.STATUS_CANCELLED + "'";
 		List<Account> acc = getHibernateTemplate().find(query, userId);
 		return acc;
 	}
@@ -57,7 +61,8 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 	
 	@Override
 	public List<Account> findByAvailableUserId(Long userId) {
-		String query="select o from com.vipro.data.Account o where o.attendedBy=? and o.projectInventory.propertyStatus='" 
+		String query="select o from com.vipro.data.Account o where o.attendedBy=? and and o.accountStatus<>'" 
+				+ AccountStatusConst.STATUS_CANCELLED + "' and o.projectInventory.propertyStatus='" 
 				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
 		List<Account> acc = getHibernateTemplate().find(query, userId);
 		return acc;

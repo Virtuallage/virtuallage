@@ -35,6 +35,9 @@
         <property name="facing" type="string">
             <column name="facing" length="5" />
         </property>
+        <property name="view" type="string">
+            <column name="view" length="5" />
+        </property>
         <property name="landArea" type="java.lang.Integer">
             <column name="land_area" />
         </property>

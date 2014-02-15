@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_progresiveBilling" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_progresiveBilling" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="invoice_no" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="amountInWords" class="java.lang.String"/>
+	<parameter name="account_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      progressive_billing.`stage_no` AS progressive_billing_stage_no,
@@ -16,7 +19,8 @@
 FROM
      `progressive_billing` progressive_billing
 WHERE
-    progressive_billing.`invoice_no` like $P{invoice_no}]]>
+    progressive_billing.`invoice_no` like $P{invoice_no}
+and progressive_billing.`account_id`= $P{account_id}]]>
 	</queryString>
 	<field name="progressive_billing_stage_no" class="java.lang.String"/>
 	<field name="progressive_billing_stage_description" class="java.lang.String"/>
@@ -32,57 +36,57 @@ WHERE
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="322" height="12"/>
-				<textElement verticalAlignment="Top">
+				<reportElement positionType="Float" x="0" y="0" width="285" height="12"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Particulars of Billing]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="0" width="60" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<reportElement positionType="Float" x="300" y="0" width="60" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Percentage % ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="396" y="0" width="141" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<reportElement positionType="Float" x="369" y="0" width="141" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Amount(RM)]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="14" width="536" height="1"/>
+				<reportElement positionType="Float" x="1" y="14" width="519" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="0" width="74" height="12"/>
-				<textElement>
+				<reportElement positionType="Float" x="1" y="0" width="64" height="12"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_no}+" "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="75" y="0" width="247" height="12"/>
-				<textElement>
+				<reportElement positionType="Float" x="67" y="0" width="220" height="12"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00 &apos;%&apos;" isBlankWhenNull="true">
-				<reportElement x="336" y="0" width="60" height="12"/>
-				<textElement textAlignment="Right">
+				<reportElement positionType="Float" x="300" y="0" width="60" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement x="396" y="0" width="141" height="12"/>
-				<textElement textAlignment="Right">
+				<reportElement positionType="Float" x="369" y="0" width="141" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_amount_billed}]]></textFieldExpression>
@@ -92,39 +96,39 @@ WHERE
 	<summary>
 		<band height="56">
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement x="396" y="10" width="141" height="12"/>
-				<textElement textAlignment="Right">
+				<reportElement positionType="Float" x="369" y="10" width="141" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_Amount}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="261" y="8" width="135" height="12"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Amount Due for Payment   ]]></text>
-			</staticText>
 			<line>
-				<reportElement x="396" y="7" width="141" height="1"/>
-			</line>
-			<line>
-				<reportElement x="396" y="26" width="141" height="1"/>
+				<reportElement positionType="Float" x="376" y="24" width="141" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="110" y="31" width="430" height="12"/>
-				<textElement>
+				<reportElement positionType="Float" x="110" y="31" width="410" height="12"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{amountInWords}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="6" y="31" width="101" height="12"/>
-				<textElement textAlignment="Right">
+				<reportElement positionType="Float" x="6" y="31" width="101" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ringgit Malaysia:  ]]></text>
 			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="225" y="10" width="135" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Due for Payment   ]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="376" y="7" width="141" height="1"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

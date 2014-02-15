@@ -1,10 +1,12 @@
 package com.vipro.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.constant.ProgressiveBillingConst;
 import com.vipro.data.ProgressiveBilling;
 
 @Repository("com.vipro.dao.ProgressiveBillingDao")
@@ -16,6 +18,14 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 	public List<ProgressiveBilling> findByAccountId(Long accountId) {
 		String query = "select o from ProgressiveBilling o where o.account.accountId=?";
 		return getHibernateTemplate().find(query, accountId);
+	}
+	
+	public boolean isInvoiceFullyPaid(Long accountId, String invoiceNo){
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status not in ('"+ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT+"') ";
+		@SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().find(query, accountId);
+		return ((result == null || result.isEmpty()) ? true : false);
+		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -30,11 +40,24 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		
 	}
 	
+	
+	public BigDecimal getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
+		String fString ="";
+		for (int i = 0; i < statuses.length; i++) {
+			fString = fString+"'"+statuses[i]+"',";
+		}
+		fString = fString.substring(0, fString.length()-1);
+		String query = "select SUM(o.amountBilled) - IFNULL(SUM(o.partialPaidAmount),0)  from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status in ("+fString+") ";
+		BigDecimal diff = (BigDecimal)getHibernateTemplate().find(query, accountId).get(0); 
+		return diff;
+		
+	}
 	@Override
 	public ProgressiveBilling findByStageAndAccountId(Long accountId, String stageNo) {
 		ProgressiveBilling pb = new ProgressiveBilling();
 				
 		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.stageNo=? order by o.scheduleId desc";
+		@SuppressWarnings("rawtypes")
 		List list = getHibernateTemplate().find(query, accountId,stageNo);
 		if(list != null && !list.isEmpty()){
 			pb = (ProgressiveBilling)list.get(0);

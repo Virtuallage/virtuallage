@@ -22,6 +22,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private String layoutType;
 	private String orientation;
 	private String facing;
+	private String view;
 	private Integer landArea;
 	private Integer builtUpArea;
 	private String propertyStatus;
@@ -55,7 +56,7 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public ProjectInventory(Project project, String unitNo, String ptNo,
 			String hsdNo, String blockNo, String level, String layoutType,
-			String orientation, String facing, Integer landArea, Integer builtUpArea,
+			String orientation, String facing, String view, Integer landArea, Integer builtUpArea,
 			String propertyStatus, Date statusChangeDate,
 			BigDecimal purchasePrice, BigDecimal discountAmount,
 			BigDecimal redemptionAmount, Date redemptionPaidTodate,
@@ -73,6 +74,7 @@ public class ProjectInventory implements java.io.Serializable {
 		this.layoutType = layoutType;
 		this.orientation = orientation;
 		this.facing = facing;
+		this.view = view;
 		this.landArea = landArea;
 		this.builtUpArea = builtUpArea;
 		this.propertyStatus = propertyStatus;
@@ -435,6 +437,14 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setFacing(String facing) {
 		this.facing = facing;
+	}
+
+	public String getView() {
+		return view;
+	}
+
+	public void setView(String view) {
+		this.view = view;
 	}
 	
 }

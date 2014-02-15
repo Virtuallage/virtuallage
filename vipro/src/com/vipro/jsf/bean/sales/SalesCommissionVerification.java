@@ -404,7 +404,7 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 		}
 		
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
-			addInfoMessage("Sales Commission Approval", "There is nothing claim to approve.");
+			addInfoMessage("Information", "There is no qualified sales for your Sales Commission claim.");
 			return listAccounts();
 		}
 		
@@ -463,13 +463,13 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, project.getProjectId(), salesCommissionAccount.getAccountId(),
 						currentUser, CaseStatus.REJECTED, null, null);
 				
-				addInfoMessage("Sales Commission Verification", "Commission Rejected.");
+				addInfoMessage("Information", "Sales Commission Rejected.");
 				return submitAgain();
 				//return listAccounts();
 			}
 		}
 		
-		addInfoMessage("Sales Commission Verification", "Failed to reject commission.");
+		addInfoMessage("WARNING!", "Failed to reject the Sales Commission.");
 		return listAccounts();
 	}
 	
@@ -486,8 +486,8 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 			if(historys != null && historys.size() > 0)
 			{
 				SalesCommissionHistory history = historys.get(historys.size() - 1);
-				history.setApprovedBy(userId);
-				history.setDateApproved(currentDate);
+				history.setVerifiedBy(userId);
+				history.setDateVerified(currentDate);
 				history.setChangedBy(userId);
 				history.setDateChanged(currentDate);
 				history.setClaimStatus(ClaimStatusConst.STATUS_VERIFIED);
@@ -502,14 +502,14 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 						salesCommissionAccount.getAccountId(),	
 						currentUser, CaseStatus.VERIFIED, null, null);
 				
-				addInfoMessage("Sales Commission Verification", "Commission Approved.");
+				addInfoMessage("Information", "Selected Sales Commission Verified.");
 				return submitAgain();
 				//return listAccounts();
 			}
 
 		}
 		
-		addInfoMessage("Sales Commission Verification", "Failed to approve commission.");
+		addInfoMessage("WARNING!", "Sales Commission Verification Failed.");
 		return listAccounts();
 	}
 

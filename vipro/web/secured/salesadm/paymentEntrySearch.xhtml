@@ -47,7 +47,7 @@
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
 									<p:inputText id="unitTxt"
-										value="#{paymentEntryBean.unit}" />
+										value="#{paymentEntryBean.unit}" style="text-transform:uppercase"/>
 								</p:column>
 								<p:column
 									style="width:15%;text-align:left;vertical-align:middle">
@@ -211,7 +211,7 @@
 											oncomplete="handleSaveRequest(xhr, status, args)" />										
 										<p:commandButton value="Submit" disabled="false" 
 												actionListener="#{paymentEntryBean.onSubmitAction}"
-												ajax="true" update="growl" style="margin-top:20px"
+												ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
 												title="Submit"									
 												 />
 										</h:panelGroup>
@@ -238,11 +238,32 @@
 									oncomplete="handleConfirmBillRequest(xhr, status, args)" />
 								<p:commandButton value="Yes" disabled="false"
 										actionListener="#{paymentEntryBean.onYes}"
-										ajax="true" update="growl" style="margin-top:20px"
+										ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
 										oncomplete="handleConfirmBillRequest(xhr, status, args)" />
 								</h:panelGroup>
 								</h:panelGrid>
 						</p:dialog>
+						
+						
+						<p:dialog id="t4Dialog" header="Invalid Payment Amount"
+							widgetVar="dlg4" modal="true" height="150" width="400"
+							showEffect="explode" hideEffect="explode">
+							
+							<br/>
+							<div style="text-align:left; margin-bottom:20px">
+								<h:outputText  style="font-weight:bold" value=" The Payment Amount is more than Billing Amount. Please check with the bank" />
+							</div>
+								<h:panelGrid id="displaybtns4" columns="1" cellpadding="10" width="100%" style="text-align:center;margin-top:5px">
+								<h:panelGroup>	
+								<p:commandButton value="Cancel" disabled="false" 
+										actionListener="#{paymentEntryBean.onWarningClose}"
+										ajax="true" update="growl" style="margin-top:20px"
+										oncomplete="handleMessageRequest(xhr, status, args)" />
+								</h:panelGroup>
+								</h:panelGrid>
+						</p:dialog>
+						
+						
 						</p:outputPanel>
 						
 						<script type="text/javascript">
@@ -267,6 +288,19 @@
 
 								} else {
 									dlg3.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleMessageRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success3 ) {
+									dlg4.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg4.hide();
 									// PF('dlg').hide();  
 									// $('#loginLink').fadeOut();  
 								}

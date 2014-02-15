@@ -20,6 +20,8 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	private String claimStatus;
 	private Long submittedBy;
 	private Date dateSubmitted;
+	private Long verifiedBy;
+	private Date dateVerified;
 	private Long approvedBy;
 	private Date dateApproved;
 	private Long changedBy;
@@ -29,7 +31,7 @@ public class SalesCommissionHistory implements java.io.Serializable {
 	}
 
 	public SalesCommissionHistory(Account account, Long projectId, BigDecimal purchasePrice, BigDecimal claimPercent, BigDecimal claimAmount, String claimStatus,
-			Long submittedBy, Date dateSubmitted, Long approvedBy, Date dateApproved, Long changedBy, Date dateChanged) {
+			Long submittedBy, Date dateSubmitted, Long verifiedBy, Date dateVerified, Long approvedBy, Date dateApproved, Long changedBy, Date dateChanged) {
 		this.account = account;
 		this.projectId = projectId;
 		this.purchasePrice = purchasePrice;
@@ -38,6 +40,8 @@ public class SalesCommissionHistory implements java.io.Serializable {
 		this.claimStatus = claimStatus;
 		this.submittedBy = submittedBy;
 		this.dateSubmitted = dateSubmitted;
+		this.verifiedBy = verifiedBy;
+		this.dateVerified = dateVerified;
 		this.approvedBy = approvedBy;
 		this.dateApproved = dateApproved;
 		this.changedBy = changedBy;
@@ -154,6 +158,22 @@ public class SalesCommissionHistory implements java.io.Serializable {
 
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
+	}
+
+	public Long getVerifiedBy() {
+		return verifiedBy;
+	}
+
+	public void setVerifiedBy(Long verifiedBy) {
+		this.verifiedBy = verifiedBy;
+	}
+
+	public Date getDateVerified() {
+		return dateVerified;
+	}
+
+	public void setDateVerified(Date dateVerified) {
+		this.dateVerified = dateVerified;
 	}
 	
 }

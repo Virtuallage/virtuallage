@@ -1,5 +1,6 @@
 package com.vipro.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.vipro.common.Dao;
@@ -10,6 +11,9 @@ public interface ProgressiveBillingDao extends Dao<ProgressiveBilling>{
 	public List<ProgressiveBilling> findByAccountId(Long accountId);
 	
 	public List<ProgressiveBilling> findByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+	public BigDecimal getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+	
+	public boolean isInvoiceFullyPaid(Long accountId, String invoiceNo);
 	
 	public boolean updateProgressiveBillingStatus(Long accountId, String to, String[] from, String[] stagesNos, Long txReversalId);
 		

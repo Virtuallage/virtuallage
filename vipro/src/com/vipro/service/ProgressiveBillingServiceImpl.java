@@ -143,22 +143,22 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 
 	@Override
-	public Long getLatestPBSeqNo() {
+	public Long getLatestPBSeqNo(String projectCode) {
 		Long no = new Long(0l);
-		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE);
+		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE,projectCode);
 		no = seq.getNextSeq() + 1 ;
 		//seq.setNextSeq(no);
-		seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, no);
+		seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, no, projectCode);
 		return no;
 	}
 
 	@Override
-	public Long getLatestRBSeqNo() {
+	public Long getLatestRBSeqNo(String projectCode) {
 		Long no = new Long(0l);
-		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE);
+		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE,projectCode);
 		no = seq.getNextSeq() + 1 ;
 		//seq.setNextSeq(no);
-		seqNoDao.updateSeqNo(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, no);
+		seqNoDao.updateSeqNo(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, no, projectCode);
 		return no;
 	}
 	@Override
@@ -166,7 +166,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
-		reportDTO.setReportFormatId(new Long(2l));
+		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
 		try {
@@ -192,7 +192,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
-		reportDTO.setReportFormatId(new Long(2l));
+		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
 		try {
@@ -224,14 +224,15 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
 			BigDecimal totalAmount = sumDTO.getProgressiveBilling().getAmountBilled();			
 			String refNo = getRefNo(selectedDto.getProject().getDeveloperId());
-			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
+//			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
+			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
 
 			
 			//1. Progressive Billing Reversal Transaction History Record
 			TransactionHistory tx = new TransactionHistory();
 			tx.setTransactionCode(new TransactionCode(
 					TransactionCodeConst.REVERSAL_PROGRESSIVE_BILLING));
-			tx.setTransactionDescription("Progressive Billing Reversal");
+			tx.setTransactionDescription("PROGRESSIVE BILLING REVERSAL");
 			tx.setAmount(totalAmount);
 			tx.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
 			//tx.setInvoiceNo(invoiceNo);
@@ -258,7 +259,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				aa.setAccountId(act.getAccountId());
 				TransactionHistory txPayRev = new TransactionHistory();
 				txPayRev.setTransactionCode(new TransactionCode(TransactionCodeConst.REVERSAL_PAYMENT_FROM_PURCHASER));
-				txPayRev.setTransactionDescription("Payment Reversal");
+				txPayRev.setTransactionDescription("PAYMENT REVERSAL");
 				txPayRev.setAmount(tempTotalAmountPaid);
 				txPayRev.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
 				txPayRev.setAccount(aa);
@@ -307,7 +308,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			//5. Create new TransactionHistory Renotice record
 			TransactionHistory txr = new TransactionHistory();
 			txr.setTransactionCode(new TransactionCode(TransactionCodeConst.RENOTICE_BILLING));
-			txr.setTransactionDescription("Renotice Billing ");
+			txr.setTransactionDescription("RENOTICE BILLING");
 			txr.setAmount(totalAmount);
 			txr.setInvoiceNo(invoiceNo);
 			txr.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
@@ -333,7 +334,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			refNo = getRefNo(selectedDto.getProject().getDeveloperId());
-			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
+//			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
+			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
 			Account act = selectedDto.getAccount();
 			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
 			
@@ -346,7 +348,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 
 			TransactionHistory tx = new TransactionHistory();
 			tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
-			tx.setTransactionDescription("Progressive Billing ");
+			tx.setTransactionDescription("PROGRESSIVE BILLING");
 			tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled());
 			tx.setInvoiceNo(invoiceNo);
 			tx.setStatus(TransactionStatusConst.PENDING);
@@ -389,10 +391,16 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		return isSucessfull;
 	}
 	
+	public BigDecimal getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
+	
+		return progressiveBillingDao.getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(accountId, statuses, invoiceNo);
+		
+	}
+	
 	
 	@Override
 	@Transactional
-	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo){
+	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo,Date selectedChkDate){
 		boolean isSuccess = false;
 		
 		String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
@@ -409,8 +417,9 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 						
 					}else{
 						pb.setDatePaid(new Date());
-						pb.setStatus(ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT);
-						tempPaymentAmount = tempPaymentAmount.subtract(pb.getAmountBilled());
+						pb.setStatus(ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT);						
+						tempPaymentAmount = tempPaymentAmount.subtract(pb.getAmountBilled().subtract(pb.getPartialPaidAmountNotNull()));
+						pb.setPartialPaidAmount(BigDecimal.ZERO);
 						}
 				}else if (ProgressiveBillingConst.PB_STATUS_BILL.equals(pb.getStatus())){
 					if(pb.getAmountBilled().compareTo(tempPaymentAmount) == 1 ){
@@ -429,7 +438,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		}//end if list.isempty
 			
 			//2. Update account table.
-			if(tempPaymentAmount.compareTo(BigDecimal.ZERO) == 0 ){
+			//if(tempPaymentAmount.compareTo(BigDecimal.ZERO) == 0 ){
 				Account act = selectDto.getAccount();
 				act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().add(paymentAmount));
 				act.setAccountBalance(act.getAccountBalanceNotNull().subtract(paymentAmount));
@@ -444,7 +453,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 					
 				}
 				accountDao.update(act);
-			}//end if
+		//	}//end if
 			
 			//3 Create Payment Transaction History Record
 			Account a = new Account();
@@ -455,15 +464,22 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			th.setTransactionCode(new TransactionCode(TransactionCodeConst.PAYMENT_FROM_PURCHASER));
 			th.setTransactionDate(new Date());
 			th.setAmount(paymentAmount);
-			th.setTransactionDescription("Payment from Purchaser");
+			th.setTransactionDescription("PAYMENT RECEIVED");
 			th.setPaymentMethod(paymentMethod);
 			th.setBank(bank);
 			th.setCardChequeNo(chqNo);
+			th.setChqDate(selectedChkDate);
 			th.setInvoiceNo(selectDto.getTransaction().getInvoiceNo());
 			th.setRefNo(selectDto.getTransaction().getRefNo());
-			th.setTxnReversalId(selectDto.getTransaction().getTransactionId());
+			//th.setTxnReversalId(selectDto.getTransaction().getTransactionId());
 			th.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
 			transactionHistoryDao.insert(th);
+			
+			boolean fullyPaid = progressiveBillingDao.isInvoiceFullyPaid(selectDto.getAccount().getAccountId(), selectDto.getTransaction().getInvoiceNo());
+			if(fullyPaid){
+				selectDto.getTransaction().setTxnReversalId(th.getTransactionId());
+				transactionHistoryDao.update(selectDto.getTransaction());
+			}
 			isSuccess = true;
 		return isSuccess;		
 	}

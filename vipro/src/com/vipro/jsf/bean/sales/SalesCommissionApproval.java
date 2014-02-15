@@ -297,7 +297,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 		}*/
 		
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
-			addInfoMessage("Sales Commission Approval", "There is nothing claim to approve.");
+			addInfoMessage("Information", "There is qualified Sales Commission for Approval.");
 			return listAccounts();
 		}
 		
@@ -334,7 +334,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					code.setTransactionCode(TransactionCodeConst.COMMISSION_FEE);
 					transactionHistory.setTransactionCode(code);
 					transactionHistory.setTransactionDate(currentDate);
-					transactionHistory.setTransactionDescription("COMMISSION FEE");
+					transactionHistory.setTransactionDescription("SALES COMMISSION");
 					transactionHistory.setStatus(TransactionStatusConst.PENDING);
 					transactionHistory.setAmount(history.getClaimAmount());
 					transactionHistory.setAccount(salesCommissionAccount);
@@ -344,14 +344,14 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 
 				CaseAlert caseAlert = new CaseAlert();
 				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, salesCommissionHistory.getProjectId(), accountId,	
-						currentUser, "CSAPP", null, null);
+						currentUser, CaseStatus.APPROVED, null, null);
 			}
 			
-			addInfoMessage("Sales Commission", "Commission Approved.");
+			addInfoMessage("Information", "Sales Commission Approved.");
 			return "salesCommissionApproval";
 			
 		} else {
-			addInfoMessage("Sales Commission", "Failed to approve commission.");
+			addInfoMessage("WARNING!", "Sales Commission Approval Failed.");
 			return "salesCommissionConfirmationApproval";
 		}
 	}

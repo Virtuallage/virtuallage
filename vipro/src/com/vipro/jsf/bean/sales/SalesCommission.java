@@ -470,7 +470,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 		}
 
 		if (salesCommissionAccounts == null || salesCommissionAccounts.size() <= 0) {
-			addInfoMessage("Warning!", "No Sales Commission is availeble to claim.");
+			addInfoMessage("Information", "No Sales Commission is eligibled for claim.");
 			return listAccounts();
 		}
 
@@ -540,14 +540,14 @@ public class SalesCommission extends CommonBean implements Serializable{
 
 				CaseAlert caseAlert = new CaseAlert();
 				caseAlert.insertCase(CaseStatus.COMMISSION_CLAIM, projectId, accountId,
-						currentUser, accountCust, "CSSMT", toUserProfile, null);
+						currentUser, accountCust, CaseStatus.SUBMITTED, toUserProfile, null);
 			}
 			
-			addInfoMessage("Sales Commission", "Submitted Successful.");
+			addInfoMessage("Information", "Your sales commission claim submitted successful.");
 
 			return listAccounts();
 		} else {
-			addInfoMessage("Sales Commission", "Failed to submit.");
+			addInfoMessage("WARNING", "You have failed to submit your sales commission claim.");
 			return "salesCommissionConfirmation";
 		}
 	}
