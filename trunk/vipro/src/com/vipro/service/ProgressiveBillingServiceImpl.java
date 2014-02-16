@@ -143,24 +143,14 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 
 	@Override
-	public Long getLatestPBSeqNo(String projectCode) {
+	public Long getAndUpdteSeqNO(String projectCode, String seqType, boolean isIncrement) {
 		Long no = new Long(0l);
-		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE,projectCode);
-		no = seq.getNextSeq() + 1 ;
-		//seq.setNextSeq(no);
-		seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, no, projectCode);
+		SeqNo seq = seqNoDao.findById(seqType,projectCode);
+		no = seq.getNextSeq() + (isIncrement ? 1l: -1l) ;
+		seqNoDao.updateSeqNo(seqType, no, projectCode);
 		return no;
 	}
-
-	@Override
-	public Long getLatestRBSeqNo(String projectCode) {
-		Long no = new Long(0l);
-		SeqNo seq = seqNoDao.findById(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE,projectCode);
-		no = seq.getNextSeq() + 1 ;
-		//seq.setNextSeq(no);
-		seqNoDao.updateSeqNo(ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, no, projectCode);
-		return no;
-	}
+	
 	@Override
 	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo, String accountId){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());

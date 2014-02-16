@@ -384,7 +384,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
-			this.setInvoiceNo(pbService.getLatestPBSeqNo(getSelectedDto().getProject().getProjectCode()));
+			this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));
 			
 		}
 		
@@ -399,6 +399,8 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	public void onCancelBillConfirmation(){
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 boolean success = true;
+		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());			
+		 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, false));
 		 getSelectedStageDtoList().clear();
 		 setInvoiceNo(new Long(1l));
 		 CommonBean.addInfoMessage("Billing Stages Window Closed.","");
