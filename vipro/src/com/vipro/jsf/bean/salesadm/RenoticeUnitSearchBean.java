@@ -406,8 +406,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			
-			this.setInvoiceNo(pbService.getLatestRBSeqNo(getSelectedDto().getProject().getProjectCode()));
+			this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));
 			
 		}
 		
@@ -423,6 +422,8 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 boolean success = true;
 		 getSelectedStageDtoList().clear();
+		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		 pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, false);
 		 setInvoiceNo(new Long(1l));
 		 CommonBean.addInfoMessage("Renotice Stages Window Closed.","");
 		 context.addCallbackParam("success2", success);

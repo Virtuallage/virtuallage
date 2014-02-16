@@ -61,7 +61,7 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 	
 	@Override
 	public List<Account> findByAvailableUserId(Long userId) {
-		String query="select o from com.vipro.data.Account o where o.attendedBy=? and and o.accountStatus<>'" 
+		String query="select o from com.vipro.data.Account o where o.attendedBy=? and o.accountStatus<>'" 
 				+ AccountStatusConst.STATUS_CANCELLED + "' and o.projectInventory.propertyStatus='" 
 				+ PropertyUnitStatusConst.STATUS_SOLD + "'";
 		List<Account> acc = getHibernateTemplate().find(query, userId);
