@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/vipro" />
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.vipro" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.use_outer_join">true</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.region_prefix">hbm</prop>
+				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
+				</prop>
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory
+				</prop>
+				<prop key="hibernate.order_updates">true</prop>
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+				<prop key="hibernate.connection.release_mode">on_close</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath://com/vipro/data/*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="contextHolder" class="com.vipro.utils.spring.ApplicationContextFactory" />
+
+
+	<bean id="hibInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="allServiceMethods"
+			expression="execution(* 
+		com.vipro.service.**.**(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethods" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="allDaoMethods"
+			expression="execution(* 
+		com.vipro.dao.**.**(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allDaoMethods" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="*newTrans" propagation="REQUIRES_NEW" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+
+</beans>

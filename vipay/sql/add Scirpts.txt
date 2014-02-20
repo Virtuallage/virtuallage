@@ -1,0 +1,8 @@
+insert into `vipro`.`transaction_code` ( `transaction_code`, `name`, `code_type`, `accounting_group`, `status` ) values (  '500001',  'Add Progressive Billing',  'DR',  NULL,  'SSACT' )
+
+-- alter table vipro.project add due_days BIGINT  DEFAULT 0 after status;
+
+update `vipro`.`project` set `due_days`='14' where `project_id`='1' ;
+commit;
+
+ALTER TABLE `vipro`.`transaction_history` CHANGE `ref_no` `ref_no` VARCHAR(50) CHARSET latin1 COLLATE latin1_swedish_ci NULL; 

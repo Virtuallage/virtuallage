@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+
+    <application>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+        
+    </application>
+    <navigation-rule>
+        <from-view-id>/secured/*</from-view-id>
+        <navigation-case>
+            <from-outcome>main</from-outcome>
+            <to-view-id>/secured/main.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listCase</from-outcome>
+            <to-view-id>/secured/mydesk/listCase.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>project</from-outcome>
+            <to-view-id>/secured/sales/setup/project.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>selectProject</from-outcome>
+            <to-view-id>/secured/sales/registration/selectProject.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancelSelectProject</from-outcome>
+            <to-view-id>/secured/sales/cancel/cancelSelectProject.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>updateSelectProject</from-outcome>
+            <to-view-id>/secured/sales/update/updateSelectProject.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/secured/mydesk/listCase.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newCase</from-outcome>
+            <to-view-id>/secured/mydesk/newCase.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>openCase</from-outcome>
+            <to-view-id>/secured/mydesk/openCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/individual/*</from-view-id>
+        <navigation-case>
+            <from-outcome>addIndividual</from-outcome>
+            <to-view-id>/secured/customer_service/individual/addIndividual.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editIndividual</from-outcome>
+            <to-view-id>/secured/customer_service/individual/editIndividual.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>individualRegistration</from-outcome>
+            <to-view-id>/secured/customer_service/individual/purchaser_information.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+  
+    <navigation-rule>
+        <from-view-id>/secured/customer_service/company/*</from-view-id>
+        <navigation-case>
+            <from-outcome>addCompany</from-outcome>
+            <to-view-id>/secured/customer_service/company/addCompany.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editCompany</from-outcome>
+            <to-view-id>/secured/customer_service/company/editCompany.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>companyRegistration</from-outcome>
+            <to-view-id>/secured/customer_service/company/purchaser_information.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+</faces-config>

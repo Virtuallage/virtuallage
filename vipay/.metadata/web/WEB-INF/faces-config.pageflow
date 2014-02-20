@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13664353292530" configfile="/vipro/web/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="secured/*" x="122" y="1522" id="pf13664755725910" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13664755725921 pf13664755725922 pf13664755725923 pf13664755725924 pf13667174286570 pf13667174286571 pf13667174286572" path="/secured/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/main.xhtml" x="338" y="178" id="pf13664755725928" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13664755725921" path="/secured/main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/mydesk/listCase.xhtml" x="338" y="946" id="pf13664755725929" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13667174286573 pf13667174286574" inlinks="pf13664755725922" path="/secured/mydesk/listCase.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/sales/setup/project.xhtml" x="338" y="562" id="pf136647557259212" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf13664755725923" path="/secured/sales/setup/project.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/sales/registration/selectProject.xhtml" x="338" y="1330" id="pf136647557259213" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf13664755725924" path="/secured/sales/registration/selectProject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/sales/cancel/cancelSelectProject.xhtml" id="pf13667174286575" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf13667174286570" path="/secured/sales/cancel/cancelSelectProject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/sales/update/updateSelectProject.xhtml" id="pf13667174286576" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf13667174286571" path="/secured/sales/update/updateSelectProject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" id="pf13667174286577" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf13667174286572" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/mydesk/newCase.xhtml" id="pf13667174286578" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13667174286573" path="/secured/mydesk/newCase.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secured/mydesk/openCase.xhtml" id="pf13667174286579" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf13667174286574" path="/secured/mydesk/openCase.xhtml"/>
+  <links id="pf13664755725921" target="pf13664755725928" source="pf13664755725910" outcome="main"/>
+  <links id="pf13664755725922" target="pf13664755725929" source="pf13664755725910" outcome="listCase"/>
+  <links id="pf13664755725923" target="pf136647557259212" source="pf13664755725910" outcome="project"/>
+  <links id="pf13664755725924" target="pf136647557259213" source="pf13664755725910" outcome="selectProject"/>
+  <links id="pf13667174286570" target="pf13667174286575" source="pf13664755725910" outcome="cancelSelectProject"/>
+  <links id="pf13667174286571" target="pf13667174286576" source="pf13664755725910" outcome="updateSelectProject"/>
+  <links id="pf13667174286572" target="pf13667174286577" source="pf13664755725910" outcome="logout"/>
+  <links id="pf13667174286573" target="pf13667174286578" source="pf13664755725929" outcome="newCase"/>
+  <links id="pf13667174286574" target="pf13667174286579" source="pf13664755725929" outcome="openCase"/>
+</pageflow:Pageflow>

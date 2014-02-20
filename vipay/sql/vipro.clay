@@ -1,0 +1,1433 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clay-model clay-version="2.0.1">
+<database-model author="" begin-script="" end-script="" id="42aefb01:13c9db412d7:-8000" name="vipro" sql-dialect-id="jp.azzurri.clay.dialect.MySQL_5_0_Dialect" version="1.0">
+<schema-list>
+<schema id="42aefb01:13c9db412d7:-7ffd" name="vipro">
+<table-list>
+<table id="42aefb01:13c9db412d7:-7fff" name="Institution">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ffa" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff9" mandatory="false" name="institution_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="6" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff8" mandatory="false" name="initial">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff6" mandatory="false" name="office_tel">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff5" mandatory="false" name="contact_person">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff4" mandatory="false" name="contact_person_title">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fe9" mandatory="false" name="contact_person_mobile">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="50" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fe8" mandatory="false" name="contact_person_email">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="4" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff1" mandatory="false" name="currency_symbol">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="2" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ff0" mandatory="false" name="decimal_points">
+<data-type name="DECIMAL" selected-variant-pattern="DECIMAL(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fec" mandatory="false" name="status" remarks="ACTV,DISB">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7ffe" name="PK_INSTITUTION">
+<primary-key-column name="institution_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7fe7" name="audit_log_header">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fe3" mandatory="true" name="hdr_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7fe6" name="PK_AUDIT_LOG_HEADER">
+<primary-key-column name="hdr_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7fdd" name="audit_log_det">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fd7" mandatory="true" name="det_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7fa5" mandatory="true" name="hdr_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7fdc" name="PK_AUDIT_LOG_DET">
+<primary-key-column name="det_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7fa7" name="FK_audit_log_det_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_AUDIT_LOG_HEADER" referenced-table="audit_log_header" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="hdr_id" referenced-key-column-name="hdr_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="42aefb01:13c9db412d7:-7f6c" name="holiday">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f64" mandatory="true" name="holiday_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f63" mandatory="false" name="date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f62" mandatory="false" name="description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f34" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7f6b" name="PK_HOLIDAY">
+<primary-key-column name="holiday_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7f36" name="FK_holiday_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INSTITUTION" referenced-table="Institution" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="institution_id" referenced-key-column-name="institution_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="42aefb01:13c9db412d7:-7f0f" name="user_profile">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f0b" mandatory="true" name="user_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f0a" mandatory="false" name="username">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f09" mandatory="false" name="password">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f08" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f07" mandatory="false" name="address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f06" mandatory="false" name="staff_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f05" mandatory="false" name="email">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f04" mandatory="false" name="mobile_no">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f03" mandatory="false" name="office_no">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f02" mandatory="false" name="invalid_password_count">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column auto-increment="false" column-size="1" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f01" mandatory="false" name="special_handling">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7f00" mandatory="false" name="status" remarks="ACTV,DISB">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ed0" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7e4c" mandatory="true" name="group_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7f0e" name="PK_USER_PROFILE">
+<primary-key-column name="user_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7ed2" name="FK_user_profile_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INSTITUTION" referenced-table="Institution" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="institution_id" referenced-key-column-name="institution_id"/>
+</foreign-key>
+<foreign-key id="42aefb01:13c9db412d7:-7e4e" name="FK_user_profile_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_GROUP" referenced-table="user_group" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="group_id" referenced-key-column-name="group_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="42aefb01:13c9db412d7:-7eaf" name="user_group">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7eab" mandatory="true" name="group_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7eaa" mandatory="false" name="group_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ea9" mandatory="false" name="status" remarks="ACTV,DISB">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7eae" name="PK_USER_GROUP">
+<primary-key-column name="group_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7e3a" name="group_permission">
+<column-list>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7e36" mandatory="true" name="permission_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7e34" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7e39" name="PK_GROUP_PERMISSION">
+<primary-key-column name="permission_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7e33" name="user_permission">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7de8" mandatory="true" name="group_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7daa" mandatory="true" name="permission_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7e32" name="PK_USER_PERMISSION">
+<primary-key-column name="group_id"/>
+<primary-key-column name="permission_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7dea" name="FK_user_permission_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_GROUP" referenced-table="user_group" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="group_id" referenced-key-column-name="group_id"/>
+</foreign-key>
+<foreign-key id="42aefb01:13c9db412d7:-7dac" name="FK_user_permission_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_GROUP_PERMISSION" referenced-table="group_permission" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="permission_id" referenced-key-column-name="permission_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="42aefb01:13c9db412d7:-7d8e" name="document_reference">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d8a" mandatory="true" name="id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d89" mandatory="false" name="doc_type">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d88" mandatory="false" name="file_content">
+<data-type name="LONGBLOB" selected-variant-pattern="LONGBLOB"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d87" mandatory="false" name="created_on">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d86" mandatory="false" name="created_by">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7d8d" name="PK_DOCUMENT_REFERENCE">
+<primary-key-column name="id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7d85" name="code_header">
+<column-list>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d80" mandatory="true" name="code_header_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d7f" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7d84" name="PK_CODE_HEADER">
+<primary-key-column name="code_header_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7d7e" name="code_det">
+<column-list>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d54" mandatory="true" name="code_header_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d75" mandatory="true" name="code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d74" mandatory="false" name="description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7d73" mandatory="false" name="status" remarks="ACTV,DISB">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7d7d" name="PK_CODE_DET">
+<primary-key-column name="code_header_id"/>
+<primary-key-column name="code"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7d56" name="FK_code_det_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CODE_HEADER" referenced-table="code_header" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="code_header_id" referenced-key-column-name="code_header_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="42aefb01:13c9db412d7:-7cdf" name="discount">
+<column-list>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cd4" mandatory="true" name="discount_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cd3" mandatory="false" name="description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cd2" mandatory="false" name="effective_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cd1" mandatory="false" name="expiry_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="42aefb01:13c9db412d7:-7cd0" mandatory="false" name="discount_rate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ccf" mandatory="false" name="created_on">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cce" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7cde" name="PK_DISCOUNT">
+<primary-key-column name="discount_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7ccd" name="sales_commission">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc9" mandatory="true" name="commission_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc8" mandatory="false" name="description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc7" mandatory="false" name="effective_date">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc6" mandatory="false" name="type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="6" decimal-digits="2" default-value="" id="42aefb01:13c9db412d7:-7cc5" mandatory="false" name="amount_or_rate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc4" mandatory="false" name="created_on">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cc3" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7ccc" name="PK_SALES_COMMISSION">
+<primary-key-column name="commission_id"/>
+</primary-key>
+</table>
+<table id="42aefb01:13c9db412d7:-7cb5" name="business_partner">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7caf" mandatory="false" name="partner_id">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cae" mandatory="false" name="partner_type" remarks="SOLICITOR,BANK">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cad" mandatory="false" name="business_registration_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cac" mandatory="false" name="registration_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7cab" mandatory="false" name="company_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="100" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7caa" mandatory="false" name="address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca9" mandatory="false" name="contact_person_title">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="50" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca8" mandatory="false" name="contact_person_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca7" mandatory="false" name="office_tel">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca6" mandatory="false" name="fax_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca5" mandatory="false" name="mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca4" mandatory="false" name="email_address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7ca3" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="42aefb01:13c9db412d7:-7c8e" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="42aefb01:13c9db412d7:-7cb4" name="PK_BUSINESS_PARTNER"/>
+<foreign-key-list>
+<foreign-key id="42aefb01:13c9db412d7:-7c90" name="FK_business_partner_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INSTITUTION" referenced-table="Institution" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="institution_id" referenced-key-column-name="institution_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7fe2" name="project">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd6" mandatory="true" name="project_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd5" mandatory="false" name="project_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd4" mandatory="false" name="project_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd3" mandatory="false" name="property_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd2" mandatory="false" name="report_group">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="80" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd1" mandatory="false" name="address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fd0" mandatory="false" name="project_office_tel_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fcf" mandatory="false" name="project_office_fax_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fce" mandatory="false" name="person_in_charge">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fcd" mandatory="false" name="pic_mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fcc" mandatory="false" name="location_longtitude">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fcb" mandatory="false" name="location_latitude">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fca" mandatory="false" name="location_city">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fc9" mandatory="false" name="location_state">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fc8" mandatory="false" name="location_country">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7fc7" mandatory="false" name="collection_interest_rate">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7fc6" mandatory="false" name="staff_booking_fee">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7fc5" mandatory="false" name="public_booking_fee">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7fc4" mandatory="false" name="maintenance_fee_rate">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fc2" mandatory="false" name="launch_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7fc1" mandatory="false" name="tax_percentage">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7fad" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7e2f" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7fe1" name="PK_PROJECT">
+<primary-key-column name="project_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7faf" name="FK_project_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INSTITUTION" referenced-table="Institution" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="institution_id" referenced-key-column-name="institution_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-7e31" name="FK_project_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7fe0" name="project_inventory">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f95" mandatory="true" name="inventory_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="8" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f94" mandatory="false" name="unit_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="8" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f93" mandatory="false" name="pt_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="8" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f92" mandatory="false" name="hsd_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="8" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f91" mandatory="false" name="block_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f90" mandatory="false" name="level">
+<data-type name="DEC" selected-variant-pattern="DEC(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8f" mandatory="false" name="layout_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8e" mandatory="false" name="orientation">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8d" mandatory="false" name="land_area">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8c" mandatory="false" name="built_up_area">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8b" mandatory="false" name="property_status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f8a" mandatory="false" name="status_change_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f89" mandatory="false" name="purchase_price">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f88" mandatory="false" name="discount_amount">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f87" mandatory="false" name="redemption_amount">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f86" mandatory="false" name="redemption_paid_todate">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f85" mandatory="false" name="assessment">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f84" mandatory="false" name="quit_rent">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f83" mandatory="false" name="legal_fee">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f82" mandatory="false" name="disbursement_fee">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f81" mandatory="false" name="property_address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f80" mandatory="false" name="property_title_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f7f" mandatory="false" name="strata_title_obtained_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f7e" mandatory="false" name="key_handover_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f7c" mandatory="false" name="development_stage">
+<data-type name="DEC" selected-variant-pattern="DEC(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f6c" mandatory="true" name="project_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7fdf" name="PK_PROJECT_INVENTORY">
+<primary-key-column name="inventory_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7f6e" name="FK_project_inventory_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PROJECT" referenced-table="project" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="project_id" referenced-key-column-name="project_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7f40" name="progressive_billing">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f3c" mandatory="true" name="schedule_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f22" mandatory="true" name="inventory_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="2" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f0f" mandatory="false" name="seq_no">
+<data-type name="DECIMAL" selected-variant-pattern="DECIMAL(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f0e" mandatory="false" name="stage_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="120" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f0d" mandatory="false" name="stage_description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f0c" mandatory="false" name="percentage">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f0b" mandatory="false" name="due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f0a" mandatory="false" name="interest_rate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f09" mandatory="false" name="amount_billed">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f08" mandatory="false" name="date_billed">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f07" mandatory="false" name="payment_due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f06" mandatory="false" name="date_paid">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7f05" mandatory="false" name="overdue_interest">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7f04" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7f3f" name="PK_PROGRESSIVE_BILLING">
+<primary-key-column name="schedule_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7f24" name="FK_progressive_billing_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PROJECT_INVENTORY" referenced-table="project_inventory" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="inventory_id" referenced-key-column-name="inventory_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7f03" name="postdated_cheque">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7eff" mandatory="true" name="cheque_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7efe" mandatory="false" name="transaction_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7efd" mandatory="false" name="cheque_valid_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7efc" mandatory="false" name="cheque_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7efb" mandatory="false" name="cheque_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7efa" mandatory="false" name="bank_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7ef9" mandatory="false" name="transaction_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7ef8" mandatory="false" name="cheque_status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7ece" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7f02" name="PK_POSTDATED_CHEQUE">
+<primary-key-column name="cheque_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7ed0" name="FK_postdated_cheque_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7ef7" name="account">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7ef1" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7b69" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a86" mandatory="true" name="inventory_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a68" mandatory="false" name="account_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a67" mandatory="false" name="account_status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a66" mandatory="false" name="attended_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a65" mandatory="false" name="registration_fee">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a64" mandatory="false" name="registration_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a63" mandatory="false" name="date_purchased">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a62" mandatory="false" name="purchase_price">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a61" mandatory="false" name="discounted_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a60" mandatory="false" name="commission_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a5f" mandatory="false" name="commission_paid_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a5e" mandatory="false" name="net_price">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a5d" mandatory="false" name="purchase_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79c7" mandatory="false" name="panel_bank_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a5b" mandatory="false" name="loan_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a5a" mandatory="false" name="total_payment_todate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a59" mandatory="false" name="redemption_bank_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a58" mandatory="false" name="bank_redemption_sum">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a57" mandatory="false" name="bank_redemption_todate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a56" mandatory="false" name="spa_signed_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a55" mandatory="false" name="spa_stamped_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a54" mandatory="false" name="spa_verified_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a53" mandatory="false" name="spa_verified_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a52" mandatory="false" name="spa_solicitor_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a51" mandatory="false" name="LO_signed_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a50" mandatory="false" name="LO_verified_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4f" mandatory="false" name="LO_verified_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4e" mandatory="false" name="LA_signed_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4d" mandatory="false" name="LA_stamped_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4c" mandatory="false" name="LA_verified_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4b" mandatory="false" name="LA_verified_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a4a" mandatory="false" name="LA_solicitor_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a49" mandatory="false" name="advise_signed_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a48" mandatory="false" name="advise_stamped_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a47" mandatory="false" name="advise_verified_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a46" mandatory="false" name="advise_verified_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a45" mandatory="false" name="maintenance_start_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a44" mandatory="false" name="maintenance_end_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a43" mandatory="false" name="maintenance_fee">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a42" mandatory="false" name="maintenance_biling_address">
+<data-type name="CHAR" selected-variant-pattern="CHAR"/>
+</column>
+<column auto-increment="false" column-size="2" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79c4" mandatory="false" name="maintenance_fee_freq">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a41" mandatory="false" name="fire_insurance_due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7a40" mandatory="false" name="fire_insurance_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a3f" mandatory="false" name="fire_insurance_company_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a3e" mandatory="false" name="last_Payment_made_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="2" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a3d" mandatory="false" name="maintenance_biling_cycle">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7a3c" mandatory="false" name="cancelled_reason">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7ef6" name="PK_ACCOUNT">
+<primary-key-column name="account_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7b6b" name="FK_account_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-7a88" name="FK_account_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PROJECT_INVENTORY" referenced-table="project_inventory" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="inventory_id" referenced-key-column-name="inventory_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7e04" name="customer">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7e00" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dff" mandatory="false" name="customer_category">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dfe" mandatory="false" name="identity_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dfd" mandatory="false" name="identity_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dfc" mandatory="false" name="title">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dfb" mandatory="false" name="full_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dfa" mandatory="false" name="special_handling">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df9" mandatory="false" name="race">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="1" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df8" mandatory="false" name="bumi_indicator">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="4" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df7" mandatory="false" name="sex">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="4" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df6" mandatory="false" name="marital_status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df5" mandatory="false" name="employer_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df4" mandatory="false" name="house_tel_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df3" mandatory="false" name="office_tel_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df2" mandatory="false" name="fax_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df1" mandatory="false" name="communication_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7df0" mandatory="false" name="language">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7def" mandatory="false" name="date_of_birth">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7ded" mandatory="false" name="created_by">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dec" mandatory="false" name="date_created">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7dcd" mandatory="true" name="institution_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7e03" name="PK_CUSTOMER">
+<primary-key-column name="customer_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7dcf" name="FK_customer_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INSTITUTION" referenced-table="Institution" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="institution_id" referenced-key-column-name="institution_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7da4" name="address">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d9e" mandatory="true" name="address_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d9c" mandatory="false" name="address_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d9b" mandatory="false" name="address_line_1">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d9a" mandatory="false" name="address_line_2">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d99" mandatory="false" name="address_line_3">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d98" mandatory="false" name="postcode">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d97" mandatory="false" name="city">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d96" mandatory="false" name="state">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d95" mandatory="false" name="country">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d94" mandatory="false" name="created_on">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d93" mandatory="false" name="created_by">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7d6a" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7cc9" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7da3" name="PK_ADDRESS">
+<primary-key-column name="address_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7d6c" name="FK_address_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-7ccb" name="FK_address_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7da2" name="email">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7cae" mandatory="true" name="email_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="50" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7cad" mandatory="false" name="email_address">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7cac" mandatory="false" name="created_on">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7cab" mandatory="false" name="created_by">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c80" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c41" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7da1" name="PK_EMAIL">
+<primary-key-column name="email_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7c82" name="FK_email_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-7c43" name="FK_email_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7c09" name="mobile_phone">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c05" mandatory="true" name="mobile_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c04" mandatory="false" name="mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c03" mandatory="false" name="created_on">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7c02" mandatory="false" name="created_by">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7bea" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7b9c" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7c08" name="PK_MOBILE_PHONE">
+<primary-key-column name="mobile_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7bec" name="FK_mobile_phone_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-7b9e" name="FK_mobile_phone_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-79c3" name="account_aging">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79bf" mandatory="true" name="account_aging_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79b4" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79a8" mandatory="false" name="aging_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-79a7" mandatory="false" name="aging_start_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-79a6" mandatory="false" name="delinquent_level_1">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-79a3" mandatory="false" name="delinquent_level_2">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-79a2" mandatory="false" name="delinquent_level_3">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-79a1" mandatory="false" name="delinquent_level_4">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-79a0" mandatory="false" name="delinquent_level_5">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799f" mandatory="false" name="delinquent_level_6">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799e" mandatory="false" name="delinquent_level_7">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799d" mandatory="false" name="delinquent_level_8">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799c" mandatory="false" name="delinquent_level_9">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799b" mandatory="false" name="delinquent_level_10">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-799a" mandatory="false" name="delinquent_level_11">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7999" mandatory="false" name="delinquent_level_12">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-79c2" name="PK_ACCOUNT_AGING">
+<primary-key-column name="account_aging_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-79b6" name="FK_account_aging_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7998" name="transaction_history">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7992" mandatory="true" name="transaction_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="6" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-77e1" mandatory="true" name="transaction_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7990" mandatory="false" name="transaction_date">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-798f" mandatory="false" name="transaction_description">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-798e" mandatory="false" name="ref_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-798d" mandatory="false" name="posting_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-798c" mandatory="false" name="statement_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-798b" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-796d" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7997" name="PK_TRANSACTION_HISTORY">
+<primary-key-column name="transaction_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-796f" name="FK_transaction_history_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-77e3" name="FK_transaction_history_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_TRANSACTION_CODE" referenced-table="transaction_code" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="transaction_code" referenced-key-column-name="transaction_code"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7996" name="transaction_group">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-791c" mandatory="true" name="transaction_group_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="6" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-779d" mandatory="true" name="transaction_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-791a" mandatory="false" name="transaction_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7919" mandatory="false" name="group_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7918" mandatory="false" name="total_amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7917" mandatory="false" name="total_transaction">
+<data-type name="NUMERIC" selected-variant-pattern="NUMERIC(%p, %s)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7995" name="PK_TRANSACTION_GROUP">
+<primary-key-column name="transaction_group_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-779f" name="FK_transaction_group_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_TRANSACTION_CODE" referenced-table="transaction_code" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="transaction_code" referenced-key-column-name="transaction_code"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-7916" name="join_account">
+<column-list>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78fa" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78c8" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7915" name="PK_JOIN_ACCOUNT"/>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-78fc" name="FK_join_account_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-78ca" name="FK_join_account_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-78be" name="water_billing">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78ba" mandatory="true" name="water_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78b8" mandatory="false" name="date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78b7" mandatory="false" name="start_reading">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78b6" mandatory="false" name="end_reading">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column auto-increment="false" column-size="3" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-78b5" mandatory="false" name="rate">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="7" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-78b4" mandatory="false" name="amount">
+<data-type name="DEC" selected-variant-pattern="DEC(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="6" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78b3" mandatory="false" name="transaction_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="12" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-78b2" mandatory="false" name="invoice_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-785a" mandatory="true" name="account_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-78bd" name="PK_WATER_BILLING">
+<primary-key-column name="water_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-785c" name="FK_water_billing_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ACCOUNT" referenced-table="account" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="account_id" referenced-key-column-name="account_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-783a" name="voucher">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7836" mandatory="true" name="voucher_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7835" mandatory="false" name="issue_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="12" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7834" mandatory="false" name="voucher_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7833" mandatory="false" name="voucher_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="9" decimal-digits="2" default-value="" id="724eda4a:13c9eed27b2:-7832" mandatory="false" name="voucher_amount">
+<data-type name="DECIMAL" selected-variant-pattern="DECIMAL(%p, %s)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7830" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7814" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7839" name="PK_VOUCHER">
+<primary-key-column name="voucher_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-7816" name="FK_voucher_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="724eda4a:13c9eed27b2:-780a" name="transaction_code">
+<column-list>
+<column auto-increment="false" column-size="6" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7806" mandatory="true" name="transaction_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7805" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7804" mandatory="false" name="code_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7803" mandatory="false" name="accounting_group">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7802" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7809" name="PK_TRANSACTION_CODE">
+<primary-key-column name="transaction_code"/>
+</primary-key>
+</table>
+<table id="724eda4a:13c9eed27b2:-776e" name="contact_list">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-776a" mandatory="true" name="list_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="5" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7769" mandatory="false" name="type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="80" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-7767" mandatory="false" name="subject">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-776d" name="PK_CONTACT_LIST">
+<primary-key-column name="list_id"/>
+</primary-key>
+</table>
+<table id="724eda4a:13c9eed27b2:-7764" name="contact">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76c3" mandatory="true" name="id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76a4" mandatory="true" name="list_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76ec" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="80" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76d8" mandatory="false" name="contact_name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="2" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76d7" mandatory="false" name="contact_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="40" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76d6" mandatory="false" name="email">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76d5" mandatory="false" name="mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="724eda4a:13c9eed27b2:-76d4" mandatory="false" name="doc_template_id">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="724eda4a:13c9eed27b2:-7763" name="PK_CONTACT">
+<primary-key-column name="id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="724eda4a:13c9eed27b2:-76ee" name="FK_contact_list_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="724eda4a:13c9eed27b2:-76a6" name="FK_contact_list_4" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CONTACT_LIST" referenced-table="contact_list" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="list_id" referenced-key-column-name="list_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="3071de8d:13cb2e3ed6f:-7fa0" name="case">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f96" mandatory="true" name="case_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f95" mandatory="false" name="creation_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f94" mandatory="false" name="case_type">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f93" mandatory="false" name="subject">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="60" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f90" mandatory="false" name="name">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8f" mandatory="false" name="mobile_no">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="50" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8e" mandatory="false" name="email">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8d" mandatory="false" name="due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="1" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8c" mandatory="false" name="notification">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f8b" mandatory="false" name="status">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f65" mandatory="true" name="sender_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7ef4" mandatory="true" name="assignee_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7da4" mandatory="true" name="customer_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7d5e" mandatory="true" name="creator_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="3071de8d:13cb2e3ed6f:-7f9f" name="PK_CASE">
+<primary-key-column name="case_id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f67" name="FK_case_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f2f" name="FK_case_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7ef6" name="FK_case_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7da6" name="FK_case_4" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CUSTOMER" referenced-table="customer" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7d60" name="FK_case_5" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_USER_PROFILE" referenced-table="user_profile" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="sender_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="3071de8d:13cb2e3ed6f:-7f8a" name="case_activity">
+<column-list>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7c" mandatory="false" name="activity_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7b" mandatory="false" name="action_by">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f7a" mandatory="false" name="action_code">
+<data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f79" mandatory="false" name="action_time">
+<data-type name="DATETIME" selected-variant-pattern="DATETIME"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f78" mandatory="false" name="old_due_date">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3071de8d:13cb2e3ed6f:-7f12" mandatory="true" name="case_id">
+<data-type name="BIGINT" selected-variant-pattern="BIGINT"/>
+</column>
+</column-list>
+<primary-key id="3071de8d:13cb2e3ed6f:-7f89" name="PK_CASE_ACTIVITY"/>
+<foreign-key-list>
+<foreign-key id="3071de8d:13cb2e3ed6f:-7f14" name="FK_case_activity_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_CASE" referenced-table="case" referenced-table-schema="vipro" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="case_id" referenced-key-column-name="case_id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+<diagram>
+<table-figure refid="42aefb01:13c9db412d7:-7fff" x="464" y="27"/>
+<table-figure refid="42aefb01:13c9db412d7:-7fe7" x="342" y="446"/>
+<table-figure refid="42aefb01:13c9db412d7:-7fdd" x="346" y="568"/>
+<table-figure refid="42aefb01:13c9db412d7:-7f6c" x="550" y="473"/>
+<table-figure refid="42aefb01:13c9db412d7:-7f0f" x="878" y="20"/>
+<table-figure refid="42aefb01:13c9db412d7:-7eaf" x="900" y="319"/>
+<table-figure refid="42aefb01:13c9db412d7:-7e3a" x="916" y="541"/>
+<table-figure refid="42aefb01:13c9db412d7:-7e33" x="738" y="422"/>
+<table-figure refid="42aefb01:13c9db412d7:-7d8e" x="1157" y="19"/>
+<table-figure refid="42aefb01:13c9db412d7:-7d85" x="1166" y="161"/>
+<table-figure refid="42aefb01:13c9db412d7:-7d7e" x="1174" y="341"/>
+<table-figure refid="42aefb01:13c9db412d7:-7cdf" x="1164" y="460"/>
+<table-figure refid="42aefb01:13c9db412d7:-7ccd" x="1154" y="641"/>
+<table-figure refid="42aefb01:13c9db412d7:-7cb5" x="5" y="247"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7fe2" x="737" y="821"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7fe0" x="369" y="1325"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7f40" x="696" y="1768"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7f03" x="706" y="2083"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7ef7" x="1001" y="2284"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7e04" x="1734" y="1326"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7da4" x="1058" y="1276"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7da2" x="1262" y="1740"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7c09" x="1384" y="1938"/>
+<table-figure refid="724eda4a:13c9eed27b2:-79c3" x="676" y="2897"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7998" x="1456" y="2755"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7996" x="1626" y="2968"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7916" x="1719" y="2641"/>
+<table-figure refid="724eda4a:13c9eed27b2:-78be" x="1948" y="2658"/>
+<table-figure refid="724eda4a:13c9eed27b2:-783a" x="1900" y="2978"/>
+<table-figure refid="724eda4a:13c9eed27b2:-780a" x="1528" y="520"/>
+<table-figure refid="724eda4a:13c9eed27b2:-776e" x="1324" y="3104"/>
+<table-figure refid="724eda4a:13c9eed27b2:-7764" x="1524" y="3338"/>
+<table-figure refid="3071de8d:13cb2e3ed6f:-7fa0" x="1031" y="939"/>
+<table-figure refid="3071de8d:13cb2e3ed6f:-7f8a" x="1279" y="1227"/>
+</diagram>
+</clay-model>

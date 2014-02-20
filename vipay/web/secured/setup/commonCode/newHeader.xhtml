@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<ui:define name="title">
+Common Code Header Setup
+</ui:define>
+
+	<ui:define name="content">
+
+		<p:panel id="panel" header="Common Code Header Information"
+			style="width:95%">
+
+			<p:focus context="panel" />
+
+			<h:form id="headerForm">
+				<h:panelGrid columns="4" style="width:100%">
+					<p:outputLabel value="Header ID" for="headerId" />
+					<p:inputText id="headerId"
+						value="#{generalCodeBean.codeHeader.codeHeaderId}" maxlength="2"
+						style="text-transform:uppercase" required="true"
+						autocomplete="off" />
+					<p:outputLabel value="Header Description" for="desc" />
+					<p:inputText id="desc" value="#{generalCodeBean.codeHeader.name}"
+						style="text-transform:uppercase" required="true"
+						autocomplete="off" />
+
+				</h:panelGrid>
+
+				<br />
+				<p:commandButton value="Back" action="#{generalCodeBean.listHeader}"
+					ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w" />  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{generalCodeBean.saveHeader}"
+					ajax="false" icon="ui-icon-disk" />
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>

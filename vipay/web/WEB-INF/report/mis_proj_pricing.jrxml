@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="project_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PI.*,
+     P.`PROJECT_NAME`,
+     code_det.`description` AS code_det_description
+FROM
+     `project` P INNER JOIN `project_inventory` PI ON P.`PROJECT_ID` = PI.`PROJECT_ID`
+     INNER JOIN `code_det` code_det ON PI.`property_status` = code_det.`code`
+WHERE
+     P.PROJECT_ID = $P{project_id}]]>
+	</queryString>
+	<field name="inventory_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unit_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pt_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hsd_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="block_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="level" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="layout_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orientation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="land_area" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="built_up_area" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchase_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="redemption_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="redemption_paid_todate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="assessment" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quit_rent" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="legal_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="disbursement_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="property_title_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="strata_title_obtained_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="key_handover_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dnc_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="development_stage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="change_user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_change_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="property_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROJECT_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="code_det_description" class="java.lang.String"/>
+	<variable name="total_purchase_price" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{purchase_price}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalDiscount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{discount_amount}]]></variableExpression>
+	</variable>
+	<variable name="NetPrice" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{purchase_price}.subtract($F{discount_amount})]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="TotalNett" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{NetPrice}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="118" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="543" height="29"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[B&G Concept Engineering Sdn Bhd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="31" width="286" height="20"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Project Pricing Listing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="54" width="371" height="29"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[No. 45, 47 & 49, Jalan USJ 21/11, 47630 UEP Subang Jaya, Selangor D.E. Malaysia.
+Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="94" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="94" width="157" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROJECT_NAME}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="87" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="408" y="63" width="37" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="445" y="63" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="77" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Unit No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Purchase Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="2" width="86" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="2" width="108" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nett Selling Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="2" y="1" width="77" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{unit_no}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="188" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{discount_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="1" width="96" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code_det_description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="337" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{NetPrice}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="297" y="1" width="40" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{discount_rate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="20" width="550" height="1" isPrintWhenDetailOverflows="true" forecolor="#999999"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="79" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{purchase_price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="26">
+			<line>
+				<reportElement x="79" y="21" width="103" height="1"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="79" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total_purchase_price}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="79" y="1" width="103" height="1"/>
+			</line>
+			<line>
+				<reportElement x="79" y="19" width="103" height="1"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="188" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotalDiscount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="186" y="1" width="103" height="1"/>
+			</line>
+			<line>
+				<reportElement x="186" y="19" width="103" height="1"/>
+			</line>
+			<line>
+				<reportElement x="186" y="21" width="103" height="1"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="337" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotalNett}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="337" y="1" width="103" height="1"/>
+			</line>
+			<line>
+				<reportElement x="337" y="19" width="103" height="1"/>
+			</line>
+			<line>
+				<reportElement x="337" y="21" width="103" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="24">
+			<textField>
+				<reportElement x="441" y="2" width="65" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="512" y="2" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>
