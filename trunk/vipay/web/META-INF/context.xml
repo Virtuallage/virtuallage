@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" reloadable="false"> <!-- antiResourceLocking="true" -->
+
+
+	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver"
+		maxActive="20" maxIdle="2" maxWait="10000" name="jdbc/vipro" password="password"
+		type="javax.sql.DataSource"
+		url="jdbc:mysql://localhost:3306/vipro?zeroDateTimeBehavior=convertToNull"
+		username="vipro" validationQuery="">
+	</Resource>
+
+
+
+</Context>

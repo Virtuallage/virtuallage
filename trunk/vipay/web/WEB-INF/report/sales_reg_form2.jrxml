@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="account_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     A.*,
+     PI.*,
+     P.*,
+     c1.`full_name` AS c1_fn,
+     c1.`email` AS c1_e,
+     c1.`mobile_no` AS c1_mn,
+     c1.`house_tel_no` AS c1_htn,
+     c1.`title` AS c1_t,
+     c1.`identity_type` AS c1_it,
+     c1.`sex` AS c1_s,
+     c1.`office_tel_no` AS c1_otn,
+     c1.`date_of_birth` AS c1_dob,
+     c1.`identity_no` AS c1_in,
+     c1.`marital_status` AS c1_ms,
+     c1.`fax_no` AS c1_fax,
+     c2.`full_name` AS c2_fn,
+     c2.`email` AS c2_e,
+     c2.`mobile_no` AS c2_mn,
+     c2.`house_tel_no` AS c2_htn,
+     c2.`title` AS c2_t,
+     c2.`identity_type` AS c2_it,
+     c2.`sex` AS c2_s,
+     c2.`office_tel_no` AS c2_otn,
+     c2.`date_of_birth` AS c2_dob,
+     c2.`identity_no` AS c2_in,
+     c2.`marital_status` AS c2_ms,
+     c2.`fax_no` AS c2_fax,
+     PM.`description` AS pm_desc,
+     BB.`description` AS bb_desc,
+     BP.`company_name` AS BP_name,
+     proptype.`description` AS proptype_desc,
+     addr.`address_line_1` AS c1_l1,
+     addr.`address_line_2` AS c1_l2,
+     addr.`address_line_3` AS c1_l3,
+     addr.`address_line_4` AS c1_l4,
+     addr.`postcode` AS c1_pc,
+     addr.`city` AS c1_city,
+     addr.`state` AS c1_state,
+     addr.`country` AS c1_country,
+     code_det.`description` AS c1title,
+     code_det_A.`description` AS c1state,
+     code_det_B.`description` AS c1country,
+     code_det_C.`description` AS c1sex,
+     code_det_D.`description` AS c1marital,
+     code_det_E.`description` AS c2title,
+     code_det_F.`description` AS c2sex,
+     code_det_G.`description` AS c2marital
+FROM
+     `account` A INNER JOIN `project_inventory` PI ON A.`INVENTORY_ID` = PI.`INVENTORY_ID`
+     INNER JOIN `project` P ON PI.`PROJECT_ID` = P.`PROJECT_ID`
+     INNER JOIN `business_partner` BP ON P.`developer_id` = BP.`partner_id`
+     INNER JOIN `code_det` proptype ON P.`property_type` = proptype.`code`
+     LEFT OUTER JOIN `customer` c1 ON A.`customer_id` = c1.`customer_id`
+     LEFT OUTER JOIN `customer` c2 ON A.`customer_id2` = c2.`customer_id`
+     RIGHT OUTER JOIN `code_det` PM ON A.`book_pymt_method` = PM.`code`
+     RIGHT OUTER JOIN `code_det` BB ON A.`book_pymt_bank` = BB.`code`
+     INNER JOIN `code_det` code_det_E ON c2.`title` = code_det_E.`code`
+     INNER JOIN `code_det` code_det_F ON c2.`sex` = code_det_F.`code`
+     INNER JOIN `code_det` code_det_G ON c2.`marital_status` = code_det_G.`code`
+     INNER JOIN `address` addr ON c1.`address_id` = addr.`address_id`
+     INNER JOIN `code_det` code_det ON c1.`title` = code_det.`code`
+     INNER JOIN `code_det` code_det_C ON c1.`sex` = code_det_C.`code`
+     INNER JOIN `code_det` code_det_D ON c1.`marital_status` = code_det_D.`code`
+     INNER JOIN `code_det` code_det_A ON addr.`state` = code_det_A.`code`
+     INNER JOIN `code_det` code_det_B ON addr.`country` = code_det_B.`code`
+WHERE
+     A.ACCOUNT_ID = $P{account_id}]]>
+	</queryString>
+	<field name="account_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inventory_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="account_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="attended_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sales_person" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="corr_addr_cust_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="registration_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="registration_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_purchased" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchase_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discounted_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="net_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commission_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commission_paid_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="source" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchase_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="panel_bank_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_payment_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="account_balance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="late_pymt_int_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="late_pymt_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accrual_interest" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="redemption_bank_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bank_redemption_sum" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bank_redemption_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_refund_net_amt" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancel_doc_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cancelled_reason" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_signed_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_stamped_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_verified_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_ref_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LO_signed_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LO_verified_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LO_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="financier_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="financier_ref" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_signed_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_stamped_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_verified_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="la_ref_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="advise_signed_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="advise_stamped_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="advise_verified_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="advise_verified_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_start_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_end_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_biling_address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_fee_freq" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fire_insurance_due_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fire_insurance_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fire_insurance_company_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="last_Payment_made_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_biling_cycle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_method" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_card_chq_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_pymt_bank" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id2" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id3" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id4" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id5" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="campaign_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="changed_by" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_changed" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="account_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unit_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pt_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hsd_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="block_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="level" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="layout_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orientation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="land_area" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="built_up_area" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="redemption_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="redemption_paid_todate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="assessment" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quit_rent" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="legal_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="disbursement_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="property_title_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="strata_title_obtained_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="key_handover_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dnc_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="development_stage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="change_user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_change_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="property_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="institution_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="property_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="developer_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="land_proprietor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="person_in_charge" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pic_mobile_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_group" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="postcode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_office_tel_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_office_fax_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="location_longtitude" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="location_latitude" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="location_city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="location_state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="location_country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="collection_interest_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staff_booking_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="public_booking_fee" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sales_commission" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maintenance_fee_rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="start_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="launch_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="end_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tax_percentage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="billing_model_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="c1_fn" class="java.lang.String"/>
+	<field name="c1_e" class="java.lang.String"/>
+	<field name="c1_mn" class="java.lang.String"/>
+	<field name="c1_htn" class="java.lang.String"/>
+	<field name="c1_t" class="java.lang.String"/>
+	<field name="c1_it" class="java.lang.String"/>
+	<field name="c1_s" class="java.lang.String"/>
+	<field name="c1_otn" class="java.lang.String"/>
+	<field name="c1_dob" class="java.sql.Date"/>
+	<field name="c1_in" class="java.lang.String"/>
+	<field name="c1_ms" class="java.lang.String"/>
+	<field name="c1_fax" class="java.lang.String"/>
+	<field name="c2_fn" class="java.lang.String"/>
+	<field name="c2_e" class="java.lang.String"/>
+	<field name="c2_mn" class="java.lang.String"/>
+	<field name="c2_htn" class="java.lang.String"/>
+	<field name="c2_t" class="java.lang.String"/>
+	<field name="c2_it" class="java.lang.String"/>
+	<field name="c2_s" class="java.lang.String"/>
+	<field name="c2_otn" class="java.lang.String"/>
+	<field name="c2_dob" class="java.sql.Date"/>
+	<field name="c2_in" class="java.lang.String"/>
+	<field name="c2_ms" class="java.lang.String"/>
+	<field name="c2_fax" class="java.lang.String"/>
+	<field name="pm_desc" class="java.lang.String"/>
+	<field name="bb_desc" class="java.lang.String"/>
+	<field name="BP_name" class="java.lang.String"/>
+	<field name="proptype_desc" class="java.lang.String"/>
+	<field name="c1_l1" class="java.lang.String"/>
+	<field name="c1_l2" class="java.lang.String"/>
+	<field name="c1_l3" class="java.lang.String"/>
+	<field name="c1_l4" class="java.lang.String"/>
+	<field name="c1_pc" class="java.lang.String"/>
+	<field name="c1_city" class="java.lang.String"/>
+	<field name="c1_state" class="java.lang.String"/>
+	<field name="c1_country" class="java.lang.String"/>
+	<field name="c1title" class="java.lang.String"/>
+	<field name="c1state" class="java.lang.String"/>
+	<field name="c1country" class="java.lang.String"/>
+	<field name="c1sex" class="java.lang.String"/>
+	<field name="c1marital" class="java.lang.String"/>
+	<field name="c2title" class="java.lang.String"/>
+	<field name="c2sex" class="java.lang.String"/>
+	<field name="c2marital" class="java.lang.String"/>
+	<title>
+		<band height="224">
+			<staticText>
+				<reportElement x="1" y="55" width="152" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="55" width="22" height="20"/>
+				<textElement/>
+				<text><![CDATA[No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="55" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="99" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Unit / Lot No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="83" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Project Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="83" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Developer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="115" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Attended By]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="99" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{unit_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="83" width="186" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="115" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Purchase Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="131" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Purchase Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="99" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Property Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="131" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Verified By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="157" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Purchaser Address]]></text>
+			</staticText>
+			<textField pattern="RM  #,##0.00" isBlankWhenNull="true">
+				<reportElement x="101" y="115" width="100" height="16"/>
+				<textElement textAlignment="Left">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{purchase_price}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="101" y="131" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_purchased}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="2" y="2" width="100" height="35"/>
+				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement mode="Opaque" x="102" y="171" width="450" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="187" width="450" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="203" width="450" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="218" width="450" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="387" y="83" width="165" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BP_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="387" y="115" width="165" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sales_person}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Opaque" x="387" y="146" width="165" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="387" y="99" width="165" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{proptype_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="204" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="2" width="435" height="35"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BP_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="157" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l1} + " " + $F{c1_l2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="173" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_l3} + " " + $F{c1_l4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="189" width="450" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_pc} + " " + $F{c1_city} + " " + $F{c1state}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="571">
+			<rectangle>
+				<reportElement x="0" y="2" width="555" height="175"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="236" width="555" height="44"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="210" y="203" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Card / Cheque No:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="310" y="203" width="215" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{book_pymt_card_chq_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="219" width="100" height="16"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+			<textField pattern="RM  #,##0.00" isBlankWhenNull="true">
+				<reportElement x="102" y="187" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{book_pymt_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="209" y="187" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Payment Method:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="309" y="187" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pm_desc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="187" width="126" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bb_desc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="187" width="100" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Registration Fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="22" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Full Name]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="456" y="70" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_in}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="38" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Marital Status]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="54" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_mn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="70" width="98" height="16"/>
+				<textElement/>
+				<text><![CDATA[Office]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="22" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="456" y="22" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{c1_dob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="54" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Mobile No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="70" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[ID No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="70" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_otn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="54" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_htn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="54" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Sex]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="110" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2title} + " " + $F{c2_fn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="126" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_e}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="110" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Full Name]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="158" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_in}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="126" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Marital Status]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="142" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_mn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="158" width="98" height="16"/>
+				<textElement/>
+				<text><![CDATA[Office]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="110" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Date of birth]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="456" y="110" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{c2_dob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="142" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Mobile No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="90" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchaser 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="158" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[ID No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="158" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_otn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="142" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_htn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="126" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="142" width="80" height="16"/>
+				<textElement/>
+				<text><![CDATA[Sex]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="236" width="554" height="45"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="288" width="152" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERMS & CONDITIONS :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="308" width="550" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[I/We Agree and undertake:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="324" width="534" height="40"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[to pay the first 10% of the purchase price and to sign the Sale and Purchase Agreement within 21 days from the date hereof, falling which the Developer reserves the right to sell or transfer the above property to any other party and I/we shall have no right and/or claim whatsover over the said property.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="364" width="534" height="27"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[that should I/we cancel the purchase prior to the signing of the Sale and Purchase Agreement, we have the right to impose a sum of RM 500.00 as administrative fees against me/us.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="391" width="534" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[that all cheque/bank drafts must be made payable to the Developer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="4" width="98" height="18"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchaser 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="38" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="38" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_e}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Opaque" x="102" y="36" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="36" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="52" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="68" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="84" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="52" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="68" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="84" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="68" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="84" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="124" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="101" y="140" width="268" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="156" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="102" y="172" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="156" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="272" y="172" width="100" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="124" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="140" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="156" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="456" y="172" width="94" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="88" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="18" y="407" width="534" height="29"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[the Developer reserves the right (i) not to sell the unit/lot to me/us (ii) to reject the request for change of purchase unit/lot no.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="436" width="534" height="27"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[this Registration Form is not a booking proforma for the said unit/lot and it does not impose any legal obligation on the Developer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="475" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Signed by :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="549" width="184" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fn}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="548" width="119" height="1"/>
+			</line>
+			<line>
+				<reportElement x="201" y="548" width="119" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="202" y="548" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fn}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="428" y="549" width="119" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="431" y="550" width="119" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="324" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="364" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="391" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="407" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="436" width="10" height="16"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="38" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1marital}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="456" y="54" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1sex}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="70" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="158" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="126" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2marital}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="142" width="96" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2sex}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="142" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[House Tel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="158" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[Fax No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="54" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[House Tel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="70" width="68" height="16"/>
+				<textElement/>
+				<text><![CDATA[Fax No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="70" width="32" height="16"/>
+				<textElement/>
+				<text><![CDATA[Tel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="158" width="32" height="16"/>
+				<textElement/>
+				<text><![CDATA[Tel]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="22" width="272" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c1title} + " " + $F{c1_fn}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

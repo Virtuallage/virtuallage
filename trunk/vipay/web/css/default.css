@@ -1,0 +1,56 @@
+#header {
+	height: 10px;
+	overflow: hidden;
+}
+
+#content {
+	overflow: hidden;
+	margin-bottom: 20px;
+	float: center;
+	width: 1320px;
+	padding: 2px;
+	min-height: 520px;
+}
+
+#footer {
+	overflow: hidden;
+	float: center;
+	margin: 20px auto 0px auto;
+	padding: 20px 0px;
+}
+
+#footer p {
+	text-align: center;
+	font-size: 10pt;
+}
+
+#footer a {
+	
+}
+
+.label {
+	text-align: left;
+}
+
+.data {
+	text-align: left;
+}
+
+.ui-widget,.ui-widget .ui-widget {
+	font-family: verdana, arial;
+	font-size: 10pt;
+}
+
+.banner {
+	background-image: url("../images/background.jpg") !important;
+	background-repeat: no-repeat;
+}
+
+.no-borders tr,.no-borders td {
+	background: none !important;
+	border: none !important;
+}
+
+.ui-fileupload .cancel {
+	display: none;
+}

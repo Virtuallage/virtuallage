@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+My Profile
+</ui:define>
+
+	<ui:define name="content">
+
+		<p:panel id="panel" header="My Profile" style="width:60%">
+
+			<p:focus context="panel" />
+
+			<h:form id="myUserProfileForm">
+
+				<h:panelGrid columns="2" style="width:90%;border:0px;">
+
+					<p:outputLabel value="User Name" />
+					<h:inputText value="#{myUserProfile.userProfile.name}"
+						style="width:300px" disabled="true" />
+
+					<p:outputLabel value="Company Name" for="companyName" />
+					<p:selectOneMenu id="companyName" required="true"
+						value="#{myUserProfile.userProfile.institution}"
+						converter="institution">
+						<f:selectItems value="#{myUserProfile.institutions}" var="ins"
+							itemLabel="#{ins.institutionName}" itemValue="#{ins}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Department" for="departments" />
+					<p:selectOneMenu id="departments" required="true"
+						value="#{myUserProfile.userProfile.department}">
+						<f:selectItems value="#{myUserProfile.departments}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Mobile No" for="mobileNo" />
+					<p:inputText id="mobileNo" required="true"
+						value="#{myUserProfile.userProfile.mobileNo}" autocomplete="off" />
+
+					<p:outputLabel value="Office No" for="officeNo" />
+					<p:inputText id="officeNo" required="false"
+						value="#{myUserProfile.userProfile.officeNo}" autocomplete="off" />
+
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" required="true"
+						value="#{myUserProfile.userProfile.email}" maxlength="30"
+						autocomplete="off" />
+
+
+				</h:panelGrid>
+
+				<p:commandButton id="saveButton" action="#{myUserProfile.save}"
+					value="Save" ajax="false" />
+
+			</h:form>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesByStaffAgentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.1000000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="projectId" class="java.lang.Long"/>
+	<parameter name="blocksTitle" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+  i.institution_name,p.project_name,
+  a.sales_person AS salesPerson,
+  COALESCE(COUNT(a.account_id)) AS units,
+  COALESCE(SUM(a.net_price)) AS netSales,
+  (SELECT
+     COALESCE(COUNT(b.account_id))
+   FROM account b,
+     project_inventory in1,
+     customer cust
+   WHERE b.inventory_id = in1.inventory_id
+       AND b.customer_id = cust.customer_id
+       AND in1.project_id = $P{projectId}
+       AND b.sales_person = a.sales_person
+       AND cust.special_handling = 'SHSTF'
+       AND (b.account_status IN('SSNEW', 'SSACT'))) AS staffPurchase ,
+(SELECT
+     COALESCE(COUNT(c.account_id))
+   FROM account c,
+     project_inventory in2
+   WHERE c.inventory_id = in2.inventory_id
+       AND in2.project_id = $P{projectId}
+       AND c.sales_person = a.sales_person
+       AND c.campaign_code <> Null) AS salesCampaign
+FROM account a,
+  project_inventory in2,project p,
+  institution i
+WHERE a.inventory_id = in2.inventory_id
+    AND p.project_id = $P{projectId}
+    AND p.institution_id = i.institution_id
+    AND in2.project_id = $P{projectId}
+    AND (a.account_status IN('SSNEW', 'SSACT'))
+GROUP BY a.sales_person
+ORDER BY a.sales_person ASC]]>
+	</queryString>
+	<field name="institution_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salesPerson" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="units" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="netSales" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staffPurchase" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salesCampaign" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="totalUnits" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{units}]]></variableExpression>
+	</variable>
+	<variable name="totalNetSales" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{netSales}]]></variableExpression>
+	</variable>
+	<variable name="totalStaffPurchase" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffPurchase}]]></variableExpression>
+	</variable>
+	<variable name="totalSalesCampaign" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{salesCampaign}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="57" width="51" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="57" width="255" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="35" width="306" height="22"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Summary: By Sales/Agent
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="10" width="306" height="25"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="168" y="10" width="208" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{blocksTitle}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="257" y="30" width="119" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Sales (RM)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="17" y="10" width="151" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sold By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="168" y="30" width="89" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Units]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="376" y="10" width="78" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff Purchase]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="454" y="10" width="86" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Campaign]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="0" width="151" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{salesPerson}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="0" width="89" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{units}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="257" y="0" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{netSales}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{staffPurchase}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement mode="Transparent" x="17" y="20" width="521" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="455" y="2" width="85" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{salesCampaign}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="0" width="151" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="0" width="89" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalUnits}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalStaffPurchase}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="257" y="0" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalNetSales}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="85" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalSalesCampaign}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

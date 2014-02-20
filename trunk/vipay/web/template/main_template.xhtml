@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Vipro - <ui:insert name="title"></ui:insert></title>
+	<link href="/vipro/css/default.css" rel="stylesheet" type="text/css"
+		media="all" />
+</h:head>
+<h:body>
+	<div id="header">
+		<p:growl showDetail="true" showSummary="true" />
+	</div>
+	<p:panel styleClass="banner">
+		<table width="100%" style="padding: 0px">
+			<tr>
+				<td><img align="left" alt="Logo for MCT"
+					src="/vipro/images/MCT_logo.png" /></td>
+				<td><img align="right" alt="Logo for B &amp; G"
+					src="/vipro/images/BnG_logo.png" /></td>
+			</tr>
+		</table>
+	</p:panel>
+
+	<p:panel style='background-color:#CC0000; padding:0px; border:0px'>
+	</p:panel>
+	<div id="menu">
+		<ui:include src="/secured/common/menu.xhtml" />
+	</div>
+
+	<p:panel>
+		<p:outputPanel id="content" style="width:100%">
+			<table border="0" width="100%">
+				<tr>
+					<td align="center"><ui:insert name="content">Welcome</ui:insert>
+					</td>
+				</tr>
+			</table>
+		</p:outputPanel>
+	</p:panel>
+
+	<div id="footer">
+		<p style="font-size: 12px">
+			Vipro - Virtuallage Property Development System <br /> Copyright(C)
+			2013 Virtuallage Team <a href="https://www.virtuallage.com"
+				target="_blank">https://www.virtuallage.com</a>
+		</p>
+	</div>
+</h:body>
+</html>
