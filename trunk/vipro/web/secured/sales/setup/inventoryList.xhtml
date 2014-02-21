@@ -61,12 +61,12 @@ Project Setup
            		<f:convertNumber type="currency" currencySymbol="" />
            	</h:outputText>
         </p:column>
-        
-        <p:column headerText="Action">  
+         
+<!--        <p:column headerText="Action">  
            	<p:commandButton action="#{projectSetup.editInventory}" ajax="false" icon="ui-icon-pencil" title="Edit Property Unit">
            		<f:setPropertyActionListener value="#{c}" target="#{projectSetup.inventory}" />  
-           	</p:commandButton>
- 			&nbsp;
+           	</p:commandButton>  
+ 			&nbsp;  -
            	<p:commandButton id="showDialogButton" ajax="false" icon="ui-icon-trash" title="Delete Property Unit" onclick="confirmation.show()" type="button"/>  
       
     		<p:confirmDialog id="confirmDialog" message="Do you want to delete this property?"  
@@ -85,7 +85,7 @@ Project Setup
                 </p:panelGrid>
     		</p:confirmDialog>  
         </p:column>
-
+-->
     </p:dataTable>  
     
     <br/>
