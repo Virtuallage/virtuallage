@@ -56,6 +56,9 @@
         <property name="discountAmount" type="big_decimal">
             <column name="discount_amount" precision="11" />
         </property>
+        <property name="netPrice" type="big_decimal">
+            <column name="net_price" precision="11" />
+        </property>
         <property name="redemptionAmount" type="big_decimal">
             <column name="redemption_amount" precision="11" />
         </property>

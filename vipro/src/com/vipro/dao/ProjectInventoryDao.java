@@ -18,6 +18,8 @@ public interface ProjectInventoryDao extends Dao<ProjectInventory>{
 	public List<ProjectInventory> findLockedUnit(Long projectId, Long userId);
 	
 	public List<ProjectInventory> findByAvailableProjectId(Long projectId);
+
+	public List<ProjectInventory> findCancellingById(Long projectId);
 	
 	public ProjectInventory findById(Long id);
 	

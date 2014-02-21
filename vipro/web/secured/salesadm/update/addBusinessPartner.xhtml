@@ -22,12 +22,14 @@ Add Business Partner
 <h:form>
 
 			<h:panelGrid columns="2" style="width:100%;text-align:left;">
+				<p:outputLabel value="Company Code"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.companyCode}" style="width:100px; text-transform:uppercase" required="true" maxlength="10"/>
+				<p:outputLabel value="Company Name"/>
+				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px; text-transform:uppercase" required="true"/>
 				<p:outputLabel value="Business Registration No"/>
 				<p:inputText value="#{propertyUnitUpdate.partner.businessRegistrationNo}" style="width:200px; text-transform:uppercase" />
-				<p:outputLabel value="Trading Name"/>
-				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value="Address"/>
-				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine1}" style="width:400px; text-transform:uppercase" />
+				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine1}" style="width:400px; text-transform:uppercase" required="true"/>
 				<p:outputLabel value=""/>
 				<p:inputText value="#{propertyUnitUpdate.partnerAddress.addressLine2}" style="width:400px; text-transform:uppercase" />
 				<p:outputLabel value=""/>

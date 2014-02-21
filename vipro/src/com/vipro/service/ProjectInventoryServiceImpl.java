@@ -38,7 +38,12 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	public List<ProjectInventory> getAvailableInventories(Long projectId) {
 		return projectInventoryDao.findByAvailableProjectId(projectId);
 	}
-
+	
+	@Override
+	public List<ProjectInventory> getCancellingInventories(Long projectId) {
+		return projectInventoryDao.findCancellingById(projectId);
+	}
+	
 	@Override
 	public ProjectInventory getInventoryById(Long inventoryId) {
 		return projectInventoryDao.findById(inventoryId);

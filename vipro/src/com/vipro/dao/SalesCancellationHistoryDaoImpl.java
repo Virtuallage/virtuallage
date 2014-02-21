@@ -19,6 +19,12 @@ public class SalesCancellationHistoryDaoImpl extends DaoImpl<SalesCancellationHi
 	}
 	
 	@Override
+	public List<SalesCancellationHistory> findByProjectId(Long projectId) {
+		String query="select o from com.vipro.data.SalesCancellationHistory o where o.projectInventory.project.projectId=?";
+		return getHibernateTemplate().find(query);
+	}
+	
+	@Override
 	public List<SalesCancellationHistory> findByInventoryId(Long inventoryId) {
 		String query="select o from com.vipro.data.SalesCancellationHistory o where o.projectInventory.inventoryId=?";
 		List<SalesCancellationHistory> historys = getHibernateTemplate().find(query, inventoryId);

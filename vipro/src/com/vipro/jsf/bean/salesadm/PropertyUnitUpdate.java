@@ -1379,6 +1379,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		partner.setContactPersonName(fname.toUpperCase());
 		String cname = partner.getCompanyName();
 		partner.setCompanyName(cname.toUpperCase());
+		String ccode = partner.getCompanyCode();
+		partner.setCompanyCode(ccode.toUpperCase());
 		String regno = partner.getBusinessRegistrationNo();
 		partner.setBusinessRegistrationNo(regno.toUpperCase());
 		

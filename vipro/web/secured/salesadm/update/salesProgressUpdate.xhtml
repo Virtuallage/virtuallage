@@ -64,7 +64,7 @@ Sales Update
 						<f:selectItems value="#{propertyUnitUpdate.purchaseTypes}" />
 			</p:selectOneMenu>
 
-			<p:outputLabel value="Net Price"/>
+			<p:outputLabel value="Nett Price"/>
    			<h:inputText value="#{propertyUnitUpdate.account.netPrice}" style="width:200px" disabled="true">
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
@@ -91,13 +91,13 @@ Sales Update
 				<p:commandButton id="spaViewDialogButton" value="View" actionListener="#{propertyUnitUpdate.listSPADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
    			
-   			<p:outputLabel value="Solicitor"/>
+   			<p:outputLabel value="SPA Solicitor"/>
 			<h:panelGroup>
    				<p:selectOneMenu id="spaSolicitorId" value="#{propertyUnitUpdate.account.spaSolicitorId}" style="width:200px">  
 						<f:selectItems value="#{propertyUnitUpdate.listSolicitors}" />
 						<p:ajax event="change" update="spaAddressName,spaAddAddressButton,spaAddressLine1,spaAddressLine2,spaAddressLine3,spaAddressLine4,spaPostcode,spaCity,spaState" listener="#{propertyUnitUpdate.updateSPAAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
-				<p:commandButton id="spaAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('SPA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.spaSolicitorId)}" icon="ui-icon-plus" />
+				<p:commandButton id="spaAddAddressButton" value="Add" title="Add New Solicitor" action="#{propertyUnitUpdate.toBusinessPartner('SPA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.spaSolicitorId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>
@@ -150,7 +150,7 @@ Sales Update
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState" listener="#{propertyUnitUpdate.updateLOAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
-				<p:commandButton id="loAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
+				<p:commandButton id="loAddAddressButton" value="Add" title="Add New Financier" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>
@@ -158,6 +158,7 @@ Sales Update
 				&nbsp;&nbsp;
 				<p:commandButton id="loVerifiedByViewDialogButton" value="Verify" actionListener="#{propertyUnitUpdate.setLODocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{propertyUnitUpdate.verifyByDocumentType('LO')}"/>
 			</h:panelGroup>
+
 			<p:outputLabel id="loAddressName" value="Address" />
    			<h:inputText id="loAddressLine1" value="#{propertyUnitUpdate.loFinancierAddress.addressLine1}" style="width:200px;" disabled="true" />
    				<p:outputLabel value="LO Ref No"/>
@@ -197,14 +198,14 @@ Sales Update
 				<p:commandButton id="laViewDialogButton" value="View" actionListener="#{propertyUnitUpdate.listLADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
    			
-   			<p:outputLabel value="Solicitor"/>
+   			<p:outputLabel value="LA Solicitor"/>
 			<h:panelGroup>
    				<p:selectOneMenu id="laSolicitorId" value="#{propertyUnitUpdate.account.laSolicitorId}" style="width:200px">  
 						<f:selectItems value="#{propertyUnitUpdate.listSolicitors}" />
 						<p:ajax event="change" update="laAddressName,laAddAddressButton,laAddressLine1,laAddressLine2,laAddressLine3,laAddressLine4,laPostcode,laCity,laState" listener="#{propertyUnitUpdate.updateLAAddress}"/>
 				</p:selectOneMenu>
    				&nbsp;&nbsp;
-				<p:commandButton id="laAddAddressButton" value="Add" title="Add Business Partner" action="#{propertyUnitUpdate.toBusinessPartner('LA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.laSolicitorId)}" icon="ui-icon-plus" />
+				<p:commandButton id="laAddAddressButton" value="Add" title="Add New Solicitor" action="#{propertyUnitUpdate.toBusinessPartner('LA')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.laSolicitorId)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>

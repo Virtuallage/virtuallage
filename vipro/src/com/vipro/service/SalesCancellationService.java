@@ -7,6 +7,7 @@ import com.vipro.data.SalesCancellationHistory;;
 public interface SalesCancellationService {
 
 	public List<SalesCancellationHistory> findAll();
+	public List<SalesCancellationHistory> findByProjectId(Long projectId);
 	public List<SalesCancellationHistory> findByInventoryId(Long inventoryId);
 	public SalesCancellationHistory findById(Long cancellationId);
 	public void insert(SalesCancellationHistory a);

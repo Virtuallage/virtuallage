@@ -9,6 +9,7 @@ public interface SalesCancellationHistoryDao extends Dao<SalesCancellationHistor
 
 
 	public List<SalesCancellationHistory> findAll();
+	public List<SalesCancellationHistory> findByProjectId(Long projectId);
 	public List<SalesCancellationHistory> findByInventoryId(Long inventoryId);
 	public SalesCancellationHistory findById(Long cancellationId);
 }
