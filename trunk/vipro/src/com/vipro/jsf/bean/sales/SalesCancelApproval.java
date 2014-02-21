@@ -307,13 +307,16 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 		List<SalesCancellationHistory> salesCancellationHistorys = salesCancellationService.findAll();
 		
 		for(SalesCancellationHistory salesCancellationHistory: salesCancellationHistorys)
-		{
-			ProjectInventory projectInventory = inventoryService.getInventoryById(salesCancellationHistory.getProjectInventory().getInventoryId());
-			if(projectInventory!= null)
-			{
-				inventories.add(projectInventory);
-			}
-		}
+//		{
+//			ProjectInventory projectInventory = inventoryService.getInventoryById(salesCancellationHistory.getProjectInventory().getInventoryId());
+//			if(projectInventory!= null)
+//			{
+//				inventories.add(projectInventory);
+//			}
+//		}
+
+		inventories = inventoryService.getCancellingInventories(projectId);
+		
 		return "cancelPropertyListApproval";
 	}
 	

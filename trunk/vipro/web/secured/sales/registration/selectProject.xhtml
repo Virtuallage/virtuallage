@@ -44,7 +44,7 @@
 	        </p:column>  
 	  
 	        <p:column headerText="Type" sortBy="#{c.layoutType}">  
-	           <h:outputText value="#{c.layoutType}"/>
+	           <h:outputText value="#{salesRegister.getCodeDesc('LT', c.layoutType)}"/>
 	        </p:column>  
 	        
 	        <p:column headerText="B/U Area" sortBy="#{c.builtUpArea}" style="text-align:right">  

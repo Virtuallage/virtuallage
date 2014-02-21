@@ -107,15 +107,15 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private CommandButton editButton;
 	private CommandButton confirmButton;
 	private CommandButton deleteButton;
-	private InputText payBookingFields;
+//	private InputText payBookingFields;
 	
-	public InputText getPayBookingFields() {
-		return payBookingFields;
-	}
+//	public InputText getPayBookingFields() {
+//		return payBookingFields;
+//	}
 
-	public void setPayBookingFields(InputText payBookingFields) {
-		this.payBookingFields = payBookingFields;
-	}
+//	public void setPayBookingFields(InputText payBookingFields) {
+//		this.payBookingFields = payBookingFields;
+//	}
 
 	/**
 	 * search customer dialog
@@ -629,7 +629,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 				editButton.setStyle("display: none");
 				confirmButton.setStyle("display: none");
 				deleteButton.setStyle("");
-				payBookingFields.setDisabled(false);
+//				payBookingFields.setDisabled(false);
 				inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_LOCKED);		
 				inventory.setStatusChangeDate(new Date());
 				inventory.setChangeUserId(attendedBy.getUserId());
@@ -645,7 +645,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			salesRegTabView.setActiveIndex(0);
 			selectionTab.setDisabled(false);
 			registrationTab.setDisabled(true);
-			payBookingFields.setDisabled(true);
+//			payBookingFields.setDisabled(true);
 			
 			lockedUnit = inventoryService.getLockedUnit(project.getProjectId(), getCurrentUserId());
 			if (lockedUnit.size() > 0) {
@@ -659,7 +659,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		
 		selectionTab.setDisabled(true);
 		registrationTab.setDisabled(false);
-		payBookingFields.setDisabled(true);
+//		payBookingFields.setDisabled(true);
 
 		if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
 			salesRegTabView.setActiveIndex(1);
@@ -672,7 +672,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("display: none");
 			confirmButton.setStyle("display: none");
 			deleteButton.setStyle("");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_LOCKED);		
 			inventory.setStatusChangeDate(new Date());
 			inventory.setChangeUserId(attendedBy.getUserId());
@@ -690,7 +690,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("display: none");
 			confirmButton.setStyle("display: none");
 			deleteButton.setStyle("display: none");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 		}
 
 		else if (inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_BOOKED)) {
@@ -704,7 +704,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("");
 			confirmButton.setStyle("");
 			deleteButton.setStyle("display: none");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 			payBookingTab.setDisabled(false);
 		}
 		
@@ -719,7 +719,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("display: none");
 			confirmButton.setStyle("display: none");
 			deleteButton.setStyle("display: none");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 			payBookingTab.setDisabled(false);
 		}
 		
@@ -734,7 +734,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("display: none");
 			confirmButton.setStyle("display: none");
 			deleteButton.setStyle("display: none");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 			payBookingTab.setDisabled(false);
 		}
 		
@@ -749,7 +749,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			editButton.setStyle("");
 			confirmButton.setStyle("display: none");
 			deleteButton.setStyle("display: none");
-			payBookingFields.setDisabled(false);
+//			payBookingFields.setDisabled(false);
 		}
 		
 		return "salesRegistration";

@@ -27,6 +27,11 @@ public class SalesCancellationServiceImpl implements SalesCancellationService {
 	}
 	
 	@Override
+	public List<SalesCancellationHistory> findByProjectId(Long projectId) {
+		return salesCancellationHistoryDao.findByProjectId(projectId);
+	}
+	
+	@Override
 	public List<SalesCancellationHistory> findByInventoryId(Long inventoryId) {
 		return salesCancellationHistoryDao.findByInventoryId(inventoryId);
 	}

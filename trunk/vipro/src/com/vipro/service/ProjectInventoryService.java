@@ -17,6 +17,8 @@ public interface ProjectInventoryService {
 	public List<ProjectInventory> getLockedUnit(Long projectId, Long userId);
 	
 	public List<ProjectInventory> getAvailableInventories(Long projectId);
+
+	public List<ProjectInventory> getCancellingInventories(Long projectId);
 	
 	public ProjectInventory getInventoryById(Long inventoryId);
 	

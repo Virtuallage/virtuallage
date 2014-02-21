@@ -29,6 +29,7 @@ public class ProjectInventory implements java.io.Serializable {
 	private Date statusChangeDate;
 	private BigDecimal purchasePrice;
 	private BigDecimal discountAmount;
+	private BigDecimal netPrice;	
 	private BigDecimal redemptionAmount;
 	private Date redemptionPaidTodate;
 	private BigDecimal assessment;
@@ -445,6 +446,14 @@ public class ProjectInventory implements java.io.Serializable {
 
 	public void setView(String view) {
 		this.view = view;
+	}
+
+	public BigDecimal getNetPrice() {
+		return netPrice;
+	}
+
+	public void setNetPrice(BigDecimal netPrice) {
+		this.netPrice = netPrice;
 	}
 	
 }

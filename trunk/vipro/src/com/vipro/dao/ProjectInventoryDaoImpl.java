@@ -30,12 +30,21 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 				+ PropertyUnitStatusConst.STATUS_SOLD + "')";
 		return getHibernateTemplate().find(query, projectId);
 	}
-
+	
+	@Override
+	public List<ProjectInventory> findCancellingById(Long projectId) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? and o.propertyStatus='" 
+				+ PropertyUnitStatusConst.STATUS_CANCELLING + "')";
+		
+		return getHibernateTemplate().find(query, projectId);
+		
+	}
+		
 	@Override
 	public ProjectInventory findById(Long id) {
 		return getHibernateTemplate().get(ProjectInventory.class, id);
 	}
-
+	
 	@Override
 	public ProjectInventory findByCompositeKey(Long projectId, String blockNo,
 			String unit, String level) {

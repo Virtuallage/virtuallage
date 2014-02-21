@@ -64,7 +64,7 @@ Sales Update
 						<f:selectItems value="#{salesUpdate.purchaseTypes}" />
 			</p:selectOneMenu>
 
-			<p:outputLabel value="Net Price"/>
+			<p:outputLabel value="Nett Price"/>
    			<h:inputText value="#{salesUpdate.account.netPrice}" style="width:200px" disabled="true">
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
@@ -81,7 +81,7 @@ Sales Update
    				<f:convertNumber pattern="#,###,##0.00"  />
    			</h:inputText>	
 
-			<p:outputLabel value="Solicitor"/>
+			<p:outputLabel value="SPA Solicitor"/>
    			<p:selectOneMenu id="spaSolicitorId" value="#{salesUpdate.account.spaSolicitorId}" style="width:200px">  
 						<f:selectItems value="#{salesUpdate.listSolicitors}" />
 			</p:selectOneMenu>
@@ -131,7 +131,7 @@ Sales Update
 				<p:commandButton id="laViewDialogButton" value="View" actionListener="#{salesUpdate.listLADocumentType}" update="documentReferenceTable" oncomplete="viewDialog.show()" icon="ui-icon-document"/>
 			</h:panelGroup>
    			
-   			<p:outputLabel value="Solicitor"/>
+   			<p:outputLabel value="LA Solicitor"/>
    			<p:selectOneMenu id="laSolicitorId" value="#{salesUpdate.account.laSolicitorId}" style="width:200px">  
 						<f:selectItems value="#{salesUpdate.listSolicitors}" />
 			</p:selectOneMenu>
