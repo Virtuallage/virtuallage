@@ -111,7 +111,7 @@
             <column name="spa_solicitor_id" />
         </property>
         <property name="spaRefNo" type="string">
-            <column name="spa_ref_no" length="20" />
+            <column name="spa_ref_no" length="40" />
         </property>
         <property name="loSignedDate" type="date">
             <column name="LO_signed_date" length="10" />
@@ -141,7 +141,7 @@
             <column name="LA_solicitor_id" />
         </property>
         <property name="laRefNo" type="string">
-            <column name="la_ref_no" length="20" />
+            <column name="la_ref_no" length="40" />
         </property>
         <property name="adviseSignedDate" type="date">
             <column name="advise_signed_date" length="10" />
@@ -286,7 +286,7 @@
             <column name="campaign_code" length="5" />
         </property>
         <property name="financierRef" type="string">
-            <column name="financier_ref" length="20" />
+            <column name="financier_ref" length="40" />
         </property>
         <property name="borrowerId1" type="java.lang.Long">
             <column name="borrower_id1" />
