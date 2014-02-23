@@ -6,3 +6,5 @@ ALTER TABLE vipro.account change spa_ref_no spa_ref_no VARCHAR(50);
 ALTER TABLE vipro.account change financier_ref financier_ref VARCHAR(50);
 
 ALTER TABLE vipro.account change la_ref_no la_ref_no VARCHAR(50);
+
+ALTER TABLE vipro.account add debtor_account VARCHAR(12) after campaign_code;
