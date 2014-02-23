@@ -101,6 +101,7 @@ public class Account implements java.io.Serializable {
 	private String laRefNo;
 	private String campaignCode;
 	private String financierRef;
+	private String debtorAccount;
 
 	public Account() {
 	}
@@ -1055,6 +1056,14 @@ public class Account implements java.io.Serializable {
 
 	public void setBorrowerId2(Long borrowerId2) {
 		this.borrowerId2 = borrowerId2;
+	}
+
+	public String getDebtorAccount() {
+		return debtorAccount;
+	}
+
+	public void setDebtorAccount(String debtorAccount) {
+		this.debtorAccount = debtorAccount;
 	}
 
 }

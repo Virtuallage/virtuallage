@@ -294,5 +294,8 @@
         <property name="borrowerId2" type="java.lang.Long">
             <column name="borrower_id2" />
         </property>
+        <property name="debtorAccount" type="string">
+            <column name="debtor_account" length="12" />
+        </property>
     </class>
 </hibernate-mapping>
