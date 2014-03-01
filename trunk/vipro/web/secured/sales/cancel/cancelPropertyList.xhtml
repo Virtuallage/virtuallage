@@ -15,7 +15,7 @@ Sales Cancellation
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Property List - Sold" style="width:95%">  
+<p:panel id="panel" header="Sales Cancellation Property List - Newly Sold" style="width:95%">  
     
 <p:focus context="panel"/> 
       
@@ -59,8 +59,8 @@ Sales Cancellation
 			</h:outputText>
 		</p:column>
 	        
-	 	<p:column headerText="Net Price" sortBy="#{c.nettPrice}" style="text-align:right">  
-			<h:outputText value="#{c.nettPrice}" style="color:#{salesCancel.GetFontColorByInvertoryId(c.inventoryId)}">
+	 	<p:column headerText="Nett Price" sortBy="#{c.netPrice}" style="text-align:right">  
+			<h:outputText value="#{c.netPrice}" style="color:#{salesCancel.GetFontColorByInvertoryId(c.inventoryId)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	   		</h:outputText>
 	 	</p:column>

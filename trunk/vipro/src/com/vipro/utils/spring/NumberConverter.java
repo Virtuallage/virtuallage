@@ -55,9 +55,9 @@ public class NumberConverter {
 	
 		if( i < 20)  return units[i];
 		if( i < 100) return tens[i/10] + ((i % 10 > 0)? " " + convertUnit(i % 10):"");
-		if( i < 1000) return units[i/100] + " Hundreds" + ((i % 100 > 0)?" and " + convertUnit(i % 100):"");
-		if( i < 1000000) return convertUnit(i / 1000) + " Thousands" + ((i % 1000 > 0)? " " + convertUnit(i % 1000):"") ;
-		return convertUnit(i / 1000000) + " Millions" + ((i % 1000000 > 0)? " " + convertUnit(i % 1000000):"") ;
+		if( i < 1000) return units[i/100] + " Hundred" + ((i % 100 > 0)?" and " + convertUnit(i % 100):"");
+		if( i < 1000000) return convertUnit(i / 1000) + " Thousand" + ((i % 1000 > 0)? " " + convertUnit(i % 1000):"") ;
+		return convertUnit(i / 1000000) + " Million" + ((i % 1000000 > 0)? " " + convertUnit(i % 1000000):"") ;
 	}
 	
 	public static void main(String args[]) {

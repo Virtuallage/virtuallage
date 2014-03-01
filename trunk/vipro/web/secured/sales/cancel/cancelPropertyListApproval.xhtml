@@ -59,8 +59,8 @@ Sales Cancellation Approval List
 			</h:outputText>
 		</p:column>
 	        
-	 	<p:column headerText="Net Price" sortBy="#{c.nettPrice}" style="text-align:right">  
-			<h:outputText value="#{c.nettPrice}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}">
+	 	<p:column headerText="Net Price" sortBy="#{c.netPrice}" style="text-align:right">  
+			<h:outputText value="#{c.netPrice}" style="color:#{salesCancelApproval.GetFontColorByInvertoryId(c.inventoryId)}">
 	    		<f:convertNumber type="currency" currencySymbol="" />
 	   		</h:outputText>
 	 	</p:column>

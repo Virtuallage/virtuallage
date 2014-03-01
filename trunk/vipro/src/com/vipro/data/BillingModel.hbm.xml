@@ -9,13 +9,13 @@
             <generator class="identity" />
         </id>
         <property name="billingModelCode" type="string">
-            <column name="billing_model_code" length="1" />
+            <column name="billing_model_code" length="10" />
         </property>
         <property name="billingSeq" type="java.lang.Integer">
             <column name="billing_seq" />
         </property>
         <property name="stage" type="string">
-            <column name="stage" length="5" />
+            <column name="stage" length="10" />
         </property>       
         <property name="description" type="string">
             <column name="description" length="120" />

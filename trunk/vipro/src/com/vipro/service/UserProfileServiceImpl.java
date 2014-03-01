@@ -53,8 +53,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	@Override
 	public List<UserProfile> findAll() {
-		
 		return userProfileDao.findAll();
 	}
 
+	@Override
+	public List<UserProfile> findActiveUsers() {
+		return userProfileDao.findActiveUsers();
+	}
+	
 }

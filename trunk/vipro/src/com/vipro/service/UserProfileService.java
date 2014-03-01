@@ -15,7 +15,9 @@ public interface UserProfileService {
 	public UserProfile findById(Long userId);
 	
 	public List<UserProfile> findAll();
-	
+
+	public List<UserProfile> findActiveUsers();	
+
 	public void insert(UserProfile up);
 	
 	public void update(UserProfile up);
