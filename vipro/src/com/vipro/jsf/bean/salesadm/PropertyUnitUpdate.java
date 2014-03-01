@@ -883,7 +883,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		String groupId = user.getUserProfile().getUserGroup().getGroupId();
 		if(docType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LO)) {
@@ -891,7 +891,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
 				display = "inline";
 			}
 		}

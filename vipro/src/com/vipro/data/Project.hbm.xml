@@ -117,7 +117,7 @@
             <column name="tax_percentage" precision="5" />
         </property>
         <property name="billingModelCode" type="string">
-            <column name="billing_model_code" length="1"/>
+            <column name="billing_model_code" length="10"/>
         </property>
         <property name="changedBy" type="java.lang.Long">
             <column name="changed_by" />

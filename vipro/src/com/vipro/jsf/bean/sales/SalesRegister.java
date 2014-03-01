@@ -513,7 +513,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		}
 
 		if (StringUtils.hasText(unitNo)) {
-			inventories = inventoryService.getInventories(projectId, unitNo);;
+			inventories = inventoryService.getInventories(projectId, unitNo);
 		} else {
 			inventories = inventoryService.getInventories(projectId);
 		}
@@ -1146,6 +1146,9 @@ public class SalesRegister extends CommonBean implements Serializable {
 					.lookup(ProjectInventoryService.class.getName());
 			inventory.setPropertyStatus(PropertyUnitStatusConst.STATUS_BOOKED);
 			inventory.setStatusChangeDate(new Date());
+			if (!inventory.getNetPrice().equals(account.getNetPrice())) {
+				inventory.setNetPrice(account.getNetPrice());
+			}
 			
 			AuthUser user = getCurrentUser();
 			inventory.setChangeUserId(user.getUserProfile().getUserId());

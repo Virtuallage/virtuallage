@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Property Unit Information Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Property Unit Details" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+<h:form>  
+	<h:panelGrid columns="4" style="width:100%;text-align:left;">
+		<p:outputLabel value="Project Name"/>
+		<h:inputText value="#{unitUpdate.project.projectName}" style="width:250px" disabled="true"/>	
+		<p:outputLabel value="Status" for="status"/>
+		<p:selectOneMenu id="status" value="#{unitUpdate.inventory.propertyStatus}" disabled="false"> 
+			<f:selectItems value="#{unitUpdate.propertyStatusList}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Block No" for="blockNo"/>
+		<p:inputText id="blockNo" value="#{unitUpdate.inventory.blockNo}"  maxlength="8" autocomplete="off" style="text-transform:uppercase" required="true"/>
+		<p:outputLabel value="Level" for="level"/>
+		<p:inputText id="level" value="#{unitUpdate.inventory.level}"  maxlength="5" autocomplete="off" required="true"/>
+
+		<p:outputLabel value="Unit No" for="unitNo"/>
+		<p:inputText id="unitNo" value="#{unitUpdate.inventory.unitNo}"  maxlength="12" autocomplete="off" style="text-transform:uppercase" required="true"/>
+		<p:outputLabel value="Layout Type" for="layoutType"/>
+		<p:selectOneMenu id="layoutType" value="#{unitUpdate.inventory.layoutType}"> 
+			<f:selectItems value="#{unitUpdate.layoutTypeList}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Build Up Area" for="buildUpArea"/>
+		<p:inputText id="buildUpArea" value="#{unitUpdate.inventory.builtUpArea}" maxlength="10" autocomplete="off" required="true" style="text-align:right">
+				<f:convertNumber maxFractionDigits="0" />
+		</p:inputText>
+		<p:outputLabel value="Land Area" for="landArea"/>
+		<pe:inputNumber id="landArea" value="#{unitUpdate.inventory.landArea}" decimalPlaces="0" autocomplete="off" style="text-align:right">
+		</pe:inputNumber>
+		
+		<p:outputLabel value="Selling Price" for="sellingPrice"/>
+   		<h:inputText id="sellingPrice" value="#{unitUpdate.inventory.purchasePrice}" style="text-align:right" maxValue="999999999.99" disabled="false" required="true">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
+   		</h:inputText>
+		<p:outputLabel value="Orientation" for="orientation"/>
+		<p:selectOneMenu id="orientation" value="#{unitUpdate.inventory.orientation}"> 
+			<f:selectItems value="#{unitUpdate.orientationList}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Facing" for="facing"/>
+		<p:selectOneMenu id="facing" value="#{unitUpdate.inventory.facing}"> 
+			<f:selectItems value="#{unitUpdate.facingList}" />
+		</p:selectOneMenu>
+		<p:outputLabel value="View" for="view"/>
+		<p:selectOneMenu id="view" value="#{unitUpdate.inventory.view}"> 
+			<f:selectItems value="#{unitUpdate.viewList}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Discount Amount" for="discountAmt"/>
+ 		<h:inputText id="discountAmt" value="#{unitUpdate.inventory.discountAmount}" style="text-align:right" maxValue="999999999.99" disabled="false" required="false">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
+   		</h:inputText>
+ 		<p:outputLabel value="Nett Amount" for="netAmt"/>
+ 		<h:inputText id="netAmt" value="#{unitUpdate.inventory.netPrice}" style="text-align:right" maxValue="999999999.99" disabled="true" required="false">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
+   		</h:inputText>
+
+		<p:outputLabel value="Discount Rate" for="discountRate"/>
+  		<h:inputText id="discountRate" value="#{unitUpdate.inventory.discountRate}" style="text-align:right" maxValue="99.99" decimalPlaces="2" disabled="false" required="false">
+   			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol=""/>
+   		</h:inputText>
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+ 		<p:outputLabel value="Enter 0.00 for Discount Rate"/>		
+ 		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+ 		<p:outputLabel value="if using a Fixed Discount Amount."/>		
+	</h:panelGrid>
+	
+	<br/>
+		<p:commandButton value="Back" action="#{unitUpdate.listUnits}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{unitUpdate.saveUnit}" ajax="false" icon="ui-icon-disk" /> &nbsp;&nbsp;&nbsp;&nbsp;
+</h:form> 
+
+</p:panel>
+
+
+</ui:define>
+
+</ui:composition>

@@ -110,7 +110,7 @@ Project Information Update
 		<p:outputLabel value="Total Units"/>
 		<p:inputText value="#{projectUpdate.totalUnits}" maxlength="10" disabled="true" style="text-align:right"/>
 		<p:outputLabel value="Billing Schedule" for="billingModelCode"/>
-		<p:inputText id="billingModelCode" value="#{projectUpdate.project.billingModelCode}" required="true" style="text-transform:uppercase" disabled="false"/>
+		<p:inputText id="billingModelCode" value="#{projectUpdate.project.billingModelCode}" required="true" style="text-transform:uppercase" maxlength="10" disabled="false"/>
 
 		<p:outputLabel value="Late Payment Interest (% per year)"/>
 		<pe:inputNumber value="#{projectUpdate.project.latePymtIntRate}" minValue="0" maxValue="100" emptyValue="0" decimalPlaces="2" style="text-align:right"/> 

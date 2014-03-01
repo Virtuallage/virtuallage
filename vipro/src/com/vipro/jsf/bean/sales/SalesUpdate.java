@@ -83,9 +83,11 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listSolicitors = null;
 	private List<SelectItem> listPanelBanks = null;
 	private List<SelectItem> listSpecial = null;
+	private List<SelectItem> listUsers = null;
 	
 	private ProjectInventory inventory;
 	private Long projectId;
+	private String unitNo;
 	private Project project;
 	private String customerName;
 	private String customerName2;
@@ -131,7 +133,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		listSpecial = CodeUtil.getCodes("SH");
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
 		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
-
+		listUsers = CodeUtil.getActiveUsersAsItems();
 	}
 	
 	public List<SelectItem> getListPanelBanks() {
@@ -537,7 +539,11 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 
-		inventories = inventoryService.getAvailableInventories(projectId);
+		if (StringUtils.hasText(unitNo)) {
+			inventories = inventoryService.getAvailableInventories(projectId, unitNo);;
+		} else {
+			inventories = inventoryService.getAvailableInventories(projectId);
+		}
 		accounts = new ArrayList<Account>();
 		
 		AuthUser user = getCurrentUser();
@@ -698,7 +704,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		String groupId = user.getUserProfile().getUserGroup().getGroupId();
 		if(docType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LO)) {
@@ -706,7 +712,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
 				display = "inline";
 			}
 		}
@@ -729,12 +735,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		
 		if (account != null) {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			String sperson = account.getSalesPerson();
+			account.setSalesPerson(sperson.toUpperCase());
 			
 			accountService.update(account);
-			addInfoMessage("Sales Update", "Updated Successfully.");
+			addInfoMessage("Information", "Sales Update Completed Successfully.");
 			return listAccounts();
 		} else {
-			addInfoMessage("Sales Update", "Failed to update.");
+			addInfoMessage("Warning!", "Update Failed.");
 			return "salesProgressUpdate";
 		}
 	}
@@ -998,6 +1006,22 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setListSpecial(List<SelectItem> listSpecial) {
 		this.listSpecial = listSpecial;
+	}
+
+	public List<SelectItem> getListUsers() {
+		return listUsers;
+	}
+
+	public void setListUsers(List<SelectItem> listUsers) {
+		this.listUsers = listUsers;
+	}
+
+	public String getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
 	}
 
 }

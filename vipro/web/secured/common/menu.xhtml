@@ -73,8 +73,11 @@
     	</sec:authorize> 	
     	
     	<sec:authorize ifAnyGranted="ROLE_SALES_PIC">
-    	<p:submenu label="Sales" icon="ui-icon-star">
+ 	    <p:submenu label="Setup">
     		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
+	    </p:submenu> 
+    	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
 			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
     		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
@@ -92,7 +95,7 @@
     	</p:submenu>
     	</sec:authorize>
     	
-    	   	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
+    	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
     	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />

@@ -64,7 +64,6 @@ public final class CodeUtil {
 		return projItems;
 	}
 	
-	
 	public static List<SelectItem> getUsersAsItems() {
 		UserProfileService userService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 		List<UserProfile> users = userService.findAll();
@@ -79,6 +78,22 @@ public final class CodeUtil {
 		
 		return items;
 	}
+	
+	public static List<SelectItem> getActiveUsersAsItems() {
+		UserProfileService userService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		List<UserProfile> users = userService.findActiveUsers();
+		
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		items.add( new SelectItem(null, "Select One"));
+		if (users!=null) {
+			for (UserProfile u : users) {
+				items.add( new SelectItem( u.getUserId().toString(), u.getName()));
+			}
+		}
+		
+		return items;
+	}
+
 
 	public static List<SelectItem> getPropertyStatusAsItems() {
 		List<SelectItem> list = new ArrayList<SelectItem>();

@@ -212,16 +212,16 @@ public class ProjectInventory implements java.io.Serializable {
 	}
 
 	public BigDecimal getDiscountAmount() {
-		discountAmount = null;
-		if (purchasePrice != null) {
-			if (discountRate != null) {
-				discountAmount = 
-						purchasePrice.multiply(
-								discountRate.divide(new BigDecimal(100.00)));
-			} else {
-				discountAmount = new BigDecimal(0.0d);
-			}
-		}
+//		discountAmount = null;
+//		if (purchasePrice != null) {
+//			if (discountRate != null){
+//				discountAmount = 
+//						purchasePrice.multiply(
+//								discountRate.divide(new BigDecimal(100.00)));
+//			} else {
+//				discountAmount = new BigDecimal(0.0d);
+//			}
+//		}
 		return discountAmount;
 	}
 
@@ -350,21 +350,21 @@ public class ProjectInventory implements java.io.Serializable {
 		this.discountRate = discountRate;
 	}
 
-	public BigDecimal getNettPrice() {
-		BigDecimal nettPrice = null;
-		if (purchasePrice != null) {
-			if (discountAmount != null) {
-				nettPrice = purchasePrice.subtract(discountAmount);
-			} else {
-				nettPrice = purchasePrice;
-			}
-		}
-		return nettPrice;
-	}
+//	public BigDecimal getNettPrice() {
+//		BigDecimal nettPrice = null;
+//		if (purchasePrice != null) {
+//			if (discountAmount != null) {
+//				nettPrice = purchasePrice.subtract(discountAmount);
+//			} else {
+//				nettPrice = purchasePrice;
+//			}
+//		}
+//		return nettPrice;
+//	}
 	
-	public void setNettPrice(BigDecimal nettPrice) {
-		
-	}
+//	public void setNettPrice(BigDecimal nettPrice) {
+//		
+//	}
 
 	public String getCustomerName() {
 		return customerName;

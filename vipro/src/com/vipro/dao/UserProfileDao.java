@@ -17,4 +17,6 @@ public interface UserProfileDao extends Dao<UserProfile>{
 	public UserProfile findByUserId(Long userId);
 	
 	public List<UserProfile> findAll();
+	
+	public List<UserProfile> findActiveUsers();
 }

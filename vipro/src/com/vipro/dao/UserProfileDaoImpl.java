@@ -39,4 +39,11 @@ public class UserProfileDaoImpl extends DaoImpl<UserProfile> implements UserProf
 		return getHibernateTemplate().find(query);
 	}
 
+	@Override
+	public List<UserProfile> findActiveUsers() {
+		String query = "select o from UserProfile o where o.status='SSACT' order by o.name";
+		return getHibernateTemplate().find(query);
+	}
+
+	
 }
