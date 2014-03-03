@@ -90,4 +90,12 @@ INSERT INTO vipro.billing_model (billing_model_code, billing_seq, stage, descrip
      VALUES ('DPMJ', 16, '3', 'Vacant Possession.',
              5.00, null, null, 'SSACT');
 
+-- 2014/03/03 BY SEAN --
+INSERT INTO `vipro`.`code_header` (`code_header_id`, `name`) VALUES ('PR', 'Partner Type');
+
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRBNK', 'Bank', 'SSACT');
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRDEV', 'Developer', 'SSACT');
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRLND', 'Land Owner', 'SSACT');
+INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRSOL', 'Solicitor', 'SSACT');
+
              
