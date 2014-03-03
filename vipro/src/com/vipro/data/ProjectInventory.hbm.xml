@@ -15,10 +15,10 @@
             <column name="unit_no" length="12" />
         </property>
         <property name="ptNo" type="string">
-            <column name="pt_no" length="8" />
+            <column name="pt_no" length="20" />
         </property>
         <property name="hsdNo" type="string">
-            <column name="hsd_no" length="8" />
+            <column name="hsd_no" length="20" />
         </property>
         <property name="blockNo" type="string">
             <column name="block_no" length="8" />
