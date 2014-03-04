@@ -10,6 +10,5 @@ public interface BusinessPartnerDao extends Dao<BusinessPartner> {
 	public BusinessPartner findById(Long codeId);
 	public List<BusinessPartner> findByPartnerType(String partnerType);
 	public List<BusinessPartner> findAllBusinessPartner(); 
-	
 
 }
