@@ -28,7 +28,7 @@
 			<column name="company_name" length="60" />
 		</property>
 		<property name="addressId" type="long">
-            <column name="address_id" not-null="true" />
+            <column name="address_id" />
         </property>
 		<property name="contactPersonTitle" type="string">
 			<column name="contact_person_title" length="10" />

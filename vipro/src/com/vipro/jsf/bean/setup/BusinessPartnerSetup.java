@@ -16,12 +16,14 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.component.inputtext.InputText;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.data.UserProfile;
 import com.vipro.data.Address;
 import com.vipro.data.BusinessPartner;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.AddressService;
+import com.vipro.service.CustomerService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.BusinessPartnerService;
 import com.vipro.service.UserProfileService;
@@ -44,16 +46,21 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 
 	
 	private String partnerType;
-	private long editAddressId;
+	private Long editAddressId;
 	private BusinessPartner businessPartnerFld;
 	private Address address;
 	private List<SelectItem> listPartnerType;
+	private List<SelectItem> listStatus;
+	private List<SelectItem> listTitle;
+	
 	private List<BusinessPartner> searchBusinessPartnerList;
 	
-			
-	@PostConstruct
+	
+		@PostConstruct
 	public void init() {
 		listPartnerType = CodeUtil.getCodes("PR");
+		listStatus = CodeUtil.getCodes("SS");
+		listTitle = CodeUtil.getCodes("TT");
 	}
 
 	public String getPartnerType() {
@@ -64,6 +71,30 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 		this.partnerType = partnerType;
 	}
 	
+	public BusinessPartner getBusinessPartnerFld() {
+		return businessPartnerFld;
+	}
+	
+	public Long getEditAddressId() {
+		return editAddressId;
+	}
+
+	public void setEditAddressId(Long editAddressId) {
+		this.editAddressId = editAddressId;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public void setBusinessPartnerFld(BusinessPartner businessPartnerFld) {
+		this.businessPartnerFld = businessPartnerFld;
+	}
+
 	public List<SelectItem> getListPartnerType() {
 		return listPartnerType;
 	}
@@ -71,7 +102,23 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 	public void setListPartnerType(List<SelectItem> listPartnerType) {
 		this.listPartnerType = listPartnerType;
 	}
-	
+
+	public List<SelectItem> getListStatus() {
+		return listStatus;
+	}
+
+	public void setListStatus(List<SelectItem> listStatus) {
+		this.listStatus = listStatus;
+	}
+
+	public List<SelectItem> getListTitle() {
+		return listTitle;
+	}
+
+	public void setListTitle(List<SelectItem> listTitle) {
+		this.listTitle = listTitle;
+	}
+
 	public List<BusinessPartner> getSearchBusinessPartnerList() {
 		return searchBusinessPartnerList;
 	}
@@ -113,5 +160,23 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 		return "editBusinessPartner";
 	}
 	
+	public String backTosearchBusinessPartner() {
+		return "searchBusinessPartner";
+	}
+
+	public String editBusinessPartner() {
+		try {
+						
+		} catch (Throwable t) {
+			t.printStackTrace();
+			addErrorMessage("Edit Business Partner", t.getMessage());
+			return null;
+		}
+
+		addInfoMessage("Record Saved", "Business Partner information updated successfully.");
+		
+		return "editBusinessPartner";
+	}
+
 	
 }
