@@ -9,13 +9,13 @@ import java.util.Date;
  */
 public class BusinessPartner implements java.io.Serializable {
 
-	private long partnerId;
+	private Long partnerId;
 	private String partnerType;
 	private String businessRegistrationNo;
 	private Date registrationDate;
 	private String companyCode;
 	private String companyName;
-	private long addressId;
+	private Long addressId;
 	private String contactPersonTitle;
 	private String contactPersonName;
 	private String officeTel;
@@ -28,11 +28,11 @@ public class BusinessPartner implements java.io.Serializable {
 	public BusinessPartner() {
 	}
 
-	public long getPartnerId() {
+	public Long getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(long partnerId) {
+	public void setPartnerId(Long partnerId) {
 		this.partnerId = partnerId;
 	}
 
@@ -76,11 +76,11 @@ public class BusinessPartner implements java.io.Serializable {
 		this.companyName = companyName;
 	}
 
-	public long getAddressId() {
+	public Long getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(long addressId) {
+	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
 
