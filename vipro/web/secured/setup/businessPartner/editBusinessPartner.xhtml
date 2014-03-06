@@ -15,7 +15,7 @@ Business Partner Information
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Business Partner Information - Edit" style="width:95%">  
+<p:panel id="panel" header="Business Partner Information - Edit" style="width:95%;background-color:#EEFFEE">  
 
 <p:focus context="panel"/> 
 
@@ -23,7 +23,7 @@ Business Partner Information
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Business Partner Name"/>
-				<h:inputText value="#{businessPartner.businessPartnerFld.companyName}" disabled="true"/>
+				<h:inputText value="#{businessPartner.businessPartnerFld.companyName}" style="width:400px;text-transform:uppercase" disabled="true"/>
 				<p:outputLabel value="Status"/>
 				<p:selectOneMenu id="status" value="#{businessPartner.businessPartnerFld.status}" disabled="true">
 					<f:selectItems value="#{businessPartner.listStatus}"/>
@@ -39,7 +39,7 @@ Business Partner Information
 				<p:outputLabel value="Business Reg No" for="regno"/>
 				<p:inputText id="regno" value="#{businessPartner.businessPartnerFld.businessRegistrationNo}" maxlength="30" required="false" autocomplete="off"/>
 				<p:outputLabel value="Date Registered" for="regdate"/>
-				<p:calendar id="regdate" value="#{businessPartner.businessPartnerFld.registrationDate}" pattern="dd/MM/yyyy" required="false"/>
+				<p:calendar id="regdate" value="#{businessPartner.businessPartnerFld.registrationDate}" pattern="dd/MM/yyyy" required="false" navigator="true" showOn="button"/>
 				
 				<p:outputLabel value="Contact Person Name" for="contactperson"/>
 				<p:inputText id="contactperson" value="#{businessPartner.businessPartnerFld.contactPersonName}" maxlength="50" style="width:300px" required="false" autocomplete="off"/>
@@ -48,13 +48,47 @@ Business Partner Information
 						<f:selectItems value="#{businessPartner.listTitle}"/>
 				</p:selectOneMenu>
 				
+				<p:outputLabel value="Mobile No" for="mobile"/>
+				<p:inputText id="mobile" value="#{businessPartner.businessPartnerFld.mobileNo}" maxlength="20" autocomplete="off"/>
+				<p:outputLabel value="Office Tel No" for="officeno"/>
+				<p:inputText id="officeno" value="#{businessPartner.businessPartnerFld.officeTel}" maxlength="20" autocomplete="off"/>
+
+				<p:outputLabel value="Email" for="email"/>
+				<p:inputText id="email" value="#{businessPartner.businessPartnerFld.emailAddress}" maxlength="20" autocomplete="off"/>
+				<p:outputLabel value="Fax No" for="fax"/>
+				<p:inputText id="fax" value="#{businessPartner.businessPartnerFld.faxNo}" maxlength="20" autocomplete="off"/>
+				
+				<p:outputLabel value="Address Line 1" for="address1"/>
+				<p:inputText id="address1" value="#{businessPartner.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off" required="true"/>
+				<p:outputLabel value="Address Line 2" for="address2"/>
+				<p:inputText id="address2" value="#{businessPartner.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+
+				<p:outputLabel value="Address Line 3" for="address3"/>
+				<p:inputText id="address3" value="#{businessPartner.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:outputLabel value="Address Line 4" for="address4"/>
+				<p:inputText id="address4" value="#{businessPartner.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+
+				<p:outputLabel value="Post Code" for="postcode"/>
+				<p:inputText id="postcode" value="#{businessPartner.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
+				<p:outputLabel value="City" for="city"/>
+				<p:inputText id="city" value="#{businessPartner.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="true"/>
+				
+				<p:outputLabel value="State" for="state"/>
+				<p:selectOneMenu id="state" value="#{businessPartner.address.state}">
+						<f:selectItems value="#{businessPartner.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Country" for="country"/>
+				<p:selectOneMenu id="country" value="#{businessPartner.address.country}" required="true">
+						<f:selectItems value="#{businessPartner.listCountry}"/>
+				</p:selectOneMenu>
+				
 			</h:panelGrid>
 							
 			<br/>
 			
 			<p:commandButton value="Back" ajax="false" action="#{businessPartner.backTosearchBusinessPartner}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
 			
-			<p:commandButton value="Save" ajax="false" action="#{businessPartner.editBusinessPartner}" icon="ui-icon-disk"/>
+			<p:commandButton value="Save" ajax="false" action="#{businessPartner.UpdateBusinessPartner}" icon="ui-icon-disk"/>
 			
 </h:form>
 

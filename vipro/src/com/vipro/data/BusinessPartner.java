@@ -23,7 +23,7 @@ public class BusinessPartner implements java.io.Serializable {
 	private String mobileNo;
 	private String emailAddress;
 	private String status;
-	private Institution institution;
+	private Long institutionId;
 
 	public BusinessPartner() {
 	}
@@ -140,13 +140,12 @@ public class BusinessPartner implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Institution getInstitution() {
-		return institution;
+	public Long getInstitutionId() {
+		return institutionId;
 	}
 
-	public void setInstitution(Institution institution) {
-		this.institution = institution;
+	public void setInstitutionId(Long institutionId) {
+		this.institutionId = institutionId;
 	}
 
-	
 }
