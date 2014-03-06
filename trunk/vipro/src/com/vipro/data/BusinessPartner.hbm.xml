@@ -8,10 +8,9 @@
 			<column name="partner_id" />
 			<generator class="identity" />
 		</id>
-		<many-to-one name="institution" class="com.vipro.data.Institution"
-			lazy="false" fetch="join">
+		<property name="institutionId" type="long">
 			<column name="institution_id" />
-		</many-to-one>
+		</property>
 		<property name="partnerType" type="string">
 			<column name="partner_type" length="10" />
 		</property>
