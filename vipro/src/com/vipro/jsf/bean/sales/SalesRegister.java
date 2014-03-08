@@ -78,6 +78,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listBank = null;
 	private List<SelectItem> listPaymentMethod = null;
 	private List<SelectItem> listMediaSource = null;
+	private List<SelectItem> listSalesPersons = null;	
 
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -161,6 +162,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 		listLayoutType = CodeUtil.getCodes("LT");		
 		listBank = CodeUtil.getCodes("BK");
 		listPaymentMethod = CodeUtil.getCodes("PM");
+		listSalesPersons = CodeUtil.getActiveUsersAsItems();
 	}
 
 	public Tab getRegistrationTab() {
@@ -569,7 +571,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 			customers = new ArrayList<Customer>();
 			account = new Account();
 			account.setDatePurchased(new Date());
-			account.setSalesPerson(user.getName());
+			account.setSalesPersonId(currentUserId);
+//			account.setSalesPerson(user.getName());
 		}
 
 		AccountService accountService = (AccountService) SpringBeanUtil
@@ -600,7 +603,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 				customers.add(account.getCustomer4());
 			if (account.getCustomer5() != null)
 				customers.add(account.getCustomer5());
-			
+
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			selectedCustomer = customerService.findByCustId(account.getCorrAddrCustId());
@@ -804,12 +807,17 @@ public class SalesRegister extends CommonBean implements Serializable {
 			account.setDateChanged(new Date());
 			account.setChangedBy(attendedBy.getUserId());
 			account.setPurchasePrice(inventory.getPurchasePrice());
-			
+
 			// ***  default account type to individual first. Should check for 1st purchaser type for this.
 			// *** to set account type from customer category
 			account.setAccountType(selectedCustomer.getCustomerCategory());
 			account.setCorrAddrCustId(selectedCustomer.getCustomerId());
-			
+
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+			UserProfile salesProfile = userProfileService.findById(account.getSalesPersonId());
+			if(salesProfile != null) {
+				account.setSalesPerson(salesProfile.getName());
+			}
 // BILL Removed	the calculation and replace with fee from Project Table		
 //			BigDecimal regFee = inventory.getPurchasePrice().multiply(new BigDecimal(0.002d));
 //			regFee = regFee.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -831,7 +839,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			deleteButton.setStyle("display: none");
 			
 			addInfoMessage(
-					"Saved",
+					"INFORMATION!",
 					"Sales Registration Saved Successfully. Registration No is "
 							+ account.getAccountId());
 			
@@ -917,6 +925,19 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public String saveIndividual() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = individual.getFullName();
 			individual.setFullName(fname.toUpperCase());
 			
@@ -962,6 +983,19 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public String saveCompany() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = company.getFullName();
 			company.setFullName(fname.toUpperCase());
 			
@@ -1009,6 +1043,19 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public String savePurchaser() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			CustomerService customerService = (CustomerService) SpringBeanUtil
 					.lookup(CustomerService.class.getName());
 			customerService.update(purchaser);
@@ -1081,6 +1128,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			addErrorMessage("Booking Fee", t.getMessage());
 			return null;
 		}
+
 		salesRegTabView.setActiveIndex(2);
 		payBookingTab.setDisabled(false);
 		
@@ -1105,7 +1153,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 				return null;
 			}
 		}
-		
+
 		try {
 			TransactionCode code = new TransactionCode();
 			code.setTransactionCode(TransactionCodeConst.BOOK_FEE);
@@ -1113,7 +1161,6 @@ public class SalesRegister extends CommonBean implements Serializable {
 			TransactionHistoryService trxService = (TransactionHistoryService) SpringBeanUtil
 					.lookup(TransactionHistoryService.class.getName());
 			trx.setTransactionCode(code);
-			
 			trx.setTransactionDate(new Date());
 			trx.setAccount(account);
 			trx.setTransactionDescription("BOOKING FEE");
@@ -1222,7 +1269,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 					"Invalid Purchaser! You need at least 1 purchaser for sales registration.");
 			return null;
 		}
-		
+
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		UserProfile salesProfile = userProfileService.findById(account.getSalesPersonId());
+		if(salesProfile != null) {
+			account.setSalesPerson(salesProfile.getName());
+		}
+
 		account.setDateChanged(new Date());
 		account.setChangedBy(getCurrentUserId());
 		accountService.update(account);
@@ -1429,5 +1482,13 @@ public class SalesRegister extends CommonBean implements Serializable {
 
 	public void setListLayoutType(List<SelectItem> listLayoutType) {
 		this.listLayoutType = listLayoutType;
+	}
+
+	public List<SelectItem> getListSalesPersons() {
+		return listSalesPersons;
+	}
+
+	public void setListSalesPersons(List<SelectItem> listSalesPersons) {
+		this.listSalesPersons = listSalesPersons;
 	}
 }

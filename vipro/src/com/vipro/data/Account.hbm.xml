@@ -35,6 +35,12 @@
         <property name="attendedBy" type="java.lang.Long">
             <column name="attended_by" />
         </property>
+        <property name="salesPersonId" type="java.lang.Long">
+            <column name="sales_person_id" />
+        </property>
+        <property name="salesPerson" type="string">
+            <column name="sales_person" length="40" />
+        </property>
         <property name="registrationFee" type="big_decimal">
             <column name="registration_fee" precision="9" scale="2" />
         </property>
@@ -215,9 +221,7 @@
         <property name="source" type="string">
             <column name="source" length="5" />
         </property>
-         <property name="salesPerson" type="string">
-            <column name="sales_person" length="40" />
-        </property>
+
         
         <set name="waterBillings" table="water_billing" inverse="true" lazy="true" fetch="select">
             <key>

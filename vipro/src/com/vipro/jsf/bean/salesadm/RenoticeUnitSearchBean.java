@@ -566,7 +566,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	}
 
 	public String getInvoiceNoFormated() {
-		return String.format("RB%06d%n", this.invoiceNo);
+		return String.format("RB%04d%n", this.invoiceNo);
 	}
 	
 	public void setInvoiceNo(Long invoiceNo) {

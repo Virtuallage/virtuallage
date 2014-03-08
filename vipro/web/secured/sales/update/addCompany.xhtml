@@ -58,11 +58,11 @@ Add Company
 				
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{salesUpdate.address.postcode}" maxlength="10" autocomplete="off"/>
-				<p:outputLabel value="City" for="city" required="true"/>
-				<p:inputText id="city" value="#{salesUpdate.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off"/>
+				<p:outputLabel value="City" for="city"/>
+				<p:inputText id="city" value="#{salesUpdate.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="true"/>
 
 				<p:outputLabel value="State" for="state" required="true"/>
-				<p:selectOneMenu id="state" value="#{salesUpdate.address.state}"  required="true">
+				<p:selectOneMenu id="state" value="#{salesUpdate.address.state}"  required="false">
 						<f:selectItems value="#{salesUpdate.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>

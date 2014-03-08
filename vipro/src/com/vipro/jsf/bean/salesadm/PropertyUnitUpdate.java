@@ -924,12 +924,14 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 		if (account != null) {
 			
-			if(account.getPurchaseType() == null || account.getPurchaseType().length() == 0) {
-				addErrorMessage("Warning!", "Please inform Sales Staff to update Financing Information.");
-				return "salesProgressUpdate";
-			}
+//			if(account.getPurchaseType() == null || account.getPurchaseType().length() == 0) {
+//				addErrorMessage("Warning!", "Please inform Sales Staff to update Financing Information.");
+//				return "salesProgressUpdate";
+//			}
 			
-			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+			if (!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) && 
+			   !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+				System.err.println("Selected"+account.getPurchaseType());
 				if(account.getPanelBankId() == null || account.getPanelBankId() == 0) {
 					addErrorMessage("Bank Name is required",
 							"Please select bank name.");
@@ -950,18 +952,19 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				return "salesProgressUpdate";
 			}
 			
-			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) && 
+			   !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
 				if (account.getLoSignedDate() == null || account.getFinancierId() == 0) {
 					addErrorMessage("Invalid LO Financier",
 							"Please select LO Signed Date and Financier from the dropdown list.");
 					return "salesProgressUpdate";
 				}
-				
-				if (account.getLaSignedDate() == null || account.getLaSolicitorId() == 0) {
-					addErrorMessage("Invalid LA Solicitor",
-							"Please select LA Signed Date and Solicitor from the dropdown list.");
-					return "salesProgressUpdate";
-				}
+// request to removed by Alvin on 4/3/14				
+//				if (account.getLaSignedDate() == null || account.getLaSolicitorId() == 0) {
+//					addErrorMessage("Invalid LA Solicitor",
+//							"Please select LA Signed Date and Solicitor from the dropdown list.");
+//					return "salesProgressUpdate";
+//				}
 			} else {
 				if (account.getLoSignedDate() != null) {
 					addErrorMessage("LO Informaion is not required",
@@ -1242,6 +1245,19 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	
 	public String saveIndividual() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = individual.getFullName();
 			individual.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
@@ -1286,6 +1302,19 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 	public String saveCompany() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = company.getFullName();
 			company.setFullName(fname.toUpperCase());
 			String cname = company.getContactPerson();

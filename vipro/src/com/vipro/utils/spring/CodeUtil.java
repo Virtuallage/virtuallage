@@ -94,7 +94,6 @@ public final class CodeUtil {
 		return items;
 	}
 
-
 	public static List<SelectItem> getPropertyStatusAsItems() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
 		list.add( new SelectItem(PropertyUnitStatusConst.STATUS_AVAILABLE, "Available") );

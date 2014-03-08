@@ -9,13 +9,13 @@ import java.util.Date;
  */
 public class BusinessPartner implements java.io.Serializable {
 
-	private Long partnerId;
+	private long partnerId;
 	private String partnerType;
 	private String businessRegistrationNo;
 	private Date registrationDate;
 	private String companyCode;
 	private String companyName;
-	private Long addressId;
+	private Address address;
 	private String contactPersonTitle;
 	private String contactPersonName;
 	private String officeTel;
@@ -23,24 +23,24 @@ public class BusinessPartner implements java.io.Serializable {
 	private String mobileNo;
 	private String emailAddress;
 	private String status;
-	private Long institutionId;
+	private Institution institution;
 
 	public BusinessPartner() {
 	}
 
-	public Long getPartnerId() {
+	public long getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(Long partnerId) {
+	public void setPartnerId(long partnerId) {
 		this.partnerId = partnerId;
 	}
 
-	public String getpartnerType() {
+	public String getPartnerType() {
 		return partnerType;
 	}
 
-	public void setpartnerType(String partnerType) {
+	public void setPartnerType(String partnerType) {
 		this.partnerType = partnerType;
 	}
 
@@ -76,12 +76,12 @@ public class BusinessPartner implements java.io.Serializable {
 		this.companyName = companyName;
 	}
 
-	public Long getAddressId() {
-		return addressId;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getContactPersonTitle() {
@@ -140,12 +140,13 @@ public class BusinessPartner implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Long getInstitutionId() {
-		return institutionId;
+	public Institution getInstitution() {
+		return institution;
 	}
 
-	public void setInstitutionId(Long institutionId) {
-		this.institutionId = institutionId;
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
 	}
 
+	
 }

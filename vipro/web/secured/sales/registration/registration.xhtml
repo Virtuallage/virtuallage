@@ -79,12 +79,14 @@
      <br/>
 
  	<h:panelGrid columns="4" style="width:95%">
-   		<p:outputLabel value="Source"/>
+   		<p:outputLabel value="Source" required="true"/>
    		<p:selectOneMenu  id="source" value="#{salesRegister.account.source}" style="width:200px" required="true"> 
 			<f:selectItems value="#{salesRegister.listMediaSource}" />
 		</p:selectOneMenu>
-   		<p:outputLabel value="Sales Person"/>
-   		<h:inputText value="#{salesRegister.account.salesPerson}" style="text-transform:uppercase" required="true"/>
+   		<p:outputLabel value="Sales Person" required="true"/>
+		<p:selectOneMenu id="salesPerson" value="#{salesRegister.account.salesPersonId}" style="width:200px" required="true" disabled="false">
+			<f:selectItems value="#{salesRegister.listSalesPersons}" />
+		</p:selectOneMenu>
    	</h:panelGrid>  	
 	
 	<br/>

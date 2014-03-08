@@ -83,7 +83,7 @@ Add Individuals
 				<p:outputLabel value="Post Code" for="postcode" />
 				<p:inputText id="postcode" value="#{customerRegister.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
 				<p:outputLabel value="City" for="city" />
-				<p:inputText id="city" value="#{customerRegister.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="true"/>
+				<p:inputText id="city" value="#{customerRegister.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="false"/>
 				
 				<p:outputLabel value="State" for="state" />
 				<p:selectOneMenu id="state" value="#{customerRegister.address.state}"  required="false">

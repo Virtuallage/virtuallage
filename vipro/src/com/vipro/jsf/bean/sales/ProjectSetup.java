@@ -71,6 +71,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 	private List<SelectItem> orientationList;
 	private List<SelectItem> layoutTypeList;
 	private List<SelectItem> facingList;
+	private List<SelectItem> projectStatusList;
 
 	public ProjectSetup() {
 
@@ -89,6 +90,7 @@ public class ProjectSetup extends CommonBean implements Serializable {
 		layoutTypeList = CodeUtil.getCodes("LT");
 		facingList = CodeUtil.getCodes("FC");
 		statusList = CodeUtil.getCodes("SS");
+		projectStatusList = CodeUtil.getCodes("PJ");
 		institutions = CodeUtil.getInstitutionAsItems();
 		developers = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.DEVELOPER);
 		landProprietors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.LAND_PROPRIETOR);
@@ -679,6 +681,14 @@ public class ProjectSetup extends CommonBean implements Serializable {
 
 	public void setFacingList(List<SelectItem> facingList) {
 		this.facingList = facingList;
+	}
+
+	public List<SelectItem> getProjectStatusList() {
+		return projectStatusList;
+	}
+
+	public void setProjectStatusList(List<SelectItem> projectStatusList) {
+		this.projectStatusList = projectStatusList;
 	}
 
 }

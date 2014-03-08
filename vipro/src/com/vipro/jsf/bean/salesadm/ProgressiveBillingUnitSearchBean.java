@@ -544,7 +544,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	}
 
 	public String getInvoiceNoFormated() {
-		return String.format("PB%06d%n", this.invoiceNo);
+		return String.format("PB%04d%n", this.invoiceNo);
 	}
 	
 	public void setInvoiceNo(Long invoiceNo) {

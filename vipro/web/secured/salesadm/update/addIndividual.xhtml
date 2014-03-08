@@ -79,10 +79,10 @@ Add Individuals
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{propertyUnitUpdate.address.postcode}" style="text-transform:uppercase" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:inputText id="city" value="#{propertyUnitUpdate.address.city}" maxlength="20" style="text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:inputText id="city" value="#{propertyUnitUpdate.address.city}" maxlength="20" style="text-transform:uppercase" required="false" autocomplete="off"/>
 
 				<p:outputLabel value="State" for="state" required="true"/>
-				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.address.state}"  required="true">
+				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.address.state}"  required="false">
 						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>

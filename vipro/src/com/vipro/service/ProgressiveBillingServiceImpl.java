@@ -215,7 +215,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			BigDecimal totalAmount = sumDTO.getProgressiveBilling().getAmountBilled();			
 			String refNo = getRefNo(selectedDto.getProject().getDeveloperId());
 //			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
-			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
+//			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
+			refNo = selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo();
 
 			
 			//1. Progressive Billing Reversal Transaction History Record
@@ -325,7 +326,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			refNo = getRefNo(selectedDto.getProject().getDeveloperId());
 //			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+seqNo;
-			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
+//			refNo = refNo + "/"+ selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo()+"/"+invoiceNo;
+			refNo = selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo();
 			Account act = selectedDto.getAccount();
 			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
 			
