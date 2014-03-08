@@ -59,7 +59,7 @@ Add Company
 				<p:outputLabel value="Post Code" for="postcode" required="true"/>
 				<p:inputText id="postcode" value="#{salesRegister.address.postcode}" maxlength="10" autocomplete="off"/>
 				<p:outputLabel value="City" for="city" required="true"/>
-				<p:inputText id="city" value="#{salesRegister.address.city}" maxlength="20" style="text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:inputText id="city" value="#{salesRegister.address.city}" maxlength="20" style="text-transform:uppercase" required="false" autocomplete="off"/>
 	
 				<p:outputLabel value="State" for="state" />
 				<p:selectOneMenu id="state" value="#{salesRegister.address.state}"  required="false">

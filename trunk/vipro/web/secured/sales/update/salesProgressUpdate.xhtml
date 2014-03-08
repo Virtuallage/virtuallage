@@ -36,7 +36,9 @@ Sales Update
    			<p:outputLabel value="Unit No"/>
 			<h:inputText value="#{salesUpdate.account.projectInventory.unitNo}"  style="width:200px" disabled="true" />
    			<p:outputLabel value="Sales Person"/>
-			<h:inputText value="#{salesUpdate.account.salesPerson}" style="width:200px;text-transform:uppercase" maxlength="40" disabled="false" />
+			<p:selectOneMenu id="salesPerson" value="#{salesUpdate.account.salesPersonId}" style="width:200px" disabled="false">
+				<f:selectItems value="#{salesUpdate.listSalesPersons}" />
+			</p:selectOneMenu>
 			
 			<p:outputLabel value="Selling Price"/>
 			<h:inputText value="#{salesUpdate.account.purchasePrice}" style="width:200px" disabled="true">

@@ -353,6 +353,19 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String saveIndividual() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = individual.getFullName();
 			individual.setFullName(fname.toUpperCase());
 			
@@ -395,6 +408,19 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String saveCompany() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = company.getFullName();
 			company.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil
@@ -463,6 +489,19 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	
 	public String editIndividual() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+
 			String fname = individual.getFullName();
 			individual.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil
@@ -501,6 +540,19 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public String editCompany() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = company.getFullName();
 			company.setFullName(fname.toUpperCase());
 			CustomerService customerService = (CustomerService) SpringBeanUtil

@@ -52,10 +52,10 @@ Purchaser Information - Company
 				<p:column headerText="ID Number" style="width:25%">
 					<h:outputText value="#{c.identityNo}" />
 				</p:column>
-				
-				<p:column headerText="ID Type" style="width:20%">
-					<h:outputText value="#{c.identityType}" />
-				</p:column>
+
+				<p:column headerText="ID Type" sortBy="#{customerRegister.getCodeDesc('ID', c.identityType)}">
+					<h:outputText value="#{customerRegister.getCodeDesc('ID', c.identityType)}" />
+				</p:column>				
 
 				<p:column headerText="Action" style="width:20%">
 					<p:commandButton action="#{customerRegister.toEditCompany}" ajax="false" icon="ui-icon-pencil" title="Edit Company">

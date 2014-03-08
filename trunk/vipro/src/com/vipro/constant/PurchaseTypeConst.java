@@ -13,4 +13,6 @@ public interface PurchaseTypeConst extends CommonConst {
 	
 	public static final String CASH="PUCSH";
 
+	public static final String PENDING_LOAN="PUPEN";
+	
 }

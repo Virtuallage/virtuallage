@@ -15,6 +15,7 @@ import org.primefaces.model.StreamedContent;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
+import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.TransactionCodeConst;
@@ -84,6 +85,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listPanelBanks = null;
 	private List<SelectItem> listSpecial = null;
 	private List<SelectItem> listUsers = null;
+	private List<SelectItem> listSalesPersons = null;
 	
 	private ProjectInventory inventory;
 	private Long projectId;
@@ -134,6 +136,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
 		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
 		listUsers = CodeUtil.getActiveUsersAsItems();
+		listSalesPersons = CodeUtil.getActiveUsersAsItems();
 	}
 	
 	public List<SelectItem> getListPanelBanks() {
@@ -540,7 +543,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 
 		if (StringUtils.hasText(unitNo)) {
-			inventories = inventoryService.getAvailableInventories(projectId, unitNo);;
+			inventories = inventoryService.getAvailableInventories(projectId, unitNo);
 		} else {
 			inventories = inventoryService.getAvailableInventories(projectId);
 		}
@@ -735,14 +738,18 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		
 		if (account != null) {
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
-			String sperson = account.getSalesPerson();
-			account.setSalesPerson(sperson.toUpperCase());
+
+			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+			UserProfile salesProfile = userProfileService.findById(account.getSalesPersonId());
+			if(salesProfile != null) {
+				account.setSalesPerson(salesProfile.getName());
+			}
 			
 			accountService.update(account);
 			addInfoMessage("Information", "Sales Update Completed Successfully.");
 			return listAccounts();
 		} else {
-			addInfoMessage("Warning!", "Update Failed.");
+			addInfoMessage("WARNING!", "Update Failed.");
 			return "salesProgressUpdate";
 		}
 	}
@@ -929,6 +936,19 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	
 	public String saveIndividual() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = individual.getFullName();
 			individual.setFullName(fname.toUpperCase());
 			
@@ -966,6 +986,19 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public String saveCompany() {
 		try {
+			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
+				if (!StringUtils.hasText(address.getCity())) {
+					addErrorMessage("WARNING!",
+							"Please enter a City Name in Malaysia");
+					return null;
+				}
+				if (!StringUtils.hasText(address.getState())) {
+					addErrorMessage("WARNING!",
+							"Please select a valid State in Malaysia.");
+					return null;
+				}
+			}
+			
 			String fname = company.getFullName();
 			company.setFullName(fname.toUpperCase());
 			
@@ -1022,6 +1055,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setUnitNo(String unitNo) {
 		this.unitNo = unitNo;
+	}
+
+	public List<SelectItem> getListSalesPersons() {
+		return listSalesPersons;
+	}
+
+	public void setListSalesPersons(List<SelectItem> listSalesPersons) {
+		this.listSalesPersons = listSalesPersons;
 	}
 
 }

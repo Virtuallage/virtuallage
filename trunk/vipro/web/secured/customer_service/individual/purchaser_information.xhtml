@@ -52,8 +52,8 @@ Purchaser Information - Individual
 					<h:outputText value="#{c.identityNo}" />
 				</p:column>
 				
-				<p:column headerText="ID Type" style="width:20%">
-					<h:outputText value="#{c.identityType}" />
+				<p:column headerText="ID Type" sortBy="#{customerRegister.getCodeDesc('ID', c.identityType)}">
+					<h:outputText value="#{customerRegister.getCodeDesc('ID', c.identityType)}" />
 				</p:column>
 
 				<p:column headerText="Action" style="width:20%">

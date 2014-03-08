@@ -23,6 +23,8 @@ public class Account implements java.io.Serializable {
 	private String accountStatus;
 	private BigDecimal accountBalance;
 	private Long attendedBy;
+	private Long salesPersonId;
+	private String salesPerson;
 	private BigDecimal registrationFee;
 	private String registrationNo;
 	private Date datePurchased;
@@ -73,7 +75,6 @@ public class Account implements java.io.Serializable {
 	private Long changedBy;
 	private Date dateChanged;
 	private String source;
-	private String salesPerson;
 	private Long corrAddrCustId;
 	private BigDecimal bookPymtAmount;
 	private String bookPymtMethod;
@@ -1064,6 +1065,14 @@ public class Account implements java.io.Serializable {
 
 	public void setDebtorAccount(String debtorAccount) {
 		this.debtorAccount = debtorAccount;
+	}
+
+	public Long getSalesPersonId() {
+		return salesPersonId;
+	}
+
+	public void setSalesPersonId(Long salesPersonId) {
+		this.salesPersonId = salesPersonId;
 	}
 
 }

@@ -85,6 +85,7 @@ public class SalesCancel extends CommonBean implements Serializable{
 	private UserProfile attendedBy;
 	private DocumentReference documentReference;
 	private UserProfile currentUser;
+	private String unitNo;
 	
 	private double TaxCharge = 0.02;
 	private double AdminFee = 500;
@@ -265,7 +266,11 @@ public class SalesCancel extends CommonBean implements Serializable{
 		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
 				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
-			inventories = inventoryService.getAvailableInventories(projectId);
+			if (StringUtils.hasText(unitNo)) {
+				inventories = inventoryService.getAvailableInventories(projectId, unitNo);
+			} else {
+				inventories = inventoryService.getAvailableInventories(projectId);
+			}
 		}
 		else
 		{
@@ -463,7 +468,12 @@ public class SalesCancel extends CommonBean implements Serializable{
 			}*/
 			
 			if ( account==null) {
-				addInfoMessage("Sales Cancellation", "This property Unit has no sales transaction. There is nothing to cancel.");
+				addInfoMessage("WARNING!", "This property unit has been billed, please contact your Sales Admin. (No Account)");
+				return listPropertyUnits();
+			}
+
+			if (!account.getAccountStatus().equalsIgnoreCase(CommonConst.STATUS_NEW)) {
+				addInfoMessage("WARNING!", "This property unit has been billed, please contact your Sales Admin.");
 				return listPropertyUnits();
 			}
 			
@@ -613,6 +623,14 @@ public class SalesCancel extends CommonBean implements Serializable{
 		
 	    addInfoMessage("Upload Successful", "File(s) is uploaded");
 	    
+	}
+
+	public String getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
 	}
 	
 	/*public String cancel() {
