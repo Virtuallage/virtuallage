@@ -41,8 +41,8 @@ My Work Queue
            <h:outputText value="#{myDesk.getCodeDesc('CY',c.caseType)}"/>
         </p:column>  
         
-        <p:column headerText="Purchaser Name" sortBy="#{c.customer.fullName}">  
-           <h:outputText value="#{c.customer.fullName}"/>
+        <p:column headerText="Purchaser Name" sortBy="#{myDesk.getCustName(c.customerId)}">  
+           <h:outputText value="#{myDesk.getCustName(c.customerId)}"/>
         </p:column>
         
         <p:column headerText="Due Date" sortBy="#{c.dueDate}">  
