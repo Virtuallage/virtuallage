@@ -87,7 +87,7 @@ public class MyDesk extends CommonBean implements Serializable {
 
 	public void setSelectedCustomer(Customer selectedCustomer) {
 		this.selectedCustomer = selectedCustomer;
-		newCase.setCustomer(selectedCustomer);	
+		newCase.setcustomerId(selectedCustomer.getCustomerId());	
 
 	}
 

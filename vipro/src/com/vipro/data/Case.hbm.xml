@@ -11,9 +11,6 @@
         <many-to-one name="sender" class="com.vipro.data.UserProfile" fetch="select">
             <column name="sender_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="customer" class="com.vipro.data.Customer" fetch="select">
-            <column name="customer_id"  />
-        </many-to-one>
         <many-to-one name="creator" class="com.vipro.data.UserProfile" fetch="select">
             <column name="creator_id" not-null="true" />
         </many-to-one>
@@ -31,6 +28,9 @@
         </property>
         <property name="projectId" type="java.lang.Long">
             <column name="project_id" length="20"/>
+        </property>
+        <property name="customerId" type="java.lang.Long">
+            <column name="customer_id" length="20" />
         </property>
         <property name="accountId" type="java.lang.Long">
             <column name="account_id" length="20"/>

@@ -13,10 +13,12 @@ import com.vipro.auth.AuthUser;
 import com.vipro.dao.UserProfileDao;
 import com.vipro.data.CaseLink;
 import com.vipro.data.CodeDet;
+import com.vipro.data.Customer;
 import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.jsf.bean.mydesk.MyDesk;
 import com.vipro.service.CaseLinkService;
 import com.vipro.service.CodeService;
+import com.vipro.service.CustomerService;
 import com.vipro.utils.spring.SpringBeanUtil;
 import com.vipro.constant.*;
 
@@ -42,6 +44,15 @@ public class CommonBean {
 		}
 		
 		return code;
+	}
+	
+	public String getCustName(Long custId) {
+		CustomerService custService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+		Customer cust = custService.findByCustId(custId);
+		
+		String fullName = cust.getFullName();
+		
+		return fullName;
 	}
 	
 	public String getCaseLink(String caseType, Long projectId, Long accountId, String caseStatus) {
