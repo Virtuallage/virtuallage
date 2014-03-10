@@ -13,7 +13,7 @@ public class Case implements java.io.Serializable {
 
 	private Long caseId;
 	private UserProfile sender;
-	private Customer customer;
+	private Long customerId;
 	private UserProfile creator;
 	private UserProfile assignee;
 	private Date creationDate;
@@ -31,21 +31,21 @@ public class Case implements java.io.Serializable {
 	public Case() {
 	}
 
-	public Case(UserProfile userProfileBySenderId, Customer customer,
+	public Case(UserProfile userProfileBySenderId, Long customerId,
 			UserProfile creator, UserProfile assignee) {
 		this.sender = sender;
-		this.customer = customer;
+		this.customerId = customerId;
 		this.creator = creator;
 		this.assignee = assignee;
 	}
 
-	public Case(UserProfile sender, Customer customer, UserProfile creator,
+	public Case(UserProfile sender, Long customerId, UserProfile creator,
 			UserProfile assignee, Date creationDate, String caseType,
 			String subject, Long projectId, Long accountId, String groupId,
 			Date dueDate, boolean notification, String status,
 			Set caseActivities) {
 		this.sender = sender;
-		this.customer = customer;
+		this.customerId = customerId;
 		this.creator = creator;
 		this.assignee = assignee;
 		this.creationDate = creationDate;
@@ -68,12 +68,12 @@ public class Case implements java.io.Serializable {
 		this.caseId = caseId;
 	}
 
-	public Customer getCustomer() {
-		return this.customer;
+	public Long getcustomerId() {
+		return this.customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setcustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public UserProfile getSender() {

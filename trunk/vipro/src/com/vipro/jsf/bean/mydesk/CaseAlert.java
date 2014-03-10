@@ -36,7 +36,8 @@ public class CaseAlert extends CommonBean{
 			newCase.setAccountId(accountId);
 			newCase.setCreator(currentUser);
 			newCase.setSender(currentUser);
-			newCase.setCustomer(customer);
+//			newCase.setCustomer(customer);
+			newCase.setcustomerId(customer.getCustomerId());
 			newCase.setStatus(status);
 			newCase.setCreationDate(new Date());
 			newCase.setDueDate(new Date());
