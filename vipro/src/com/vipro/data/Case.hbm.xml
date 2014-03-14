@@ -8,15 +8,17 @@
             <column name="case_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="sender" class="com.vipro.data.UserProfile" fetch="select">
-            <column name="sender_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="creator" class="com.vipro.data.UserProfile" fetch="select">
-            <column name="creator_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="assignee" class="com.vipro.data.UserProfile" fetch="select">
-            <column name="assignee_id" />
-        </many-to-one>
+        
+        <property name="senderId" type="java.lang.Long">
+            <column name="sender_id" length="20" />
+        </property>
+        <property name="creator" type="java.lang.Long">
+            <column name="creator_id" length="20" />
+        </property>
+        <property name="assignee" type="java.lang.Long">
+            <column name="assignee_id" length="20" />
+        </property>
+        
         <property name="creationDate" type="date">
             <column name="creation_date" length="10" />
         </property>

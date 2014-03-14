@@ -34,9 +34,11 @@ public class CaseAlert extends CommonBean{
 			newCase.setCaseType(caseType);
 			newCase.setProjectId(projectId);
 			newCase.setAccountId(accountId);
-			newCase.setCreator(currentUser);
-			newCase.setSender(currentUser);
+//			newCase.setCreator(currentUser);
+//			newCase.setSender(currentUser);
 //			newCase.setCustomer(customer);
+			newCase.setCreator(currentUser.getUserId());
+			newCase.setsenderId(currentUser.getUserId());
 			newCase.setcustomerId(customer.getCustomerId());
 			newCase.setStatus(status);
 			newCase.setCreationDate(new Date());
@@ -44,7 +46,7 @@ public class CaseAlert extends CommonBean{
 			newCase.setNotification(false);
 
 			if(assignee!=null)
-				newCase.setAssignee(assignee);
+				newCase.setAssignee(assignee.getUserId());
 
 			if(groupId!=null)
 				newCase.setGroupId(groupId);
@@ -57,7 +59,7 @@ public class CaseAlert extends CommonBean{
 					UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 							.lookup(UserProfileService.class.getName());
 					UserProfile toUserProfile = userProfileService.findById(cr.gettUserId());
-					newCase.setAssignee(toUserProfile);
+					newCase.setAssignee(toUserProfile.getUserId());
 				}
 				newCase.setGroupId(cr.gettGroupId());
 			}
@@ -161,7 +163,7 @@ public class CaseAlert extends CommonBean{
 			newCase.setAccountId(accountId);
 
 			if(assignee!=null){
-				newCase.setAssignee(assignee);
+				newCase.setAssignee(assignee.getUserId());
 
 			}else if (groupId!=null){
 				newCase.setGroupId(groupId);
@@ -174,7 +176,7 @@ public class CaseAlert extends CommonBean{
 					UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
 							.lookup(UserProfileService.class.getName());
 					UserProfile toUserProfile = userProfileService.findById(cr.gettUserId());
-					newCase.setAssignee(toUserProfile);
+					newCase.setAssignee(toUserProfile.getUserId());
 				}else{
 					newCase.setAssignee(null);
 				}
@@ -187,10 +189,10 @@ public class CaseAlert extends CommonBean{
 					newCase.setStatus(cr.getNextAction());
 
 				if(status.equalsIgnoreCase(CaseStatus.REJECTED))
-					newCase.setAssignee(newCase.getSender());
+					newCase.setAssignee(newCase.getsenderId());
 			}
 
-			newCase.setCreator(currentUser);
+			newCase.setCreator(currentUser.getUserId());
 
 			caseService.update(newCase);
 		} catch (Throwable e) {

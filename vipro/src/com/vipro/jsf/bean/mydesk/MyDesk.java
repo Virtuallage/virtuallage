@@ -198,67 +198,67 @@ public class MyDesk extends CommonBean implements Serializable {
 //		return "/secured/mydesk/newCase";
 //	}
 
-	public String insertCase() {
-		try {
-			AuthUser user = getCurrentUser();
-			UserProfile currentUser = user.getUserProfile();
-			newCase.setCreator(currentUser);
+//	public String insertCase() {
+//		try {
+//			AuthUser user = getCurrentUser();
+//			UserProfile currentUser = user.getUserProfile();
+//			newCase.setCreator(currentUser);
+//
+//			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+//					.lookup(UserProfileService.class.getName());
+//			UserProfile toUserProfile = userProfileService.findById(Long
+//					.parseLong(toUserId));
+//
+////			newCase.setAssignee(toUserProfile);
+//
+//			newCase.setStatus(CaseStatus.NEW);
+//
+//			caseService.insert(newCase);
+//			
+//			toUserId=null;
+//			existingCustomer=null;
+//			
+//			
+//			refreshMyCases();
+//			addInfoMessage("My Work Queue", "Case is created.");
+//
+//		} catch (Throwable e) {
+//			addErrorMessage("My Work Queue", "Error Saving Case. "
+//					+ e.getMessage());
+//			return null;
+//		}
+//		return "/secured/mydesk/listCase";
+//	}
 
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-					.lookup(UserProfileService.class.getName());
-			UserProfile toUserProfile = userProfileService.findById(Long
-					.parseLong(toUserId));
-
-//			newCase.setAssignee(toUserProfile);
-
-			newCase.setStatus(CaseStatus.NEW);
-
-			caseService.insert(newCase);
-			
-			toUserId=null;
-			existingCustomer=null;
-			
-			
-			refreshMyCases();
-			addInfoMessage("My Work Queue", "Case is created.");
-
-		} catch (Throwable e) {
-			addErrorMessage("My Work Queue", "Error Saving Case. "
-					+ e.getMessage());
-			return null;
-		}
-		return "/secured/mydesk/listCase";
-	}
-
-	public String updateCase() {
-		try {
-			AuthUser authUser = getCurrentUser();
-			UserProfile currentUserProfile = authUser.getUserProfile();
-			
-			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
-					.lookup(UserProfileService.class.getName());
-			if (StringUtils.hasText(toUserId)) {
-				UserProfile toUserProfile = userProfileService.findById(Long
-						.parseLong(toUserId));
-		
-				newCase.setAssignee(toUserProfile);
-			}
-			
-			caseService.update(newCase);
-			activity.setActionTime(new Date());
-			activity.setActionBy(currentUserProfile);
-			caseService.insertActivity(activity);
-			
-			toUserId=null;
-			existingCustomer=null;
-			
-			refreshMyCases();
-			addInfoMessage("My Work Queue", "Case is updated.");
-		} catch (Throwable t ) {
-			addErrorMessage("Work Queue", t.getMessage());
-		}
-		return "/secured/mydesk/listCase";
-	}
+//	public String updateCase() {
+//		try {
+//			AuthUser authUser = getCurrentUser();
+//			UserProfile currentUserProfile = authUser.getUserProfile();
+//			
+//			UserProfileService userProfileService = (UserProfileService) SpringBeanUtil
+//					.lookup(UserProfileService.class.getName());
+//			if (StringUtils.hasText(toUserId)) {
+//				UserProfile toUserProfile = userProfileService.findById(Long
+//						.parseLong(toUserId));
+//		
+//				newCase.setAssignee(toUserProfile);
+//			}
+//			
+//			caseService.update(newCase);
+//			activity.setActionTime(new Date());
+//			activity.setActionBy(currentUserProfile);
+//			caseService.insertActivity(activity);
+//			
+//			toUserId=null;
+//			existingCustomer=null;
+//			
+//			refreshMyCases();
+//			addInfoMessage("My Work Queue", "Case is updated.");
+//		} catch (Throwable t ) {
+//			addErrorMessage("Work Queue", t.getMessage());
+//		}
+//		return "/secured/mydesk/listCase";
+//	}
 
 	public String openCase() {
 		try {
@@ -309,6 +309,13 @@ public class MyDesk extends CommonBean implements Serializable {
 		return null;
 	}
 	
-
+	public String getUserName(Long userId) {
+		UserProfileService userService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
+		UserProfile user = userService.findById(userId);
+		
+		String fullName = user.getName();
+		
+		return fullName;
+	}
 
 }

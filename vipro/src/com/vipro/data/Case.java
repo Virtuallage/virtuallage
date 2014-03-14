@@ -12,10 +12,10 @@ import java.util.Set;
 public class Case implements java.io.Serializable {
 
 	private Long caseId;
-	private UserProfile sender;
+	private Long senderId;
 	private Long customerId;
-	private UserProfile creator;
-	private UserProfile assignee;
+	private Long creator;
+	private Long assignee;
 	private Date creationDate;
 	private String caseType;
 	private String subject;
@@ -31,20 +31,20 @@ public class Case implements java.io.Serializable {
 	public Case() {
 	}
 
-	public Case(UserProfile userProfileBySenderId, Long customerId,
-			UserProfile creator, UserProfile assignee) {
-		this.sender = sender;
+	public Case(Long SenderId, Long customerId,
+			Long creator, Long assignee) {
+		this.senderId = senderId;
 		this.customerId = customerId;
 		this.creator = creator;
 		this.assignee = assignee;
 	}
 
-	public Case(UserProfile sender, Long customerId, UserProfile creator,
-			UserProfile assignee, Date creationDate, String caseType,
+	public Case(Long senderId, Long customerId, Long creator,
+			Long assignee, Date creationDate, String caseType,
 			String subject, Long projectId, Long accountId, String groupId,
 			Date dueDate, boolean notification, String status,
 			Set caseActivities) {
-		this.sender = sender;
+		this.senderId = senderId;
 		this.customerId = customerId;
 		this.creator = creator;
 		this.assignee = assignee;
@@ -76,27 +76,27 @@ public class Case implements java.io.Serializable {
 		this.customerId = customerId;
 	}
 
-	public UserProfile getSender() {
-		return sender;
+	public Long getsenderId() {
+		return senderId;
 	}
 
-	public void setSender(UserProfile sender) {
-		this.sender = sender;
+	public void setsenderId(Long senderId) {
+		this.senderId = senderId;
 	}
 
-	public UserProfile getCreator() {
+	public Long getCreator() {
 		return creator;
 	}
 
-	public void setCreator(UserProfile creator) {
+	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
 
-	public UserProfile getAssignee() {
+	public Long getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(UserProfile assignee) {
+	public void setAssignee(Long assignee) {
 		this.assignee = assignee;
 	}
 
