@@ -33,8 +33,8 @@ My Work Queue
            <h:outputText value="#{c.caseId}"/>
         </p:column>  
   
-        <p:column headerText="Sender" sortBy="#{c.sender.name}">  
-            <h:outputText value="#{c.sender.name}"/>
+        <p:column headerText="Sender" sortBy="#{myDesk.getUserName(c.senderId)}">  
+            <h:outputText value="#{myDesk.getUserName(c.senderId)}"/>
         </p:column>  
   
         <p:column headerText="Category" sortBy="#{myDesk.getCodeDesc('CY',c.caseType)}">  
