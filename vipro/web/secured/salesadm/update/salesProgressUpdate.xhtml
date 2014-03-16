@@ -60,7 +60,7 @@ Sales Update
  
  			</h:panelGroup>
     			<p:outputLabel value="Financing"/>
-   			<p:selectOneMenu id="purchaseType" value="#{propertyUnitUpdate.account.purchaseType}" style="width:200px" disabled="false">
+   			<p:selectOneMenu id="purchaseType" value="#{propertyUnitUpdate.account.purchaseType}" style="width:200px" disabled="#{propertyUnitUpdate.disableLoanFields == 'Y'}">
 						<f:selectItems value="#{propertyUnitUpdate.purchaseTypes}" />
 			</p:selectOneMenu>
 
@@ -69,15 +69,15 @@ Sales Update
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<p:outputLabel value="Bank Name"/>
-   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px" disabled="#{propertyUnitUpdate.account.purchaseType == 'PUCSH'}">  
+   			<p:selectOneMenu id="bankName" value="#{propertyUnitUpdate.account.panelBankId}" style="width:200px" disabled="#{propertyUnitUpdate.disableLoanFields == 'Y'}">  
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 			</p:selectOneMenu>
    			
    			<p:outputLabel value=""/>
    			<p:outputLabel value=""/>
    			<p:outputLabel value="Loan Amount"/>
-			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off" disabled="#{propertyUnitUpdate.account.purchaseType == 'PUCSH'}"
-   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
+			<h:inputText value="#{propertyUnitUpdate.account.loanAmount}" style="width:200px" autocomplete="off" disabled="#{propertyUnitUpdate.disableLoanFields == 'Y'}"
+   				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;" >
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>	
 
@@ -146,11 +146,11 @@ Sales Update
 
    			<p:outputLabel value="Financier"/>
 			<h:panelGroup>
-   				<p:selectOneMenu id="financierId" value="#{propertyUnitUpdate.account.financierId}" style="width:200px">  
+   				<p:selectOneMenu id="financierId" value="#{propertyUnitUpdate.account.financierId}" style="width:200px" disabled="#{propertyUnitUpdate.disableLoanFields == 'Y'}" >  
 						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
 						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState" listener="#{propertyUnitUpdate.updateLOAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
-				<p:commandButton id="loAddAddressButton" value="Add" title="Add New Financier" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifySelectedIndex(propertyUnitUpdate.account.financierId)}" icon="ui-icon-plus" />
+				<p:commandButton id="loAddAddressButton" value="Add" title="Add New Financier" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifyAddButton(propertyUnitUpdate.disableLoanFields)}" icon="ui-icon-plus" />
    			</h:panelGroup>
    			<p:outputLabel value="Verified by"/>
    			<h:panelGroup>

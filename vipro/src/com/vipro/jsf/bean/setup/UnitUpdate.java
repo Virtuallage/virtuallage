@@ -16,12 +16,17 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.component.inputtext.InputText;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.CommonConst;
 import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.data.Account;
+import com.vipro.data.Customer;
 import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.service.AccountService;
+import com.vipro.service.CustomerService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
@@ -53,6 +58,7 @@ public class UnitUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> viewList;
 	
 	private ProjectInventory inventory;
+	private Account account;
 	private Long projectId;
 	private String unitNo;
 	private Project project;
@@ -248,53 +254,94 @@ public class UnitUpdate extends CommonBean implements Serializable{
 	public String saveUnit() {
 
 		if (!inventory.getPropertyStatus().equals(CurrentStatus)) {
-			if (!CurrentStatus.equals(PropertyUnitStatusConst.STATUS_CANCELLED)) {
-				addErrorMessage("Warning!",	"You can only change the status unless the unit is Cancelled.");
+			if (CurrentStatus.equals(PropertyUnitStatusConst.STATUS_CANCELLED) ||
+				CurrentStatus.equals(PropertyUnitStatusConst.STATUS_LOCKED)) {
+				if (!inventory.getPropertyStatus().equalsIgnoreCase(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
+					addErrorMessage("WARNING!",	"You can only change the status to AVAILABLE.");
+					inventory.setPropertyStatus(CurrentStatus);
+					return selectUnit();	
+				}
+			} else {
+				addErrorMessage("WARNING!",	"You Cannot change the Status if the Status is Not CANCELLED or LOCKED.");
 				inventory.setPropertyStatus(CurrentStatus);
 				return selectUnit();
 			}
 		}
 		
-		if (!inventory.getPurchasePrice().equals(PurchasePrice)) {
-			if (!CurrentStatus.equals(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
-				addErrorMessage("Warning!",	"You Cannot Change the Selling Price if the Status is NOT Available.");
+		String updAccount = "N"; 
+		if (!inventory.getPurchasePrice().equals(PurchasePrice) || 
+			!inventory.getDiscountAmount().equals(DiscountAmount) || 
+			!inventory.getDiscountRate().equals(DiscountRate)) {
+			if (CurrentStatus.equals(PropertyUnitStatusConst.STATUS_CANCELLED) ||
+				CurrentStatus.equals(PropertyUnitStatusConst.STATUS_LOCKED)) {
+				addErrorMessage("WARNING!",	"You Cannot change the pricing if the Status is CANCELLED or LOCKED");
 				inventory.setPurchasePrice(PurchasePrice);
 				return selectUnit();
+			} else {
+				updAccount = "Y";
 			}
+		} else {
+			updAccount = "Y";
 		}
 
-		if (!inventory.getDiscountAmount().equals(DiscountAmount)) {
-			if (!CurrentStatus.equals(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
-				addErrorMessage("Warning!",	"You Cannot Change the Discount Amount if the Status is NOT Available.");
-				inventory.setDiscountAmount(DiscountAmount);
-				return selectUnit();
-			}
-		}
-		
-		if (!inventory.getDiscountRate().equals(DiscountRate)) {
-			if (!CurrentStatus.equals(PropertyUnitStatusConst.STATUS_AVAILABLE)) {
-				addErrorMessage("Warning!",	"You Cannot Change the Discount Rate if the Status is NOT Available.");
-				inventory.setDiscountRate(DiscountRate);
-				return selectUnit();
-			}
-		}
-		
-		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
-		
-		if (!inventory.getDiscountRate().equals(new BigDecimal(0.00))) {
+		BigDecimal zeroAmount = new BigDecimal(0);		
+		if (inventory.getDiscountRate().compareTo(zeroAmount) > 0) {
 			inventory.setDiscountAmount(inventory.getPurchasePrice().multiply(inventory.getDiscountRate()).divide(new BigDecimal(100)));
 		} 
+		inventory.setNetPrice(inventory.getPurchasePrice().subtract(inventory.getDiscountAmount()));
 
-		inventory.setNetPrice(inventory.getPurchasePrice().subtract(inventory.getDiscountAmount()));		
-		inventory.setStatusChangeDate(new Date());
+		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());			
 		AuthUser user = getCurrentUser();
 		inventory.setChangeUserId(user.getUserProfile().getUserId());
 
+		inventory.setStatusChangeDate(new Date());
 		inventoryService.update(inventory);
-			
-		addInfoMessage("Information", "Property Unit Update Completed Successfully.");
+
+// check and update account data, if any
+		if (updAccount == "Y") {	
+			AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+			List<Account> accounts = accountService.findByProjectInventoryId(inventory.getInventoryId());
+
+			for (Account account : accounts) {
+				if (account.getAccountId() == null) {
+					addErrorMessage("WARNING!",	"There is no sales recorded for this unit, please contact your System Support (Account = Null). ");
+					inventory.setPurchasePrice(PurchasePrice);
+					inventory.setDiscountAmount(DiscountAmount);				
+					inventory.setDiscountRate(DiscountRate);
+					inventoryService.update(inventory);
+					return selectUnit();
+				} else {
+					if (!account.getAccountStatus().equalsIgnoreCase(CommonConst.STATUS_CANCELLED) &&
+						!account.getAccountStatus().equalsIgnoreCase(CommonConst.STATUS_ACTIVE)	) {
+						account.setPurchasePrice(inventory.getPurchasePrice());
+						account.setDiscountedAmount(inventory.getDiscountAmount());
+						account.setNetPrice(inventory.getNetPrice());
+						account.setChangedBy(user.getUserProfile().getUserId());
+						account.setDateChanged(new Date());		
+						accountService.update(account);
+					} else {
+						addErrorMessage("WARNING!",	"This unit has been billed, you cannot change Price/Discount.");
+						inventory.setPurchasePrice(PurchasePrice);
+						inventory.setDiscountAmount(DiscountAmount);				
+						inventory.setDiscountRate(DiscountRate);
+						inventoryService.update(inventory);
+						return selectUnit();
+					}
+				}
+			}	
+		}
+
+		addInfoMessage("INFORMATION", "Property Unit Update Completed Successfully.");
 		return listUnits();
 		
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 }

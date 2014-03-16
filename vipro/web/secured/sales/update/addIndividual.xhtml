@@ -39,8 +39,11 @@ Add Individuals
 					<f:selectItems value="#{salesUpdate.listIdType}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="ID No" for="idno"/>
-				<p:inputText id="idno" value="#{salesUpdate.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
-
+				<h:panelGroup>
+					<p:inputText id="idno" value="#{salesUpdate.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+					<p:outputLabel value=" ie. 880808-08-8888" />
+				</h:panelGroup>
+				
 				<p:outputLabel value="Race" for="race"/>
 				<p:selectOneMenu id="race" value="#{salesUpdate.individual.race}" required="true">
 						<f:selectItems value="#{salesUpdate.listRace}"/>
@@ -91,9 +94,15 @@ Add Individuals
 				</p:selectOneMenu>
 
 				<p:outputLabel value="House Tel No" for="tel"/>
+				<h:panelGroup>
 				<p:inputText  id="tel" value="#{salesUpdate.individual.houseTelNo}" maxlength="15" autocomplete="off"/>
+					<p:outputLabel value=" ie. 0368683322" />
+				</h:panelGroup>
 				<p:outputLabel value="Mobile No" for="mobile"/>
-				<p:inputText  id="mobile" value="#{salesUpdate.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+				<h:panelGroup>
+					<p:inputText  id="mobile" value="#{salesUpdate.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+					<p:outputLabel value=" ie. 0123558888" />
+				</h:panelGroup>
 
 				<p:outputLabel value="Office Tel No" for="offtel"/>
 				<p:inputText id="offtel" value="#{salesUpdate.individual.officeTelNo}" maxlength="15" autocomplete="off"/>

@@ -194,14 +194,26 @@
 									disabled="true" />
 
 								<p:outputLabel id="stateTxt" value="State" />
-								
+							
 								<p:selectOneMenu id="stateTypeList2"
 									value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"
 									requiredMessage="Please Select Any State" required="false"
 									style="width:100%" for="stateTxt" disabled="true">
 									<f:selectItems value="#{progressiveBillingUnitSearchBean.statesSIList}" />
 								</p:selectOneMenu>								
+
+								<p:outputLabel id="countryTxt" value="Country" />					
+								<p:selectOneMenu id="countryTypeList2"
+									value="#{progressiveBillingUnitSearchBean.corrDTO.address.country}"
+									requiredMessage="Please Select Any Country" required="false"
+									style="width:100%" for="countryTxt" disabled="true">
+									<f:selectItems value="#{progressiveBillingUnitSearchBean.countrySIList}" />
+								</p:selectOneMenu>	
+
+								<p:outputLabel value="" />						
 								<p:outputLabel value="" />
+								<p:outputLabel value="" />
+								
 								<p:commandButton id="selectDTOBtn2"
 									update=":dialogAddresForm:dialogAddressPanel"
 									oncomplete="dlg2.show()" title="Change Address"
@@ -479,8 +491,13 @@
 											<f:selectItems value="#{progressiveBillingUnitSearchBean.statesSIList}" />
 										</p:selectOneMenu>
 
-										<p:outputLabel value="" />
-										<p:outputLabel value="" />
+										<p:outputLabel id="countryTxt2" value="Country" />
+										<p:selectOneMenu id="countryTypeList2"
+											value="#{addressDto.address.country}"
+											requiredMessage="Please Select Any Country" required="true"
+											style="width:100%" for="countryTxt2">
+											<f:selectItems value="#{progressiveBillingUnitSearchBean.countrySIList}" />
+										</p:selectOneMenu>
 
 										<p:outputLabel value="Email" />
 										<p:inputText value="#{addressDto.customer.email}" />
