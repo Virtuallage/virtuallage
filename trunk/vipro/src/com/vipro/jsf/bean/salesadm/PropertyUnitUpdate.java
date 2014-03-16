@@ -52,6 +52,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.component.inputtext.InputText;
 import org.springframework.util.StringUtils;
 
 import java.io.FileInputStream;
@@ -130,13 +131,15 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private BusinessPartner partner;
 	private String partnerDocumentType;
 	private String tradingName;
+	private String disableLoanFields;
 	
 	private String customerType = "0";
 	private Customer borrower1;
 	private Customer borrower2;
 	private CommandButton borrower1Button;
 	private CommandButton borrower2Button;
-		
+	private CommandButton loAddAddressButton;
+	
 	@PostConstruct
 	public void init() {
 		purchaseTypes = CodeUtil.getCodes("PU");
@@ -157,6 +160,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		
 		borrower1Button = new CommandButton();
 		borrower2Button = new CommandButton();
+		loAddAddressButton = new CommandButton();
 	}
 	
 	public CommandButton getBorrower1Button() {
@@ -642,7 +646,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	}
 
 	public String listAccounts(){
-
+		
 		listProject = CodeUtil.getProjectAsItems();
 		
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
@@ -733,7 +737,27 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			borrower2Button.setStyle("display: none");
 		}
 		
+		if (account.getPurchaseType() != null) {
+			if (account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH)) {
+				disableLoanFields = "N"; 
+			} else {
+				if (account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+					disableLoanFields = "N"; 
+				} else {
+// Disable changes on Loan information once the first billing is issued.
+					if (!account.getLoanAmount().equals(new BigDecimal(0.00)) && account.getFinancierId() != null && account.getAccountStatus().equalsIgnoreCase(CommonConst.STATUS_ACTIVE)){
+						disableLoanFields = "Y";
+					} else {
+						disableLoanFields = "N";
+					}				
+				}
+			} 
+		} else {
+			disableLoanFields = "N";
+		}
+		
 		return "salesProgressUpdate";
+		
 	}
 	
 	public void updateSPAAddress() {
@@ -916,6 +940,14 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			}
 		} catch (Exception ex)
 		{
+		}
+		return display;
+	}
+	
+	public String verifyAddButton(String button) {
+		String display = "none";
+		if(button.equalsIgnoreCase("N")) {
+			display = "inline";
 		}
 		return display;
 	}
@@ -1444,6 +1476,22 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 	public void setListSpecial(List<SelectItem> listSpecial) {
 		this.listSpecial = listSpecial;
+	}
+
+	public String getDisableLoanFields() {
+		return disableLoanFields;
+	}
+
+	public void setDisableLoanFields(String disableLoanFields) {
+		this.disableLoanFields = disableLoanFields;
+	}
+
+	public CommandButton getLoAddAddressButton() {
+		return loAddAddressButton;
+	}
+
+	public void setLoAddAddressButton(CommandButton loAddAddressButton) {
+		this.loAddAddressButton = loAddAddressButton;
 	}
 
 }

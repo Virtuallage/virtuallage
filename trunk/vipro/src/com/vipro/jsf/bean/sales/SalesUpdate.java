@@ -18,6 +18,7 @@ import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.DocumentTypeConst;
+import com.vipro.constant.PurchaseTypeConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.UserGroupConst;
@@ -57,6 +58,7 @@ import java.io.OutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat; 
 import javax.servlet.ServletContext;  
 import javax.servlet.http.HttpServletResponse;
@@ -118,6 +120,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 	private Customer individual;
 	private Customer company;
 	private Address address;
+	private String disableLoanFields;
 		
 	@PostConstruct
 	public void init() {
@@ -595,7 +598,23 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		if (account.getCustomer5() != null) {
 			availableCustomers.add(account.getCustomer5());
 		}
-
+		
+		disableLoanFields = "N";
+		if (account.getPurchaseType() != null) {
+			if (account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) || account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+				if (account.getAccountStatus().equalsIgnoreCase(CommonConst.STATUS_ACTIVE)) {
+					disableLoanFields = "Y";
+				} else {
+					disableLoanFields = "N"; 
+				}
+			} else {
+// Disable changes on Loan information once the first billing is issued.
+				if (account.getLoVerifiedBy() != null) {
+					disableLoanFields = "Y";
+				}			
+			} 
+		}
+		
 		return "salesProgressUpdate";
 	}
 	
@@ -1063,6 +1082,14 @@ public class SalesUpdate extends CommonBean implements Serializable{
 
 	public void setListSalesPersons(List<SelectItem> listSalesPersons) {
 		this.listSalesPersons = listSalesPersons;
+	}
+
+	public String getDisableLoanFields() {
+		return disableLoanFields;
+	}
+
+	public void setDisableLoanFields(String disableLoanFields) {
+		this.disableLoanFields = disableLoanFields;
 	}
 
 }

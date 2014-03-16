@@ -61,7 +61,7 @@ Sales Update
  	   			</h:outputLabel>			
   			</h:panelGroup>
     		<p:outputLabel value="Financing"/>
-   			<p:selectOneMenu id="purchaseType" value="#{salesUpdate.account.purchaseType}" style="width:200px">
+   			<p:selectOneMenu id="purchaseType" value="#{salesUpdate.account.purchaseType}" style="width:200px" disabled="#{salesUpdate.disableLoanFields == 'Y'}" >
 						<f:selectItems value="#{salesUpdate.purchaseTypes}" />
 			</p:selectOneMenu>
 
@@ -70,7 +70,7 @@ Sales Update
    				<f:convertNumber type="currency" currencySymbol="" />
    			</h:inputText>
    			<p:outputLabel value="Bank Name"/>
-   			<p:selectOneMenu id="bankName" value="#{salesUpdate.account.panelBankId}" style="width:200px">  
+   			<p:selectOneMenu id="bankName" value="#{salesUpdate.account.panelBankId}" style="width:200px" disabled="#{salesUpdate.disableLoanFields == 'Y'}">  
 						<f:selectItems value="#{salesUpdate.listPanelBanks}" />
 			</p:selectOneMenu>
 
@@ -79,7 +79,7 @@ Sales Update
 				<f:selectItems value="#{salesUpdate.propertyTypes}" />
 			</p:selectOneMenu>
   			<p:outputLabel value="Loan Amount"/>
-			<h:inputText value="#{salesUpdate.account.loanAmount}" style="width:200px" autocomplete="off" 
+			<h:inputText value="#{salesUpdate.account.loanAmount}" style="width:200px" autocomplete="off" disabled="#{salesUpdate.disableLoanFields == 'Y'}"
    				onkeypress="if(event.which == 46) return true; if(event.which &lt; 48 || event.which &gt; 57) return false;">
    				<f:convertNumber pattern="#,###,##0.00"  />
    			</h:inputText>	

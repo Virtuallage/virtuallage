@@ -62,6 +62,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	private String ttlAmount;
 	private List<SelectItem> projects;
 	private List<SelectItem> statesSIList;
+	private List<SelectItem> countrySIList;
 	private ProgressiveBillingUnitSeachDTO selectedDto = new ProgressiveBillingUnitSeachDTO();
 	private List<ProgressiveBillingUnitSeachDTO> dtoList;
 	private Address corrAddress = new Address();
@@ -520,6 +521,18 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 
 	public void setStatesSIList(List<SelectItem> statesSIList) {
 		this.statesSIList = statesSIList;
+	}
+	
+	public List<SelectItem> getCountrySIList() {
+		if(countrySIList == null){
+			countrySIList = CodeUtil.getCodes(CodeConst.COUNTRY);
+		}
+		
+		return countrySIList;
+	}
+
+	public void setCountrySIList(List<SelectItem> countrySIList) {
+		this.countrySIList = countrySIList;
 	}
 
 	public BigDecimal getPercent() {
