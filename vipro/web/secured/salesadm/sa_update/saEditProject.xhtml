@@ -109,16 +109,23 @@ Project Information Update
 		
 		<p:outputLabel value="Total Units"/>
 		<p:inputText value="#{projectUpdate.totalUnits}" maxlength="10" disabled="true" style="text-align:right"/>
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+		
 		<p:outputLabel value="Billing Schedule" for="billingModelCode"/>
 		<p:inputText id="billingModelCode" value="#{projectUpdate.project.billingModelCode}" required="true" style="text-transform:uppercase" maxlength="10" disabled="false"/>
-
 		<p:outputLabel value="Late Payment Interest (% per year)"/>
 		<pe:inputNumber value="#{projectUpdate.project.latePymtIntRate}" minValue="0" maxValue="100" emptyValue="0" decimalPlaces="2" style="text-align:right"/> 
+
 		<p:outputLabel value="Late Payment Fee"/>
 		<pe:inputNumber value="#{projectUpdate.project.latePymtFee}" maxValue="999999999.99" emptyValue="0" decimalPlaces="2" style="text-align:right"/>
-
 		<p:outputLabel value="Billing Due Days"/>
 		<pe:inputNumber value="#{projectUpdate.project.dueDays}" minValue="0" maxValue="999" emptyValue="0" decimalPlaces="0" style="text-align:right"/> 
+
+		<p:outputLabel value="Advance Days to Bill"/>
+		<pe:inputNumber value="#{projectUpdate.project.daysToBill}" minValue="0" maxValue="999" emptyValue="0" decimalPlaces="0" style="text-align:right"/> 
+		<p:outputLabel value="Billing on Off Day" for="offDayBill"/>
+		<p:inputText id="offDayBill" value="#{projectUpdate.project.includeOffDay}" maxlength="1" autocomplete="off" disabled="false"/>
 
 	</h:panelGrid>
 	

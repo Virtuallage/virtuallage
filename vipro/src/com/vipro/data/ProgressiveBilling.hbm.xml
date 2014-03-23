@@ -18,7 +18,7 @@
             <column name="seq_no" precision="2" scale="0" />
         </property>
         <property name="stageNo" type="string">
-            <column name="stage_no" length="5" />
+            <column name="stage_no" length="10" />
         </property>
         <property name="stageDescription" type="string">
             <column name="stage_description" length="120" />

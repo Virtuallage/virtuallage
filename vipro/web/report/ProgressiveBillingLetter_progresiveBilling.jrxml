@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_progresiveBilling" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_progresiveBilling" pageWidth="550" pageHeight="520" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e1b3bbcc-07d9-4fdc-8cd8-0cfcde156868">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="290"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="invoice_no" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -34,101 +34,122 @@ and progressive_billing.`account_id`= $P{account_id}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="19" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="Float" x="0" y="0" width="285" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+				<reportElement uuid="ffab7077-b16d-4122-986b-b340dc2b955d" positionType="Float" x="0" y="0" width="313" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Particulars of Billing]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="300" y="0" width="60" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+				<reportElement uuid="e1a6170d-4fdb-4d63-935c-8f6b9aac399e" positionType="Float" x="313" y="0" width="70" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Percentage % ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="369" y="0" width="141" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+				<reportElement uuid="181c97ad-dd77-4c8b-b218-40f812dcdcc0" positionType="Float" x="383" y="0" width="151" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Amount(RM)]]></text>
+				<text><![CDATA[Amount (RM)]]></text>
 			</staticText>
 			<line>
-				<reportElement positionType="Float" x="1" y="14" width="519" height="1"/>
+				<reportElement uuid="8bf7ae40-80fe-438d-ba73-978d73f0974c" positionType="Float" x="0" y="14" width="534" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="1" y="0" width="64" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+				<reportElement uuid="cc4bf491-766c-47ef-bbc0-48cc6e9e3f16" positionType="Float" x="0" y="0" width="64" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_no}+" "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{progressive_billing_stage_no}+" "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="67" y="0" width="220" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+				<reportElement uuid="ec0325ea-fe66-46ed-bce4-723084823d76" positionType="Float" x="64" y="0" width="249" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{progressive_billing_stage_description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{progressive_billing_stage_description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00 &apos;%&apos;" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="300" y="0" width="60" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+				<reportElement uuid="5b643071-acdd-4993-b9df-1bcdfa71aa40" positionType="Float" x="313" y="0" width="70" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="369" y="0" width="141" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+				<reportElement uuid="f417ed07-b3e9-4c30-aed9-b84faa2539e8" positionType="Float" x="383" y="0" width="151" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{progressive_billing_amount_billed}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{progressive_billing_amount_billed}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
-		<band height="56">
+		<band height="48">
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="369" y="10" width="141" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+				<reportElement uuid="a7c5719a-cbf4-4561-9cd1-d532ab92d4bb" positionType="Float" x="384" y="11" width="150" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_Amount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Total_Amount}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="376" y="24" width="141" height="1"/>
+				<reportElement uuid="ec887d78-6c1a-446a-a66c-4892b1b042fa" positionType="Float" x="424" y="24" width="110" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="110" y="31" width="410" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+				<reportElement uuid="4d03f8f8-4c64-42c2-a811-3d7a6a4c2cd3" positionType="Float" x="122" y="35" width="412" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{amountInWords}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{amountInWords}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="6" y="31" width="101" height="12"/>
+				<reportElement uuid="5e1c8cd9-1b0b-409e-8235-6b0b78652d2c" positionType="Float" x="0" y="35" width="106" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ringgit Malaysia:  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="225" y="10" width="135" height="12"/>
+				<reportElement uuid="b792e629-ebe4-4be6-8906-3fc81d1899ee" positionType="Float" x="0" y="11" width="383" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Due for Payment]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4d7abcb4-a6df-4b07-89da-892cbb3d913b" positionType="Float" x="424" y="10" width="110" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d6b3c4a4-9423-49fa-bac2-2ba6fb40d621" positionType="Float" x="0" y="25" width="534" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Amount Due for Payment   ]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
-			<line>
-				<reportElement positionType="Float" x="376" y="7" width="141" height="1"/>
-			</line>
+			<staticText>
+				<reportElement uuid="882e7299-c014-4b00-9e18-9a1cba475213" positionType="Float" x="106" y="35" width="16" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0b397ee0-cca8-4e3a-8714-c084b2f9ca2e" positionType="Float" x="0" y="0" width="534" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>

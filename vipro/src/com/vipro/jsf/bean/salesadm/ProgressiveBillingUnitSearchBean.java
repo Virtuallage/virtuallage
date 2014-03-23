@@ -32,6 +32,7 @@ import com.vipro.constant.CodeConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.JasperConst;
 import com.vipro.constant.ProgressiveBillingConst;
+import com.vipro.constant.PurchaseTypeConst;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Project;
@@ -409,22 +410,47 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	}
 	
 	public void onConfirmBill(){
-		 RequestContext context = RequestContext.getCurrentInstance();
-		 boolean success = true;
+		
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+
+		BigDecimal billedTodate = new BigDecimal(0.00);
+		if (getSelectedDto().getAccount().getAccountBalance() != null) {
+			if (getSelectedDto().getAccount().getTotalPaymentTodate() == null) {
+				billedTodate = getSelectedDto().getAccount().getAccountBalance();
+			} else {
+				billedTodate = getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate());
+			}
+		}
+		
+		BigDecimal purchaserAmount = new BigDecimal(0.00);
+		if (getSelectedDto().getAccount().getLoanAmount() == null) {		
+			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice();			
+		} else {
+			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
+		}
 		
 		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
-		
-		
+
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
-			pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+			if (getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) || getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+				pbService.printProgressiveLetterCash(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+			} else {
+				if (billedTodate.compareTo(purchaserAmount) >= 0) {
+					pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+				} else {
+					pbService.printProgressiveLetterPurchaser(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+				}
+			}
 		}
+		
 		//Update StageDTOList from DB.
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
 				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
-
-		CommonBean.addInfoMessage("Progressive Billing Processed Successfully.","The Progressive Billing letter is ready for printing.");
+		
+		CommonBean.addInfoMessage("Progressive Billing Processed Successfully.","The Progressive Billing letter is now ready for printing.");
 		
 		getSelectedStageDtoList().clear();
 		setInvoiceNo(new Long(01));

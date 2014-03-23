@@ -20,6 +20,12 @@
         <property name="dueDays" type="java.lang.Integer">
             <column name="due_days" />
         </property>
+        <property name="daysToBill" type="java.lang.Integer">
+            <column name="days_to_bill" />
+        </property>
+        <property name="includeOffDay" type="string">
+            <column name="include_off_day" length="1" />
+        </property>       
         <property name="landProprietorId" type="java.lang.Long">
             <column name="land_proprietor_id" />
         </property>

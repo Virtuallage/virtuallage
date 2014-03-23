@@ -20,6 +20,8 @@ public class Project implements java.io.Serializable {
 	private Institution institution;
 	private Long developerId;
 	private Integer dueDays;
+	private Integer daysToBill;
+	private String includeOffDay;
 	private Long landProprietorId;
 	private String developerName;
 	private String landProprietorName;
@@ -600,6 +602,22 @@ public class Project implements java.io.Serializable {
 
 	public void setPicId(Long picId) {
 		this.picId = picId;
+	}
+
+	public Integer getDaysToBill() {
+		return daysToBill;
+	}
+
+	public void setDaysToBill(Integer daysToBill) {
+		this.daysToBill = daysToBill;
+	}
+
+	public String getIncludeOffDay() {
+		return includeOffDay;
+	}
+
+	public void setIncludeOffDay(String includeOffDay) {
+		this.includeOffDay = includeOffDay;
 	}
 
 	
