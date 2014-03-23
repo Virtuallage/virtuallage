@@ -178,6 +178,58 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
+	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo, String accountId){
+		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setProjectId(projectId);
+		reportDTO.setReportFormatId(new Long(3l));
+		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
+		try {
+			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
+			
+			 File baseFolder = new File(path);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
+			
+			rs.generateProgressBillingLetterCash(reportDTO,invoiceNo,path);
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo, String accountId){
+		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setProjectId(projectId);
+		reportDTO.setReportFormatId(new Long(3l));
+		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
+		try {
+			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
+			
+			 File baseFolder = new File(path);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
+			
+			rs.generateProgressBillingLetterPurchaser(reportDTO,invoiceNo,path);
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
@@ -274,8 +326,19 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 					new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT},stageNos, tx.getTransactionId());
 			
 			
-			//4. Create a new progressive billing record for every selected stages
-			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), userProfile);
+			//4. Create a new progressive billing record for every selected stages		
+			Date billDate = new Date();
+			if (selectedDto.getProject().getDaysToBill() != null) {
+				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
+			} else {
+				selectedDto.getProject().setDaysToBill(0);
+			}
+			
+			Date currentDate = new Date();
+			Long daysDiff = (billDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000);
+			Integer daysToBill = daysDiff.intValue();
+			
+			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
 			Account a = new Account();
 			a.setAccountId(act.getAccountId());
 
@@ -283,7 +346,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				ProgressiveBilling pb = new ProgressiveBilling();
 				pb.setAccount(a);
 				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));
-				pb.setDateBilled(new Date());
+				pb.setDateBilled(billDate);
 				pb.setInvoiceNo(invoiceNo);
 				pb.setPercentage(stageDto.getBillingModel().getBillingPercentage());
 				pb.setStageNo(stageDto.getBillingModel().getStage());
@@ -337,7 +400,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			BillingModelStageDTO sumDTO = stageDtoList.remove(stageDtoList.size() -1 );
 			
 			boolean isFirstSeqNo = false;
-
+			
 			TransactionHistory tx = new TransactionHistory();
 			tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
 			tx.setTransactionDescription("PROGRESSIVE BILLING");
@@ -349,23 +412,43 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			tx.setTransactionDate(new Date());				
 			transactionHistoryDao.insert(tx);
 			
-			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), userProfile);
+			Date billDate = new Date();
+			if (selectedDto.getProject().getDaysToBill() != null) {
+				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
+			} else {
+				selectedDto.getProject().setDaysToBill(0);
+			}
+
+			Date currentDate = new Date();
+			Long daysDiff = (billDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000);
+			Integer daysToBill = daysDiff.intValue();
+					
+			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
 			
 			for (BillingModelStageDTO stageDto : stageDtoList) {
-				if(stageDto.getBillingModel().getBillingSeq().equals(1) ){
-					isFirstSeqNo = true;
-				}
 				ProgressiveBilling pb = new ProgressiveBilling();
 				pb.setAccount(a);
 				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));
-				pb.setDateBilled(new Date());
 				pb.setInvoiceNo(invoiceNo);
 				pb.setPercentage(stageDto.getBillingModel().getBillingPercentage());
 				pb.setStageNo(stageDto.getBillingModel().getStage());
 				pb.setStageDescription(stageDto.getBillingModel().getDescription());
 				pb.setSeqNo(new Byte(stageDto.getBillingModel().getBillingSeq().toString()));
 				pb.setStatus(ProgressiveBillingConst.PB_STATUS_BILL);
-				pb.setDueDate(dueDate); 
+
+				if(stageDto.getBillingModel().getBillingSeq().equals(1) ){
+					isFirstSeqNo = true;
+					if (act.getSpaStampedDate() == null) {
+						pb.setDateBilled(new Date());
+						pb.setDueDate(new Date()); 
+					} else {
+						pb.setDateBilled(act.getSpaStampedDate());
+						pb.setDueDate(act.getSpaStampedDate()); 
+					}
+				} else {
+					pb.setDateBilled(billDate);
+					pb.setDueDate(dueDate); 
+				}
 				
 				progressiveBillingDao.insert(pb);
 			}// end for
@@ -440,9 +523,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 						act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(paymentAmount));
 					}else{
 						act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(tempRemdeptionAmount));
-					}
-						
-					
+					}				
 				}
 				accountDao.update(act);
 		//	}//end if
@@ -484,23 +565,75 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		return refNo;
 	}
 	
-	private Date getDueDate(int dueDays,UserProfile profile){
+	private Date getDueDate(int dueDays, int daysToBill, String includeOffDay, UserProfile profile) {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_YEAR, dueDays);
-
-		boolean isOffDay = false;
 		
-		do {
-			if(isOffDay){
+		if (includeOffDay.compareTo("Y") == 0) {
+			cal.add(Calendar.DAY_OF_YEAR, (daysToBill + dueDays - 1));
+		} else {
+			cal.add(Calendar.DAY_OF_YEAR, (daysToBill + 1));	
+
+			boolean isOffDay = false;
+			Integer countDays = 1;
+			do {
+				isOffDay = institutionDao.isOffDay(cal.get(Calendar.DAY_OF_WEEK), profile.getInstitution().getInstitutionId());
+				if(!isOffDay){
+					isOffDay = institutionDao.isHoliday(cal.getTime(), profile.getInstitution().getInstitutionId());
+				}
+				if(!isOffDay){
+					countDays++;
+				} 
 				cal.add(Calendar.DAY_OF_YEAR, 1);
-			}
-			isOffDay = institutionDao.isOffDay(cal.get(Calendar.DAY_OF_WEEK), profile.getInstitution().getInstitutionId());
-			if(!isOffDay){
-				isOffDay = institutionDao.isHoliday(cal.getTime(), profile.getInstitution().getInstitutionId());
-			}
-		} while (isOffDay);  
+			} while (countDays < dueDays); 			
+			
+			boolean isOffDay2 = false;
+			do {
+				if(isOffDay2){
+					cal.add(Calendar.DAY_OF_YEAR, 1);
+				}
+				isOffDay2 = institutionDao.isOffDay(cal.get(Calendar.DAY_OF_WEEK), profile.getInstitution().getInstitutionId());
+				if(!isOffDay2){
+					isOffDay2 = institutionDao.isHoliday(cal.getTime(), profile.getInstitution().getInstitutionId());
+				}
+			} while (isOffDay2); 	
+		}
+		
+//		if (includeOffDay.compareTo("N") == 0) {
+//			boolean isOffDay = false;
+//			do {
+//				if(isOffDay){
+//					cal.add(Calendar.DAY_OF_YEAR, 1);
+//				}
+//				isOffDay = institutionDao.isOffDay(cal.get(Calendar.DAY_OF_WEEK), profile.getInstitution().getInstitutionId());
+//				if(!isOffDay){
+//					isOffDay = institutionDao.isHoliday(cal.getTime(), profile.getInstitution().getInstitutionId());
+//				}
+//			} while (isOffDay); 			
+//		}
+
 		Date dueDate = cal.getTime(); 		
 		return dueDate;
+	}
+	
+	private Date getBillDate(int daysToBill, String includeOffDay, UserProfile profile) {
+		Calendar cal2 = Calendar.getInstance();
+		cal2.add(Calendar.DAY_OF_YEAR, daysToBill);
+		
+		if (includeOffDay.compareTo("N") == 0) {			
+			boolean isOffDay = false;
+			do {
+				if(isOffDay){
+					cal2.add(Calendar.DAY_OF_YEAR, 1);
+				}
+				isOffDay = institutionDao.isOffDay(cal2.get(Calendar.DAY_OF_WEEK), profile.getInstitution().getInstitutionId());
+				if(!isOffDay){
+					isOffDay = institutionDao.isHoliday(cal2.getTime(), profile.getInstitution().getInstitutionId());
+				}
+			} while (isOffDay); 			
+		}
+		
+		Date billDate = cal2.getTime(); 
+		return billDate;
 	}
 
 	/***************************** Getter/Setters *****************************/

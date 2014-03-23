@@ -35,5 +35,8 @@ public interface ProgressiveBillingService {
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
 	
 	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId);
+	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo,String accountId);
+	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo,String accountId);
+
 	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo,String accountId);
 }

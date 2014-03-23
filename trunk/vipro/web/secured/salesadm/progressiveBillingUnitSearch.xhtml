@@ -127,8 +127,8 @@
 				</h:form>
 
 
-				<h:form id="dialogForm">
-					<p:outputPanel id="dialogPanel">
+				<h:form id="dialogForm" >
+					<p:outputPanel id="dialogPanel" >
 						<p:dialog id="tDialog" header="Progressive Billing"
 							widgetVar="dlg" modal="true" height="550" width="950"
 							showEffect="explode" hideEffect="explode">
@@ -146,7 +146,6 @@
 								<p:inputText
 									value="#{progressiveBillingUnitSearchBean.selectedDto.project.projectCode}"
 									disabled="true" />
-
 
 								<p:outputLabel value="Purchaser Name" />
 								<p:inputText
@@ -170,55 +169,47 @@
 								<p:inputText
 									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine1}"
 									disabled="true" />
-								<p:outputLabel value="Billing Address 2" />
-								<p:inputText
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine2}"
-									disabled="true" />
-
-								<p:outputLabel value="Billing Address 3" />
-								<p:inputText
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine3}"
-									disabled="true" />
-								<p:outputLabel value="Billing Address 4" />
-								<p:inputText
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.addressLine4}"
-									disabled="true" />
-
-								<p:outputLabel value="Post Code" />
-								<p:inputText
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.postcode}"
-									disabled="true" style="width:50%" />
-								<p:outputLabel value="City" />
-								<p:inputText
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.city}"
-									disabled="true" />
-
-								<p:outputLabel id="stateTxt" value="State" />
-							
-								<p:selectOneMenu id="stateTypeList2"
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"
-									requiredMessage="Please Select Any State" required="false"
-									style="width:100%" for="stateTxt" disabled="true">
-									<f:selectItems value="#{progressiveBillingUnitSearchBean.statesSIList}" />
-								</p:selectOneMenu>								
-
-								<p:outputLabel id="countryTxt" value="Country" />					
-								<p:selectOneMenu id="countryTypeList2"
-									value="#{progressiveBillingUnitSearchBean.corrDTO.address.country}"
-									requiredMessage="Please Select Any Country" required="false"
-									style="width:100%" for="countryTxt" disabled="true">
-									<f:selectItems value="#{progressiveBillingUnitSearchBean.countrySIList}" />
-								</p:selectOneMenu>	
-
-								<p:outputLabel value="" />						
 								<p:outputLabel value="" />
-								<p:outputLabel value="" />
-								
 								<p:commandButton id="selectDTOBtn2"
 									update=":dialogAddresForm:dialogAddressPanel"
 									oncomplete="dlg2.show()" title="Change Address"
 									actionListener="#{progressiveBillingUnitSearchBean.onChangeAddress}"
 									value="Change Address" />
+
+								<p:outputLabel value="Selling Price" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.purchasePrice}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Discounted Price" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.netPrice}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+
+								<p:outputLabel value="Loan Amount" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.loanAmount}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+															
+								<p:outputLabel value="Billed Todate" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.accountBalance.add(progressiveBillingUnitSearchBean.selectedDto.account.totalPaymentTodate)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+
+								<p:outputLabel value="Purchaser Amount" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.purchasePrice.subtract(progressiveBillingUnitSearchBean.selectedDto.account.loanAmount)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Paid Todate" />
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.totalPaymentTodate}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								
 							</h:panelGrid>
 							<h:inputHidden value="#{progressiveBillingUnitSearchBean.corrDTO.address.state}"/>
 							<p:dataTable id="stagesDT" rowIndexVar="index" var="dto" value="#{progressiveBillingUnitSearchBean.selectedDto.stageDtoList}" scrollable="false" scrollHeight="180" >
