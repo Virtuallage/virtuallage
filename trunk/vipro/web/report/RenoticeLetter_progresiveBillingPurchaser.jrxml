@@ -11,12 +11,6 @@
 	<parameter name="account_id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
 	</parameter>
-	<parameter name="financierPortion" class="java.math.BigDecimal">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="purchaserPortion" class="java.math.BigDecimal">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      progressive_billing.`stage_no` AS progressive_billing_stage_no,
@@ -27,8 +21,8 @@
 FROM
      `progressive_billing` progressive_billing
 WHERE
-     progressive_billing.`status` in ("PBBIL", "PBPAI")
-AND  progressive_billing.`account_id` = $P{account_id}]]>
+     progressive_billing.`invoice_no` LIKE $P{invoice_no}
+and progressive_billing.`account_id` = $P{account_id}]]>
 	</queryString>
 	<field name="progressive_billing_stage_no" class="java.lang.String"/>
 	<field name="progressive_billing_stage_description" class="java.lang.String"/>
@@ -45,18 +39,11 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 	<columnHeader>
 		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="243ab6e9-cbe6-4fda-9fc0-aca985ce9ce3" positionType="Float" x="64" y="0" width="243" height="13"/>
+				<reportElement uuid="243ab6e9-cbe6-4fda-9fc0-aca985ce9ce3" positionType="Float" x="64" y="0" width="303" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Particulars of Billing]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="ecc91f12-25c2-4e8f-9fb6-cda08b9d19a2" positionType="Float" x="367" y="0" width="60" height="13"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Percentage % ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="bd22e0be-284a-4ebf-b114-6bcb8d9543cb" positionType="Float" x="427" y="0" width="107" height="13"/>
@@ -76,7 +63,7 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<text><![CDATA[Stage]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3a67c881-91f1-4e05-9c33-f979f3352ad4" positionType="Float" x="307" y="0" width="60" height="13"/>
+				<reportElement uuid="3a67c881-91f1-4e05-9c33-f979f3352ad4" positionType="Float" x="367" y="0" width="60" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
@@ -94,18 +81,11 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<textFieldExpression><![CDATA[$F{progressive_billing_stage_no}+" "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5af0fcd9-8319-4141-bc33-e9a182db1d5d" positionType="Float" x="64" y="0" width="243" height="13"/>
+				<reportElement uuid="5af0fcd9-8319-4141-bc33-e9a182db1d5d" positionType="Float" x="64" y="0" width="303" height="13"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{progressive_billing_stage_description}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="###0.00 &apos;%&apos;" isBlankWhenNull="true">
-				<reportElement uuid="33a7458b-79ee-4e02-bfa5-6b6386e0249d" positionType="Float" x="367" y="0" width="60" height="13"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{progressive_billing_percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="c30b297c-0c3e-4d8b-aeaa-b42c8f753e02" positionType="Float" x="427" y="0" width="107" height="13"/>
@@ -115,7 +95,7 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<textFieldExpression><![CDATA[$F{progressive_billing_amount_billed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="1c59da06-cb7f-4de7-85dc-8e4b36600154" positionType="Float" x="307" y="0" width="60" height="13"/>
+				<reportElement uuid="1c59da06-cb7f-4de7-85dc-8e4b36600154" positionType="Float" x="367" y="0" width="60" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
@@ -124,7 +104,7 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 		</band>
 	</detail>
 	<summary>
-		<band height="98">
+		<band height="111">
 			<textField isStretchWithOverflow="true" pattern="RM #,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="47633e10-44ba-4b1e-8f82-dabd6e56c79c" positionType="Float" x="427" y="11" width="107" height="13"/>
 				<textElement textAlignment="Right">
@@ -157,35 +137,49 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{purchaserPortion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{buyerPortion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fe97c6cc-f267-4596-9068-f3e111b55567" positionType="Float" x="295" y="48" width="12" height="13"/>
+				<reportElement uuid="147301c6-8af1-48f0-b8b9-6c33491e96e9" positionType="Float" x="295" y="48" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="f1af7f0b-d49b-4e47-ad74-23b971711056" positionType="Float" x="307" y="48" width="120" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Amount}.subtract( $P{buyerPortion} )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ea96a270-de65-486b-8940-40506aa31aab" positionType="Float" x="105" y="48" width="190" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Renotice Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fe97c6cc-f267-4596-9068-f3e111b55567" positionType="Float" x="295" y="61" width="12" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b81e90f8-9e1e-4c6b-9684-ea465b6ef1bc" positionType="Float" x="105" y="48" width="190" height="13"/>
+				<reportElement uuid="b81e90f8-9e1e-4c6b-9684-ea465b6ef1bc" positionType="Float" x="105" y="61" width="190" height="13"/>
 				<textElement verticalAlignment="Top">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Amount Due From Financier]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="01935267-715f-4f26-8ba9-16a2953202de" positionType="Float" x="307" y="48" width="120" height="13"/>
+				<reportElement uuid="01935267-715f-4f26-8ba9-16a2953202de" positionType="Float" x="307" y="61" width="120" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{financierPortion}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
-				<reportElement uuid="9c3e7bbd-05f6-49c0-854e-90daee9b4f60" positionType="Float" x="0" y="71" width="534" height="27"/>
-				<textElement textAlignment="Justified" markup="none">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Kindly remit to us the above Amount Due failing which interest of ("+$P{latePaymentRate}+"%) p.a will be charged on the outstanding amount to the purchaser(s) in accordance to the Sale and Purchase Agreement."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Total_Amount}.subtract( $P{buyerPortion} )]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="eea8f797-dc2e-4868-b4cb-5d5e07cb00f5" positionType="Float" x="0" y="0" width="534" height="10"/>
@@ -216,26 +210,47 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3248a173-8706-498b-8e98-2f7edac21abf" positionType="Float" x="0" y="48" width="105" height="13"/>
+				<reportElement uuid="50691426-1625-4ef5-9ea2-17b9128680c8" positionType="Float" x="0" y="48" width="105" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f335b8be-1d8d-4dfb-96e4-e0cf962d153f" positionType="Float" x="427" y="48" width="107" height="13"/>
+				<reportElement uuid="3248a173-8706-498b-8e98-2f7edac21abf" positionType="Float" x="0" y="61" width="105" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9c7aa665-e902-4e0c-b88f-fa504a6e0d6d" positionType="Float" x="0" y="61" width="534" height="10"/>
+				<reportElement uuid="96868b45-9115-4adb-9a6d-2419d5bcabeb" positionType="Float" x="427" y="48" width="107" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="f335b8be-1d8d-4dfb-96e4-e0cf962d153f" positionType="Float" x="427" y="61" width="107" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9c7aa665-e902-4e0c-b88f-fa504a6e0d6d" positionType="Float" x="0" y="74" width="534" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement uuid="98a7f080-61d5-4ded-a1d4-a518731f201c" positionType="Float" x="0" y="84" width="534" height="27"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kindly remit to us the above Amount Due failing which interest of ("+$P{latePaymentRate}+"%) p.a will be charged on the outstanding amount to the purchaser(s) in accordance to the Sale and Purchase Agreement."]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

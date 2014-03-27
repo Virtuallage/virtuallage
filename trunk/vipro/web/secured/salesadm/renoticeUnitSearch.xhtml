@@ -170,43 +170,48 @@
 								<p:inputText
 									value="#{renoticeUnitSearchBean.corrDTO.address.addressLine1}"
 									disabled="true" />
-								<p:outputLabel value="Billing Address 2" />
-								<p:inputText
-									value="#{renoticeUnitSearchBean.corrDTO.address.addressLine2}"
-									disabled="true" />
-
-								<p:outputLabel value="Billing Address 3" />
-								<p:inputText
-									value="#{renoticeUnitSearchBean.corrDTO.address.addressLine3}"
-									disabled="true" />
-								<p:outputLabel value="Billing Address 4" />
-								<p:inputText
-									value="#{renoticeUnitSearchBean.corrDTO.address.addressLine4}"
-									disabled="true" />
-
-								<p:outputLabel value="Post Code" />
-								<p:inputText
-									value="#{renoticeUnitSearchBean.corrDTO.address.postcode}"
-									disabled="true" style="width:50%" />
-								<p:outputLabel value="City" />
-								<p:inputText
-									value="#{renoticeUnitSearchBean.corrDTO.address.city}"
-									disabled="true" />
-
-								<p:outputLabel id="stateTxt" value="State" />
-								
-								<p:selectOneMenu id="stateTypeList2"
-									value="#{renoticeUnitSearchBean.corrDTO.address.state}"
-									requiredMessage="Please Select Any State" required="false"
-									style="width:100%" for="stateTxt" disabled="true">
-									<f:selectItems value="#{renoticeUnitSearchBean.statesSIList}" />
-								</p:selectOneMenu>								
 								<p:outputLabel value="" />
 								<p:commandButton id="selectDTOBtn2"
 									update=":dialogAddresForm:dialogAddressPanel"
 									oncomplete="dlg2.show()" title="Change Address"
 									actionListener="#{renoticeUnitSearchBean.onChangeAddress}"
 									value="Change Address" />
+
+								<p:outputLabel value="Selling Price" />
+								
+								
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.purchasePrice}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Discounted Price" />
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.netPrice}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+
+								<p:outputLabel value="Loan Amount" />
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.loanAmount}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>			
+								<p:outputLabel value="Billed Todate" />
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.accountBalance.add(renoticeUnitSearchBean.selectedDto.account.totalPaymentTodate)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+
+								<p:outputLabel value="Purchaser Portion" />
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.purchasePrice.subtract(renoticeUnitSearchBean.selectedDto.account.loanAmount)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Paid Todate" />
+								<h:inputText value="#{renoticeUnitSearchBean.selectedDto.account.totalPaymentTodate}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+
 							</h:panelGrid>
 							<h:inputHidden value="#{renoticeUnitSearchBean.corrDTO.address.state}"/>
 							<p:dataTable id="stagesDT" rowIndexVar="index" var="dto" value="#{renoticeUnitSearchBean.selectedDto.stageDtoList}" scrollable="false" scrollHeight="180" >
