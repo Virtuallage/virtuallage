@@ -38,5 +38,5 @@ public interface ProgressiveBillingService {
 	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo,String accountId);
 	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo,String accountId);
 
-	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo,String accountId);
+	public void printRenoticeLetter(String amount, Long projectId, String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion);
 }

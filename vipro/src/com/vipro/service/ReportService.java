@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.math.BigDecimal;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -18,5 +19,5 @@ public interface ReportService {
 	public void generateProgressBillingLetterReport(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
 	public void generateProgressBillingLetterCash(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
 	public void generateProgressBillingLetterPurchaser(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
-	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
+	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo,String path,BigDecimal financierPortion,BigDecimal purchaserPortion)throws SQLException, JRException,FileNotFoundException,IOException ;
 }

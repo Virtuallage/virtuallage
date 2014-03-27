@@ -112,21 +112,21 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		
 		List<BillingModel> list = billingModelDao.findByBillingModelCode(billingModelCode);
 		
-		for (BillingModel billingModel : list) {
+		for (BillingModel billingModel : list) { 
 			BillingModelStageDTO dto = new BillingModelStageDTO();
 			dto.setBillingModel(billingModel);
 			
 			ProgressiveBilling pb = progressiveBillingDao.findByStageAndAccountId(accountId, billingModel.getStage());
 			if(pb != null){
 				if(pb.getDatePaid() != null){
-					dto.setStatus(ProgressiveBillingConst.STAGE_PAID);					
+					dto.setStatus(ProgressiveBillingConst.STAGE_PAID);		
 				}else if(pb.getDateBilled() != null){
-					dto.setStatus(ProgressiveBillingConst.STAGE_BILLED);	
+					dto.setStatus(ProgressiveBillingConst.STAGE_BILLED);
 				}else{
 					dto.setStatus(ProgressiveBillingConst.STAGE_PENDING);
 				}
 				
-				if(pb.getInvoiceNo()!= null && pb.getInvoiceNo().startsWith("RB")){ // if it is Renoticed.
+				if(pb.getInvoiceNo()!= null && pb.getInvoiceNo().startsWith("RI")){ // if it is Renoticed.
 					dto.setStatus(ProgressiveBillingConst.STAGE_RENOTICED);
 					
 				}
@@ -230,7 +230,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
-	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId){
+	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
@@ -245,7 +245,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				 baseFolder.mkdirs();
 				}
 			
-			rs.generateRenoticeLetterReport(reportDTO,invoiceNo,path);
+			rs.generateRenoticeLetterReport(reportDTO,invoiceNo,path,financierPortion,purchaserPortion);
 		} catch (SQLException e) {	
 			e.printStackTrace();
 		} catch (JRException e) {
@@ -287,14 +287,20 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			//2. New Payment Reversal Transaction History Record
 			//2.a
 			BigDecimal tempTotalAmountPaid = BigDecimal.ZERO;
+			int firstStageSeqNo = 0;
+			BigDecimal firstStagePercentage = BigDecimal.ZERO;
 			String[] stageNos = new String[stageDtoList.size()];
 			int i = 0;
-			for (BillingModelStageDTO stageDto : stageDtoList) {				
+			for (BillingModelStageDTO stageDto : stageDtoList) {
 				if(ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT.equals(stageDto.getProgressiveBilling().getStatus())){
 					tempTotalAmountPaid = tempTotalAmountPaid.add(stageDto.getProgressiveBilling().getAmountBilled());
 				}
 				stageNos[i++]= stageDto.getBillingModel().getStage();// building string for query.
-			}
+				if (i == 1) {
+					firstStageSeqNo = stageDto.getBillingModel().getBillingSeq();
+					firstStagePercentage = stageDto.getBillingModel().getBillingPercentage();
+				}
+			}		
 			
 			if (tempTotalAmountPaid.compareTo(BigDecimal.ZERO) > 0 ) {	
 				//2.b
@@ -308,7 +314,6 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				txPayRev.setAccount(aa);
 				txPayRev.setTransactionDate(new Date());				
 				transactionHistoryDao.insert(txPayRev);	
-				
 				
 				//2.c
 				act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().subtract(tempTotalAmountPaid));
@@ -328,21 +333,21 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			
 			//4. Create a new progressive billing record for every selected stages		
 			Date billDate = new Date();
-			if (selectedDto.getProject().getDaysToBill() != null) {
-				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
-			} else {
-				selectedDto.getProject().setDaysToBill(0);
-			}
+//			if (selectedDto.getProject().getDaysToBill() != null) {
+//				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
+//			} else {
+//				selectedDto.getProject().setDaysToBill(0);
+//			}
 			
 			Date currentDate = new Date();
 			Long daysDiff = (billDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000);
-			Integer daysToBill = daysDiff.intValue();
-			
+			Integer daysToBill = daysDiff.intValue();		
 			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
+			
 			Account a = new Account();
 			a.setAccountId(act.getAccountId());
-
-			for (BillingModelStageDTO stageDto : stageDtoList) {				
+			
+			for (BillingModelStageDTO stageDto : stageDtoList) {
 				ProgressiveBilling pb = new ProgressiveBilling();
 				pb.setAccount(a);
 				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));

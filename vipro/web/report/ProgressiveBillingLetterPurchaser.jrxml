@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter" pageWidth="595" pageHeight="842" columnWidth="534" leftMargin="43" rightMargin="18" topMargin="54" bottomMargin="18" uuid="c5dfab51-e53c-4efc-8a36-d2e80136dbb9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="63"/>
-	<property name="ireport.y" value="344"/>
+	<property name="ireport.y" value="379"/>
 	<property name="ireport.layers" value="##Sat Jan 18 00:06:39 PKT 2014\nlayer.0.name=Background\nlayer.0.visible=true\nlayer.0.id=0"/>
 	<parameter name="projectId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
@@ -524,7 +524,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
-		<band height="46">
+		<band height="69">
 			<staticText>
 				<reportElement uuid="1841b5da-8fee-4f80-92bc-c15b25a6c99e" positionType="Float" x="0" y="0" width="534" height="13"/>
 				<textElement verticalAlignment="Top">
@@ -533,7 +533,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<text><![CDATA[Your faithfully,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ea2aa375-d4df-43d3-bd01-b5e8597f7a3c" positionType="Float" x="0" y="36" width="534" height="10"/>
+				<reportElement uuid="ea2aa375-d4df-43d3-bd01-b5e8597f7a3c" positionType="Float" x="0" y="59" width="534" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -547,7 +547,7 @@ AND t.invoice_no Like $P{invoiceNo}
 				<textFieldExpression><![CDATA[$F{companyName2}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="9e120ac1-7d88-40aa-ada4-51eef3a086e6" positionType="Float" x="0" y="26" width="534" height="10"/>
+				<reportElement uuid="9e120ac1-7d88-40aa-ada4-51eef3a086e6" positionType="Float" x="0" y="49" width="534" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -559,6 +559,20 @@ AND t.invoice_no Like $P{invoiceNo}
 					<font size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[for]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c0932642-fd32-4700-8012-96896c781ac3" positionType="Float" x="0" y="36" width="534" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[This document is computer generated, no signature is required.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e29b70a9-288f-4ace-a2ad-afcdf6e16040" positionType="Float" x="0" y="26" width="534" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[This document is computer generated, no signature is required.]]></text>
 			</staticText>
 		</band>
 		<band height="13">

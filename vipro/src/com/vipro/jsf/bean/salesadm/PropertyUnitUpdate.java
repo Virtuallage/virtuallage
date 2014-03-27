@@ -693,7 +693,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	}
 	
 	public String selectAccount() {
-
+		
 		availableCustomers = new ArrayList<Customer>();
 		if (account.getCustomer() != null) {
 			availableCustomers.add(account.getCustomer());
@@ -955,7 +955,6 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	public String update() {
 
 		if (account != null) {
-			
 //			if(account.getPurchaseType() == null || account.getPurchaseType().length() == 0) {
 //				addErrorMessage("Warning!", "Please inform Sales Staff to update Financing Information.");
 //				return "salesProgressUpdate";
@@ -963,19 +962,18 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			
 			if (!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) && 
 			   !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-				System.err.println("Selected"+account.getPurchaseType());
 				if(account.getPanelBankId() == null || account.getPanelBankId() == 0) {
 					addErrorMessage("Bank Name is required",
 							"Please select bank name.");
 					return "salesProgressUpdate";
 				}
-				
 				double loanAmount = account.getLoanAmount() != null? account.getLoanAmount().doubleValue() : 0;
 				if(loanAmount == 0) {
 					addErrorMessage("Load Amount is required",
 							"Please key in load amount.");
 					return "salesProgressUpdate";
 				}
+
 			}
 			
 			if (account.getSpaSignedDate() == null || account.getSpaSolicitorId() == 0) {
@@ -983,7 +981,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 						"Please select SPA Signed Date and Solicitor from the dropdown list.");
 				return "salesProgressUpdate";
 			}
-			
+
 			if(!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) && 
 			   !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
 				if (account.getLoSignedDate() == null || account.getFinancierId() == 0) {
@@ -991,6 +989,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 							"Please select LO Signed Date and Financier from the dropdown list.");
 					return "salesProgressUpdate";
 				}
+
 // request to removed by Alvin on 4/3/14				
 //				if (account.getLaSignedDate() == null || account.getLaSolicitorId() == 0) {
 //					addErrorMessage("Invalid LA Solicitor",
@@ -1003,6 +1002,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 							"Please EMPTY LO Signed Date.");
 					return "salesProgressUpdate";
 				}
+
 				if (account.getLoSignedDate() != null) {
 					addErrorMessage("LO Informaion is not required",
 							"Please EMPTY LO Accepted Date.");
@@ -1019,6 +1019,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 					return "salesProgressUpdate";
 				}
 				
+
 				if (account.getLaSignedDate() != null) {
 					addErrorMessage("LA Informaion is not required",
 							"Please EMPTY LA Signed Date.");
@@ -1039,22 +1040,21 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 							"Please EMPTY LA Ref No.");
 					return "salesProgressUpdate";
 				}
-				
+
 			}
 			
 			if(borrower1 != null) {
 				account.setBorrowerId1(borrower1.getCustomerId());
 			}
+
 			
 			if(borrower2 != null) {
 				account.setBorrowerId2(borrower2.getCustomerId());
 			}
-			
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
 			
 			accountService.update(account);
 			addInfoMessage("Sales Update", "Updated Successfully.");
-
 			
 			return listAccounts();
 		} else {

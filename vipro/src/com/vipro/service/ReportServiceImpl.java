@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -390,11 +391,14 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 	}  
 	
 	@Override
-	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
+	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo,String path, BigDecimal financierPortion, BigDecimal purchaserPortion)throws SQLException, JRException, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("projectId", reportDTO.getProjectId());
 		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
 		params.put("ttlAmount", reportDTO.getInstitutionName());
+		params.put("financierPortion", financierPortion);
+		params.put("purchaserPortion", purchaserPortion);
+		
 		String reportPath = JasperConst.RENOTICE_LETTER_REPORT;
 		
 		String extension = "";

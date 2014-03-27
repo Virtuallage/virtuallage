@@ -71,7 +71,8 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	private List<BillingModelStageDTO> selectedStageDtoList = new ArrayList<BillingModelStageDTO>();
 	private Long invoiceNo = new Long(1l);
 	private StreamedContent fileToDownload;
-	
+	private BigDecimal financierPortion = new BigDecimal(0.00);
+	private BigDecimal purchaserPortion = new BigDecimal(0.00);
 	
 	public RenoticeUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
@@ -378,44 +379,95 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	/************** Renotice Actions *********************/
 	public void onRenoticeAction() {
 		 boolean isRightSelection = false;	
-		 
+		 boolean isCleared = true;
+		 boolean firstTime = true;
+		 int firstSeq = 0;
+		 BigDecimal firstAmount = new BigDecimal(0);
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
 		 BillingModelStageDTO sumDTO = new BillingModelStageDTO();
 		 BigDecimal amountTtl = new BigDecimal(0);
 		 BigDecimal percentTtl = new BigDecimal(0);
-		for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
+		 BigDecimal stageTtl = new BigDecimal(0);	
+		 
+		 if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
+			 CommonBean.addInfoMessage("WARNING","Loan Amount is Empty! Please key in the Loan Amount before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
+			 CommonBean.addInfoMessage("WARNING","Loan Amount is Missing! Please key in the Loan Amount before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getFinancierId() == null) {
+			 CommonBean.addInfoMessage("WARNING","Financier is Missing! Please select the Financier before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getFinancierRef() == null) {
+			 CommonBean.addInfoMessage("WARNING","LO Reference is Missing! Please key in the Financier Reference before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getLaSolicitorId() == null) {
+			 CommonBean.addInfoMessage("WARNING","LA Solicitor is Missing! Please select the LA Solicitor before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getBorrowerId1() == null) {
+			 CommonBean.addInfoMessage("WARNING","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");
+			 isCleared = false;
+		 }
+		 		 
+		 purchaserPortion = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
+		 
+		 if (isCleared) {
+			 for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
 //			if(!dto.isBillMe() && (ProgressiveBillingConst.STAGE_BILLED.equals(dto.getStatus()) || ProgressiveBillingConst.STAGE_PAID.equals(dto.getStatus()))){
 //				isRightSelection = false;
 //				break;
-//			}			
-			if(dto.isBillMe()){
+//			}
+				 if (firstTime) {
+					 stageTtl = stageTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
+				 }
+				 if(dto.isBillMe()){
+					 if (firstTime) {
+						 firstSeq = dto.getBillingModel().getBillingSeq();
+						 firstAmount = getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent);
+						 firstTime = false;
+					 }
+					 if (dto.getBillingModel().getBillingSeq() == 1) {
+						 CommonBean.addInfoMessage("WARNING","You cannot perform Renotice on 1st Stage! Please choose other stages.");
+						 break;
+					 }
 					 isRightSelection = true;
 					 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
 					 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
-					 // System.out.println("==============is True for :"+dto.getBillingModel().getStage());
-					 selectedStageDtoList.add(dto);				 
+					 selectedStageDtoList.add(dto);
+				 }		 
+			 }
+			 if (purchaserPortion.compareTo(stageTtl) >= 0) {
+				 CommonBean.addInfoMessage("WARNING","Loan Amount is insufficient to cover for this stage! Please choose later stage or increase the Loan Amount.");
+				 isRightSelection = false;
+			 } else {
+				 financierPortion = stageTtl.subtract(purchaserPortion);
+				 if (financierPortion.compareTo(firstAmount) > 0) {
+					 CommonBean.addInfoMessage("WARNING","Loan Amount is more than this stage amount! Please choose earlier stage or reduce the Loan Amount.");
+					 isRightSelection = false;					 
+				 }
 			 }
 			 
-		}
-		if(!selectedStageDtoList.isEmpty() && isRightSelection){
-			sumDTO.getBillingModel().setBillingPercentage(percentTtl);
-			sumDTO.getProgressiveBilling().setAmountBilled(amountTtl);
-			sumDTO.getBillingModel().setDescription("Total");
-			selectedStageDtoList.add(sumDTO);
-			this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
+			 if(!selectedStageDtoList.isEmpty() && isRightSelection){
+				 sumDTO.getBillingModel().setBillingPercentage(percentTtl);
+				 sumDTO.getProgressiveBilling().setAmountBilled(amountTtl);
+				 sumDTO.getBillingModel().setDescription("Total");
+				 selectedStageDtoList.add(sumDTO);
+				 this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
 			
-			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));
-			
-		}
-		
-		if(!isRightSelection){
-			CommonBean.addInfoMessage("Invalid Renotice Selection","Please select all paid & billed for renotice billing");
-		}else{
-			RequestContext.getCurrentInstance().execute("dlg3.show()");
-		}
-		
+				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));			
+			 }
+
+			 if(isRightSelection){
+				 RequestContext.getCurrentInstance().execute("dlg3.show()");
+			 }
+		 }	
 	}
 	
 	public void onCancelBillConfirmation(){
@@ -430,16 +482,16 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	}
 	
 	public void onConfirmBill(){
-		 RequestContext context = RequestContext.getCurrentInstance();
-		 boolean success = true;
+
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 		
 		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
 		
-		
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
-			pbService.printRenoticeLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+			pbService.printRenoticeLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), financierPortion, purchaserPortion);
 		}
 		//Update StageDTOList from DB.
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
@@ -566,7 +618,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	}
 
 	public String getInvoiceNoFormated() {
-		return String.format("RB%04d%n", this.invoiceNo);
+		return String.format("RI%04d%n", this.invoiceNo);
 	}
 	
 	public void setInvoiceNo(Long invoiceNo) {
