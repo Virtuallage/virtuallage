@@ -143,7 +143,7 @@ AND  progressive_billing.`account_id` = $P{account_id}]]>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Buyer Portion]]></text>
+				<text><![CDATA[Purchaser Portion]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="f9cd292b-60eb-4e7c-bbea-d449c8a96081" positionType="Float" x="295" y="35" width="12" height="13"/>

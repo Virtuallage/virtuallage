@@ -969,8 +969,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				}
 				double loanAmount = account.getLoanAmount() != null? account.getLoanAmount().doubleValue() : 0;
 				if(loanAmount == 0) {
-					addErrorMessage("Load Amount is required",
-							"Please key in load amount.");
+					addErrorMessage("Loan Amount is required",
+							"Please key in the Loan Amount.");
 					return "salesProgressUpdate";
 				}
 

@@ -72,7 +72,9 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	private Long invoiceNo = new Long(1l);
 	private StreamedContent fileToDownload;
 	private BigDecimal financierPortion = new BigDecimal(0.00);
+	private BigDecimal financierStageAmount = new BigDecimal(0.00);	
 	private BigDecimal purchaserPortion = new BigDecimal(0.00);
+	private BigDecimal purchaserStageAmount = new BigDecimal(0.00);
 	
 	public RenoticeUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
@@ -446,11 +448,13 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 				 CommonBean.addInfoMessage("WARNING","Loan Amount is insufficient to cover for this stage! Please choose later stage or increase the Loan Amount.");
 				 isRightSelection = false;
 			 } else {
-				 financierPortion = stageTtl.subtract(purchaserPortion);
-				 if (financierPortion.compareTo(firstAmount) > 0) {
+				 financierStageAmount = stageTtl.subtract(purchaserPortion);
+				 if (financierStageAmount.compareTo(firstAmount) > 0) {
 					 CommonBean.addInfoMessage("WARNING","Loan Amount is more than this stage amount! Please choose earlier stage or reduce the Loan Amount.");
 					 isRightSelection = false;					 
 				 }
+				 purchaserStageAmount = firstAmount.subtract(financierStageAmount);
+				 financierPortion = amountTtl.subtract(purchaserStageAmount);
 			 }
 			 
 			 if(!selectedStageDtoList.isEmpty() && isRightSelection){
@@ -487,7 +491,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 		
-		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
+		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), purchaserStageAmount);
 		
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
