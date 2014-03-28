@@ -50,11 +50,18 @@
         <property name="overdueInterest" type="big_decimal">
             <column name="overdue_interest" precision="7" />
         </property>
+        <property name="PurchaserPortion" type="big_decimal">
+            <column name="purchaser_portion" precision="9" />
+        </property>
+        <property name="PurchaserInvoiceNo" type="string">
+            <column name="purchaser_invoice_no" precision="10" />
+        </property>
         <property name="status" type="string">
             <column name="status" length="5" />
         </property>
         <property name="partialPaidAmount" type="big_decimal">
             <column name="partial_paid_amount" precision="9" />
         </property>
+
     </class>
 </hibernate-mapping>

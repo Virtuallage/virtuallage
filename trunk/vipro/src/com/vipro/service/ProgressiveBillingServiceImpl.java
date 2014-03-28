@@ -258,7 +258,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	@Override
 	@Transactional
 	public boolean generateRenoticesForSelectedStages(
-			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto) {
+			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, BigDecimal purchaserStageAmount) {
 		boolean isSucessfull = false;
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			Account act = selectedDto.getAccount();		
@@ -287,8 +287,9 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			//2. New Payment Reversal Transaction History Record
 			//2.a
 			BigDecimal tempTotalAmountPaid = BigDecimal.ZERO;
+			BigDecimal selectedStagesAmount = BigDecimal.ZERO;
 			int firstStageSeqNo = 0;
-			BigDecimal firstStagePercentage = BigDecimal.ZERO;
+			String firstStageInvoiceNo = "";
 			String[] stageNos = new String[stageDtoList.size()];
 			int i = 0;
 			for (BillingModelStageDTO stageDto : stageDtoList) {
@@ -298,8 +299,9 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				stageNos[i++]= stageDto.getBillingModel().getStage();// building string for query.
 				if (i == 1) {
 					firstStageSeqNo = stageDto.getBillingModel().getBillingSeq();
-					firstStagePercentage = stageDto.getBillingModel().getBillingPercentage();
+					firstStageInvoiceNo = stageDto.getProgressiveBilling().getInvoiceNo();
 				}
+				selectedStagesAmount = selectedStagesAmount.add(stageDto.getProgressiveBilling().getAmountBilled());
 			}		
 			
 			if (tempTotalAmountPaid.compareTo(BigDecimal.ZERO) > 0 ) {	
@@ -359,6 +361,10 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				pb.setSeqNo(new Byte(stageDto.getBillingModel().getBillingSeq().toString()));
 				pb.setStatus(ProgressiveBillingConst.PB_STATUS_BILL);
 				pb.setDueDate(dueDate); 
+				if ((stageDto.getBillingModel().getBillingSeq() == firstStageSeqNo) && (purchaserStageAmount.compareTo(new BigDecimal(0.00)) > 0)) {
+					pb.setPurchaserInvoiceNo(firstStageInvoiceNo);
+					pb.setPurchaserPortion(purchaserStageAmount);
+				}
 				
 				progressiveBillingDao.insert(pb);
 			}// end for
