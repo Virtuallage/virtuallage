@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<ui:define name="title">
+Billing Model Header
+</ui:define>
+
+	<ui:define name="content">
+
+		<p:panel id="panel" header="List of Progressive Billing Model"
+			style="width:95%">
+
+			<p:focus context="panel" />
+
+			<h:form>
+				<p:panelGrid style="width:100%;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:20%;text-align:left">
+							<h:outputText value="Billing Model :" />
+						</p:column>
+						<p:column style="width:30%;text-align:left">
+							<p:selectOneMenu id="billingHeaderList"
+								value="#{listBillingModel.headerId}" required="true"
+								style="width:250px">
+								<f:selectItems value="#{listBillingModel.listBillingHeader}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:40%;text-align:left;">
+							<p:commandButton value="Search" action="#{listBillingModel.searchModel}" update="billingModelHeaderTable" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+
+				<p:dataTable var="c"
+					value="#{listBillingModel.modelsHeader}"
+					paginator="true" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40,60,80,100"
+					id="billingModelHeaderTable" editable="true">
+
+					<p:ajax event="rowEdit" listener="#{listBillingModel.onEditH}" oncomplete="savechange.show()" />  
+        			<p:ajax event="rowEditCancel" listener="#{listBillingModel.onCancelH}"  />
+    
+					<p:column headerText="Model" style="width:20%" sortBy="#{c.billingModelCode}">
+						<p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.billingModelCode}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <h:outputText value="#{c.billingModelCode}" maxlength="10" style="width:100%" />  
+			                </f:facet>  
+			            </p:cellEditor> 
+					</p:column>
+
+					<p:column headerText="Description" style="width:50%" sortBy="#{c.description}">
+						 <p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.description}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <p:inputText value="#{c.description}" maxlength="30" style="width:100%"/>  
+			                </f:facet>  
+			            </p:cellEditor>  
+					</p:column>
+
+
+					<p:column headerText="Status" style="width:20%" sortBy="#{listBillingModel.getCodeDesc('SS', c.status)}">
+						<p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{listBillingModel.getCodeDesc('SS', c.status)}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <h:selectOneMenu value="#{c.status}" >  
+			                        <f:selectItems value="#{listBillingModel.listStatus}" />
+			                    </h:selectOneMenu>  
+			                </f:facet>  
+			            </p:cellEditor>  
+					</p:column>
+
+					<p:column headerText="Edit" style="width:5%">  
+           		 		<p:rowEditor />           		 		
+        			</p:column>
+        			
+					<p:column headerText="Actions" style="width:10%" >
+						<p:commandButton ajax="false" title="Action" icon="ui-icon-check" 
+							action="#{listBillingModel.editBillingModel(c.billingModelCode, c.description)}" />
+
+					</p:column>
+
+				</p:dataTable>
+				<br />
+				
+				 <p:confirmDialog message="Record updated" widgetVar="savechange" global="true" showEffect="fade" hideEffect="explode">  
+			        	<p:commandButton value="Ok" ajax="false" immediate="true"  icon="ui-icon-check" update="billingModelHeaderTable" onclick="savechange.hide()" />         
+   	 			</p:confirmDialog> 
+   	 			
+				<p:panelGrid style="width:100%;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:40%;">
+						<h:outputText value="" />
+							<p:commandButton value="Add New Model" ajax="false" title="View" icon="ui-icon-plus" 
+							action="#{listBillingModel.newBillingModelHeader}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
