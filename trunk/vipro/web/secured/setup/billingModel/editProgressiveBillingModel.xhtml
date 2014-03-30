@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<ui:define name="title">
+Billing Model Details
+</ui:define>
+
+	<ui:define name="content">
+
+		<p:panel id="panel" header="#{listBillingModel.header}"
+			style="width:95%">
+
+			<p:focus context="panel" />
+
+			<h:form>
+				<p:panelGrid style="width:100%;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:20%;text-align:left">
+							<h:outputText value="Total Percentage :" />
+						</p:column>
+						<p:column style="width:20%;text-align:left;">
+							<h:outputText value="#{listBillingModel.sum}"
+							style="color : #{listBillingModel.color};" />
+						</p:column>
+						<p:column style="width:60%;text-align:left">
+							<h:outputText value="#{listBillingModel.msg}"  style="color : red"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+
+  				<p:growl id="messages" showDetail="true"/>  
+  
+				<p:dataTable var="c"
+					value="#{listBillingModel.models}"
+					paginator="true" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40,60,80,100"
+					id="billingModelTable" editable="true">
+
+					<p:ajax event="rowEdit" listener="#{listBillingModel.onEdit}" oncomplete="savechange.show()" />  
+        			<p:ajax event="rowEditCancel" listener="#{listBillingModel.onCancel}"  />
+    
+			        <p:column headerText="Seq" style="width:10%" sortBy="#{c.billingSeq}">  
+			            <p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.billingSeq}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <p:inputMask value="#{c.billingSeq}" style="width:100%" mask="9?9999999999" maxlength="11" />  
+			                </f:facet>  
+			            </p:cellEditor>  
+			        </p:column>  
+
+			        <p:column headerText="Stage" style="width:10%">  
+			            <p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.stage}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <p:inputText value="#{c.stage}" style="width:100%"/>  
+			                </f:facet>  
+			            </p:cellEditor>  
+			        </p:column> 
+					
+					<p:column headerText="Description" style="width:50%">  
+			            <p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.description}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <p:inputText value="#{c.description}" style="width:100%"/>  
+			                </f:facet>  
+			            </p:cellEditor>  
+			        </p:column> 
+			        
+      			    <p:column headerText="Percentage" style="width:20%">  
+			            <p:cellEditor>  
+			                <f:facet name="output">  
+			                    <h:outputText value="#{c.billingPercentage}" />  
+			                </f:facet>  
+			                <f:facet name="input">  
+			                    <p:inputMask value="#{c.billingPercentage}" mask="99.99" style="width:100%"/>  
+			                </f:facet>  
+			            </p:cellEditor>  
+			        </p:column> 
+
+					<p:column headerText="Edit" style="width:5%">  
+           		 		<p:rowEditor />           		 		
+        			</p:column>  
+        			
+        			<p:column headerText="Delete" style="width:5%">  
+        			<p:commandButton onclick="confirmation.show()" icon="ui-icon-trash"
+        			action="#{listBillingModel.onDelete(c.modelId)}" 
+        			immediate="true" />
+           		 		<p:confirmDialog message="Delete record?" widgetVar="confirmation" global="true" showEffect="fade" hideEffect="explode">  
+			        		<p:commandButton value="Yes" ajax="false" action="#{listBillingModel.delete(c.billingModelCode)}" immediate="true"  icon="ui-icon-check" update="billingModelTable" oncomplete="confirmation.hide()" />  
+			        		<p:commandButton value="No" onclick="confirmation.hide()" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+   	 					</p:confirmDialog> 
+        			</p:column>  
+				 </p:dataTable>
+				 
+				 <p:confirmDialog message="Record updated" widgetVar="savechange" global="true" showEffect="fade" hideEffect="explode">  
+			        	<p:commandButton value="Ok" ajax="false" action="#{listBillingModel.update}" immediate="true"  icon="ui-icon-check" update="billingModelTable" oncomplete="savechange.hide()" />         
+   	 			</p:confirmDialog> 
+   	 			
+   	 			<p:commandButton value="Back" ajax="false" action="#{listBillingModel.backToListing}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>	
+				<p:commandButton value="New" ajax="false" action="#{listBillingModel.newBillingModel}" immediate="true"  icon="ui-icon-plus" />
+							   
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
