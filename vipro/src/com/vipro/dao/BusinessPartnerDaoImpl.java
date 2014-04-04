@@ -11,10 +11,27 @@ import com.vipro.data.BusinessPartner;
 public class BusinessPartnerDaoImpl extends DaoImpl<BusinessPartner> implements BusinessPartnerDao {
 
 	@Override
-	public BusinessPartner findById(Long codeId) {
-		BusinessPartner header = getHibernateTemplate().get(BusinessPartner.class, codeId);
+	public BusinessPartner findById(Long partnerId) {
+		BusinessPartner header = getHibernateTemplate().get(BusinessPartner.class, partnerId);
 		return header;
 	}
+	
+	@Override
+	public BusinessPartner findByCompanyCode(String companyCode) {
+		List list = getHibernateTemplate().find(
+                "from BusinessPartner where companyCode=?",companyCode);
+		if (list.size() == 0) {
+			return null;
+		}
+		return (BusinessPartner)list.get(0);
+	}	
+		
+//	public Stock findByStockCode(String stockCode){
+//		List list = getHibernateTemplate().find(
+//                     "from Stock where stockCode=?",stockCode);
+//		return (Stock)list.get(0);
+//	}
+
 	
 	@Override
 	public List<BusinessPartner> findByPartnerType(String partnerType) {
@@ -26,5 +43,5 @@ public class BusinessPartnerDaoImpl extends DaoImpl<BusinessPartner> implements 
 	public List<BusinessPartner> findAllBusinessPartner() {
 		return getHibernateTemplate().loadAll(BusinessPartner.class);
 	}
-
+	
 }

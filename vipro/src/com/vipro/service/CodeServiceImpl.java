@@ -1,6 +1,5 @@
 package com.vipro.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -11,18 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vipro.dao.CodeDao;
+import com.vipro.dao.CodeDetDao;
 import com.vipro.data.CodeDet;
+import com.vipro.data.CodeDetId;
 import com.vipro.data.CodeHeader;
 
 @Service("com.vipro.service.CodeService")
-public class CodeServiceImpl implements CodeService,Serializable  {
+public class CodeServiceImpl implements CodeService  {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -9168979124094738771L;
+//	private static final long serialVersionUID = -9168979124094738771L;
 	@Autowired
 	private CodeDao codeDao;
+	@Autowired
+	private CodeDetDao codeDetDao;
 
 	public CodeDao getCodeDao() {
 		return codeDao;
@@ -32,11 +35,25 @@ public class CodeServiceImpl implements CodeService,Serializable  {
 		this.codeDao = codeDao;
 	}
 
+	public CodeDetDao getCodeDetDao() {
+		return codeDetDao;
+	}
+
+	public void setCodeDetDao(CodeDetDao codeDetDao) {
+		this.codeDetDao = codeDetDao;
+	}
+
 	@Override
 	public CodeHeader findById(String codeId) {
 		return codeDao.findById(codeId);
 	}
 
+	@Override
+	public CodeDet findByKey(CodeDetId Key) {
+		return codeDao.findByKey(Key);
+	}
+
+	
 	@Override
 	public List<SelectItem> getCodes(String codeId) {
 		CodeHeader header = findById(codeId);
@@ -123,14 +140,12 @@ public class CodeServiceImpl implements CodeService,Serializable  {
 
 	@Override
 	public void insert(CodeDet d) {
-		// TODO Auto-generated method stub
-		
+		codeDetDao.insert(d);
 	}
 
 	@Override
 	public void update(CodeDet d) {
-		// TODO Auto-generated method stub
-		
+		codeDetDao.update(d);
 	}
 
 	@Override
@@ -139,10 +154,10 @@ public class CodeServiceImpl implements CodeService,Serializable  {
 		
 	}
 
-	@Override
-	public List<CodeDet> getCodeDets(Long codeHeaderId) {
+//	@Override
+//	public List<CodeDet> getCodeDets(Long codeHeaderId) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+//		return null;
+//	}
 	
 }
