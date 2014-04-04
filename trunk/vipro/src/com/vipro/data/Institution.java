@@ -53,6 +53,10 @@ public class Institution implements java.io.Serializable {
 		this.businessPartners = businessPartners;
 	}
 
+//	public Institution(Long institutionId) {
+//		this.institutionId = institutionId;
+//	}
+
 	public Long getInstitutionId() {
 		return this.institutionId;
 	}

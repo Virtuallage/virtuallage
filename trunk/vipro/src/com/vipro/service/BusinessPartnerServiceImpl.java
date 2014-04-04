@@ -29,6 +29,11 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
 	}
 	
 	@Override
+	public BusinessPartner findByCompanyCode(String companyCode) {
+		return businessPartnerDao.findByCompanyCode(companyCode);
+	}
+	
+	@Override
 	public List<BusinessPartner> findByPartnerType(String partnerType) {
 		return businessPartnerDao.findByPartnerType(partnerType);
 	}
