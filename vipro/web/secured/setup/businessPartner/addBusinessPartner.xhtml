@@ -22,9 +22,9 @@ Business Partner Information
 <h:form>
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
-				<p:outputLabel value="Business Partner Name"/>
-				<h:inputText value="#{businessPartner.businessPartnerFld.companyName}" maxlength="60" style="width:400px;text-transform:uppercase" required="true" autocomplete="off"/>
-				<p:outputLabel value="Status"/>
+				<p:outputLabel value="Business Partner Name" for="companyname" />
+				<h:inputText id="companyname" value="#{businessPartner.businessPartnerFld.companyName}" maxlength="60" style="width:400px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:outputLabel value="Status" for="status"/>
 				<p:selectOneMenu id="status" value="#{businessPartner.businessPartnerFld.status}" disabled="true">
 					<f:selectItems value="#{businessPartner.listStatus}"/>
 				</p:selectOneMenu>
@@ -59,26 +59,26 @@ Business Partner Information
 				<p:inputText id="fax" value="#{businessPartner.businessPartnerFld.faxNo}" maxlength="20" autocomplete="off"/>
 				
 				<p:outputLabel value="Address Line 1" for="address1"/>
-				<p:inputText id="address1" value="#{businessPartner.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off" required="true"/>
+				<p:inputText id="address1" value="#{businessPartner.businessPartnerFld.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off" required="true"/>
 				<p:outputLabel value="Address Line 2" for="address2"/>
-				<p:inputText id="address2" value="#{businessPartner.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="address2" value="#{businessPartner.businessPartnerFld.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 
 				<p:outputLabel value="Address Line 3" for="address3"/>
-				<p:inputText id="address3" value="#{businessPartner.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="address3" value="#{businessPartner.businessPartnerFld.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				<p:outputLabel value="Address Line 4" for="address4"/>
-				<p:inputText id="address4" value="#{businessPartner.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:inputText id="address4" value="#{businessPartner.businessPartnerFld.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 
 				<p:outputLabel value="Post Code" for="postcode"/>
-				<p:inputText id="postcode" value="#{businessPartner.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
+				<p:inputText id="postcode" value="#{businessPartner.businessPartnerFld.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
 				<p:outputLabel value="City" for="city"/>
-				<p:inputText id="city" value="#{businessPartner.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="true"/>
+				<p:inputText id="city" value="#{businessPartner.businessPartnerFld.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="true"/>
 				
 				<p:outputLabel value="State" for="state"/>
-				<p:selectOneMenu id="state" value="#{businessPartner.address.state}">
+				<p:selectOneMenu id="state" value="#{businessPartner.businessPartnerFld.address.state}">
 						<f:selectItems value="#{businessPartner.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Country" for="country"/>
-				<p:selectOneMenu id="country" value="#{businessPartner.address.country}" required="true">
+				<p:selectOneMenu id="country" value="#{businessPartner.businessPartnerFld.address.country}" required="true">
 						<f:selectItems value="#{businessPartner.listCountry}"/>
 				</p:selectOneMenu>
 				
