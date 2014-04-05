@@ -11,8 +11,8 @@ import com.vipro.data.BusinessPartner;
 public class BusinessPartnerDaoImpl extends DaoImpl<BusinessPartner> implements BusinessPartnerDao {
 
 	@Override
-	public BusinessPartner findById(Long partnerId) {
-		BusinessPartner header = getHibernateTemplate().get(BusinessPartner.class, partnerId);
+	public BusinessPartner findById(Long codeId) {
+		BusinessPartner header = getHibernateTemplate().get(BusinessPartner.class, codeId);
 		return header;
 	}
 	
