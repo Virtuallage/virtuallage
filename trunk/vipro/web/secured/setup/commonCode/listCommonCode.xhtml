@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Common Code
+</ui:define>
+	<ui:define name="content">
+	<p:panel id="panel" header="List of Common Code Value" style="width:95%">  
+	<p:focus context="panel"/>
+		
+		<h:form id="listcodeheader">
+    
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="width:20%;text-align:left">
+						<p:outputLabel value="Common Code Type" />
+					</p:column>
+					<p:column style="width:20%;text-align:left">
+						<p:selectOneMenu id="codetype" value="#{commonCode.codeType}">
+							<f:selectItems value="#{commonCode.listCodeType}"/>
+						</p:selectOneMenu>
+					</p:column>
+					<p:column style="width:60%;text-align:left;">
+						<p:commandButton value="Search" action="#{commonCode.searchCommonCode}" update="CommonCodeTable" icon="ui-icon-search"/>
+					</p:column>
+				</p:row>
+				
+			</p:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable var="c" value="#{commonCode.listCodeDets}" paginator="true" rows="10"  paginatorPosition="bottom"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+            rowsPerPageTemplate="5,10,15" id="CommonCodeTable"> 
+			
+				<p:column headerText="Type" style="width:15%">
+					<h:outputText value="#{c.getId().getCodeHeaderId()}" />
+				</p:column>
+				
+				<p:column headerText="Value" style="width:20%">
+					<h:outputText value="#{c.getId().getCode()}" />
+				</p:column>
+				
+				<p:column headerText="Description" style="width:40%">
+					<h:outputText value="#{c.description}" />
+				</p:column>
+
+				<p:column headerText="Status" style="width:15%">
+					<h:outputText value="#{commonCode.getCodeDesc('SS',c.status)}" />
+				</p:column>
+
+				<p:column headerText="Action" style="width:10%">
+					<p:commandButton action="#{commonCode.LoadCodeHeader}" ajax="false" icon="ui-icon-pencil" title="Edit Common Code Type">
+           		 	<f:setPropertyActionListener value="#{c}" target="#{commonCode.codeDetFld}" />  
+           			</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<br/>
+
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="text-align:middle;width:25%" />
+					<p:column style="text-align:mddle;width:25%">
+						<p:commandButton value="Add New Type" ajax="false" immediate="true"
+							action="#{commonCode.NewCodeHeader}" icon="ui-icon-plus"> 
+						</p:commandButton>	
+					</p:column>
+					<p:column style="text-align:middle;width:25%">
+						<p:commandButton value="Add New Value" ajax="false" immediate="true"
+							action="#{commonCode.NewCodeDet}" icon="ui-icon-plus"> 
+						</p:commandButton>	
+					</p:column>
+					<p:column style="text-align:middle;width:25%" />
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

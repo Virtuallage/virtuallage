@@ -9,6 +9,10 @@ import java.util.Date;
  */
 public class BusinessPartner implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -750499779938282482L;
 	private long partnerId;
 	private String partnerType;
 	private String businessRegistrationNo;

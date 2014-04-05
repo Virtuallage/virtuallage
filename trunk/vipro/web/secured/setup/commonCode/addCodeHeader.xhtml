@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Common Code Type Information
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Common Code Type Information - Add" style="width:60%;background-color:#EEFFEE">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="3" style="width:90%;text-align:left;">
+				<p:outputLabel value="Common Code Type" for="codetype" />
+				<h:inputText id="codetype" value="#{commonCode.codeHeaderFld.codeHeaderId}" maxlength="20" style="width:200px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:outputLabel value=" " />
+				
+				<p:outputLabel value="Description" for="hdrdesc"/>
+				<p:inputText id="hdrdesc" value="#{commonCode.codeHeaderFld.name}" maxlength="30" style="width:400px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:outputLabel value=" " />
+				
+			</h:panelGrid>
+							
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{commonCode.backTolistCommonCode}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+			<p:commandButton value="Save" ajax="false" action="#{commonCode.InsertCodeHeader}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		

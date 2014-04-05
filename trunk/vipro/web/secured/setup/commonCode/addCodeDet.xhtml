@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Common Code Information
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Common Code Information - Add" style="width:80%;background-color:#EEFFEE">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+		<p:panelGrid styleClass="no-borders" style="width:95%">
+			<p:row>
+				<p:column style="width:20%;text-align:left">
+					<p:outputLabel value="Common Code Type" for="codetype" />
+				</p:column>
+				<p:column style="width:15%;text-align:left">
+					<p:selectOneMenu id="codetype" value="#{commonCode.codeDetFld.codeHeaderId}" style="width:120px" required="true">
+						<f:selectItems value="#{commonCode.listCodeTypeOnly}"/>
+						<p:ajax update="hdrdesc" listener="#{commonCode.getDesc}" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column style="width:65%;text-align:left;">
+					<h:inputText id="hdrdesc" value="#{commonCode.codeHeaderFld.name}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:panelGrid styleClass="no-borders" style="width:95%">
+			<p:row>
+				<p:column style="width:20%;text-align:left">
+					<p:outputLabel value="Value" for="value"/>
+				</p:column>
+				<p:column style="width:80%;text-align:left">
+					<p:inputText id="value" value="#{commonCode.codeDetFld.code}" maxlength="5" style="width:150px;text-transform:uppercase" required="true" autocomplete="off"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		
+		<p:panelGrid styleClass="no-borders" style="width:95%">
+			<p:row>
+				<p:column style="width:20%;text-align:left">
+					<p:outputLabel value="Description" for="detdesc"/>
+				</p:column>
+				<p:column style="width:80%;text-align:left">
+					<p:inputText id="detdesc" value="#{commonCode.codeDetFld.description}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:panelGrid styleClass="no-borders" style="width:95%">
+			<p:row>
+				<p:column style="width:20%;text-align:left">
+					<p:outputLabel value="Status" for="status"/>
+				</p:column>
+				<p:column style="width:80%;text-align:left">
+					<p:selectOneMenu id="status" value="#{commonCode.codeDetFld.status}" disabled="true">
+						<f:selectItems value="#{commonCode.listStatus}"/>
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<br/>
+			
+		<p:commandButton value="Back" ajax="false" action="#{commonCode.backTolistCommonCode}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+		<p:commandButton value="Save" ajax="false" action="#{commonCode.InsertCodeDet}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		
