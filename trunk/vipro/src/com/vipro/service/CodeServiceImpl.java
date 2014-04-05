@@ -21,7 +21,7 @@ public class CodeServiceImpl implements CodeService  {
 	/**
 	 * 
 	 */
-//	private static final long serialVersionUID = -9168979124094738771L;
+	private static final long serialVersionUID = -9168979124094738771L;
 	@Autowired
 	private CodeDao codeDao;
 	@Autowired
