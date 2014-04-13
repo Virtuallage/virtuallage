@@ -60,6 +60,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	private AccountDao accountDao;
 	@Autowired
 	private InstitutionDao institutionDao; 
+	private Long pInvoiceNo = new Long(1l);
 	
 	@Override
 	public List<ProgressiveBilling> getProgressiveBilling(Long accountId) {
@@ -152,13 +153,31 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
-	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo, String accountId){
+	public Long getNextSeqNO(String projectCode, String seqType, boolean isIncrement) {
+		Long no = new Long(0l);
+		SeqNo seq = seqNoDao.findById(seqType,projectCode);
+		no = seq.getNextSeq() + (isIncrement ? 1l: -1l) ;
+		return no;
+	}
+
+	@Override
+	public Long getCurrentSeqNO(String projectCode, String seqType, boolean isIncrement) {
+		Long no = new Long(0l);
+		SeqNo seq = seqNoDao.findById(seqType,projectCode);
+		no = seq.getNextSeq();
+		return no;
+	}
+
+	
+	@Override
+	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo, String accountId, String lastStageSelected){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
 		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(lastStageSelected);
 		try {
 			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
 			
@@ -178,13 +197,14 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
-	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo, String accountId){
+	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo, String accountId, String lastStageSelected){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
 		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(lastStageSelected);
 		try {
 			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
 			
@@ -204,13 +224,14 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
-	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo, String accountId){
+	public void printProgressiveLetterPurchaser(String amount, Long projectId, String invoiceNo, String accountId, String lastStageSelected){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
 		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(lastStageSelected);
 		try {
 			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
 			
@@ -230,13 +251,68 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	}
 	
 	@Override
-	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion){
+	public void printProgressiveLetterPurchaserSplit(String amount, Long projectId, String invoiceNo, String accountId, String lastStageSelected){
 		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
 		ReportDTO reportDTO = new ReportDTO();
 		reportDTO.setProjectId(projectId);
 		reportDTO.setReportFormatId(new Long(3l));
 		reportDTO.setBlocksTitle(invoiceNo);
 		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(lastStageSelected);
+		try {
+			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
+			
+			 File baseFolder = new File(path);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
+			
+			rs.generateProgressBillingLetterPurchaserSplit(reportDTO,invoiceNo,path);
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void printProgressiveLetterFinancierSplit(String amount, Long projectId, String invoiceNo, String accountId, String lastStageSelected){
+		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setProjectId(projectId);
+		reportDTO.setReportFormatId(new Long(3l));
+		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(lastStageSelected);
+		try {
+			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
+			
+			 File baseFolder = new File(path);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
+			
+			rs.generateProgressBillingLetterFinancierSplit(reportDTO,invoiceNo,path);
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void printRenoticeLetter(String amount, Long projectId , String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion, String firstStageSelected){
+		ReportService rs = (ReportService)SpringBeanUtil.lookup(ReportService.class.getName());
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setProjectId(projectId);
+		reportDTO.setReportFormatId(new Long(3l));
+		reportDTO.setBlocksTitle(invoiceNo);
+		reportDTO.setInstitutionName(amount);
+		reportDTO.setProjectName(firstStageSelected);
 		try {
 			String path = JasperConst.ACCOUNTS_FOLDER+"/"+accountId+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME+"/";
 			
@@ -258,7 +334,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	@Override
 	@Transactional
 	public boolean generateRenoticesForSelectedStages(
-			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, BigDecimal purchaserStageAmount) {
+			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
+			BigDecimal financierStageAmount, String firstStageSelected) {
 		boolean isSucessfull = false;
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			Account act = selectedDto.getAccount();		
@@ -304,6 +381,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				selectedStagesAmount = selectedStagesAmount.add(stageDto.getProgressiveBilling().getAmountBilled());
 			}		
 			
+			
 			if (tempTotalAmountPaid.compareTo(BigDecimal.ZERO) > 0 ) {	
 				//2.b
 				Account aa = new Account();
@@ -331,20 +409,25 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			//3.  Update Existing ProgressiveBilling records for selected stages(PBBIL/PBPAI)
 			progressiveBillingDao.updateProgressiveBillingStatus(act.getAccountId(), ProgressiveBillingConst.PB_STATUS_REVERSAL,
 					new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT},stageNos, tx.getTransactionId());
-			
+
 			
 			//4. Create a new progressive billing record for every selected stages		
 			Date billDate = new Date();
-//			if (selectedDto.getProject().getDaysToBill() != null) {
-//				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
-//			} else {
-//				selectedDto.getProject().setDaysToBill(0);
-//			}
+			if (selectedDto.getProject().getDaysToBill() != null) {
+				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
+			} else {
+				selectedDto.getProject().setDaysToBill(0);
+			}
 			
 			Date currentDate = new Date();
 			Long daysDiff = (billDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000);
-			Integer daysToBill = daysDiff.intValue();		
-			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
+			Integer daysToBill = daysDiff.intValue();
+
+			// get due date from the previous progressive billing
+			ProgressiveBilling pBilling = new ProgressiveBilling();
+			pBilling = progressiveBillingDao.findByStageAndAccountId(act.getAccountId(), firstStageSelected);
+			Date dueDate = pBilling.getDueDate();
+			//			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
 			
 			Account a = new Account();
 			a.setAccountId(act.getAccountId());
@@ -361,9 +444,9 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				pb.setSeqNo(new Byte(stageDto.getBillingModel().getBillingSeq().toString()));
 				pb.setStatus(ProgressiveBillingConst.PB_STATUS_BILL);
 				pb.setDueDate(dueDate); 
-				if ((stageDto.getBillingModel().getBillingSeq() == firstStageSeqNo) && (purchaserStageAmount.compareTo(new BigDecimal(0.00)) > 0)) {
-					pb.setPurchaserInvoiceNo(firstStageInvoiceNo);
-					pb.setPurchaserPortion(purchaserStageAmount);
+				if ((stageDto.getBillingModel().getBillingSeq() == firstStageSeqNo) && (financierStageAmount.compareTo(new BigDecimal(0.00)) > 0)) {
+					pb.setFinancierInvoiceNo(firstStageInvoiceNo);
+					pb.setFinancierPortion(financierStageAmount);
 				}
 				
 				progressiveBillingDao.insert(pb);
@@ -387,14 +470,12 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		return isSucessfull;
 	}
 	
-	
-	
 	@Override
 	@Transactional
 	public boolean generateProgressiveBillForSelectedStages(
-			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto) {
-		boolean isSucessfull = false;
-		
+			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
+			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount, BigDecimal financierPortion) {
+		boolean isSucessfull = false;		
 		String refNo = "";
 
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
@@ -404,25 +485,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			refNo = selectedDto.getProject().getProjectCode() +"/" + selectedDto.getProjectInvetory().getUnitNo();
 			Account act = selectedDto.getAccount();
 			UserProfile userProfile = CommonBean.getCurrentUser().getUserProfile();
-			
-			Account a = new Account();
-			a.setAccountId(act.getAccountId());
-			
-			BillingModelStageDTO sumDTO = stageDtoList.remove(stageDtoList.size() -1 );
-			
-			boolean isFirstSeqNo = false;
-			
-			TransactionHistory tx = new TransactionHistory();
-			tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
-			tx.setTransactionDescription("PROGRESSIVE BILLING");
-			tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled());
-			tx.setInvoiceNo(invoiceNo);
-			tx.setStatus(TransactionStatusConst.PENDING);
-			tx.setRefNo(refNo);
-			tx.setAccount(a);
-			tx.setTransactionDate(new Date());				
-			transactionHistoryDao.insert(tx);
-			
+
+			// get bill and due date for progressive billing record
 			Date billDate = new Date();
 			if (selectedDto.getProject().getDaysToBill() != null) {
 				billDate = getBillDate(selectedDto.getProject().getDaysToBill(), selectedDto.getProject().getIncludeOffDay(), userProfile);
@@ -433,10 +497,19 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			Date currentDate = new Date();
 			Long daysDiff = (billDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000);
 			Integer daysToBill = daysDiff.intValue();
-					
+							
 			Date dueDate = getDueDate(selectedDto.getProject().getDueDays(), daysToBill, selectedDto.getProject().getIncludeOffDay(), userProfile);
+						
+			Account a = new Account();
+			a.setAccountId(act.getAccountId());
+			
+			BillingModelStageDTO sumDTO = stageDtoList.remove(stageDtoList.size() -1 );
+			
+			boolean isFirstSeqNo = false;
+			BigDecimal txFinancierPortion = BigDecimal.ZERO;
 			
 			for (BillingModelStageDTO stageDto : stageDtoList) {
+				
 				ProgressiveBilling pb = new ProgressiveBilling();
 				pb.setAccount(a);
 				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));
@@ -446,8 +519,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				pb.setStageDescription(stageDto.getBillingModel().getDescription());
 				pb.setSeqNo(new Byte(stageDto.getBillingModel().getBillingSeq().toString()));
 				pb.setStatus(ProgressiveBillingConst.PB_STATUS_BILL);
-
-				if(stageDto.getBillingModel().getBillingSeq().equals(1) ){
+				if(stageDto.getBillingModel().getBillingSeq().equals(1) ){  // if first Stage, fixed the bill and due date
 					isFirstSeqNo = true;
 					if (act.getSpaStampedDate() == null) {
 						pb.setDateBilled(new Date());
@@ -461,17 +533,55 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 					pb.setDueDate(dueDate); 
 				}
 				
-				progressiveBillingDao.insert(pb);
+				if (splitStageSeqNo > 0) {
+					if (stageDto.getBillingModel().getBillingSeq() == splitStageSeqNo) {
+						pInvoiceNo = getNextSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true);			
+						pInvoiceNo++;
+						pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
+						pb.setFinancierPortion(financierStageAmount);
+						txFinancierPortion = txFinancierPortion.add(financierStageAmount);
+						seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, pInvoiceNo, selectedDto.getProject().getProjectCode());
+					} else {  // set the financier amount and invoice no
+						if (stageDto.getBillingModel().getBillingSeq() > splitStageSeqNo) {
+							txFinancierPortion = txFinancierPortion.add(pb.getAmountBilled());
+							pb.setFinancierPortion(pb.getAmountBilled());
+							pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
+						}
+					}					
+				}
+				
+				progressiveBillingDao.insert(pb);			
 			}// end for
 			
+			// create transaction history record
+			TransactionHistory tx = new TransactionHistory();
+			tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
+			tx.setTransactionDescription("PROGRESSIVE BILLING");
+			tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled());
+			tx.setInvoiceNo(invoiceNo);
+			tx.setStatus(TransactionStatusConst.PENDING);
+			tx.setRefNo(refNo);
+			tx.setAccount(a);
+			tx.setTransactionDate(new Date());
+			if (splitStageSeqNo > 0) {
+				tx.setFinancierPortion(txFinancierPortion);				
+				tx.setFinancierInvoiceNo(getPInvoiceNoFormated());
+			} else {
+				if (financierPortion.compareTo(BigDecimal.ZERO) >= 0) {
+					tx.setFinancierPortion(sumDTO.getProgressiveBilling().getAmountBilled());
+				}
+			}		
+			transactionHistoryDao.insert(tx);
+			
+			// update account balance
 			act.setAccountBalance(act.getAccountBalanceNotNull().add(sumDTO.getProgressiveBilling().getAmountBilled()));
 			act.setDateChanged(new Date());
 			act.setChangedBy(userProfile.getUserId());
 			if(isFirstSeqNo){
 				act.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
-			}
-			
+			}			
 			accountDao.update(act);
+			
 			isSucessfull = true;
 		}
 		return isSucessfull;
@@ -704,6 +814,18 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 
 	public void setInstitutionDao(InstitutionDao institutionDao) {
 		this.institutionDao = institutionDao;
+	}
+
+	public Long getpInvoiceNo() {
+		return pInvoiceNo;
+	}
+	
+	public String getPInvoiceNoFormated() {
+		return String.format("PB%04d%n", this.pInvoiceNo);
+	}
+
+	public void setpInvoiceNo(Long pInvoiceNo) {
+		this.pInvoiceNo = pInvoiceNo;
 	}
 
 	

@@ -28,15 +28,22 @@ public interface ProgressiveBillingService {
 			Long projectId, String billingModelCode, Long accountId); 
 	
 	public Long getAndUpdteSeqNO(String projectCode, String seqType, boolean isIncrement);
+	public Long getNextSeqNO(String projectCode, String seqType, boolean isIncrement);
+	public Long getCurrentSeqNO(String projectCode, String seqType, boolean isIncrement);	
 
-	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto);
-	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, BigDecimal purchaserStageAmount);
+	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
+			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount, BigDecimal financierPortion);
+	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
+			BigDecimal financierStageAmount, String firstStageSelected);
 	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo, Date selectedChkDate);
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
 	
-	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId);
-	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo,String accountId);
-	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo,String accountId);
+	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
+	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
+	public void printProgressiveLetterPurchaser(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
+	public void printProgressiveLetterPurchaserSplit(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
+	public void printProgressiveLetterFinancierSplit(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
+	
+	public void printRenoticeLetter(String amount, Long projectId, String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion, String firstStageSelected);
 
-	public void printRenoticeLetter(String amount, Long projectId, String invoiceNo, String accountId, BigDecimal financierPortion, BigDecimal purchaserPortion);
 }

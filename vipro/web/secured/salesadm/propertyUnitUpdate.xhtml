@@ -151,19 +151,23 @@
 								 required="false" style="width:100%" for="stateTxt">  
 								<f:selectItems value="#{propertyUnitUpdateBean.statesSIList}"/>
 							</p:selectOneMenu>
+							<p:outputLabel id="countryTxt" value="Country" />
+				            <p:selectOneMenu id="countryTypeList" value="#{propertyUnitUpdateBean.selectedDto.address.country}"  requiredMessage="Please Select Any Country"
+								 required="false" style="width:100%" for="countryTxt">  
+								<f:selectItems value="#{propertyUnitUpdateBean.countrySIList}"/>
+							</p:selectOneMenu>
+							
 				            <p:outputLabel  value="Handover Date" />
 				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.keyHandoverDate}" id="popupButtonCal1"   showOn="button" style="width:50%"/>
-				            
 				             <p:outputLabel id="titleTypeTxt"  value="Title Type" />
 				             <p:selectOneMenu id="titleTypeList" value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.propertyTitleType}"  requiredMessage="Please Select Any Title Type"
 								 required="false" style="width:100%" for="titleTypeTxt">  
 								<f:selectItems value="#{propertyUnitUpdateBean.titlTypesSIList}"/>
 							</p:selectOneMenu>				     
+
 				            <p:outputLabel  value="Strata Title Date" />
 				            <p:calendar value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.strataTitleObtainedDate}" id="popupButtonCal2"  showOn="button" style="width:50%"/>
-				           
-
-							 <p:outputLabel  value="Disbursment Fee" />
+  							 <p:outputLabel  value="Disbursment Fee" />
 				            <p:inputText id="disbursmentFee" value="#{propertyUnitUpdateBean.selectedDto.projectInvetory.disbursementFee}" 
 				            	converter="javax.faces.BigDecimal" converterMessage="Please enter valid Disbursment Fee amount"  style="width:50%;text-align:right" >
 				            	<f:convertNumber pattern="#,###,##0.00"   />

@@ -15,7 +15,7 @@ Business Partner Information
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Business Partner Information - Edit" style="width:95%;background-color:#EEFFEE">  
+<p:panel id="panel" header="Business Partner Information - Edit" style="width:95%">  
 
 <p:focus context="panel"/> 
 
@@ -42,9 +42,9 @@ Business Partner Information
 				<p:calendar id="regdate" value="#{businessPartner.businessPartnerFld.registrationDate}" pattern="dd/MM/yyyy" required="false" navigator="true" showOn="button"/>
 				
 				<p:outputLabel value="Contact Person Name" for="contactperson"/>
-				<p:inputText id="contactperson" value="#{businessPartner.businessPartnerFld.contactPersonName}" maxlength="50" style="width:300px" required="false" autocomplete="off"/>
+				<p:inputText id="contactperson" value="#{businessPartner.businessPartnerFld.contactPersonName}" maxlength="50" style="width:300px;text-transform:uppercase" required="false" autocomplete="off"/>
 				<p:outputLabel value="Contact Person Title" for="contacttitle"/>
-				<p:selectOneMenu id="contacttitle" value="#{businessPartner.businessPartnerFld.contactPersonTitle}" required="true">
+				<p:selectOneMenu id="contacttitle" value="#{businessPartner.businessPartnerFld.contactPersonTitle}" required="false">
 						<f:selectItems value="#{businessPartner.listTitle}"/>
 				</p:selectOneMenu>
 				

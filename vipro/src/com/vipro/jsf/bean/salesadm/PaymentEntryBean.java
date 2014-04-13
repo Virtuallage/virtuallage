@@ -102,14 +102,14 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 		public void onClose(ActionEvent actionEvent) {
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = true;
-			 CommonBean.addInfoMessage("Details Closed."," Details window closed.");
+			 CommonBean.addInfoMessage("INFORMATION"," Details window is closed normally.");
 			 context.addCallbackParam("success", success);
 		}
 		
 		public void onWarningClose(ActionEvent actionEvent) {
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = true;
-			 CommonBean.addInfoMessage("Warning Closed."," Warning Window Closed.");
+			 CommonBean.addInfoMessage("INFORMATION"," Warning Window is Closed normally.");
 			 context.addCallbackParam("success3", success);
 		}
 		
@@ -119,7 +119,7 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
 			
 			int res = paymentAmount.compareTo(getSelectedDto().getTransaction().getAmount());
-			
+		
 			if (res == 1) {
 				RequestContext.getCurrentInstance().execute("dlg4.show()");
 			} else { // if equal or less check for remain amount.
@@ -128,10 +128,7 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 								getSelectedDto().getAccount().getAccountId(),
 								statuses, getSelectedDto().getTransaction()
 										.getInvoiceNo());
-				System.out
-						.println("---------------------------------------------------------");
-				System.out.println("Remaing amount is ::" + dd);
-	
+
 				int diff = paymentAmount.compareTo(dd);
 	
 				if (diff == -1) { // if less
@@ -157,11 +154,11 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 				//	dtoList.remove(selectedDto);
 				}
 				 setSelectedDto(new PaymentEntryDTO());
-				 CommonBean.addInfoMessage("Payment Submitted Successfully","The payment transaction has been submitted for processing.");
+				 CommonBean.addInfoMessage("SUCCESSFUL","The payment transaction has been submitted successfully for processing.");
 				 context.addCallbackParam("success2", success);
 				 context.execute("dlg.hide()");
 			 }else{
-				 CommonBean.addErrorMessage("Payment Submition Erorr","Please contact application administrator.");
+				 CommonBean.addErrorMessage("WARNING","Error! Please contact System Administrator.");
 			 }
 		}
 		
@@ -173,7 +170,7 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = true;
 			 
-			 CommonBean.addInfoMessage("Warning Closed."," Warning window closed.");
+			 CommonBean.addInfoMessage("INFORMATION"," Warning window is closed normally.");
 			 context.addCallbackParam("success2", success);
 		}
 	public String onDtoSelection(){

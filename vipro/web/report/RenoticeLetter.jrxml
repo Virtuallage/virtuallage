@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RenoticeLetter" pageWidth="595" pageHeight="842" columnWidth="534" leftMargin="43" rightMargin="18" topMargin="54" bottomMargin="18" uuid="4cebcb05-bb0a-4bec-9ad5-38cce2377766">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="95"/>
-	<property name="ireport.y" value="322"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="25"/>
 	<parameter name="projectId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
 	</parameter>
@@ -22,7 +22,7 @@ a.spa_ref_no,
 a.LA_solicitor_id,
 a.la_ref_no,a.loan_amount,
   t.ref_no AS OurRef,
-  NOW() AS CurrentDate,
+  pb.date_billed AS CurrentDate,
   a.financier_ref AS FinancierRef,
   pb.due_date AS DueDate,
   a.date_purchased AS DatePurchased,
@@ -62,15 +62,29 @@ AND t.invoice_no Like $P{invoiceNo}
      and cd.code_header_id = 'PT'
      and cd.code = p.property_type]]>
 	</queryString>
-	<field name="account_id" class="java.lang.Long"/>
-	<field name="account_type" class="java.lang.String"/>
-	<field name="spa_solicitor_id" class="java.lang.Long"/>
-	<field name="spa_ref_no" class="java.lang.String"/>
-	<field name="LA_solicitor_id" class="java.lang.Long"/>
-	<field name="la_ref_no" class="java.lang.String"/>
-	<field name="loan_amount" class="java.math.BigDecimal"/>
+	<field name="account_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="account_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="spa_ref_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LA_solicitor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="la_ref_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="OurRef" class="java.lang.String"/>
-	<field name="CurrentDate" class="java.sql.Timestamp"/>
+	<field name="CurrentDate" class="java.sql.Date"/>
 	<field name="FinancierRef" class="java.lang.String"/>
 	<field name="DueDate" class="java.sql.Date"/>
 	<field name="DatePurchased" class="java.sql.Date"/>
@@ -90,66 +104,70 @@ AND t.invoice_no Like $P{invoiceNo}
 	<field name="bp_address_id" class="java.lang.Long"/>
 	<field name="companyName" class="java.lang.String"/>
 	<field name="companyName2" class="java.lang.String"/>
+	<variable name="ProjectString" class="java.lang.String">
+		<variableExpression><![CDATA[$P{projectId}.toString().trim()]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{projectId}.toString().trim()]]></initialValueExpression>
+	</variable>
 	<title>
 		<band height="49" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3875fadd-6334-4d0b-8439-30822b32a968" positionType="Float" x="0" y="0" width="63" height="13"/>
+				<reportElement uuid="3875fadd-6334-4d0b-8439-30822b32a968" positionType="Float" x="0" y="0" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Financer Ref]]></text>
+				<text><![CDATA[Financier Ref]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0ca460f3-4574-49e6-a24b-ddeef4e6d497" positionType="Float" x="0" y="26" width="63" height="13"/>
+				<reportElement uuid="0ca460f3-4574-49e6-a24b-ddeef4e6d497" positionType="Float" x="0" y="26" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Date   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="22dd89c3-75ec-443c-a9ea-f53cf55c0658" positionType="Float" x="63" y="0" width="12" height="13"/>
+				<reportElement uuid="22dd89c3-75ec-443c-a9ea-f53cf55c0658" positionType="Float" x="70" y="0" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a5dfa5f8-e962-470f-ab5c-dd587fceac08" positionType="Float" x="63" y="26" width="12" height="13"/>
+				<reportElement uuid="a5dfa5f8-e962-470f-ab5c-dd587fceac08" positionType="Float" x="70" y="26" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb3cbf78-a5a7-4f6f-b535-e4e75db3ba8e" positionType="Float" x="63" y="13" width="12" height="13"/>
+				<reportElement uuid="eb3cbf78-a5a7-4f6f-b535-e4e75db3ba8e" positionType="Float" x="70" y="13" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fa6227ca-9d80-4c86-ae90-6fe761c13dbf" positionType="Float" x="334" y="26" width="60" height="13"/>
+				<reportElement uuid="fa6227ca-9d80-4c86-ae90-6fe761c13dbf" positionType="Float" x="331" y="26" width="63" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Renotice No :]]></text>
+				<text><![CDATA[Renotice No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="aa8885a7-d43c-42d9-9eed-01f299470456" positionType="Float" x="75" y="13" width="459" height="13"/>
+				<reportElement uuid="aa8885a7-d43c-42d9-9eed-01f299470456" positionType="Float" x="82" y="13" width="452" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OurRef}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="d/M/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="cedc178a-3d14-4f33-af45-09a61e836b4f" positionType="Float" x="75" y="26" width="259" height="13"/>
+				<reportElement uuid="cedc178a-3d14-4f33-af45-09a61e836b4f" positionType="Float" x="82" y="26" width="249" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CurrentDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6516c9aa-dbc7-4de6-87fd-a20bc416d22d" positionType="Float" x="75" y="0" width="459" height="13"/>
+				<reportElement uuid="6516c9aa-dbc7-4de6-87fd-a20bc416d22d" positionType="Float" x="82" y="0" width="452" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -163,11 +181,11 @@ AND t.invoice_no Like $P{invoiceNo}
 				<textFieldExpression><![CDATA[$F{InvoiceNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4ee705b2-43c4-4b49-89a6-2e1cbccb87e9" positionType="Float" x="0" y="13" width="63" height="13"/>
+				<reportElement uuid="4ee705b2-43c4-4b49-89a6-2e1cbccb87e9" positionType="Float" x="0" y="13" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Our Ref   ]]></text>
+				<text><![CDATA[Our Ref]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e64b0bab-3e8b-4908-970c-28f8a4aa5219" positionType="Float" x="394" y="26" width="12" height="13"/>
@@ -186,29 +204,14 @@ AND t.invoice_no Like $P{invoiceNo}
 		</band>
 	</title>
 	<detail>
-		<band height="26" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="eac535d1-2d23-4ee7-b1d5-85cddc39bea1" positionType="Float" x="0" y="0" width="534" height="13">
-					<printWhenExpression><![CDATA[(!"PUCSH".equals($F{PurchaseType}))]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="address_id">
-					<subreportParameterExpression><![CDATA[$F{bp_address_id}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement uuid="eac535d1-2d23-4ee7-b1d5-85cddc39bea1" positionType="Float" x="0" y="0" width="534" height="13"/>
 				<subreportParameter name="company_name">
 					<subreportParameterExpression><![CDATA[$F{companyName}]]></subreportParameterExpression>
 				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_address_subreport.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="4701ebe5-d367-4b9f-9e4e-1f17764e662b" positionType="Float" x="0" y="13" width="534" height="13">
-					<printWhenExpression><![CDATA["PUCSH".equals($F{PurchaseType})]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="company_name">
-					<subreportParameterExpression><![CDATA[$F{customer_name}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="address_id">
-					<subreportParameterExpression><![CDATA[$F{cashCustAddress_id}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{bp_address_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_address_subreport.jasper"]]></subreportExpression>
@@ -286,7 +289,9 @@ AND t.invoice_no Like $P{invoiceNo}
 				<textFieldExpression><![CDATA[$F{PropertyTypeDesc}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4916b803-b026-4db4-9aa3-d63b68477383" positionType="Float" x="121" y="49" width="413" height="13"/>
+				<reportElement uuid="4916b803-b026-4db4-9aa3-d63b68477383" positionType="Float" x="121" y="49" width="413" height="13">
+					<printWhenExpression><![CDATA[(!$V{ProjectString}.equals( "1" ))]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -437,6 +442,16 @@ AND t.invoice_no Like $P{invoiceNo}
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<subreport isUsingCache="false">
+				<reportElement uuid="784a6951-c3d4-4bda-8855-71f62b29c4f3" positionType="Float" x="121" y="49" width="413" height="13">
+					<printWhenExpression><![CDATA[$V{ProjectString}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="unit_no">
+					<subreportParameterExpression><![CDATA[$F{UnitNo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_unitMapping.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 		<band height="23">
 			<subreport isUsingCache="false">
@@ -522,7 +537,6 @@ AND t.invoice_no Like $P{invoiceNo}
 			</staticText>
 		</band>
 		<band height="23">
-			<printWhenExpression><![CDATA[!$F{PurchaseType}.equals( "PUCSH" )]]></printWhenExpression>
 			<subreport>
 				<reportElement uuid="167382c8-c8f4-4c1f-b0e8-5b289e7a9ef0" positionType="Float" x="276" y="0" width="258" height="13"/>
 				<subreportParameter name="partner_id">
@@ -561,7 +575,6 @@ AND t.invoice_no Like $P{invoiceNo}
 			</subreport>
 		</band>
 		<band height="13" splitType="Stretch">
-			<printWhenExpression><![CDATA[!$F{PurchaseType}.equals( "PUCSH" )]]></printWhenExpression>
 			<staticText>
 				<reportElement uuid="c02e5445-d223-4716-baa3-b382ff5d05aa" x="0" y="0" width="18" height="13"/>
 				<textElement verticalAlignment="Top">
@@ -579,25 +592,14 @@ AND t.invoice_no Like $P{invoiceNo}
 			</subreport>
 		</band>
 		<band height="13">
-			<printWhenExpression><![CDATA[$F{PurchaseType}.equals( "PUCSH" )]]></printWhenExpression>
 			<subreport>
-				<reportElement uuid="6c981e7a-85da-440f-998d-a42cf6e72312" x="18" y="0" width="516" height="13"/>
-				<subreportParameter name="partner_id">
-					<subreportParameterExpression><![CDATA[$F{spa_solicitor_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="doc_Ref_No">
-					<subreportParameterExpression><![CDATA[$F{spa_ref_no}]]></subreportParameterExpression>
+				<reportElement uuid="bf1d1934-b4fa-4069-a163-0b3fce6f7df6" positionType="Float" x="0" y="0" width="534" height="13"/>
+				<subreportParameter name="project_id">
+					<subreportParameterExpression><![CDATA[$P{projectId}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_solictor.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_bankInfoFinancier.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement uuid="b0cacfbd-e2ee-418e-bedc-ae3b04aa080d" x="0" y="0" width="18" height="13"/>
-				<textElement verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[cc :]]></text>
-			</staticText>
 		</band>
 	</detail>
 </jasperReport>

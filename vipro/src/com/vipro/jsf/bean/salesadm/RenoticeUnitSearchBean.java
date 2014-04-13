@@ -75,6 +75,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 	private BigDecimal financierStageAmount = new BigDecimal(0.00);	
 	private BigDecimal purchaserPortion = new BigDecimal(0.00);
 	private BigDecimal purchaserStageAmount = new BigDecimal(0.00);
+	private String firstStageSelected ="";
 	
 	public RenoticeUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
@@ -147,7 +148,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 					inputStream.close();
 					out.flush();
 					out.close();
-					CommonBean.addInfoMessage("Upload Successful."," The document is stored at "+targetFolder.getAbsolutePath());
+					CommonBean.addInfoMessage("SUCCESSFUL"," The document is uploaded successfuly and stored at "+targetFolder.getAbsolutePath());
 				 }
 			}catch(IOException io){
 				io.printStackTrace();
@@ -209,7 +210,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			 boolean success = true;
 //			 setSelectedDto(new AdviseUpdateDetailsDTO());
 //			 refreshProjectSearch();
-			 CommonBean.addInfoMessage("Details Closed."," Details window closed.");
+			 CommonBean.addInfoMessage("INFORMATION","Previous page is closed normally.");
 			 context.addCallbackParam("success", success);
 		}
 		
@@ -218,7 +219,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = true;
 			 clearAddressChange();
-			 CommonBean.addInfoMessage("Change Address Closed."," Change Address window closed.");
+			 CommonBean.addInfoMessage("INFORMATION","Change Address page is closed normally.");
 			 context.addCallbackParam("success", success);
 		}
 		
@@ -240,7 +241,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 
 			 this.addressDTOList.clear();
 			 //clearAddressChange();
-			 CommonBean.addInfoMessage("Address Updated"," Address details updated successfully");
+			 CommonBean.addInfoMessage("SUCCESSFUL","Address details are updated successfully");
 			 context.addCallbackParam("success", success);
 		}
 		
@@ -326,7 +327,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 				}
 			}
 		}
-		CommonBean.addInfoMessage("Check box clicked."," Corr Address is Changed");
+		CommonBean.addInfoMessage("INFORMATION","The Correspondance Address is changed.");
     }  
 	
 	public void onStageSelection(ValueChangeEvent event) {  
@@ -356,7 +357,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 						}
 					}//end for					
 				if(wrongSelection){
-					CommonBean.addErrorMessage("Cannot Skip Stages", "Cannot Skip stages in between!");
+					CommonBean.addErrorMessage("WARNING", "You Cannot skip any stages in between of the selection!");
 					 SelectBooleanCheckbox chckbox = (SelectBooleanCheckbox) event.getSource();
 					 chckbox.setValue(false);;
 				}
@@ -384,13 +385,13 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		 boolean isCleared = true;
 		 boolean firstTime = true;
 		 int firstSeq = 0;
-		 BigDecimal firstAmount = new BigDecimal(0);
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
 		 BillingModelStageDTO sumDTO = new BillingModelStageDTO();
 		 BigDecimal amountTtl = new BigDecimal(0);
 		 BigDecimal percentTtl = new BigDecimal(0);
 		 BigDecimal stageTtl = new BigDecimal(0);	
+		 BigDecimal firstAmount = new BigDecimal(0);
 		 
 		 if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
 			 CommonBean.addInfoMessage("WARNING","Loan Amount is Empty! Please key in the Loan Amount before proceeding.");
@@ -430,6 +431,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 				 }
 				 if(dto.isBillMe()){
 					 if (firstTime) {
+						 firstStageSelected = dto.getBillingModel().getStage();
 						 firstSeq = dto.getBillingModel().getBillingSeq();
 						 firstAmount = getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent);
 						 firstTime = false;
@@ -465,7 +467,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 				 this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
 			
 				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));			
+				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));			
 			 }
 
 			 if(isRightSelection){
@@ -478,10 +480,10 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 boolean success = true;
 		 getSelectedStageDtoList().clear();
-		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-		 pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, false);
+//		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+//		 pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, false);
 		 setInvoiceNo(new Long(1l));
-		 CommonBean.addInfoMessage("Renotice Stages Window Closed.","");
+		 CommonBean.addInfoMessage("INFORMATION","Renotice Stages Window is Closed normally.");
 		 context.addCallbackParam("success2", success);
 	}
 	
@@ -490,18 +492,19 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));			
 		
-		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), purchaserStageAmount);
+		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), financierStageAmount, firstStageSelected);
 		
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
-			pbService.printRenoticeLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), financierPortion, purchaserPortion);
+			pbService.printRenoticeLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), financierPortion, purchaserPortion, firstStageSelected);
 		}
 		//Update StageDTOList from DB.
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
 				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
 
-		CommonBean.addInfoMessage("Renotice Processed Successfully.","The Renotice letter is ready for printing.");
+		CommonBean.addInfoMessage("SUCCESSFUL","The Renotice process is completed successfully and the letter is ready for printing.");
 		
 		getSelectedStageDtoList().clear();
 		setInvoiceNo(new Long(01));

@@ -24,7 +24,8 @@ public class TransactionHistory implements java.io.Serializable {
 	private Date chqDate;
 	private String status;
 	private BigDecimal amount;
-	
+	private BigDecimal financierPortion;
+	private String financierInvoiceNo;	
 	private String paymentMethod;
 	private String bank;
 	private String cardChequeNo;
@@ -185,6 +186,22 @@ public class TransactionHistory implements java.io.Serializable {
 
 	public void setChqDate(Date chqDate) {
 		this.chqDate = chqDate;
+	}
+
+	public BigDecimal getFinancierPortion() {
+		return financierPortion;
+	}
+
+	public void setFinancierPortion(BigDecimal financierPortion) {
+		this.financierPortion = financierPortion;
+	}
+
+	public String getFinancierInvoiceNo() {
+		return financierInvoiceNo;
+	}
+
+	public void setFinancierInvoiceNo(String financierInvoiceNo) {
+		this.financierInvoiceNo = financierInvoiceNo;
 	}
 
 }

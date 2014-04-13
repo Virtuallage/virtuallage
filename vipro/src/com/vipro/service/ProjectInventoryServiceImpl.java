@@ -67,10 +67,16 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 		if(dto.getAddress().getAddressId() == null){
 			dto.getAddress().setCreatedBy(CommonBean.getCurrentUser().getUsername());
 			dto.getAddress().setCreatedOn(new Date());
+		} else {
+			dto.getAddress().setAddressLine1((dto.getAddress().getAddressLine1()).toUpperCase());
+			dto.getAddress().setAddressLine2((dto.getAddress().getAddressLine2()).toUpperCase());
+			dto.getAddress().setAddressLine3((dto.getAddress().getAddressLine3()).toUpperCase());
+			dto.getAddress().setAddressLine4((dto.getAddress().getAddressLine4()).toUpperCase());
+			dto.getAddress().setCity((dto.getAddress().getCity()).toUpperCase());
 		}
 		addressDao.update(dto.getAddress());
 		dto.getProjectInvetory().setPropertyAddress(dto.getAddress());
-		projectInventoryDao.update(dto.getProjectInvetory());		
+		projectInventoryDao.update(dto.getProjectInvetory());
 	}
 
 	@Override

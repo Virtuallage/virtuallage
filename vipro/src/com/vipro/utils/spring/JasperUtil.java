@@ -64,11 +64,9 @@ public class JasperUtil {
 
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report, String pdf) {
-		System.out.println("Usage: ReportGenerator ....");
 		boolean result = false;
 
 		try {
-			System.out.println("Start ....");
 			// String dbUrl = props.getProperty("jdbc.url");
 			String dbUrl = DataSourceConst.DB_URL;
 			// String dbDriver = props.getProperty("jdbc.driver");
@@ -89,7 +87,6 @@ public class JasperUtil {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					jasperReport, hm, conn);
 			JasperExportManager.exportReportToPdfFile(jasperPrint, pdf);
-			System.out.println("Done exporting reports to pdf");
 
 			File myFile = new File(pdf);
 			

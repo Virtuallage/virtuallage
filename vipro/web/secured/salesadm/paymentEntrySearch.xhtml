@@ -76,6 +76,11 @@
 								style="text-align:left">
 								<p:outputLabel value="#{dto.transaction.invoiceNo}" />
 							</p:column>
+							<p:column headerText="Split Invoice"
+								sortBy="#{dto.transaction.financierInvoiceNo}"
+								style="text-align:left">
+								<p:outputLabel value="#{dto.transaction.financierInvoiceNo}" />
+							</p:column>
 							<p:column headerText="Billed Date"
 								sortBy="#{dto.transaction.transactionDate}"
 								style="text-align:center">
@@ -190,7 +195,7 @@
 								<p:outputLabel id="bnkTxt" value="Bank" />
 								<p:selectOneMenu id="bankList"
 									value="#{paymentEntryBean.selectedBank}"
-									requiredMessage="Please Select Any Bank" required="true"
+									requiredMessage="Please Select Any Bank" required="false"
 									style="width:200px" for="bnkTxt" disabled="false">
 									<f:selectItems value="#{paymentEntryBean.bankList}" />
 								</p:selectOneMenu>								
@@ -198,7 +203,19 @@
 								<p:inputText
 									value="#{paymentEntryBean.chequeNo}" 
 									disabled="false"  />
-
+								<p:outputLabel value="Purchaser Portion" />
+								<h:inputText
+									value="#{paymentEntryBean.selectedDto.transaction.amount.subtract(paymentEntryBean.selectedDto.transaction.financierPortion)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>				
+								
+								<p:outputLabel value="Financier Portion" />
+								<h:inputText
+									value="#{paymentEntryBean.selectedDto.transaction.financierPortion}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>	
 							</h:panelGrid>
 
 									<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">

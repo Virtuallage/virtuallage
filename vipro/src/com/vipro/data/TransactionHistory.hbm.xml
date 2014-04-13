@@ -41,11 +41,16 @@
         <property name="status" type="string">
             <column name="status" length="5" />
         </property>
-          <property name="amount" type="big_decimal">
+        <property name="amount" type="big_decimal">
             <column name="amount" precision="9" scale="2"/>
         </property>
-        
-          <property name="paymentMethod" type="string">
+        <property name="financierPortion" type="big_decimal">
+            <column name="financier_portion" precision="9" scale="2"/>
+        </property>
+        <property name="financierInvoiceNo" type="string">
+            <column name="financier_invoice_no" precision="10" />
+        </property> 
+        <property name="paymentMethod" type="string">
             <column name="payment_method" length="5" />
         </property>
         <property name="bank" type="string">
