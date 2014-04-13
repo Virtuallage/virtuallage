@@ -1382,9 +1382,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 		String fileName = JasperReportTypeConst.REGISTRATION_FILE;
 		String path ="/reports/" + account.getAccountId() + "/" + fileName;
 		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(path);  
-        registrationForm = new DefaultStreamedContent(stream, fileName, fileName); 
-        
-        return registrationForm;  
+		registrationForm = new DefaultStreamedContent(stream, fileName, fileName);   
+        return registrationForm;
     } 
 	
 	public StreamedContent getReceipt() {  

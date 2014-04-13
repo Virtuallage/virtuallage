@@ -83,7 +83,6 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		
 		 String hqlUpdate = "update ProgressiveBilling c set c.status = '"+to+"', c.txnReversalId = '"+txReversalId+"' where c.account.accountId ="+accountId+"  and c.stageNo in ("+stageNoString+") and c.status in ("+fString+") ";
 		int i =  getHibernateTemplate().bulkUpdate(hqlUpdate);
-		System.out.println(hqlUpdate+"\n--------------------------"+i);
 		return true;
 	}
 	

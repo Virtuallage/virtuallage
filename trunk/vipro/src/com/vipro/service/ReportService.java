@@ -19,5 +19,7 @@ public interface ReportService {
 	public void generateProgressBillingLetterReport(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
 	public void generateProgressBillingLetterCash(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
 	public void generateProgressBillingLetterPurchaser(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
+	public void generateProgressBillingLetterPurchaserSplit(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
+	public void generateProgressBillingLetterFinancierSplit(ReportDTO reportDTO,String InvoiceNo, String path)throws SQLException, JRException,FileNotFoundException,IOException ;
 	public void generateRenoticeLetterReport(ReportDTO reportDTO,String InvoiceNo,String path,BigDecimal financierPortion,BigDecimal purchaserPortion)throws SQLException, JRException,FileNotFoundException,IOException ;
 }

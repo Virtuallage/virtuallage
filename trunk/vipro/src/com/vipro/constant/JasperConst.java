@@ -51,4 +51,8 @@ public class JasperConst {
 
 	public static final String PROGRESS_BILLING_LETTER_PURCHASER = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetterPurchaser.jasper";
 
+	public static final String PROGRESS_BILLING_LETTER_PURCHASER_SPLIT = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetterPurchaserSplit.jasper";
+
+	public static final String PROGRESS_BILLING_LETTER_FINANCIER_SPLIT = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetterFinancierSplit.jasper";
+	
 }

@@ -72,8 +72,15 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	private BigDecimal percent = new BigDecimal(100);
 	private List<BillingModelStageDTO> selectedStageDtoList = new ArrayList<BillingModelStageDTO>();
 	private Long invoiceNo = new Long(1l);
+	private Long invoiceNo2 = new Long(1l);
 	private StreamedContent fileToDownload;
-	
+	private BigDecimal financierStageAmount = new BigDecimal(0.00);	
+	private BigDecimal purchaserPortion = new BigDecimal(0.00);
+	private BigDecimal purchaserStageAmount = new BigDecimal(0.00);
+	private BigDecimal amountTtlPurchaser = new BigDecimal(0.00);
+	private BigDecimal amountTtlFinancier = new BigDecimal(0.00);
+	private Integer splitStageSeqNo = 0;
+	private String lastStageSelected ="";
 	
 	public ProgressiveBillingUnitSearchBean() {
 		this.projectService = (ProjectService)SpringBeanUtil.lookup(ProjectService.class.getName());
@@ -364,60 +371,123 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	public void onBillAction() {
 		 boolean isTrue = false;
 		 boolean isCleared = true;
+		 Integer selectedStageCount = 0;
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
+		 splitStageSeqNo = 0;
+		 amountTtlPurchaser = BigDecimal.ZERO;
+		 amountTtlFinancier = BigDecimal.ZERO;		 
+		 financierStageAmount = BigDecimal.ZERO;
+		 purchaserStageAmount = BigDecimal.ZERO;
 		 BillingModelStageDTO sumDTO = new BillingModelStageDTO();
 		 BigDecimal amountTtl = new BigDecimal(0);
 		 BigDecimal percentTtl = new BigDecimal(0);
+		 BigDecimal currentStageAmount = new BigDecimal(0);
+		 BigDecimal tempPurchaserPortion = new BigDecimal(0);
 		 
 		 if (getSelectedDto().getAccount().getSpaStampedDate() == null) {
-			 CommonBean.addInfoMessage("WARNING","Stamped Date is Missing! Please key in the Stamp Date before proceeding.");
+			 CommonBean.addInfoMessage("WARNING!","Stamped Date is Missing! Please key in the Stamp Date before proceeding.");
+			 isCleared = false;
+		 }
+		 if (getSelectedDto().getAccount().getSpaVerifiedBy() == null) {
+			 CommonBean.addInfoMessage("WARNING!","The SPA is not verified yet! Please get your supervisor to verify it first before billing.");
 			 isCleared = false;
 		 }
 		 if (getSelectedDto().getAccount().getSpaSolicitorId() == null) {
-			 CommonBean.addInfoMessage("WARNING","SPA Solicitor is Missing! Please select SPA solicitor before proceeding.");
+			 CommonBean.addInfoMessage("WARNING!","SPA Solicitor is Missing! Please select SPA solicitor before proceeding.");
 			 isCleared = false;
 		 }
 		 if (getSelectedDto().getAccount().getSpaRefNo() == null) {
-			 CommonBean.addInfoMessage("WARNING","SPA Reference is Missing! Please key in the SPA reference no before proceeding.");
+			 CommonBean.addInfoMessage("WARNING!","SPA Reference is Missing! Please key in the SPA reference no before proceeding.");
 			 isCleared = false;
 		 }
 		 
 		 if (!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) &&
 		 	!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-			System.err.println("This is under Loan:"+getSelectedDto().getAccount().getPurchaseType());
 			if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
-				CommonBean.addInfoMessage("WARNING","Loan Amount is Missing! Please key in the Loan Amount before proceeding.");
+				CommonBean.addInfoMessage("WARNING!","Loan Amount is Missing! Please key in the Loan Amount before proceeding.");
 				isCleared = false;
 			}
 			if (getSelectedDto().getAccount().getFinancierId() == null) {
-				 CommonBean.addInfoMessage("WARNING","Financier is Missing! Please select the Financier before proceeding.");
+				 CommonBean.addInfoMessage("WARNING!","Financier is Missing! Please select the Financier before proceeding.");
 				 isCleared = false;
 			}
 			if (getSelectedDto().getAccount().getFinancierRef() == null) {
-				 CommonBean.addInfoMessage("WARNING","LO Reference is Missing! Please key in the Financier Reference before proceeding.");
+				 CommonBean.addInfoMessage("WARNING!","LO Reference is Missing! Please key in the Financier Reference before proceeding.");
 				 isCleared = false;
 			}
 			if (getSelectedDto().getAccount().getLaSolicitorId() == null) {
-				 CommonBean.addInfoMessage("WARNING","LA Solicitor is Missing! Please select the LA Solicitor before proceeding.");
+				 CommonBean.addInfoMessage("WARNING!","LA Solicitor is Missing! Please select the LA Solicitor before proceeding.");
+				 isCleared = false;
+			}
+			if (getSelectedDto().getAccount().getLaRefNo() == null) {
+				 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
 				 isCleared = false;
 			}
 			if (getSelectedDto().getAccount().getBorrowerId1() == null) {
-				 CommonBean.addInfoMessage("WARNING","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");
+				 CommonBean.addInfoMessage("WARNING!","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");
 				 isCleared = false;
 			}
 		 }
 
+		 if (getSelectedDto().getAccount().getLoanAmount() == null) {
+			 purchaserPortion = getSelectedDto().getAccount().getPurchasePrice();
+		 } else {
+			 purchaserPortion = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
+		 }
+		 
+		 if (getSelectedDto().getAccount().getAccountBalance() == null) {
+			 tempPurchaserPortion = purchaserPortion;
+		 } else {
+			 if (getSelectedDto().getAccount().getTotalPaymentTodate() == null) {
+				 tempPurchaserPortion = purchaserPortion.subtract(getSelectedDto().getAccount().getAccountBalance());
+			 } else {
+				 tempPurchaserPortion = purchaserPortion.subtract((getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate())));				 
+			 }
+		 }
+		 
 		 if (isCleared) {
 			 for (BillingModelStageDTO dto : getSelectedDto().getStageDtoList()) {
 				 if(dto.isBillMe()){
+					 selectedStageCount++;
 					 isTrue = true;
 					 amountTtl = amountTtl.add(getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
 					 percentTtl = percentTtl.add(dto.getBillingModel().getBillingPercentage());
-					 selectedStageDtoList.add(dto);				 
-				 }			 
+					 selectedStageDtoList.add(dto);
+					 
+					 currentStageAmount = (getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
+					 if (tempPurchaserPortion.compareTo(BigDecimal.ZERO) > 0) {
+						 if (tempPurchaserPortion.compareTo(currentStageAmount) >= 0) {
+							 tempPurchaserPortion = tempPurchaserPortion.subtract(currentStageAmount);
+							 amountTtlPurchaser = amountTtlPurchaser.add(currentStageAmount);
+						 } else {
+							 if (tempPurchaserPortion.equals(BigDecimal.ZERO)) {
+								 splitStageSeqNo = 0;
+								 purchaserStageAmount = new BigDecimal(0);
+								 financierStageAmount = new BigDecimal(0);
+							 } else {
+								 if (splitStageSeqNo == 0) {
+									 splitStageSeqNo = dto.getBillingModel().getBillingSeq();									 
+								 }
+								 financierStageAmount = currentStageAmount.subtract(tempPurchaserPortion);
+								 purchaserStageAmount = tempPurchaserPortion;
+								 amountTtlPurchaser = amountTtlPurchaser.add(tempPurchaserPortion);
+							 }
+						 }
+					 }
+					 lastStageSelected = dto.getBillingModel().getStage();
+				 }
 			 }
-			 if(!selectedStageDtoList.isEmpty()){
+			 
+			 if (splitStageSeqNo > 0) {
+				 if (selectedStageCount > 1) {
+					 CommonBean.addInfoMessage("WARNING!","For Split Billing, please select and bill 1 Stage at 1 time.");
+					 isTrue = false;
+				 }
+			 }
+			 amountTtlFinancier = amountTtl.subtract(amountTtlPurchaser);
+			 
+			 if(!selectedStageDtoList.isEmpty() && isTrue ){
 				 sumDTO.getBillingModel().setBillingPercentage(percentTtl);
 				 sumDTO.getProgressiveBilling().setAmountBilled(amountTtl);
 				 sumDTO.getBillingModel().setDescription("Total");
@@ -426,7 +496,8 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			
 				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
-				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+//				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 			 }		
 			 if(!isTrue){
 				 CommonBean.addInfoMessage("WARNING!","Invalid stage selected for billing. Please select other stage to Bill.");
@@ -439,16 +510,15 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	public void onCancelBillConfirmation(){
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 boolean success = true;
-		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());			
-		 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, false));
+//		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());			
+//		 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, false));
 		 getSelectedStageDtoList().clear();
 		 setInvoiceNo(new Long(1l));
 		 CommonBean.addInfoMessage("Billing Stages Window Closed.","");
 		 context.addCallbackParam("success2", success);
 	}
 	
-	public void onConfirmBill(){
-		
+	public void onConfirmBill(){		
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
@@ -461,26 +531,40 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 				billedTodate = getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate());
 			}
 		}
+		BigDecimal financierPortion = billedTodate.subtract(purchaserPortion);
+
+		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 		
-		BigDecimal purchaserAmount = new BigDecimal(0.00);
-		if (getSelectedDto().getAccount().getLoanAmount() == null) {		
-			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice();			
-		} else {
-			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
-		}
+//		BigDecimal purchaserAmount = new BigDecimal(0.00);
+//		if (getSelectedDto().getAccount().getLoanAmount() == null) {		
+//			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice();			
+//		} else {
+//			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
+//		}
 		
-		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto());
+		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
+				splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
 
 		if(isSucessfull){
-			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
-			if (getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) || getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-				pbService.printProgressiveLetterCash(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
-			} else {
-				if (billedTodate.compareTo(purchaserAmount) >= 0) {
-					pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
+			if (splitStageSeqNo == 0) {
+				//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
+				if (getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) || getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+					pbService.printProgressiveLetterCash(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
 				} else {
-					pbService.printProgressiveLetterPurchaser(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString());
-				}
+					if (billedTodate.compareTo(purchaserPortion) >= 0) {
+						pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+					} else {
+						pbService.printProgressiveLetterPurchaser(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+					}
+				}				
+			} else {
+				this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtlPurchaser);
+				pbService.printProgressiveLetterPurchaserSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+				// to generate split billing for Financier
+				this.setInvoiceNo2(pbService.getCurrentSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));
+				lastStageSelected = lastStageSelected.trim()+"_"+getInvoiceNo2Formated();
+				this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtlFinancier);
+				pbService.printProgressiveLetterFinancierSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);				
 			}
 		}
 		
@@ -488,10 +572,11 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
 				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
 		
-		CommonBean.addInfoMessage("Progressive Billing Processed Successfully.","The Progressive Billing letter is now ready for printing.");
+		CommonBean.addInfoMessage("SUCCESSFUL", "Progressive Billing Processed Successfully! The Progressive Billing letter is now ready for printing, click View to download.");
 		
 		getSelectedStageDtoList().clear();
 		setInvoiceNo(new Long(01));
+		setInvoiceNo2(new Long(01));
 		context.addCallbackParam("success2", success);
 	}
 	
@@ -634,6 +719,18 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 
 	public void setFileToDownload(StreamedContent fileToDownload) {
 		this.fileToDownload = fileToDownload;
+	}
+
+	public Long getInvoiceNo2() {
+		return invoiceNo2;
+	}
+	
+	public String getInvoiceNo2Formated() {
+		return String.format("PB%04d%n", this.invoiceNo2);
+	}
+
+	public void setInvoiceNo2(Long invoiceNo2) {
+		this.invoiceNo2 = invoiceNo2;
 	}
 	
 }

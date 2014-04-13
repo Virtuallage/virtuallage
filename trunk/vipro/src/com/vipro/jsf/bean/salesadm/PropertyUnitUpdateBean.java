@@ -42,6 +42,7 @@ public class PropertyUnitUpdateBean extends CommonBean implements Serializable{
 	private List<PropertyUnitDetailsDTO> dtoList;
 	
 	private List<SelectItem> statesSIList;
+	private List<SelectItem> countrySIList;
 	private List<SelectItem> titlTypesSIList;
 	
 	private Project project = null;
@@ -201,5 +202,14 @@ public class PropertyUnitUpdateBean extends CommonBean implements Serializable{
 
 	public void setTitlTypesSIList(List<SelectItem> titlTypesSIList) {
 		this.titlTypesSIList = titlTypesSIList;
+	}
+
+	public List<SelectItem> getCountrySIList() {
+		countrySIList = getCodeSIList(CodeConst.COUNTRY);
+		return countrySIList;
+	}
+
+	public void setCountrySIList(List<SelectItem> countrySIList) {
+		this.countrySIList = countrySIList;
 	}
 }

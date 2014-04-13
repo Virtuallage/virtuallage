@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.setup;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -9,6 +10,7 @@ import javax.faces.model.SelectItem;
 
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.CommonConst;
+import com.vipro.data.BusinessPartnerId;
 import com.vipro.data.Institution;
 import com.vipro.data.UserProfile;
 import com.vipro.data.Address;
@@ -170,6 +172,8 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 		try {
 			BusinessPartnerService businesspartner = (BusinessPartnerService) SpringBeanUtil
 					.lookup(BusinessPartnerService.class.getName());
+			String cperson = businessPartnerFld.getContactPersonName();
+			businessPartnerFld.setContactPersonName(cperson.toUpperCase()); 
 			String companyname = businessPartnerFld.getCompanyName();
 			businessPartnerFld.setCompanyName(companyname.toUpperCase());
 			String companycode = businessPartnerFld.getCompanyCode();
@@ -179,7 +183,7 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 
 			address = new Address();
 			AddressService addressService = (AddressService) SpringBeanUtil
-					.lookup(AddressService.class.getName());
+						.lookup(AddressService.class.getName());
 			address.setAddressId(businessPartnerFld.getAddress().getAddressId());
 			String address1 = businessPartnerFld.getAddress().getAddressLine1();
 			address.setAddressLine1(address1.toUpperCase());
@@ -194,18 +198,19 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 			address.setPostcode(businessPartnerFld.getAddress().getPostcode());
 			address.setState(businessPartnerFld.getAddress().getState());
 			address.setCountry(businessPartnerFld.getAddress().getCountry());
-			
+				
 			addressService.update(address);
 
 		} catch (Throwable t) {
 			t.printStackTrace();
-			addErrorMessage("Edit Business Partner", t.getMessage());
+			addErrorMessage("WARNING", t.getMessage());
 			return null;
 		}
 
-		addInfoMessage("Record Saved", "Business Partner information updated successfully.");
-		
-		return "editBusinessPartner";
+		addInfoMessage("SUCCESSFUL", "Business Partner information updated successfully.");
+
+		return "searchBusinessPartner";
+//		return "editBusinessPartner";
 	}
 
 	public String InsertBusinessPartner() {
@@ -213,7 +218,9 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 			businessPartner1 = new BusinessPartner();
 			BusinessPartnerService businesspartner = (BusinessPartnerService) SpringBeanUtil
 					.lookup(BusinessPartnerService.class.getName());
-
+			
+			String cperson = businessPartnerFld.getContactPersonName();
+			businessPartnerFld.setContactPersonName(cperson.toUpperCase()); 
 			String companyname = businessPartnerFld.getCompanyName();
 			businessPartnerFld.setCompanyName(companyname.toUpperCase());
 			String companycode = businessPartnerFld.getCompanyCode();
@@ -225,9 +232,6 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 
 			if (businessPartner1 != null) {
 				String bpName = businessPartner1.getCompanyName();
-
-				System.out.println(bpName);
-
 				addErrorMessage("Add New Business Partner",
 						"Initial : " + companycode.toUpperCase() + " already existed." );
 				return null;
@@ -245,7 +249,6 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 		
 			institution = userProfileFld.getInstitution();
 			Long institutionId = institution.getInstitutionId();
-			System.out.println("Instituton Id :" + institutionId);
 			
 			businessPartnerFld.setInstitution(institution);
 			
@@ -266,23 +269,25 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 			address.setPostcode(businessPartnerFld.getAddress().getPostcode());
 			address.setState(businessPartnerFld.getAddress().getState());
 			address.setCountry(businessPartnerFld.getAddress().getCountry());
+			address.setCreatedBy(userProfileFld.getUsername());
+			address.setCreatedOn(new Date());
 
 			addressService.insert(address);
 
 			businessPartnerFld.setAddress(address);
-			System.out.println("New addressID : " + address.getAddressId());
 			
 			businesspartner.insert(businessPartnerFld);
 
 		} catch (Throwable t) {
 			t.printStackTrace();
-			addErrorMessage("Add New Business Partner", t.getMessage());
+			addErrorMessage("WARNING", t.getMessage());
 			return null;
 		}
 
-		addInfoMessage("Record Saved", "Business Partner information saved successfully.");
-		
-		return "addBusinessPartner";
+		addInfoMessage("SUCCESSFUL", "Business Partner information added successfully.");
+
+		return "searchBusinessPartner";		
+//		return "addBusinessPartner";
 	}
 	
 }

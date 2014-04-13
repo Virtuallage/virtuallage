@@ -330,7 +330,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
-			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+InvoiceNo.trim()+extension);
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();
@@ -358,7 +358,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
-			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+InvoiceNo.trim()+extension);
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();		
@@ -383,7 +383,57 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
-			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+InvoiceNo.trim()+extension);
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
+			FileOutputStream fileOuputStream = new FileOutputStream(file);
+			fileOuputStream.write(reportData);
+		    fileOuputStream.close();		
+		}
+	}  
+	
+	@Override
+	public void generateProgressBillingLetterPurchaserSplit(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("projectId", reportDTO.getProjectId());
+		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
+		params.put("ttlAmount", reportDTO.getInstitutionName());
+		String reportPath = JasperConst.PROGRESS_BILLING_LETTER_PURCHASER_SPLIT;
+		
+		String extension = "";
+		if(reportDTO.getReportFormatId() == 1L){
+			extension = ".xlsx";
+		}else if(reportDTO.getReportFormatId() == 2L){
+			extension = ".pdf";
+		}else if(reportDTO.getReportFormatId() == 3L){
+			extension = ".docx";
+		}
+		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
+		if(reportData != null){
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
+			FileOutputStream fileOuputStream = new FileOutputStream(file);
+			fileOuputStream.write(reportData);
+		    fileOuputStream.close();		
+		}
+	}  
+	
+	@Override
+	public void generateProgressBillingLetterFinancierSplit(ReportDTO reportDTO,String InvoiceNo,String path)throws SQLException, JRException, IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("projectId", reportDTO.getProjectId());
+		params.put("invoiceNo", reportDTO.getBlocksTitle().split("\r\n")[0]+"%");
+		params.put("ttlAmount", reportDTO.getInstitutionName());
+		String reportPath = JasperConst.PROGRESS_BILLING_LETTER_FINANCIER_SPLIT;
+		
+		String extension = "";
+		if(reportDTO.getReportFormatId() == 1L){
+			extension = ".xlsx";
+		}else if(reportDTO.getReportFormatId() == 2L){
+			extension = ".pdf";
+		}else if(reportDTO.getReportFormatId() == 3L){
+			extension = ".docx";
+		}
+		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
+		if(reportData != null){
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();		
@@ -411,7 +461,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
-			File file = new File(path+"RENOTICE_"+reportDTO.getProjectId()+"_"+InvoiceNo.trim()+extension);
+			File file = new File(path+"RENOTICE_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();
