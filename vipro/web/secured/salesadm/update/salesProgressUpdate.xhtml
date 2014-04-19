@@ -147,8 +147,8 @@ Sales Update
    			<p:outputLabel value="Financier"/>
 			<h:panelGroup>
    				<p:selectOneMenu id="financierId" value="#{propertyUnitUpdate.account.financierId}" style="width:200px" disabled="#{propertyUnitUpdate.disableLoanFields == 'Y'}" >  
-						<f:selectItems value="#{propertyUnitUpdate.listPanelBanks}" />
-						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState" listener="#{propertyUnitUpdate.updateLOAddress}"/>
+						<f:selectItems value="#{propertyUnitUpdate.listFinancier}" />
+						<p:ajax event="change" update="loAddressName,loAddAddressButton,loAddressLine1,loAddressLine2,loAddressLine3,loAddressLine4,loPostcode,loCity,loState,financierName" listener="#{propertyUnitUpdate.updateLOAddress}"/>
 				</p:selectOneMenu>&nbsp;&nbsp;
 				<p:commandButton id="loAddAddressButton" value="Add" title="Add New Financier" action="#{propertyUnitUpdate.toBusinessPartner('LO')}" ajax="false" immediate="true" style="display:#{propertyUnitUpdate.verifyAddButton(propertyUnitUpdate.disableLoanFields)}" icon="ui-icon-plus" />
    			</h:panelGroup>
@@ -158,6 +158,11 @@ Sales Update
 				&nbsp;&nbsp;
 				<p:commandButton id="loVerifiedByViewDialogButton" value="Verify" actionListener="#{propertyUnitUpdate.setLODocumentType}" oncomplete="verifyDialog.show()" icon="ui-icon-circle-check" style="display: #{propertyUnitUpdate.verifyByDocumentType('LO')}"/>
 			</h:panelGroup>
+
+			<p:outputLabel value="Financier Name" />
+			<h:inputText id="financierName" value="#{propertyUnitUpdate.financierName}" disabled="true" />
+			<p:outputLabel value="" />
+			<p:outputLabel value="" />
 
 			<p:outputLabel id="loAddressName" value="Address" />
    			<h:inputText id="loAddressLine1" value="#{propertyUnitUpdate.loFinancierAddress.addressLine1}" style="width:200px;" disabled="true" />

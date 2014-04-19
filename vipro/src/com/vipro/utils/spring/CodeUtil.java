@@ -6,12 +6,14 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import com.vipro.constant.PropertyUnitStatusConst;
+import com.vipro.data.BillingModelHeader;
 import com.vipro.data.BusinessPartner;
 import com.vipro.data.CodeDet;
 import com.vipro.data.CodeHeader;
 import com.vipro.data.Institution;
 import com.vipro.data.Project;
 import com.vipro.data.UserProfile;
+import com.vipro.service.BillingModelHeaderService;
 import com.vipro.service.BusinessPartnerService;
 import com.vipro.service.CodeService;
 import com.vipro.service.InstitutionService;
@@ -121,7 +123,36 @@ public final class CodeUtil {
 			}
 		}
 		
+		System.out.println("xx" + partnerType);
+		
 		return items;
 	}
 
+	public static List<SelectItem> getBusinessPartnerAsItems1(String partnerType) {
+		BusinessPartnerService partnerService = (BusinessPartnerService) 
+				SpringBeanUtil.lookup(BusinessPartnerService.class.getName());
+		List<BusinessPartner> partners = partnerService.findByPartnerType(partnerType);
+		
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		items.add( new SelectItem(null, "Select One"));
+		if (partners!=null) {
+			for (BusinessPartner u : partners) {
+				items.add( new SelectItem( u.getPartnerId(), u.getCompanyCode()));
+			}
+		}
+		
+		return items;
+	}
+
+	public static List<SelectItem> getBillingModelAsItems() {
+		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
+		List<BillingModelHeader> modelsHeaderList = billingHeaderService.findAllModel();
+		List<SelectItem> modelItems = new ArrayList<SelectItem>();
+		modelItems.add( new SelectItem(0, "Select One"));
+		for (BillingModelHeader p : modelsHeaderList) {
+			modelItems.add( new SelectItem(p.getHeaderId(), p.getDescription()));
+		}
+
+		return modelItems;
+	}
 }

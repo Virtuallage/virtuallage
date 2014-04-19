@@ -22,15 +22,20 @@ import com.vipro.data.Account;
 import com.vipro.data.Address;
 import com.vipro.data.Customer;
 import com.vipro.data.Discount;
+import com.vipro.data.ProjectInventory;
 import com.vipro.data.SalesCommission;
+import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.datamodel.CustomerDataModel;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.service.AccountService;
 import com.vipro.service.AddressService;
 import com.vipro.service.CustomerService;
 import com.vipro.service.DiscountService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.SalesCommissionService;
+import com.vipro.service.TransactionHistoryService;
+import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.JasperUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -39,6 +44,7 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class CustomerRegister extends CommonBean implements Serializable {
 
+	private static final Object arg0 = null;
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
 	private List<SelectItem> listState = null;
@@ -50,6 +56,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listLanguage = null;
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listSpecial = null;
+	private List<SelectItem> listCategory = null;
 
 	private List<Customer> customers;
 	private CustomerDataModel customerDataModel;
@@ -70,13 +77,21 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private long editAddressId;
 	private Customer delCustomer;
 	private Long currentUserId = null;
-
+	
 	/**
 	 * add customer
 	 */
 	private Customer individual;
 	private Customer company;
 	private Address address;
+
+	/**
+	 * property listing 
+	 */
+	private List<Account> accountList;
+	private String header;
+	private List<TransactionHistory> billHistory;
+	private List<TransactionHistory> paidHistory;
 
 	@PostConstruct
 	public void init() {
@@ -91,12 +106,17 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		listRace = CodeUtil.getCodes("RC");
 		listState = CodeUtil.getCodes("ST");
 		listSpecial = CodeUtil.getCodes("SH");
+		listCategory = CodeUtil.getCodes("CC");
 		
 		AuthUser user = getCurrentUser();
 		if (user != null) {
 			attendedBy = user.getUserProfile();
 			setCurrentUserId(attendedBy.getUserId());
 		}
+		
+		searchName = "";
+		searchIdNo = "";
+		setSearchCustList(null);
 	}
 
 	public List<SelectItem> getListState() {
@@ -330,6 +350,29 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		return null;
 	}
 
+	public String searchPurchaser() {
+		if (!StringUtils.hasText(searchIdNo)
+				&& !StringUtils.hasText(searchName)) {
+			setSearchCustList(null);
+			addErrorMessage("Search Customer",
+					"Please enter customer name or Id No.");
+			return null;
+		}
+
+		CustomerService customerService = (CustomerService) SpringBeanUtil
+				.lookup(CustomerService.class.getName());
+
+		if (StringUtils.hasText(searchName) || StringUtils.hasText(searchIdNo)) {
+			setSearchCustList(customerService.findByIdNoName(searchIdNo, searchName));
+		}
+
+		individual = new Customer();
+		company = new Customer();
+		address = new Address();
+
+		return null;
+	}
+	
 	public String deleteCustomer() {
 
 		customers.remove(delCustomer);
@@ -487,6 +530,51 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		return "editCompany";
 	}
 	
+	public String toPurchaserDetails() {
+		try {
+			editAddressId = customer.getAddressId();
+
+			AddressService addressService = (AddressService) SpringBeanUtil
+					.lookup(AddressService.class.getName());
+			address = addressService.findById(editAddressId);
+			
+			AccountService accountService = (AccountService) SpringBeanUtil
+					.lookup(AccountService.class.getName());
+			setAccountList(accountService.findByCustomerId(customer.getCustomerId()));
+				
+		} catch (Throwable t) {
+			addErrorMessage(t.getClass().getName(), t.getMessage());
+		}
+		return "purchaserDetails";
+	}
+	
+	public String getAccountType(Customer cust){
+		if(cust.getCustomerId().equals(customer.getCustomerId()))
+			return "Main";
+		else
+			return "Join";
+	}
+	
+	public String toPurchaserProperty(Customer cust) {
+		editAddressId = cust.getAddressId();
+		setHeader("Property Unit Account Inquiry for " + cust.getFullName());
+		
+		AddressService addressService = (AddressService) SpringBeanUtil
+				.lookup(AddressService.class.getName());
+		address = addressService.findById(editAddressId);
+		
+		AccountService accountService = (AccountService) SpringBeanUtil
+				.lookup(AccountService.class.getName());
+		accountService.findByCustomerId(cust.getCustomerId());	
+		
+		TransactionHistoryService trnxHistory = (TransactionHistoryService) SpringBeanUtil
+				.lookup(TransactionHistoryService.class.getName());
+		billHistory = trnxHistory.findTransactionHistoryByAccountIdAndTcode(account.getAccountId(), "500001", "510001", "500002");
+		paidHistory = trnxHistory.findTransactionHistoryByAccountIdAndTcode(account.getAccountId(), "100001", "100002", "100003");
+				
+		return "purchaser_property_information";
+	}
+	
 	public String editIndividual() {
 		try {
 			if (address.getCountry().equals(CommonConst.MALAYSIA)) {
@@ -597,6 +685,14 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	public String backCompany() {
 		return "companyRegistration";
 	}
+	
+	public String backPurchaser() {
+		return "/secured/customer_service/inquiry/purchaser_information.xhtml";
+	}
+	
+	public String backPurchaserDetails() {
+		return "/secured/customer_service/inquiry/purchaserDetails.xhtml";
+	}
 
 	public List<SelectItem> getListSpecial() {
 		return listSpecial;
@@ -612,5 +708,45 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public void setCurrentUserId(Long currentUserId) {
 		this.currentUserId = currentUserId;
+	}
+
+	public List<SelectItem> getListCategory() {
+		return listCategory;
+	}
+
+	public void setListCategory(List<SelectItem> listCategory) {
+		this.listCategory = listCategory;
+	}
+
+	public List<Account> getAccountList() {
+		return accountList;
+	}
+
+	public void setAccountList(List<Account> accountList) {
+		this.accountList = accountList;
+	}
+
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	public List<TransactionHistory> getBillHistory() {
+		return billHistory;
+	}
+
+	public void setBillHistory(List<TransactionHistory> billHistory) {
+		this.billHistory = billHistory;
+	}
+
+	public List<TransactionHistory> getPaidHistory() {
+		return paidHistory;
+	}
+
+	public void setPaidHistory(List<TransactionHistory> paidHistory) {
+		this.paidHistory = paidHistory;
 	}
 }

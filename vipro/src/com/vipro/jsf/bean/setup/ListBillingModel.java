@@ -34,11 +34,12 @@ public class ListBillingModel extends CommonBean implements Serializable {
 	private List<SelectItem> listStatus = null;
 
 	private List<BillingModelHeader> modelsHeader;
+	private List<BillingModelHeader> modelsHeaderList;
 	private BillingModelHeader modelHeader;
 	private List<BillingModel> models;
 	private BillingModel model;
 	
-	private Long headerId;
+	private Long headerId = (long) 0;
 	private String billingModelCode;
 	private String description;
 	private String status;
@@ -60,11 +61,11 @@ public class ListBillingModel extends CommonBean implements Serializable {
 
 	public List<SelectItem> getBillingModelAsItems() {
 		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
-		modelsHeader = billingHeaderService.findAllModel();
+		modelsHeaderList = billingHeaderService.findAllModel();
 		List<SelectItem> modelItems = new ArrayList<SelectItem>();
 		modelItems.add( new SelectItem(0, "Select All"));
-		for (BillingModelHeader p : modelsHeader) {
-			modelItems.add( new SelectItem(p.getHeaderId(), p.getDescription()) );
+		for (BillingModelHeader p : modelsHeaderList) {
+			modelItems.add( new SelectItem(p.getHeaderId(), p.getDescription()));
 		}
 
 		return modelItems;
@@ -72,7 +73,8 @@ public class ListBillingModel extends CommonBean implements Serializable {
 
 	public String searchModel(){
 		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
-		if(headerId == 0)
+		
+		if(headerId == null || headerId == 0)
 			modelsHeader = billingHeaderService.findAllModel();
 		else
 			modelsHeader = billingHeaderService.findById(headerId);
@@ -118,7 +120,6 @@ public class ListBillingModel extends CommonBean implements Serializable {
 	}
 	
 	public String newBillingModel(){
-		System.out.println("here " + currentModel);
 		AuthUser user = getCurrentUser();
 		setModel(new BillingModel());
 		getModel().setDateChanged(new Date());
@@ -138,8 +139,14 @@ public class ListBillingModel extends CommonBean implements Serializable {
 
 	public String insertNewModelHeader(){
 		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
-		billingHeaderService.insert(modelHeader);
-
+		List<BillingModelHeader> bmh = billingHeaderService.findByModel(modelHeader.getBillingModelCode());
+		if(bmh.isEmpty())
+			billingHeaderService.insert(modelHeader);
+		else{
+			addErrorMessage("Add New Billing Model Header",
+					"Billing Model Code : " + modelHeader.getBillingModelCode() + " already existed." );
+			return null;
+		}
 		return "/secured/setup/billingModel/listProgressiveBillingModel.xhtml";
 	}
 	
@@ -176,7 +183,7 @@ public class ListBillingModel extends CommonBean implements Serializable {
 		}
 		setColor();
 	}
-	
+
 	public void onEditH(RowEditEvent event) {
 		modelHeader = (BillingModelHeader) event.getObject();
 
@@ -187,23 +194,15 @@ public class ListBillingModel extends CommonBean implements Serializable {
 		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
 		billingHeaderService.update(modelHeader);
 		
-		if(headerId == 0)
-			modelsHeader = billingHeaderService.findAllModel();
-		else
-			modelsHeader = billingHeaderService.findById(headerId);
 	}
-
+	
 	public void onCancel(RowEditEvent event) {
 		BillingModelService billingModelService = (BillingModelService) SpringBeanUtil.lookup(BillingModelService.class.getName());
 		models = billingModelService.findByBillingModelCode(((BillingModel) event.getObject()).getBillingModelCode());
 	}  
 	
 	public void onCancelH(RowEditEvent event) {
-		BillingModelHeaderService billingHeaderService = (BillingModelHeaderService) SpringBeanUtil.lookup(BillingModelHeaderService.class.getName());
-		if(headerId == 0)
-			modelsHeader = billingHeaderService.findAllModel();
-		else
-			modelsHeader = billingHeaderService.findById(headerId);
+
 	}  
 	
 	public void onDelete(Long modelId){

@@ -22,9 +22,9 @@ Add Business Partner
 <h:form>
 
 			<h:panelGrid columns="2" style="width:100%;text-align:left;">
-				<p:outputLabel value="Company Code"/>
+				<p:outputLabel value="Financier"/>
 				<p:inputText value="#{propertyUnitUpdate.partner.companyCode}" style="width:100px; text-transform:uppercase" required="true" maxlength="10"/>
-				<p:outputLabel value="Company Name"/>
+				<p:outputLabel value="Financier Name"/>
 				<p:inputText value="#{propertyUnitUpdate.partner.companyName}" style="width:400px; text-transform:uppercase" required="true"/>
 				<p:outputLabel value="Business Registration No"/>
 				<p:inputText value="#{propertyUnitUpdate.partner.businessRegistrationNo}" style="width:200px; text-transform:uppercase" />
@@ -43,6 +43,10 @@ Add Business Partner
 				<p:outputLabel value="State"/>
 				<p:selectOneMenu id="state" value="#{propertyUnitUpdate.partnerAddress.state}" style="width:200px">
 						<f:selectItems value="#{propertyUnitUpdate.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Country"/>
+				<p:selectOneMenu id="country" value="#{propertyUnitUpdate.partnerAddress.country}" style="width:200px" required="true">
+						<f:selectItems value="#{propertyUnitUpdate.listCountry}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Contact Person Title" for="contactPersonTitle"/>
 				<p:selectOneMenu id="contactPersonTitle" value="#{propertyUnitUpdate.partner.contactPersonTitle}" style="width:200px">

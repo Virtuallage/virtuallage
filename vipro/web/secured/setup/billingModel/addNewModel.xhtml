@@ -21,43 +21,35 @@ Billing Model Header
 
 <h:form>
 
-			<h:panelGrid columns="3" style="width:100%;text-align:left;">
+			<h:panelGrid columns="2" style="width:100%;text-align:left;">
 				<p:outputLabel value="Model Code"/>
 				<h:outputText id="model" value="#{listBillingModel.model.billingModelCode}" />
-				<h:message for="model" />  
 							
-				<p:outputLabel value="Seq"/>
+				<p:outputLabel value="Seq" for="seq"/>
 				<p:inputMask id="seq" value="#{listBillingModel.model.billingSeq}" mask="9?9999999999" maxlength="11" style="width:400px" required="true" autocomplete="off"/>
-				<p:message for="seq" />  
 				
-				<p:outputLabel value="Stage"/>
-				<h:inputText id="stage" value="#{listBillingModel.model.stage}" maxlength="10" style="width:400px" required="true" autocomplete="off"/>
-				<h:message for="stage" />  
+				<p:outputLabel value="Stage" for="stage"/>
+				<p:inputText id="stage" value="#{listBillingModel.model.stage}" maxlength="10" style="width:400px" required="true" autocomplete="off"/>
 				
-				<p:outputLabel value="Description"/>
-				<h:inputText id="description" value="#{listBillingModel.model.description}" maxlength="120" required="true" autocomplete="off"/>
-				<h:message for="description" />  
+				<p:outputLabel value="Description" for="description"/>
+				<p:inputText id="description" value="#{listBillingModel.model.description}" maxlength="120" required="true" autocomplete="off"/>
 					
-				<p:outputLabel value="Percentage"/>
+				<p:outputLabel value="Percentage" for="percentage"/>
 				<p:inputMask id="percentage" value="#{listBillingModel.model.billingPercentage}" mask="99.99" style="width:400px" required="true" autocomplete="off"/>
-				<h:message for="percentage" />  
 				
 				<p:outputLabel value="Last Changed By"/>
 				<h:outputText value="#{listBillingModel.model.changedBy}" />
-				<h:message />  
-				
+
 				<p:outputLabel value="Last Changed Date"/>
 				<h:outputText value="#{listBillingModel.model.dateChanged}">
 					<f:convertDateTime pattern="dd/MM/yyyy"/> 
 				</h:outputText>
-				<h:message /> 
-							
+				
 				<p:outputLabel value="Status"/>
 				<p:selectOneMenu id="status" value="#{listBillingModel.model.status}" required="true" disabled="true">
 					<f:selectItems value="#{listBillingModel.listStatus}"/>
 				</p:selectOneMenu>	
-				<h:message /> 	
-								
+							
 			</h:panelGrid>
 							
 			<br/>

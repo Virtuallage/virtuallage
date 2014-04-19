@@ -46,4 +46,9 @@ public class BillingModelHeaderServiceImpl implements BillingModelHeaderService 
 		billingModelHeaderDao.delete(b);
 	}
 
+	@Override
+	public List<BillingModelHeader> findByModel(String modelCode) {
+		return billingModelHeaderDao.findByModel(modelCode);
+	}
+
 }

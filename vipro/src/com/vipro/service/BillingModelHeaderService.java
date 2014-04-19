@@ -16,6 +16,8 @@ public interface BillingModelHeaderService {
 	
 	public List<BillingModelHeader> findById(Long headerId);
 	
+	public List<BillingModelHeader> findByModel(String modelCode);
+	
 	public BillingModelHeader findModel(Long headerId);
 
 }

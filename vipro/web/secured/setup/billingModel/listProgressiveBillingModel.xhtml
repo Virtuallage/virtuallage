@@ -48,7 +48,7 @@ Billing Model Header
 					id="billingModelHeaderTable" editable="true">
 
 					<p:ajax event="rowEdit" listener="#{listBillingModel.onEditH}" oncomplete="savechange.show()" />  
-        			<p:ajax event="rowEditCancel" listener="#{listBillingModel.onCancelH}"  />
+        			<p:ajax event="rowEditCancel" listener="#{listBillingModel.onCancelH}" />
     
 					<p:column headerText="Model" style="width:20%" sortBy="#{c.billingModelCode}">
 						<p:cellEditor>  
@@ -61,7 +61,7 @@ Billing Model Header
 			            </p:cellEditor> 
 					</p:column>
 
-					<p:column headerText="Description" style="width:50%" sortBy="#{c.description}">
+					<p:column headerText="Description" style="width:50%">
 						 <p:cellEditor>  
 			                <f:facet name="output">  
 			                    <h:outputText value="#{c.description}" />  

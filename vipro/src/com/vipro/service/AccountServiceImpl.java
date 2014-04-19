@@ -76,4 +76,9 @@ public class AccountServiceImpl implements AccountService {
 		return accountDao.findById(accountId);
 	}
 
+	@Override
+	public List<Account> findByCustomerId(Long custId) {
+		return accountDao.findByCustomerId(custId);
+	}
+
 }

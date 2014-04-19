@@ -22,7 +22,7 @@ public class BillingModelHeaderDaoImpl extends DaoImpl<BillingModelHeader> imple
 
 	@Override
 	public List<BillingModelHeader> findAllModel() {
-		String query = "select o from BillingModelHeader o ";
+		String query = "select o from BillingModelHeader o order by o.billingModelCode";
 		List<BillingModelHeader> list = getHibernateTemplate().find(query);
 
 		return list;
@@ -40,5 +40,13 @@ public class BillingModelHeaderDaoImpl extends DaoImpl<BillingModelHeader> imple
 	public BillingModelHeader findModel(Long headerId) {
 		BillingModelHeader header = getHibernateTemplate().get(BillingModelHeader.class, headerId);
 		return header;
+	}
+
+	@Override
+	public List<BillingModelHeader> findByModel(String modelCode) {
+		String query = "select o from BillingModelHeader o where o.billingModelCode=?";
+		List<BillingModelHeader> list = getHibernateTemplate().find(query, modelCode);
+
+		return list;
 	}
 }

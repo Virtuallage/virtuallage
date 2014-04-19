@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Purchaser Inquiry
+</ui:define>
+	<ui:define name="content">
+	
+		<p:panel id="panel" header="Purchaser Inquiry"
+		style="width:95%">
+
+		<p:focus context="panel" />
+			
+		<h:form id="searchCustForm">
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="text-align:left">
+						<p:outputLabel value="Search by Name" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:inputText id="name" size="50" value="#{customerRegister.searchName}" style="text-transform:uppercase" required="false" autocomplete="off" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column style="text-align:left">
+						<p:outputLabel value="Search by ID Number" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:inputText id="idNumber" size="50" value="#{customerRegister.searchIdNo}" required="false" autocomplete="off" />
+					</p:column>
+					<p:column style="text-align:left">
+						<p:commandButton value="Search" action="#{customerRegister.searchPurchaser}" update="searchCustForm:custs" />
+					</p:column>
+				</p:row>
+				
+			</p:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable id="custs" var="c" value="#{customerRegister.searchCustList}"
+					paginator="true" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40,60,80,100">
+				<p:column headerText="Name" style="width:35%">
+					<h:outputText value="#{c.fullName}" />
+				</p:column>
+				
+				<p:column headerText="ID Number" style="width:25%">
+					<h:outputText value="#{c.identityNo}" />
+				</p:column>
+				
+				<p:column headerText="ID Type" sortBy="#{customerRegister.getCodeDesc('ID', c.identityType)}">
+					<h:outputText value="#{customerRegister.getCodeDesc('ID', c.identityType)}" />
+				</p:column>
+
+				<p:column headerText="Action" style="width:20%">
+					<p:commandButton action="#{customerRegister.toPurchaserDetails}" ajax="false" icon="ui-icon-pencil" title="Purchaser Details Inquiry">
+           		 	<f:setPropertyActionListener value="#{c}" target="#{customerRegister.customer}" />  
+           			</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<br/>
+
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
