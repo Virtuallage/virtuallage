@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Property Unit Account Inquiry
+</ui:define>
+	<ui:define name="content">
+	
+		<p:panel id="panel" header="#{customerRegister.header}"
+		style="width:95%">
+
+		<p:focus context="panel" />
+			
+		<h:form>
+			<h:panelGrid columns="5" style="width:100%;text-align:left;">
+			
+				<p:outputLabel value="Project" />
+				<h:inputText value="#{customerRegister.account.projectInventory.project.projectName}" disabled="true" style="width:400px"/>	
+				<p:outputLabel value="Sales Person" />
+				<h:inputText value="#{customerRegister.account.salesPerson}" disabled="true" style="width:400px"/>	
+				<p:outputLabel/>
+							
+				<p:outputLabel value="Unit No" />
+				<h:inputText value="#{customerRegister.account.projectInventory.unitNo}" disabled="true" style="width:400px"/>	
+				<p:outputLabel value="SPA Signed" />
+				<h:inputText value="#{customerRegister.account.spaSignedDate}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="Date Purchased"/>
+				<h:inputText value="#{customerRegister.account.datePurchased}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="LO Signed" />
+				<h:inputText value="#{customerRegister.account.loSignedDate}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="Financier" />
+				<h:inputText value="#{customerRegister.account.financierId}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Comm Paid" />
+				<h:inputText value="#{customerRegister.account.commissionPaidDate}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+								
+				<p:outputLabel value="Loan Amount" />
+				<h:inputText value="#{customerRegister.account.loanAmount}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Comm Amount" />
+				<h:inputText value="#{customerRegister.account.commissionAmount}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+							
+				<p:outputLabel value="Corr Address" />
+				<h:inputText value="#{customerRegister.address.addressLine1}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Booking Fee" />
+				<h:inputText value="#{customerRegister.account.bookPymtAmount}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="" />
+				<h:inputText value="#{customerRegister.address.addressLine2}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Selling Price" />
+				<h:inputText value="#{customerRegister.account.purchasePrice}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="" />
+				<h:inputText value="#{customerRegister.address.addressLine3}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Discount Amount"/>
+				<h:inputText value="#{customerRegister.account.discountedAmount}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+					
+				<p:outputLabel value="" />
+				<h:inputText value="#{customerRegister.address.addressLine4}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Nett Amount" />
+				<h:inputText value="#{customerRegister.account.netPrice}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="Postcode" />
+				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Billed Todate" />
+				<h:inputText value="#{customerRegister.account.accountBalance + customerRegister.account.totalPaymentTodate}" disabled="true" style="width:400px"/>
+			    
+				<p:panelGrid styleClass="no-borders" style="width:95%">
+			     	<p:row>
+			     		<p:column style="text-align:left">
+			     			<p:commandButton value="View" onclick="dlgView.show()" />  
+			     		</p:column>
+			     	</p:row>
+			     </p:panelGrid>
+			     
+				<p:outputLabel value="State" />
+				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listState}"/>
+				</h:selectOneMenu>
+				<p:outputLabel value="Paid Todate" />
+				<h:inputText value="#{customerRegister.account.totalPaymentTodate}" disabled="true" style="width:400px"/>
+				
+				<p:panelGrid styleClass="no-borders" style="width:95%">
+			     	<p:row>
+			     		<p:column style="text-align:left">
+			     			<p:commandButton value="View" onclick="dlgView1.show()" />  
+			     		</p:column>
+			     	</p:row>
+			     </p:panelGrid>
+		     
+				<p:outputLabel value="Country" />
+				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listCountry}"/>
+				</h:selectOneMenu>
+				<p:outputLabel value="O/S Balance" />
+				<h:inputText value="#{customerRegister.account.accountBalance}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
+								
+			</h:panelGrid>
+			<br/>
+			<p:commandButton value="Back" action="#{customerRegister.backPurchaserDetails}" icon="ui-icon-arrowreturn-1-w"/>
+		     <br/>
+		     
+</h:form>
+
+<h:form id="billHistoryForm">
+	<p:dialog header="Billed Todate Transaction History" widgetVar="dlgView"  modal="false" height="400" width="1100"  showEffect="fade" hideEffect="fade"> 
+		
+		<p:dataTable id="history1" var="c" value="#{customerRegister.billHistory}" style="width:90%;">  
+	        <p:column headerText="Transaction Date">  
+	            <h:outputText value="#{c.transactionDate}" />  
+	        </p:column>  
+	        <p:column headerText="Posting Date">  
+	            <h:outputText value="#{c.postingDate}" />
+	        </p:column>  
+	        <p:column headerText="Posted By">  
+	            <h:outputText value="#{c.postedBy}" />
+	        </p:column>  
+	        <p:column headerText="Amount">  
+	            <h:outputText value="#{c.amount}" />  
+	        </p:column>  
+	        <p:column headerText="Transaction Description">  
+	            <h:outputText value="#{c.transactionDescription}" />  
+	        </p:column> 
+	        <p:column headerText="Reference No" >  
+	            <h:outputText value="#{c.refNo}" />  
+	        </p:column> 
+	        <p:column headerText="Invoice No" >  
+	            <h:outputText value="#{c.invoiceNo}" />  
+	        </p:column> 
+	        <p:column headerText="Status">
+				<h:outputText value="#{customerRegister.getCodeDesc('TS', c.status)}" />
+			</p:column>
+		</p:dataTable>  
+		<br/>
+
+		<p:commandButton value="Close" onclick="dlgView.hide();"/>
+	
+	</p:dialog>			
+		</h:form>
+		
+<h:form id="paidHistoryForm">
+	<p:dialog header="Paid Todate Transaction History" widgetVar="dlgView1"  modal="false" height="400" width="1100"  showEffect="fade" hideEffect="fade"> 
+		
+		<p:dataTable id="history1" var="c" value="#{customerRegister.paidHistory}" style="width:90%;">  
+	        <p:column headerText="Transaction Date">  
+	            <h:outputText value="#{c.transactionDate}" />  
+	        </p:column>  
+	        <p:column headerText="Posting Date">  
+	            <h:outputText value="#{c.postingDate}" />
+	        </p:column>  
+	        <p:column headerText="Posted By">  
+	            <h:outputText value="#{customerRegister.getUserName(c.postedBy)}" />
+	        </p:column>  
+	        <p:column headerText="Amount">  
+	            <h:outputText value="#{c.amount}" />  
+	        </p:column>  
+	        <p:column headerText="Transaction Description">  
+	            <h:outputText value="#{c.transactionDescription}" />  
+	        </p:column> 
+	        <p:column headerText="Reference No" >  
+	            <h:outputText value="#{c.refNo}" />  
+	        </p:column> 
+	        <p:column headerText="Invoice No" >  
+	            <h:outputText value="#{c.invoiceNo}" />  
+	        </p:column> 
+	        <p:column headerText="Status">
+				<h:outputText value="#{customerRegister.getCodeDesc('TS', c.status)}" />
+			</p:column>
+		</p:dataTable>  
+		<br/>
+
+		<p:commandButton value="Close" onclick="dlgView1.hide();"/>
+	
+	</p:dialog>			
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

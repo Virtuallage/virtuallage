@@ -48,4 +48,10 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 		
 	}
 
+	@Override
+	public List<TransactionHistory> findTransactionHistoryByAccountIdAndTcode(
+			Long accountId, String transcationCode, String transcationCode2, String transcationCode3) {
+		return transactionHistoryDao.findTransactionHistoryByAccountIdAndTcode(accountId, transcationCode, transcationCode2, transcationCode3);
+	}
+
 }

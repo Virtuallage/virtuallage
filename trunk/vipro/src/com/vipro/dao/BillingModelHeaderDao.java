@@ -19,4 +19,6 @@ public interface BillingModelHeaderDao extends Dao<BillingModelHeader>{
 	
 	public BillingModelHeader findModel(Long headerId);
 	
+	public List<BillingModelHeader> findByModel(String modelCode);
+	
 }

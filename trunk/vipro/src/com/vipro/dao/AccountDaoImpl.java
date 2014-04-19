@@ -76,4 +76,13 @@ public class AccountDaoImpl extends DaoImpl<Account> implements AccountDao {
 		return getHibernateTemplate().get(Account.class, accountId);
 	}
 
+
+	@Override
+	public List<Account> findByCustomerId(Long custId) {
+		String query="select o from com.vipro.data.Account o where o.customer.customerId=? or o.customer2.customerId=? or " +
+				"o.customer3.customerId=? or o.customer4.customerId=? or o.customer5.customerId=?";
+		List<Account> acc = getHibernateTemplate().find(query, custId, custId, custId, custId, custId);
+		return acc;
+	}
+
 }

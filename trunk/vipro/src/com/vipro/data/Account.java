@@ -34,7 +34,7 @@ public class Account implements java.io.Serializable {
 	private Date commissionPaidDate;
 	private BigDecimal netPrice;
 	private String purchaseType;
-	private Long panelBankId;
+	private String panelBankId;
 	private BigDecimal loanAmount;
 	private BigDecimal latePymtIntRate;
 	private BigDecimal latePymtFee;
@@ -118,7 +118,7 @@ public class Account implements java.io.Serializable {
 			Date datePurchased, BigDecimal purchasePrice,
 			BigDecimal discountedAmount, BigDecimal commissionAmount,
 			Date commissionPaidDate, BigDecimal netPrice, String purchaseType,
-			Long panelBankId, BigDecimal loanAmount,
+			String panelBankId, BigDecimal loanAmount,
 			BigDecimal totalPaymentTodate, Long redemptionBankId,
 			BigDecimal bankRedemptionSum, BigDecimal bankRedemptionTodate,
 			Date spaSignedDate, Date spaStampedDate, Long spaVerifiedBy,
@@ -411,11 +411,11 @@ public class Account implements java.io.Serializable {
 		this.purchaseType = purchaseType;
 	}
 
-	public Long getPanelBankId() {
+	public String getPanelBankId() {
 		return this.panelBankId;
 	}
 
-	public void setPanelBankId(Long panelBankId) {
+	public void setPanelBankId(String panelBankId) {
 		this.panelBankId = panelBankId;
 	}
 

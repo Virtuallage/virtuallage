@@ -21,30 +21,25 @@ Billing Model Header
 
 <h:form>
 
-			<h:panelGrid columns="3" style="width:100%;text-align:left;">
-				<p:outputLabel value="Model"/>
-				<h:inputText id="model" value="#{listBillingModel.modelHeader.billingModelCode}" maxlength="10" style="width:400px" required="true" autocomplete="off"/>
-				<h:message for="model" />  
+			<h:panelGrid columns="2" style="width:100%;text-align:left;" focus="description">
+				<p:outputLabel value="Model" for="model"/>
+				<p:inputText id="model" value="#{listBillingModel.modelHeader.billingModelCode}" maxlength="10" style="width:400px" required="true" autocomplete="off"/>
 				 
-				<p:outputLabel value="Description"/>
-				<h:inputText id="description" value="#{listBillingModel.modelHeader.description}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
-				<h:message for="description" /> 
-					
+				<p:outputLabel value="Description" for="description"/>
+				<p:inputText id="description" value="#{listBillingModel.modelHeader.description}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
+
 				<p:outputLabel value="Last Changed By"/>
 				<h:outputText value="#{listBillingModel.modelHeader.changedBy}" />
-				<h:message />
-				
+
 				<p:outputLabel value="Last Changed Date"/>
 				<h:outputText value="#{listBillingModel.modelHeader.dateChanged}">
 					<f:convertDateTime pattern="dd/MM/yyyy"/> 
 				</h:outputText>
-							<h:message />
 							
 				<p:outputLabel value="Status"/>
 				<p:selectOneMenu id="status" value="#{listBillingModel.modelHeader.status}" required="true" disabled="true">
 					<f:selectItems value="#{listBillingModel.listStatus}"/>
 				</p:selectOneMenu>		
-							<h:message />
 								
 			</h:panelGrid>
 							

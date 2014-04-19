@@ -20,9 +20,9 @@ public class TransactionHistoryDaoImpl extends DaoImpl<TransactionHistory> imple
 	
 	@Override
 	public List<TransactionHistory> findTransactionHistoryByAccountIdAndTcode(
-			Long accountId, String transactionCode) {
-		String query = "select o from TransactionHistory o where o.account.accountId=? and o.transactionCode.transactionCode =? and o.status in (?,?)";
-		return getHibernateTemplate().find(query, accountId, transactionCode,
+			Long accountId, String transactionCode,String transactionCode2,String transactionCode3) {
+		String query = "select o from TransactionHistory o where o.account.accountId=? and (o.transactionCode.transactionCode =? or o.transactionCode.transactionCode =? or o.transactionCode.transactionCode =?) and o.status in (?,?)";
+		return getHibernateTemplate().find(query, accountId, transactionCode, transactionCode2, transactionCode3,
 				TransactionStatusConst.TRANSACTION_PENDING, TransactionStatusConst.TRANSACTION_POSTED);
 	}
 

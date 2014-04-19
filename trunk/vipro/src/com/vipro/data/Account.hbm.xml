@@ -74,8 +74,8 @@
          <property name="remark" type="string">
             <column name="remark" length="300" />
         </property>
-        <property name="panelBankId" type="java.lang.Long">
-            <column name="panel_bank_id" />
+        <property name="panelBankId" type="string">
+            <column name="panel_bank_id" length="5"/>
         </property>
         <property name="loanAmount" type="big_decimal">
             <column name="loan_amount" precision="11" />

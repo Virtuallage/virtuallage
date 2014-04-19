@@ -40,7 +40,11 @@ My Work Queue
         <p:column headerText="Category" sortBy="#{myDesk.getCodeDesc('CY',c.caseType)}">  
            <h:outputText value="#{myDesk.getCodeDesc('CY',c.caseType)}"/>
         </p:column>  
-        
+
+        <p:column headerText="Project Name" sortBy="#{myDesk.getProjectName(c.projectId)}">  
+           <h:outputText value="#{myDesk.getProjectName(c.projectId)}"/>
+        </p:column>  
+                
         <p:column headerText="Purchaser Name" sortBy="#{myDesk.getCustName(c.customerId)}">  
            <h:outputText value="#{myDesk.getCustName(c.customerId)}"/>
         </p:column>

@@ -18,10 +18,12 @@ import com.vipro.constant.CaseStatus;
 import com.vipro.data.Case;
 import com.vipro.data.CaseActivity;
 import com.vipro.data.Customer;
+import com.vipro.data.Project;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.CaseService;
 import com.vipro.service.CustomerService;
+import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -318,4 +320,12 @@ public class MyDesk extends CommonBean implements Serializable {
 		return fullName;
 	}
 
+	public String getProjectName(Long projectId) {
+		ProjectService projectService = (ProjectService) SpringBeanUtil.lookup(ProjectService.class.getName());
+		Project project = projectService.findById(projectId);
+
+		String projName = project.getProjectName();
+		
+		return projName;
+	}
 }

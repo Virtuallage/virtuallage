@@ -137,7 +137,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 		listState = CodeUtil.getCodes("ST");
 		listSpecial = CodeUtil.getCodes("SH");
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
-		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
+		listPanelBanks = CodeUtil.getCodes("BK");
 		listUsers = CodeUtil.getActiveUsersAsItems();
 		listSalesPersons = CodeUtil.getActiveUsersAsItems();
 	}

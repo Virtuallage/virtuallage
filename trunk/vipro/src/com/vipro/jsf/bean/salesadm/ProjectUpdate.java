@@ -1,6 +1,7 @@
 package com.vipro.jsf.bean.salesadm;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -12,11 +13,13 @@ import org.springframework.beans.BeanUtils;
 import com.vipro.auth.AuthUser;
 import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.ProjectStatusConst;
+import com.vipro.data.BillingModelHeader;
 import com.vipro.data.Discount;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.data.SalesCommission;
 import com.vipro.jsf.bean.CommonBean;
+import com.vipro.service.BillingModelHeaderService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
 import com.vipro.utils.spring.CodeUtil;
@@ -37,6 +40,7 @@ public class ProjectUpdate extends CommonBean implements Serializable {
 	private List<SelectItem> landProprietors;
 	private List<SelectItem> reportGroups;
 	private List<SelectItem> statusList;
+	private List<SelectItem> billingSchedule;
 	private String locationSearch;
 	private int totalUnits;
 	private double currentDiscount;
@@ -71,6 +75,7 @@ public class ProjectUpdate extends CommonBean implements Serializable {
 		institutions = CodeUtil.getInstitutionAsItems();
 		developers = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.DEVELOPER);
 		landProprietors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.LAND_PROPRIETOR);
+		billingSchedule = CodeUtil.getBillingModelAsItems();
 		
 		listProject();
 
@@ -316,6 +321,14 @@ public class ProjectUpdate extends CommonBean implements Serializable {
 
 	public void setDevelopers(List<SelectItem> developers) {
 		this.developers = developers;
+	}
+
+	public List<SelectItem> getBillingSchedule() {
+		return billingSchedule;
+	}
+
+	public void setBillingSchedule(List<SelectItem> billingSchedule) {
+		this.billingSchedule = billingSchedule;
 	}
 
 }

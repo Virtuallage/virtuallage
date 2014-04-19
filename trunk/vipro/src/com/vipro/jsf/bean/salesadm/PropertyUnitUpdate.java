@@ -88,6 +88,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listBumi = null;
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listSolicitors = null;
+	private List<SelectItem> listFinancier = null;
 	private List<SelectItem> listPanelBanks = null;
 	private List<SelectItem> listSpecial = null;
 	private List<SelectItem> listContactPersonTitle = null;
@@ -105,6 +106,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private Account account;
 	private Long accountId;
 	private UserProfile attendedBy;
+	private String financierName;
 	
 	private List<DocumentReference> documentReferences;
 	private DocumentReference documentReference;
@@ -155,7 +157,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		listState = CodeUtil.getCodes("ST");
 		listSpecial = CodeUtil.getCodes("SH");
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
-		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
+		listFinancier = CodeUtil.getBusinessPartnerAsItems1(BusinessPartnerTypeConst.BANK);
+		listPanelBanks = CodeUtil.getCodes("BK");
 		listContactPersonTitle = CodeUtil.getCodes("XX");
 		
 		borrower1Button = new CommandButton();
@@ -782,6 +785,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			BusinessPartner businessPartner = businessPartnerService.findById(account.getFinancierId());
 			if(businessPartner != null) {
 				loFinancierAddress = businessPartner.getAddress();
+				financierName = businessPartner.getCompanyName();
 			}
 		}
 	}
@@ -962,7 +966,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			
 			if (!account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) && 
 			   !account.getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-				if(account.getPanelBankId() == null || account.getPanelBankId() == 0) {
+				if(account.getPanelBankId() == null || account.getPanelBankId() == "") {
 					addErrorMessage("Bank Name is required",
 							"Please select bank name.");
 					return "salesProgressUpdate";
@@ -1465,7 +1469,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		}
 		
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
-		listPanelBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
+		listFinancier = CodeUtil.getBusinessPartnerAsItems1(BusinessPartnerTypeConst.BANK);
+		listPanelBanks = CodeUtil.getCodes("BK");
 		
 		return "salesProgressUpdate";
 	}
@@ -1492,6 +1497,22 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 	public void setLoAddAddressButton(CommandButton loAddAddressButton) {
 		this.loAddAddressButton = loAddAddressButton;
+	}
+
+	public List<SelectItem> getListFinancier() {
+		return listFinancier;
+	}
+
+	public void setListFinancier(List<SelectItem> listFinancier) {
+		this.listFinancier = listFinancier;
+	}
+
+	public String getFinancierName() {
+		return financierName;
+	}
+
+	public void setFinancierName(String financierName) {
+		this.financierName = financierName;
 	}
 
 }

@@ -14,11 +14,13 @@ import com.vipro.dao.UserProfileDao;
 import com.vipro.data.CaseLink;
 import com.vipro.data.CodeDet;
 import com.vipro.data.Customer;
+import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.jsf.bean.mydesk.MyDesk;
 import com.vipro.service.CaseLinkService;
 import com.vipro.service.CodeService;
 import com.vipro.service.CustomerService;
+import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.SpringBeanUtil;
 import com.vipro.constant.*;
 
@@ -44,6 +46,14 @@ public class CommonBean {
 		}
 		
 		return code;
+	}
+	
+	public String getUserName(Long userId){
+		UserProfileService userProfile = (UserProfileService) SpringBeanUtil
+				.lookup(UserProfileService.class.getName());
+		UserProfile user = userProfile.findById(userId);
+		
+		return user.getName();
 	}
 	
 	public String getCustName(Long custId) {

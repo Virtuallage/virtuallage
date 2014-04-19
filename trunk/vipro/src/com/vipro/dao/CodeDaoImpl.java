@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.data.BillingModel;
 import com.vipro.data.CodeDetId;
 import com.vipro.data.CodeHeader;
 import com.vipro.data.CodeDet;
@@ -26,9 +27,12 @@ public class CodeDaoImpl extends DaoImpl<CodeHeader> implements CodeDao {
 
 	@Override
 	public List<CodeHeader> findAllCodeHeaders() {
-		return getHibernateTemplate().loadAll(CodeHeader.class);
+		String query = " select o from CodeHeader order by o.codeHeaderId ";
+		List<CodeHeader> list = getHibernateTemplate().find(query);
+		return list;
+//		return getHibernateTemplate().loadAll(CodeHeader.class);
 	}
-
+	
 	@Override
 	public List<CodeHeader> findAllHdrs() {
 		String query = "select o from CodeHeader o ";

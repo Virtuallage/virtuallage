@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Purchaser Details Inquiry
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Purchaser Details Inquiry" style="width:95%">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="4" style="width:100%;text-align:left;">
+			
+				<p:outputLabel value="Purchaser Name" />
+				<h:inputText value="#{customerRegister.customer.fullName}" disabled="true" style="width:400px"/>	
+				<p:outputLabel value="Category" />
+				<h:selectOneMenu value="#{customerRegister.customer.customerCategory}" disabled="true" style="width:400px" >	
+					<f:selectItems value="#{customerRegister.listCategory}"/>
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="ID No" />
+				<h:inputText value="#{customerRegister.customer.identityNo}" disabled="true" style="width:400px"/>	
+				<p:outputLabel value="ID Type" />
+				<h:selectOneMenu value="#{customerRegister.customer.identityType}" disabled="true" style="width:400px" >	
+					<f:selectItems value="#{customerRegister.listIdType}"/>
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="Address 1"/>
+				<h:inputText value="#{customerRegister.address.addressLine1}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Citizenship" />
+				<h:selectOneMenu value="#{customerRegister.customer.citizenship}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listCountry}"/>
+				</h:selectOneMenu>
+					
+				<p:outputLabel value="Address 2" />
+				<h:inputText value="#{customerRegister.address.addressLine2}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Date of birth" />
+				<h:inputText value="#{customerRegister.customer.dateOfBirth}" disabled="true" style="width:400px"/>
+								
+				<p:outputLabel value="Address 3" />
+				<h:inputText value="#{customerRegister.address.addressLine3}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Sex" />
+				<h:selectOneMenu value="#{customerRegister.customer.sex}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listGender}"/>
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="Address 4" />
+				<h:inputText value="#{customerRegister.address.addressLine4}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Marital Status" />
+				<h:selectOneMenu value="#{customerRegister.customer.maritalStatus}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listMaritalStatus}"/>
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="Post Code" />
+				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" style="width:400px"/>
+				<p:outputLabel value="Bumi Ind" />
+				<h:selectOneMenu value="#{customerRegister.customer.bumiIndicator}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listBumi}"/>
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="State" />
+				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listState}"/>
+				</h:selectOneMenu>
+				<p:outputLabel value="Mobile No"/>
+				<h:inputText value="#{customerRegister.customer.mobileNo}" disabled="true" style="width:400px"/>
+					
+				<p:outputLabel value="Country" />
+				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" style="width:400px">
+						<f:selectItems value="#{customerRegister.listCountry}"/>
+				</h:selectOneMenu>
+				<p:outputLabel value="Email Address" />
+				<h:inputText value="#{customerRegister.customer.email}" disabled="true" style="width:400px"/>
+				
+			</h:panelGrid>
+			<br/>
+			<h:panelGrid columns="1" style="width:100%;text-align:left;">
+			
+			<p:outputLabel value="Purchaser Property Unit List" />
+			<p:dataTable id="props" var="c" value="#{customerRegister.accountList}"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,40,60,80,100">
+			<p:column headerText="Project">
+				<h:outputText value="#{c.projectInventory.project.projectName}" />
+			</p:column>
+			
+			<p:column headerText="Unit No">
+				<h:outputText value="#{c.projectInventory.unitNo}" />
+			</p:column>
+			
+			<p:column headerText="Purchase Price">
+				<h:outputText value="#{c.projectInventory.purchasePrice}" />
+			</p:column>
+			
+			<p:column headerText="Amount Billed">
+				<h:outputText value="#{c.accountBalance + c.totalPaymentTodate}" />
+			</p:column>
+			
+			<p:column headerText="Paid Todate">
+				<h:outputText value="#{c.totalPaymentTodate}" />
+			</p:column>
+			
+			<p:column headerText="Type">
+				<h:outputText value="#{customerRegister.getAccountType(c.customer)}" />
+			</p:column>
+			
+			<p:column headerText="Status">
+				<h:outputText value="#{customerRegister.getCodeDesc('SS', c.accountStatus)}" />
+			</p:column>
+			
+			<p:column headerText="Action">
+					<p:commandButton action="#{customerRegister.toPurchaserProperty(c.customer)}" ajax="false" icon="ui-icon-pencil" title="Purchaser property Inquiry">
+           		 	  <f:setPropertyActionListener value="#{c}" target="#{customerRegister.account}" />
+           			</p:commandButton>
+			</p:column>
+				
+			</p:dataTable>
+			</h:panelGrid>
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{customerRegister.backPurchaser}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>
+			<br/>
+				
+</h:form>	
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		
