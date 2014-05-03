@@ -94,15 +94,8 @@ Property Unit Account Inquiry
 				</h:selectOneMenu>
 				<p:outputLabel value="Paid Todate" />
 				<h:inputText value="#{customerRegister.account.totalPaymentTodate}" disabled="true" style="width:400px"/>
+				<p:outputLabel/>
 				
-				<p:panelGrid styleClass="no-borders" style="width:95%">
-			     	<p:row>
-			     		<p:column style="text-align:left">
-			     			<p:commandButton value="View" onclick="dlgView1.show()" />  
-			     		</p:column>
-			     	</p:row>
-			     </p:panelGrid>
-		     
 				<p:outputLabel value="Country" />
 				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" style="width:400px">
 						<f:selectItems value="#{customerRegister.listCountry}"/>
@@ -113,8 +106,9 @@ Property Unit Account Inquiry
 								
 			</h:panelGrid>
 			<br/>
-			<p:commandButton value="Back" action="#{customerRegister.backPurchaserDetails}" icon="ui-icon-arrowreturn-1-w"/>
-		     <br/>
+				<p:commandButton value="Back" ajax="false" action="#{customerRegister.backPurchaserDetails}" immediate="true" icon="ui-icon-arrowreturn-1-w"/>
+				<p:commandButton value="View Transaction History" onclick="dlgView1.show()" />  
+
 		     
 </h:form>
 
@@ -155,7 +149,7 @@ Property Unit Account Inquiry
 		</h:form>
 		
 <h:form id="paidHistoryForm">
-	<p:dialog header="Paid Todate Transaction History" widgetVar="dlgView1"  modal="false" height="400" width="1100"  showEffect="fade" hideEffect="fade"> 
+	<p:dialog header="Transaction History" widgetVar="dlgView1"  modal="false" height="400" width="1100"  showEffect="fade" hideEffect="fade"> 
 		
 		<p:dataTable id="history1" var="c" value="#{customerRegister.paidHistory}" style="width:90%;">  
 	        <p:column headerText="Transaction Date">  
