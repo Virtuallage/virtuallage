@@ -229,9 +229,8 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		try{
 			
 			Connection connection = getConnection();
-			
 			JasperPrint jasperReport = JasperFillManager.fillReport(reportPath, parameters, connection);
-				if(exportTo == 1L){
+			if(exportTo == 1L){
 					ByteArrayOutputStream output = new ByteArrayOutputStream();
 					JRXlsxExporter  exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperReport);
@@ -250,13 +249,12 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 					   exporter.setParameter(JRDocxExporterParameter.JASPER_PRINT, jasperReport);
 					   exporter.setParameter(JRDocxExporterParameter.OUTPUT_STREAM, baos);
 					   exporter.setParameter(JRDocxExporterParameter.FLEXIBLE_ROW_HEIGHT, Boolean.TRUE);
-	
 					   exporter.exportReport(); 
 					   return baos.toByteArray();
 					
 				}
 				connection.close();
-	
+
 		}catch(SQLException sqlE){
 			sqlE.printStackTrace();
 		}catch(JRException jrE){
@@ -282,7 +280,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		params.put("projectId", reportDTO.getProjectId());
 		params.put("blocksTitle", reportDTO.getBlocksTitle());
 		String reportPath = JasperConst.SALES_SUMMARY_TOTAL_LOAN_OFFERED;
-		
+
 		String extension = "";
 		if(reportDTO.getReportFormatId() == 1L){
 			extension = ".xlsx";

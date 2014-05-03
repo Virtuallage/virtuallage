@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_subreport_cc1" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5a13e4e8-59c6-4510-a099-99d195a9675c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="address_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     address.`address_line_1` AS address_address_line_1,
+     address.`address_line_2` AS address_address_line_2,
+     address.`address_line_3` AS address_address_line_3,
+     address.`address_line_4` AS address_address_line_4,
+     address.`postcode` AS address_postcode,
+     address.`city` AS address_city,
+     address.`state` AS address_state,
+     code_det.`description` AS state_description,
+     address.`country` AS address_country,
+     code_det2.`description` AS country_description
+FROM
+     `address` address,
+     `code_det` code_det,
+     `code_det` code_det2
+WHERE
+     address_id = $P{address_id}
+ AND code_det.`code` = state
+ AND code_det.`code_header_id` = 'ST'
+ AND code_det2.`code` = country
+ AND code_det2.`code_header_id` = 'CT']]>
+	</queryString>
+	<field name="address_address_line_1" class="java.lang.String"/>
+	<field name="address_address_line_2" class="java.lang.String"/>
+	<field name="address_address_line_3" class="java.lang.String"/>
+	<field name="address_address_line_4" class="java.lang.String"/>
+	<field name="address_postcode" class="java.lang.String"/>
+	<field name="address_city" class="java.lang.String"/>
+	<field name="address_state" class="java.lang.String"/>
+	<field name="state_description" class="java.lang.String"/>
+	<field name="address_country" class="java.lang.String"/>
+	<field name="country_description" class="java.lang.String"/>
+	<detail>
+		<band height="14">
+			<printWhenExpression><![CDATA[!$F{address_address_line_1}.isEmpty()]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7bd3a523-1909-45f2-997e-223ad0c51758" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_address_line_1}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="65980f59-7cc5-45fa-857f-18bc81c3c181" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty()]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9b87bbaa-cdbe-4a5b-ab94-9f794e433616" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_address_line_2}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="59094529-c418-455b-aaad-2c8b5de8a63d" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[!$F{address_address_line_3}.isEmpty()]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="4c3cfd8d-6420-4fc1-8bf8-9562fadfbb8f" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_address_line_3}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="cf3cf082-1edf-48fe-adc5-9963b339c36c" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[!$F{address_address_line_4}.isEmpty()]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f6ade535-4c18-409b-8bc5-4b5c22499e2f" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_address_line_4}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="93b447bc-cc16-4d9e-97dc-66f983bc621c" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[$F{address_country}.equals( "CTMAS" )]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a43ba80e-88d9-49f0-b34d-9ecf61cfe661" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{address_postcode}.trim()+" "+$F{address_city}.trim()+" "+$F{state_description}.trim()).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="13639097-efda-474d-b5de-285b42169be1" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[(!$F{address_country}.equals( "CTMAS" ))]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="cc770d2b-42c4-43e3-93bb-36d7cae2e4d7" positionType="Float" x="0" y="0" width="458" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{address_postcode}.trim()+" "+$F{address_city}.trim()+" "+$F{country_description}.trim()).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="db7c5ddc-3464-404f-ac4f-bef39f1c6183" mode="Opaque" x="0" y="13" width="458" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

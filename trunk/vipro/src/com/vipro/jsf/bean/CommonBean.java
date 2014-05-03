@@ -49,6 +49,9 @@ public class CommonBean {
 	}
 	
 	public String getUserName(Long userId){
+		if(userId == 0)
+			return "";
+		
 		UserProfileService userProfile = (UserProfileService) SpringBeanUtil
 				.lookup(UserProfileService.class.getName());
 		UserProfile user = userProfile.findById(userId);

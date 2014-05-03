@@ -67,6 +67,7 @@ public class UnitUpdate extends CommonBean implements Serializable{
 	private BigDecimal PurchasePrice;
 	private BigDecimal DiscountAmount;
 	private BigDecimal DiscountRate;
+	private BigDecimal NetPrice;
 		
 	@PostConstruct
 	public void init() {
@@ -246,6 +247,7 @@ public class UnitUpdate extends CommonBean implements Serializable{
 		PurchasePrice = inventory.getPurchasePrice();
 		DiscountAmount = inventory.getDiscountAmount();
 		DiscountRate = inventory.getDiscountRate();
+		NetPrice = inventory.getNetPrice();
 		
 		return "editUnit";
 		
@@ -308,6 +310,7 @@ public class UnitUpdate extends CommonBean implements Serializable{
 					inventory.setPurchasePrice(PurchasePrice);
 					inventory.setDiscountAmount(DiscountAmount);				
 					inventory.setDiscountRate(DiscountRate);
+					inventory.setNetPrice(NetPrice);
 					inventoryService.update(inventory);
 					return selectUnit();
 				} else {
@@ -324,6 +327,7 @@ public class UnitUpdate extends CommonBean implements Serializable{
 						inventory.setPurchasePrice(PurchasePrice);
 						inventory.setDiscountAmount(DiscountAmount);				
 						inventory.setDiscountRate(DiscountRate);
+						inventory.setNetPrice(NetPrice);
 						inventoryService.update(inventory);
 						return selectUnit();
 					}
@@ -342,6 +346,14 @@ public class UnitUpdate extends CommonBean implements Serializable{
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public BigDecimal getNetPrice() {
+		return NetPrice;
+	}
+
+	public void setNetPrice(BigDecimal netPrice) {
+		NetPrice = netPrice;
 	}
 
 }

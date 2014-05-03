@@ -423,6 +423,11 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			if (getSelectedDto().getAccount().getLaRefNo() == null) {
 				 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
 				 isCleared = false;
+			} else {
+				if ((getSelectedDto().getAccount().getLaRefNo()).isEmpty()) {
+					 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
+					 isCleared = false;
+				}
 			}
 			if (getSelectedDto().getAccount().getBorrowerId1() == null) {
 				 CommonBean.addInfoMessage("WARNING!","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");

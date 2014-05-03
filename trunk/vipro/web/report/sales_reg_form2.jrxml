@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="545" leftMargin="30" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f076927a-a39a-41b0-9229-c18c8592ba32">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="90"/>
 	<property name="ireport.y" value="855"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -67,15 +67,15 @@ FROM
      LEFT OUTER JOIN `customer` c2 ON A.`customer_id2` = c2.`customer_id`
      RIGHT OUTER JOIN `code_det` PM ON A.`book_pymt_method` = PM.`code`
      RIGHT OUTER JOIN `code_det` BB ON A.`book_pymt_bank` = BB.`code`
-     INNER JOIN `address` addr ON A.`corr_addr_cust_id` = addr.`address_id`
-     INNER JOIN `code_det` code_det_A ON addr.`state` = code_det_A.`code`
-     INNER JOIN `code_det` code_det_B ON addr.`country` = code_det_B.`code`
      INNER JOIN `code_det` code_det_E ON c2.`title` = code_det_E.`code`
      INNER JOIN `code_det` code_det_F ON c2.`sex` = code_det_F.`code`
      INNER JOIN `code_det` code_det_G ON c2.`marital_status` = code_det_G.`code`
      INNER JOIN `code_det` code_det ON c1.`title` = code_det.`code`
      INNER JOIN `code_det` code_det_C ON c1.`sex` = code_det_C.`code`
      INNER JOIN `code_det` code_det_D ON c1.`marital_status` = code_det_D.`code`
+     INNER JOIN `address` addr ON c1.`address_id` = addr.`address_id`
+     INNER JOIN `code_det` code_det_A ON addr.`state` = code_det_A.`code`
+     INNER JOIN `code_det` code_det_B ON addr.`country` = code_det_B.`code`
 WHERE
      A.ACCOUNT_ID = $P{account_id}]]>
 	</queryString>

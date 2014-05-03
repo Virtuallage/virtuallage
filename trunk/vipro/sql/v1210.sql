@@ -16,5 +16,14 @@ INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status
 INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRLND', 'LAND OWNER', 'SSACT');
 INSERT INTO `vipro`.`code_det` (`code_header_id`, `code`, `description`, `status`) VALUES ('PR', 'PRSOL', 'SOLICITOR', 'SSACT');
 
-
+INSERT INTO vipro.billing_model_header (billing_model_code,description,status)
+     VALUES ("A", "V-RESIDENSI PROJECTS", "SSACT");
+     
+INSERT INTO vipro.billing_model_header (billing_model_code,description,status)
+     VALUES ("DPMJ", "DPRISTINE PROJECT", "SSACT");
+     
+UPDATE business_partner set partner_type = "PRBNK" where partner_type = "BANK";
+UPDATE business_partner set partner_type = "PRSOL" where partner_type = "SOLI";
+UPDATE business_partner set partner_type = "PRDEV" where partner_type = "DEVP";
+UPDATE business_partner set partner_type = "PRLND" where partner_type = "LAND";
 
