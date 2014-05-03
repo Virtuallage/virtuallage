@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vipro.dao.UserProfileDao;
+import com.vipro.data.UserGroup;
 import com.vipro.data.UserProfile;
 
 /**
@@ -34,6 +35,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
+	public UserProfile findByUsername(String username) {
+		return userProfileDao.findByUsername(username);
+	}
+	
+	@Override
 	public void insert(UserProfile up) {
 		userProfileDao.insert(up);
 	}
@@ -60,5 +66,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public List<UserProfile> findActiveUsers() {
 		return userProfileDao.findActiveUsers();
 	}
-	
+
+	@Override
+	public List<UserProfile> findByGroup(UserGroup usergroup) {
+		return userProfileDao.findByGroup(usergroup);
+	}
+
 }

@@ -15,6 +15,12 @@
     		 ajax="false" action="#{myDesk.listCases}" icon="ui-icon-script"/>
      	</p:submenu>
     	
+    	<sec:authorize ifAnyGranted="ROLE_ADMIN">
+	    	<p:submenu label="Setup">
+	    		<p:menuitem value="User Profile" url="/secured/setup/userGroup/listUserGroup.xhtml" action="#{userGroup.RefreshUserGroup}" />  
+	    	</p:submenu>
+    	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Parameters">
 	    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" /> 

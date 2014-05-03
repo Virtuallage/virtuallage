@@ -11,10 +11,15 @@ import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.vipro.data.AdjHeader;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
+import com.vipro.data.UserProfile;
 
+import com.vipro.service.AdjHeaderService;
+import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
+import com.vipro.utils.spring.SpringBeanUtil;
 import com.vipro.jsf.bean.CommonBean;
 
 @ManagedBean(name = "priceAdjustment")
@@ -29,8 +34,8 @@ public class PriceAdjustment extends CommonBean implements Serializable {
 	private Project project;
 	private Long projectId;
 	private Date effectiveDate;
+	private AdjHeader adjHeader;
 	
-	private String something;
 	
 	public PriceAdjustment() {
 
@@ -39,8 +44,6 @@ public class PriceAdjustment extends CommonBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		listProject = CodeUtil.getProjectAsItems();
-		something = "test";
-
 	}
 
 	public List<SelectItem> getListProject() {
@@ -75,20 +78,33 @@ public class PriceAdjustment extends CommonBean implements Serializable {
 		this.projectId = projectId;
 	}
 
-	public String getSomething() {
-		return something;
-	}
-
-	public void setSomething(String something) {
-		this.something = something;
-	}
-
 	public Date getEffectiveDate() {
 		return effectiveDate;
 	}
 
 	public void setEffectiveDate(Date effectiveDate) {
 		this.effectiveDate = effectiveDate;
+	}
+
+	public AdjHeader getAdjHeader() {
+		return adjHeader;
+	}
+
+	public void setAdjHeader(AdjHeader adjHeader) {
+		this.adjHeader = adjHeader;
+	}
+	
+	public void save() {
+		try {
+
+			AdjHeaderService service = (AdjHeaderService) SpringBeanUtil.lookup(AdjHeaderService.class.getName());
+			service.update(adjHeader);
+			addInfoMessage("Price Adjustment", "Price Adjusment is updated");
+		} catch (Throwable th) {
+			addErrorMessage("Price Adjustment", "Error saving details. " + th.getMessage());
+//			return null;
+		}
+		
 	}
 	
 	}
