@@ -570,7 +570,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		TransactionHistoryService trnxHistory = (TransactionHistoryService) SpringBeanUtil
 				.lookup(TransactionHistoryService.class.getName());
 		billHistory = trnxHistory.findTransactionHistoryByAccountIdAndTcode(account.getAccountId(), "500001", "510001", "500002");
-		paidHistory = trnxHistory.findTransactionHistoryByAccountIdAndTcode(account.getAccountId(), "100001", "100002", "100003");
+		paidHistory = trnxHistory.findByAccountId(account.getAccountId());
 				
 		return "purchaser_property_information";
 	}
