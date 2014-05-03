@@ -29,7 +29,7 @@ Billing Model Header
 				<p:inputText id="description" value="#{listBillingModel.modelHeader.description}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
 
 				<p:outputLabel value="Last Changed By"/>
-				<h:outputText value="#{listBillingModel.modelHeader.changedBy}" />
+				<h:outputText value="#{listBillingModel.getUserName(listBillingModel.modelHeader.changedBy)}" />
 
 				<p:outputLabel value="Last Changed Date"/>
 				<h:outputText value="#{listBillingModel.modelHeader.dateChanged}">
