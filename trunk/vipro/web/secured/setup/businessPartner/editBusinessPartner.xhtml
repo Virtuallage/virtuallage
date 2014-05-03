@@ -23,7 +23,7 @@ Business Partner Information
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="Business Partner Name" for="companyname"/>
-				<h:inputText id="companyname" value="#{businessPartner.businessPartnerFld.companyName}" style="width:400px;text-transform:uppercase" disabled="true"/>
+				<p:inputText id="companyname" value="#{businessPartner.businessPartnerFld.companyName}" style="width:400px;text-transform:uppercase" disabled="true"/>
 				<p:outputLabel value="Status" for="status"/>
 				<p:selectOneMenu id="status" value="#{businessPartner.businessPartnerFld.status}" disabled="true">
 					<f:selectItems value="#{businessPartner.listStatus}"/>

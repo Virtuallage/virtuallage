@@ -3,6 +3,7 @@ package com.vipro.dao;
 import java.util.List;
 
 import com.vipro.common.Dao;
+import com.vipro.data.UserGroup;
 import com.vipro.data.UserProfile;
 
 /**
@@ -19,4 +20,6 @@ public interface UserProfileDao extends Dao<UserProfile>{
 	public List<UserProfile> findAll();
 	
 	public List<UserProfile> findActiveUsers();
+	
+	public List<UserProfile> findByGroup(UserGroup usergroup); 
 }

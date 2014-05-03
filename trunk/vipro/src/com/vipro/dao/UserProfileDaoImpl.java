@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.data.UserGroup;
 import com.vipro.data.UserProfile;
 
 /**
@@ -45,5 +46,8 @@ public class UserProfileDaoImpl extends DaoImpl<UserProfile> implements UserProf
 		return getHibernateTemplate().find(query);
 	}
 
-	
+	public List<UserProfile> findByGroup(UserGroup usergroup) {
+		String query = "select o from UserProfile o where o.userGroup=? order by o.username";
+		return getHibernateTemplate().find(query, usergroup);
+	}
 }
