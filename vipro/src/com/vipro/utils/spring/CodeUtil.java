@@ -123,8 +123,6 @@ public final class CodeUtil {
 			}
 		}
 		
-		System.out.println("xx" + partnerType);
-		
 		return items;
 	}
 
@@ -150,7 +148,7 @@ public final class CodeUtil {
 		List<SelectItem> modelItems = new ArrayList<SelectItem>();
 		modelItems.add( new SelectItem(0, "Select One"));
 		for (BillingModelHeader p : modelsHeaderList) {
-			modelItems.add( new SelectItem(p.getHeaderId(), p.getDescription()));
+			modelItems.add( new SelectItem(p.getBillingModelCode(), p.getDescription()));
 		}
 
 		return modelItems;
