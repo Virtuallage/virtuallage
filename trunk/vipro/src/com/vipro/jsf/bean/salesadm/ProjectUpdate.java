@@ -278,7 +278,6 @@ public class ProjectUpdate extends CommonBean implements Serializable {
 			project.setChangedBy(user.getUserProfile().getUserId());
 			String fbm = project.getBillingModelCode();
 			project.setBillingModelCode(fbm.toUpperCase());
-
 			projectService.insert(project);
 
 			listProject();
