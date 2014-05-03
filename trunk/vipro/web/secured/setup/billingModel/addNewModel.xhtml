@@ -38,7 +38,7 @@ Billing Model Header
 				<p:inputMask id="percentage" value="#{listBillingModel.model.billingPercentage}" mask="99.99" style="width:400px" required="true" autocomplete="off"/>
 				
 				<p:outputLabel value="Last Changed By"/>
-				<h:outputText value="#{listBillingModel.model.changedBy}" />
+				<h:outputText value="#{listBillingModel.getUserName(listBillingModel.model.changedBy)}" />
 
 				<p:outputLabel value="Last Changed Date"/>
 				<h:outputText value="#{listBillingModel.model.dateChanged}">
