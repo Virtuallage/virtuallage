@@ -69,12 +69,11 @@ public class JasperCsvUtil {
 
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report, String csv) {
-		System.out.println("Usage: ReportGenerator ....");
+		System.out.println("Usage: CSV Generator ....");
 		boolean result = false;
 		
 
 		try {
-			System.out.println("Start ....");
 			// String dbUrl = props.getProperty("jdbc.url");
 			String dbUrl = DataSourceConst.DB_URL;
 			// String dbDriver = props.getProperty("jdbc.driver");
@@ -104,7 +103,7 @@ public class JasperCsvUtil {
 			exporter.exportReport();
 			
 			
-			System.out.println("Done exporting reports to pdf");
+			System.out.println("Done : CVS file generated");
 
 			//File myFile = new File(csv);
 			

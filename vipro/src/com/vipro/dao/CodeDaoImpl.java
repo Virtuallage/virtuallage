@@ -27,7 +27,7 @@ public class CodeDaoImpl extends DaoImpl<CodeHeader> implements CodeDao {
 
 	@Override
 	public List<CodeHeader> findAllCodeHeaders() {
-		String query = " select o from CodeHeader order by o.codeHeaderId ";
+		String query = " select o from CodeHeader o order by o.name ";
 		List<CodeHeader> list = getHibernateTemplate().find(query);
 		return list;
 //		return getHibernateTemplate().loadAll(CodeHeader.class);

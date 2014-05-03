@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_subreport_brorrower" pageWidth="188" pageHeight="200" columnWidth="188" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ff88638f-fd93-46e7-ae5d-f42cafa072fc">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="unit_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA[9l]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *
+FROM unit_mapping
+WHERE unit_no_bef = $P{unit_no};]]>
+	</queryString>
+	<field name="unit_no_bef" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unit_no_aft" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8aa24745-905b-4ef8-ac65-541002dee6ca" positionType="Float" x="0" y="0" width="179" height="13"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unit_no_aft}.trim()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

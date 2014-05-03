@@ -82,7 +82,7 @@ FROM
      LEFT JOIN `code_det` code_det_H ON address_C.`country` = code_det_H.`code`
 
 WHERE
-     project.`project_id` = 1
+     project.`project_id` = $P{project_id}
 ORDER BY
      Project_Name ASC, Unit_No]]>
 	</queryString>

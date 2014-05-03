@@ -84,14 +84,14 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="ea05ced3-d5cd-4815-a30c-d7541bfdf345" positionType="Float" x="72" y="24" width="462" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{holderName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="882d86b0-6acf-4710-a33b-d589b87b1c17" positionType="Float" x="1" y="24" width="66" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Payable To]]></text>
 			</staticText>
@@ -122,7 +122,7 @@ WHERE
 			<staticText>
 				<reportElement uuid="e1a6170d-4fdb-4d63-935c-8f6b9aac399e" positionType="Float" x="1" y="0" width="66" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Bank Name]]></text>
 			</staticText>
@@ -131,14 +131,14 @@ WHERE
 					<printWhenExpression><![CDATA[(!$F{bank2Name}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Bank Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="3908e789-976a-43ba-8205-2f411a78b230" positionType="Float" x="1" y="13" width="66" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Account No]]></text>
 			</staticText>
@@ -147,14 +147,14 @@ WHERE
 					<printWhenExpression><![CDATA[(!$F{bank2AccountNo}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Account No]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="b53926c6-4dbe-43de-9033-67b2acb0b66e" positionType="Float" x="1" y="26" width="66" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Swift Code]]></text>
 			</staticText>
@@ -163,14 +163,14 @@ WHERE
 					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Swift Code]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="3d6a9e48-865d-4871-802e-39439947acf2" positionType="Float" x="1" y="39" width="66" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Bank Address]]></text>
 			</staticText>
@@ -179,7 +179,7 @@ WHERE
 					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Bank Address]]></text>
 			</staticText>
@@ -207,7 +207,7 @@ WHERE
 			<staticText>
 				<reportElement uuid="138912bb-c9e2-4327-b40a-15bc3267cdd1" positionType="Float" x="67" y="39" width="5" height="13"/>
 				<textElement verticalAlignment="Top">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[: ]]></text>
 			</staticText>
@@ -243,35 +243,35 @@ WHERE
 					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
-					<font size="9" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f255d279-a0c7-4002-a3b3-91fa99a8c34e" positionType="Float" x="72" y="13" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank1AccountNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a349ab67-7ac2-44c0-8f7a-e6484e442ec2" positionType="Float" x="72" y="0" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank1Name}.trim()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="2158536c-9be2-42c0-8137-407c3dd0c10c" positionType="Float" x="72" y="26" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank1SwiftCode}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="64e74482-d1c8-4d6e-a6da-83a9562443b7" positionType="Float" x="72" y="39" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 					<paragraph tabStopWidth="50"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank1BranchAddress}.trim()]]></textFieldExpression>
@@ -279,28 +279,28 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="6f20b869-6734-45be-8267-6404dbd4f575" positionType="Float" x="338" y="0" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2Name}.trim()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="eb6f6e35-a958-4e68-bd51-20f816346d47" positionType="Float" x="338" y="13" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2AccountNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="cd65650f-9603-4508-842d-19fcbbed5717" positionType="Float" x="338" y="26" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2SwiftCode}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="c54af989-2266-4882-a233-1313a6008e50" positionType="Float" x="338" y="39" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="false" isPdfEmbedded="true"/>
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
 					<paragraph tabStopWidth="50"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2BranchAddress}.trim()]]></textFieldExpression>
