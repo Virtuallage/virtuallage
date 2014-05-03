@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+User Profile
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Create User Profile" style="width:95%;background-color:#EEFFEE">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+			<br/>
+			
+			<h:panelGrid columns="4" style="width:100%;text-align:left;font-weight:bold">
+				<p:outputLabel value="User Group :" />
+				<p:outputLabel value="#{userGroup.userGroupFld.groupId}" />
+				<p:outputLabel value="#{userGroup.userGroupFld.groupName}" />
+				<p:outputLabel/>
+			</h:panelGrid>
+			
+			<br/>
+			<hr/>
+			<br/>
+			
+			<h:panelGrid columns="4" style="width:100%;text-align:left;">
+				<p:outputLabel value="User Id" for="userid" />
+				<p:inputText id="userid" value="#{userGroup.userProfileFld.username}" maxlength="20" style="width:200px" required="true" autocomplete="off"/>
+				<p:outputLabel value="Password" for="password"/>
+				<p:password id="password" value="#{userGroup.userProfileFld.password}" maxlength="30" style="width:290px" required="true"/>
+				
+				<p:outputLabel value="Name" for="name"/>
+				<p:inputText id="name" value="#{userGroup.userProfileFld.name}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
+				<p:outputLabel value="Staff No." for="staffno"/>
+				<p:inputText id="staffno" value="#{userGroup.userProfileFld.staffNo}" maxlength="20" style="width:200px" required="false" autocomplete="off"/>
+				
+				<p:outputLabel value="Department" for="department"/>
+				<p:selectOneMenu id="department" value="#{userGroup.userProfileFld.department}" required="false">
+						<f:selectItems value="#{userGroup.listDepartments}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Address" for="address"/>
+				<p:inputText id="address" value="#{userGroup.userProfileFld.address}" maxlength="60" style="width:450px" required="false" autocomplete="off"/>
+				
+				<p:outputLabel value="Email" for="email"/>
+				<p:inputText id="email" value="#{userGroup.userProfileFld.email}" maxlength="40" style="width:300px" 
+						requiredMessage="Please enter your email address."
+						validatorMessage="Invalid email format"
+						required="false" autocomplete="off">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+             	</p:inputText>
+				<p:outputLabel value="Mobile No." for="mobileno"/>
+				<p:inputText id="mobileno" value="#{userGroup.userProfileFld.mobileNo}" maxlength="20" style="width:200px" required="false" autocomplete="off"/>
+				
+				<p:outputLabel value="Office No." for="officeno"/>
+				<p:inputText id="officeno" value="#{userGroup.userProfileFld.officeNo}" maxlength="20" style="width:200px;text-transform:uppercase" autocomplete="off" required="false"/>
+				<p:outputLabel value="Status" for="status"/>
+				<p:selectOneMenu id="status" value="#{userGroup.userProfileFld.status}" required="true">
+					<f:selectItems value="#{userGroup.listStatus}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Special Handling" for="special"/>
+				<p:selectOneMenu id="special" value="#{userGroup.userProfileFld.specialHandling}" required="false">
+					<f:selectItems value="#{userGroup.listSpecial}"/>
+				</p:selectOneMenu>	
+			</h:panelGrid>
+							
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{userGroup.backTolistUserProfile}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			
+			<p:commandButton value="Save" ajax="false" action="#{userGroup.InsertUserProfile}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+
+</ui:define>
+</ui:composition>
+		

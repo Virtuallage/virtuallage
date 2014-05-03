@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Common Code
+</ui:define>
+	<ui:define name="content">
+	<p:panel id="panel" header="List of User Profile" style="width:95%">  
+	<p:focus context="panel"/>
+		
+		<h:form id="listuserprofile">
+    
+    		<br/>
+    		
+			<p:panelGrid styleClass="no-borders" style="width:100%">
+				<p:row>
+					<p:column style="width:15%;text-align:left;font-weight:bold">
+						<p:outputLabel value="User Group :" />
+					</p:column>
+					<p:column style="width:20%;text-align:left;font-weight:bold">
+						<p:outputLabel value="#{userGroup.userGroupFld.groupId}" />
+					</p:column>
+					<p:column style="width:65%;text-align:left;font-weight:bold">
+						<p:outputLabel value="#{userGroup.userGroupFld.groupName}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable var="up" value="#{userGroup.listUserProfiles}" paginator="true" rows="10"  paginatorPosition="bottom"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+            rowsPerPageTemplate="5,10,15" id="UserProfileTable"> 
+			
+				<p:column headerText="User ID" style="width:15%">
+					<h:outputText value="#{up.username}" />
+				</p:column>
+				
+				<p:column headerText="User Name" style="width:20%">
+					<h:outputText value="#{up.name}" />
+				</p:column>
+				
+				<p:column headerText="Department" style="width:20%">
+					<h:outputText value="#{up.department}" />
+				</p:column>
+
+				<p:column headerText="Staff No" style="width:15%">
+					<h:outputText value="#{up.staffNo}" />
+				</p:column>
+
+				<p:column headerText="Last Login On" style="width:15%">
+					<h:outputText value="#{up.lastLoginDatetime}" />
+				</p:column>
+
+				<p:column headerText="Status" style="width:10%">
+					<h:outputText value="#{userGroup.getCodeDesc('SS',up.status)}" />
+				</p:column>
+
+				<p:column headerText="Edit" style="width:5%">
+					<p:commandButton action="#{userGroup.LoadUserProfile}" ajax="false" icon="ui-icon-pencil" title="Edit User Profile">
+           		 	<f:setPropertyActionListener value="#{up}" target="#{userGroup.userProfileFld}" />  
+           			</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<br/>
+
+			<p:panelGrid styleClass="no-borders" style="width:90%">
+				<p:row>
+					<p:column style="text-align:mddle;width:25%" />
+					<p:column style="text-align:mddle;width:25%">
+						<p:commandButton ajax="false" value="Create User Profile" action="#{userGroup.NewUserProfile}" icon="ui-icon-plus" /> 
+					</p:column>
+					<p:column style="text-align:mddle;width:25%">
+						<p:commandButton ajax="false" value="Back" action="#{userGroup.backTolistUserGroup}" icon="ui-icon-arrowreturnthick-1-w" /> 
+					</p:column>
+					<p:column style="text-align:mddle;width:25%" />
+				</p:row>
+			</p:panelGrid>
+
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
