@@ -49,6 +49,8 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 	private List<SelectItem> listCountry;
 	
 	private List<BusinessPartner> searchBusinessPartnerList;
+
+	public Boolean newaddress;
 	
 	@PostConstruct
 	public void init() {
@@ -152,7 +154,14 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 	}
 
 	public String LoadBusinessPartner() {
-		
+		address = businessPartnerFld.getAddress();
+		newaddress = false;
+
+		if (address == null) {
+			businessPartnerFld.setAddress(new Address());
+			newaddress = true;
+		}
+ 
 		return "editBusinessPartner";
 	} 
 	
@@ -170,17 +179,6 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 
 	public String UpdateBusinessPartner() {
 		try {
-			BusinessPartnerService businesspartner = (BusinessPartnerService) SpringBeanUtil
-					.lookup(BusinessPartnerService.class.getName());
-			String cperson = businessPartnerFld.getContactPersonName();
-			businessPartnerFld.setContactPersonName(cperson.toUpperCase()); 
-			String companyname = businessPartnerFld.getCompanyName();
-			businessPartnerFld.setCompanyName(companyname.toUpperCase());
-			String companycode = businessPartnerFld.getCompanyCode();
-			businessPartnerFld.setCompanyCode(companycode.toUpperCase());
-
-			businesspartner.update(businessPartnerFld);
-
 			address = new Address();
 			AddressService addressService = (AddressService) SpringBeanUtil
 						.lookup(AddressService.class.getName());
@@ -198,8 +196,23 @@ public class BusinessPartnerSetup extends CommonBean implements Serializable{
 			address.setPostcode(businessPartnerFld.getAddress().getPostcode());
 			address.setState(businessPartnerFld.getAddress().getState());
 			address.setCountry(businessPartnerFld.getAddress().getCountry());
-				
+
 			addressService.update(address);
+
+			if (newaddress) {
+				businessPartnerFld.setAddress(address);
+			}
+			
+			BusinessPartnerService businesspartner = (BusinessPartnerService) SpringBeanUtil
+					.lookup(BusinessPartnerService.class.getName());
+			String cperson = businessPartnerFld.getContactPersonName();
+			businessPartnerFld.setContactPersonName(cperson.toUpperCase()); 
+			String companyname = businessPartnerFld.getCompanyName();
+			businessPartnerFld.setCompanyName(companyname.toUpperCase());
+			String companycode = businessPartnerFld.getCompanyCode();
+			businessPartnerFld.setCompanyCode(companycode.toUpperCase());
+
+			businesspartner.update(businessPartnerFld);
 
 		} catch (Throwable t) {
 			t.printStackTrace();
