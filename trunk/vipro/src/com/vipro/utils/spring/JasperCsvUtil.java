@@ -93,22 +93,14 @@ public class JasperCsvUtil {
 					.compileReport(report);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					jasperReport, hm, conn);
-			JasperExportManager.exportReportToPdfFile(jasperPrint, csv);
+			//JasperExportManager.exportReportToPdfFile(jasperPrint, csv);
 			
 			JRCsvExporter exporter = new  JRCsvExporter();
-			//exporter.setParameter(JRExporterParameter.JASPER_PRINT,  jasperPrint);
-			//exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,  ouputStream);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT,  jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, csv);
 			exporter.exportReport();
-			
-			
+		
 			System.out.println("Done : CVS file generated");
-
-			//File myFile = new File(csv);
-			
-			//Desktop.getDesktop().open(myFile);
-			//System.out.println("Done opening pdf");
 
 			result = true;
 		} catch (Exception e) {
