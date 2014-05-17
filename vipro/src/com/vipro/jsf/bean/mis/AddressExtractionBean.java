@@ -1,6 +1,5 @@
 package com.vipro.jsf.bean.mis;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -20,18 +19,19 @@ import com.vipro.constant.JasperConst;
 import com.vipro.data.Project;
 import com.vipro.service.ProjectService;
 import com.vipro.utils.spring.CodeUtil;
+import com.vipro.utils.spring.JasperAddressUtil;
 import com.vipro.utils.spring.JasperCsvUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
 
-@ManagedBean(name = "DataExtractionBean")
+@ManagedBean(name = "AddressExtractionBean")
 @RequestScoped
-public class DataExtractionBean {
+public class AddressExtractionBean {
 	
 	private Long projectId;
 	
 	private List<SelectItem> listProject = null;
 	
-	private StreamedContent salesAdminDataExtraction;
+	private StreamedContent salesAdminAddressExtraction;
 	
 	
 	@PostConstruct	
@@ -56,7 +56,7 @@ public class DataExtractionBean {
 	}
 	
 	
-	public StreamedContent getsalesAdminDataExtraction() {
+	public StreamedContent getsalesAdminAddressExtraction() {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("project_id", Long.toString(projectId));
 		
@@ -65,17 +65,17 @@ public class DataExtractionBean {
 		ProjectService projectService = (ProjectService) SpringBeanUtil
 				.lookup(ProjectService.class.getName());
 		project_name = projectService.findById(projectId);
-		String outputfilename = "SalesAdminDataExtraction" + project_name.getProjectCode() + ".csv";
-		String report = JasperConst.SalesAdminDataExtraction;
-		JasperCsvUtil.generateReport(hm, report);
+		String outputfilename = "SalesAdminAddressExtraction" + project_name.getProjectCode() + ".docx";
+		String report = JasperConst.SalesAdminAddressExtraction;
+		JasperAddressUtil.generateReport(hm, report);
 
-		String path ="/MISReport/SalesAdminDataExtraction.csv";
+		String path ="/MISReport/SalesAdminAddressExtraction.docx";
 		
 		MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
 		String mimeType = mimeTypesMap.getContentType(outputfilename);
 		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(path);  
-		salesAdminDataExtraction = new DefaultStreamedContent(stream, mimeType, outputfilename); 
+		salesAdminAddressExtraction = new DefaultStreamedContent(stream, mimeType, outputfilename); 
         
-		return salesAdminDataExtraction;  
+		return salesAdminAddressExtraction;  
     } 
 }

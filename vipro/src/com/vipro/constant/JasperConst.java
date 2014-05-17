@@ -56,4 +56,7 @@ public class JasperConst {
 	public static final String PROGRESS_BILLING_LETTER_FINANCIER_SPLIT = TOMCAT_HOME + "/vipro/report/ProgressiveBillingLetterFinancierSplit.jasper";
 	
 	public static final String SalesAdminDataExtraction = TOMCAT_HOME + "/vipro/report/SalesAdminDataExtraction.jrxml";
+	
+	public static final String SalesAdminAddressExtraction = TOMCAT_HOME + "/vipro/report/SalesAdminAddressExtraction.jrxml";
+	
 }
