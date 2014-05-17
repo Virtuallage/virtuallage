@@ -15,14 +15,13 @@ User Profile
 
 <ui:define name="content">	
 
-<p:panel id="panel" header="Change User Profile" style="width:95%;background-color:#EEFFEE">  
+<p:panel id="panel" header="Change User Profile" style="width:95%">  
 
 <p:focus context="panel"/> 
 
 <h:form>
 			<br/>
-			
-			<h:panelGrid columns="4" style="width:100%;text-align:left;font-weight:bold">
+	  			<h:panelGrid columns="4" style="width:100%;text-align:left;font-weight:bold">
 				<p:outputLabel value="User Group :" />
 				<p:outputLabel value="#{userGroup.userGroupFld.groupId}" />
 				<p:outputLabel value="#{userGroup.userGroupFld.groupName}" />
@@ -31,16 +30,16 @@ User Profile
 			
 			<br/>
 			<hr/>
-			<br/>
+			<br/> 
 
 			<h:panelGrid columns="4" style="width:100%;text-align:left;">
 				<p:outputLabel value="User Id" for="userid" />
 				<p:inputText id="userid" value="#{userGroup.userProfileFld.username}" maxlength="20" style="width:200px" disabled="true"/>
 				<p:outputLabel value="Password" for="password"/>
-				<p:password id="password" value="#{userGroup.userProfileFld.password}" maxlength="30" style="width:290px" required="true"/>
+				<p:inputText id="password" value="#{userGroup.userProfileFld.password}" maxlength="30" style="width:290px" required="true"/>
 				
 				<p:outputLabel value="Name" for="name"/>
-				<p:inputText id="name" value="#{userGroup.userProfileFld.name}" maxlength="30" style="width:400px" required="true" autocomplete="off"/>
+				<p:inputText id="name" value="#{userGroup.userProfileFld.name}" maxlength="30" style="width:400px;text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Staff No." for="staffno"/>
 				<p:inputText id="staffno" value="#{userGroup.userProfileFld.staffNo}" maxlength="20" style="width:200px" required="false" autocomplete="off"/>
 				
@@ -48,9 +47,7 @@ User Profile
 				<p:selectOneMenu id="department" value="#{userGroup.userProfileFld.department}" required="false">
 						<f:selectItems value="#{userGroup.listDepartments}"/>
 				</p:selectOneMenu>
-				<p:outputLabel value="Address" for="address"/>
-				<p:inputText id="address" value="#{userGroup.userProfileFld.address}" maxlength="60" style="width:450px" required="false" autocomplete="off"/>
-				
+			
 				<p:outputLabel value="Email" for="email"/>
 				<p:inputText id="email" value="#{userGroup.userProfileFld.email}" maxlength="40" style="width:300px" 
 						requiredMessage="Please enter your email address."
@@ -79,7 +76,7 @@ User Profile
 							
 			<br/>
 			
-			<p:commandButton value="Back" ajax="false" action="#{userGroup.backToListUserProfile}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
+			<p:commandButton value="Back" ajax="false" action="#{userGroup.backTolistUserProfile}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;
 			
 			<p:commandButton value="Save" ajax="false" action="#{userGroup.UpdateUserProfile}" icon="ui-icon-disk"/>
 			

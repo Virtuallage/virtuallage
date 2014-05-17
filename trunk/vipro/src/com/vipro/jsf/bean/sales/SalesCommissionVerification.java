@@ -493,10 +493,7 @@ public class SalesCommissionVerification extends CommonBean implements Serializa
 				history.setClaimStatus(ClaimStatusConst.STATUS_VERIFIED);
 				
 				salesCommissionHistoryService.update(history);
-				
-				System.out.println("/"+project.getProjectId()+"/"+salesCommissionAccount.getAccountId()+"/"+
-						currentUser);
-				
+							
 				CaseAlert caseAlert = new CaseAlert();
 				caseAlert.updateCase(CaseStatus.COMMISSION_CLAIM, project.getProjectId(), 
 						salesCommissionAccount.getAccountId(),	

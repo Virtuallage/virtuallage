@@ -91,12 +91,10 @@ public class JasperUtil {
 			File myFile = new File(pdf);
 			
 			//Desktop.getDesktop().open(myFile);
-			//System.out.println("Done opening pdf");
 
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.print("Exception" + e);
 		}
 		return result;
 	}

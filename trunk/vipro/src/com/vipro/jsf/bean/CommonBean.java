@@ -76,7 +76,6 @@ public class CommonBean {
 		CaseAlert caseAlert = new CaseAlert();
 		caseAlert.openCase(caseType, projectId, accountId,
 				user.getUserProfile(), "CSOPN");
-		System.out.println("open");
 		for (CaseLink d : list) {
 			if (d.getCaseType().equals(caseType)) {
 				return d.getCaseLink();

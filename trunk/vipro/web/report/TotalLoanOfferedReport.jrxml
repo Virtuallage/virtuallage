@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalLoanOfferedReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="531" leftMargin="43" rightMargin="21" topMargin="21" bottomMargin="21" uuid="d0e512f0-2c06-42fb-a47a-f41f3111bad2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalLoanOfferedReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="531" leftMargin="43" rightMargin="21" topMargin="21" bottomMargin="21">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="73"/>
 	<property name="ireport.y" value="0"/>
@@ -7,24 +7,29 @@
 	<parameter name="blocksTitle" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT i.institution_name,p.project_name,
-  bp.company_name AS bankName,
+  cd.description AS bankName,
   COALESCE(COUNT(a.account_id)) AS noOfLoans,
   COALESCE(SUM(a.loan_amount)) AS totalAmount
 FROM account a,
-  business_partner bp,
+  code_det cd,
   project_inventory pin,project p,
   institution i
 WHERE a.inventory_id = pin.inventory_id
     AND p.project_id = $P{projectId}
     AND pin.project_id = $P{projectId}
     AND a.purchase_type <> 'PUCSH'
-    AND a.panel_bank_id = bp.partner_id
+    AND a.panel_bank_id = cd.code
     AND p.institution_id = i.institution_id
     AND (a.account_status IN('SSNEW', 'SSACT'))
-GROUP BY bp.company_name]]>
+GROUP BY cd.description
+ORDER BY cd.description]]>
 	</queryString>
-	<field name="institution_name" class="java.lang.String"/>
-	<field name="project_name" class="java.lang.String"/>
+	<field name="institution_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="bankName" class="java.lang.String"/>
 	<field name="noOfLoans" class="java.lang.Long"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
@@ -40,35 +45,35 @@ GROUP BY bp.company_name]]>
 	<title>
 		<band height="87" splitType="Stretch">
 			<textField>
-				<reportElement uuid="fac3d2e4-9ae5-42dc-8d97-882303184a63" x="51" y="47" width="480" height="20"/>
+				<reportElement x="51" y="47" width="480" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d2c20192-d591-4446-8985-63bf8dd9a1cd" x="0" y="25" width="531" height="22"/>
+				<reportElement x="0" y="25" width="531" height="22"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sales Summary: Total Loan Offered]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="98be4c61-5b3f-42ca-8f05-cec02a224c39" x="0" y="47" width="51" height="20"/>
+				<reportElement x="0" y="47" width="51" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Project:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f8d069d3-a1f0-4467-ad94-17d75adbd2c9" x="0" y="0" width="531" height="25"/>
+				<reportElement x="0" y="0" width="531" height="25"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{institution_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="f6e4c563-1e9a-4a64-8b0b-1f3143f18a3d" positionType="Float" x="0" y="67" width="531" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="67" width="531" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -79,28 +84,28 @@ GROUP BY bp.company_name]]>
 	<columnHeader>
 		<band height="40" splitType="Stretch">
 			<textField>
-				<reportElement uuid="60067558-3085-49ab-94fc-67033c4f3331" mode="Opaque" x="216" y="0" width="315" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="216" y="0" width="315" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{blocksTitle}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{blocksTitle}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="246df82c-db70-404e-8e64-ea04fa305985" mode="Opaque" x="0" y="0" width="216" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="0" y="0" width="216" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bank ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="78eb8d97-f33a-4b01-be89-303d79328f9d" mode="Opaque" x="216" y="20" width="145" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="216" y="20" width="145" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No Of Loan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="442c7918-b3e6-47f6-93ec-7183c3adbef0" mode="Opaque" x="361" y="20" width="170" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="361" y="20" width="170" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
@@ -111,28 +116,28 @@ GROUP BY bp.company_name]]>
 	<detail>
 		<band height="21">
 			<textField>
-				<reportElement uuid="c3277505-1d0c-472e-bd54-ee889d323c51" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="216" height="20"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="216" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="SansSerif" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bankName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bankName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="390dd9e0-1797-4253-992b-9087b701bf45" x="216" y="0" width="145" height="20"/>
+				<reportElement x="216" y="0" width="145" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{noOfLoans}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{noOfLoans}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="ce1877c2-8470-474f-abba-585da7aea4cf" x="361" y="0" width="170" height="20"/>
+				<reportElement x="361" y="0" width="170" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
-				<reportElement uuid="aef62524-a2ba-4aff-89a5-3d81109da505" mode="Transparent" x="0" y="20" width="531" height="1"/>
+				<reportElement mode="Transparent" x="0" y="20" width="531" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -142,25 +147,25 @@ GROUP BY bp.company_name]]>
 	<summary>
 		<band height="20">
 			<staticText>
-				<reportElement uuid="aa0aa03c-5590-4ba4-899f-6aad4e93f7ac" x="0" y="0" width="215" height="20"/>
+				<reportElement x="0" y="0" width="215" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="5e78696e-d91e-4e5f-96bc-3abbed8b1d2e" x="361" y="0" width="170" height="20"/>
+				<reportElement x="361" y="0" width="170" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalOfTotalAmount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{totalOfTotalAmount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e3b20f24-d071-4e02-bac4-db02784014ad" x="216" y="0" width="145" height="20"/>
+				<reportElement x="216" y="0" width="145" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalNoOfLoans}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{totalNoOfLoans}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

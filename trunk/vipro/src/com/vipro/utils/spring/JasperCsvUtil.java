@@ -69,7 +69,6 @@ public class JasperCsvUtil {
 
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report, String csv) {
-		System.out.println("Usage: CSV Generator ....");
 		boolean result = false;
 		
 
@@ -99,13 +98,10 @@ public class JasperCsvUtil {
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT,  jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, csv);
 			exporter.exportReport();
-		
-			System.out.println("Done : CVS file generated");
 
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.print("Exception" + e);
 		}
 		return result;
 	}

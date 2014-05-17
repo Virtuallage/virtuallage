@@ -5,22 +5,14 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:sec="http://www.springframework.org/security/tags">
-    
-
-    
+        
     <h:form>
     <p:menubar autoDisplay="false">
     	<p:submenu label="My Desk" icon="ui-icon-lightbulb">
      		<p:menuitem value="My Work Queue" target="/secured/mydesk/listCase.xhtml" 
     		 ajax="false" action="#{myDesk.listCases}" icon="ui-icon-script"/>
      	</p:submenu>
-    	
-    	<sec:authorize ifAnyGranted="ROLE_ADMIN">
-	    	<p:submenu label="Setup">
-	    		<p:menuitem value="User Profile" url="/secured/setup/userGroup/listUserGroup.xhtml" action="#{userGroup.RefreshUserGroup}" />  
-	    	</p:submenu>
-    	</sec:authorize>
-    	
+     	
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
 	    	<p:submenu label="Parameters">
 	    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" /> 
@@ -31,6 +23,69 @@
 	    		<p:menuitem value="User Profile" url="#" />  
 	    	</p:submenu>
     	</sec:authorize>
+    	    	
+    	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
+ 	    <p:submenu label="Parameters">
+    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
+    		<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
+	    	<p:menuitem value="Billing Model" url="/secured/setup/billingModel/listProgressiveBillingModel.xhtml" /> 
+	    </p:submenu> 
+ 	    <p:submenu label="Setup">
+    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
+	    </p:submenu> 
+    	<p:submenu label="Sales" icon="ui-icon-star">
+    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
+			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
+    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
+  	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
+    		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
+	   		<p:menuitem value="Sales Commission - Approval" url="/secured/sales/commission/salesCommissionApproval.xhtml" />
+     	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    	</p:submenu>
+    	</sec:authorize>
+    	
+    	<sec:authorize ifAnyGranted="ROLE_SALES_PIC">
+ 	    <p:submenu label="Parameters"> 	
+    		<p:menuitem value="User Profile Maintenance" url="/secured/setup/userGroup/listUserGroup.xhtml" action="#{userGroup.RefreshUserGroup}" />  
+    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
+    		<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
+	    </p:submenu> 
+ 	    <p:submenu label="Setup">
+    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    		<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
+	    </p:submenu> 
+    	<p:submenu label="Sales" icon="ui-icon-star">
+    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
+			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
+    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
+  	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
+    		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
+    		<p:menuitem value="Sales Commission - Verification" url="/secured/sales/commission/salesCommissionVerification.xhtml" />
+     	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    	</p:submenu>
+    	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_SALES">
     	<p:submenu label="Sales" icon="ui-icon-star">
     		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
@@ -63,100 +118,64 @@
     	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Purchaser Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
     	</p:submenu>
     	<p:submenu label="Download" icon="ui-icon-document">
-    		<p:menuitem value="SalesAdminDataExtraction" url="/secured/mis/SalesAdminDataExtraction.xhtml" />
-    		<p:menuitem value="SalesAdminAddressExtraction" url="/secured/mis/SalesAdminAddressExtraction.xhtml" />
+    		<p:menuitem value="Purchaser Data" url="/secured/mis/SalesAdminDataExtraction.xhtml" />
+    		<p:menuitem value="Purchaser Addesss" url="/secured/mis/SalesAdminAddressExtraction.xhtml" />
     	</p:submenu>
     	</sec:authorize>
+
+    	<sec:authorize ifAnyGranted="ROLE_SADM_STF">
+  	    <p:submenu label="Setup">
+	   		<p:menuitem value="Project Master File Update" url="/secured/salesadm/sa_update/saListProject.xhtml" />
+     		<p:menuitem value="Property Unit Update" url="/secured/salesadm/propertyUnitUpdate.xhtml" />
+    		<p:menuitem value="Sales Info Update" url="/secured/salesadm/update/updatePropertyList.xhtml" />
+    		<p:menuitem value="Advise Update" url="/secured/salesadm/adviseUpdate.xhtml" />
+	    </p:submenu> 
+    	<p:submenu label="Sales Admin" icon="ui-icon-star">
+    		<p:menuitem value="Progessive Billing" url="/secured/salesadm/progressiveBillingUnitSearch.xhtml" />
+       		<p:menuitem value="Renotice" url="/secured/salesadm/renoticeUnitSearch.xhtml" /> 
+	   	 	<p:menuitem value="Payment Entry" url="/secured/salesadm/paymentEntrySearch.xhtml"  />
+    	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+    		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
+    		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    	</p:submenu>
+	   	</sec:authorize>
     	
     	<sec:authorize ifAnyGranted="ROLE_ACCT">
     	<p:submenu label="Account" icon="ui-icon-star">
-    		<p:menuitem value="Transaction Entry" url="#" />
-    		<p:menuitem value="Transaction Approval" url="#" />
-    		<p:menuitem value="External Transaction Upload" url="#" />
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
     	</sec:authorize>
+    	
     	<sec:authorize ifAnyGranted="ROLE_CUST_SERV">
     	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Purchaser Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	</sec:authorize> 	
-    	
-    	<sec:authorize ifAnyGranted="ROLE_SALES_PIC">
- 	    <p:submenu label="Parameters">
-    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
-    		<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
-	    </p:submenu> 
- 	    <p:submenu label="Setup">
-    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
-    		<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
-	    </p:submenu> 
-    	<p:submenu label="Sales" icon="ui-icon-star">
-    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
-			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
-    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
-  	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
-    		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
-    		<p:menuitem value="Sales Commission - Verification" url="/secured/sales/commission/salesCommissionVerification.xhtml" />
-     	</p:submenu>
-    	<p:submenu label="Customer Service" icon="ui-icon-star">
-    		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Purchaser Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
-    	</p:submenu>
-    	<p:submenu label="MIS" icon="ui-icon-document">
-    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
-    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
-    	</p:submenu>
-    	<p:submenu label="Letters" icon="ui-icon-document">
-    		<p:menuitem value="Discount Letter" url="/secured/Letters/SalesLetter.xhtml" />
-    		<p:menuitem value="F.O.C Letter" url="/secured/letters/SalesLetter.xhtml" />
-    		<p:menuitem value="Loan Application Letter" url="/secured/letters/SalesLetter.xhtml" />
-    		<p:menuitem value="Sales Cancellation Letter" url="/secured/letters/SalesLetter.xhtml" />
-    		<p:menuitem value="Signing of SPA Letter" url="/secured/letters/SalesLetter.xhtml" />
-    	</p:submenu>
-    	</sec:authorize>
-    	
-    	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
- 	    <p:submenu label="Parameters">
-    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
-    		<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
-	    	<p:menuitem value="Billing Model" url="/secured/setup/billingModel/listProgressiveBillingModel.xhtml" /> 
-	    </p:submenu> 
- 	    <p:submenu label="Setup">
-    		<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
-    		<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
-	    </p:submenu> 
-    	<p:submenu label="Sales" icon="ui-icon-star">
-    		<p:menuitem value="Sales Registration" url="/secured/sales/registration/salesRegistration.xhtml" />
-			<p:menuitem value="Sales Update" url="/secured/sales/update/updatePropertyList.xhtml" />
-    		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
-  	  		<p:menuitem value="Sales Cancellation - Approval" url="/secured/sales/cancel/cancelPropertyListApproval.xhtml" />
-    		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
-	   		<p:menuitem value="Sales Commission - Approval" url="/secured/sales/commission/salesCommissionApproval.xhtml" />
-     	</p:submenu>
-    	<p:submenu label="Customer Service" icon="ui-icon-star">
-    		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
-    		<p:menuitem value="Purchaser Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
-    	</p:submenu>
-    	<p:submenu label="MIS" icon="ui-icon-document">
-    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
-    		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
-    	</p:submenu>
-    	</sec:authorize>
-    	
+    	 	
     	<sec:authorize ifAnyGranted="ROLE_LOGGED_IN">
     	<p:submenu label="System" icon="ui-icon-gear">
     		<p:menuitem value="My Profile" url="/secured/my_profile.xhtml" icon="ui-icon-person"/>  

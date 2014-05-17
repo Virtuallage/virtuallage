@@ -68,7 +68,6 @@ public class JasperAddressUtil {
 
 	public static boolean generateReport(HashMap<String, Object> hm,
 			String report, String docx) {
-		System.out.println("Usage: DOCX Generator ....");
 		boolean result = false;
 		
 
@@ -98,12 +97,9 @@ public class JasperAddressUtil {
             exporter.setParameter(JRDocxExporterParameter.OUTPUT_FILE_NAME, docx);
             exporter.exportReport();
 
-			System.out.println("Done : DOCX file generated");
-
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.print("Exception" + e);
 		}
 		return result;
 	}

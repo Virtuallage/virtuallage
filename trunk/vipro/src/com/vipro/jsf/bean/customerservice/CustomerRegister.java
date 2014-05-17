@@ -15,6 +15,7 @@ import org.primefaces.component.tabview.TabView;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.BusinessPartnerTypeConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.CustomerTypeConst;
 import com.vipro.constant.JasperConst;
@@ -57,6 +58,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 	private List<SelectItem> listRace = null;
 	private List<SelectItem> listSpecial = null;
 	private List<SelectItem> listCategory = null;
+	private List<SelectItem> listFinancier = null;	
 
 	private List<Customer> customers;
 	private CustomerDataModel customerDataModel;
@@ -107,6 +109,7 @@ public class CustomerRegister extends CommonBean implements Serializable {
 		listState = CodeUtil.getCodes("ST");
 		listSpecial = CodeUtil.getCodes("SH");
 		listCategory = CodeUtil.getCodes("CC");
+		listFinancier = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.BANK);
 		
 		AuthUser user = getCurrentUser();
 		if (user != null) {
@@ -748,5 +751,13 @@ public class CustomerRegister extends CommonBean implements Serializable {
 
 	public void setPaidHistory(List<TransactionHistory> paidHistory) {
 		this.paidHistory = paidHistory;
+	}
+
+	public List<SelectItem> getListFinancier() {
+		return listFinancier;
+	}
+
+	public void setListFinancier(List<SelectItem> listFinancier) {
+		this.listFinancier = listFinancier;
 	}
 }
