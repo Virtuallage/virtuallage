@@ -117,7 +117,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="52" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<printWhenExpression><![CDATA[(!$F{topText}.isEmpty())]]></printWhenExpression>
 			<staticText>
 				<reportElement uuid="e1a6170d-4fdb-4d63-935c-8f6b9aac399e" positionType="Float" x="1" y="0" width="66" height="13"/>
@@ -152,38 +152,6 @@ WHERE
 				<text><![CDATA[Account No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b53926c6-4dbe-43de-9033-67b2acb0b66e" positionType="Float" x="1" y="26" width="66" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Swift Code]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8f4222ff-d6e6-4227-b4f4-a210b83b2ea2" positionType="Float" x="268" y="26" width="65" height="13">
-					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Swift Code]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3d6a9e48-865d-4871-802e-39439947acf2" positionType="Float" x="1" y="39" width="66" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Bank Address]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="9295cc04-6f37-4608-b499-82aa7547dc2c" positionType="Float" x="268" y="39" width="65" height="13">
-					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Bank Address]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="5799df6c-be39-4eca-a8ca-a55c0cd9f7c9" positionType="Float" x="67" y="0" width="5" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
@@ -192,20 +160,6 @@ WHERE
 			</staticText>
 			<staticText>
 				<reportElement uuid="35d7a844-d0b0-4d71-a3ea-165706636199" positionType="Float" x="67" y="13" width="5" height="13"/>
-				<textElement verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="12102c37-65af-473a-8084-a335bc9429a2" positionType="Float" x="67" y="26" width="5" height="13"/>
-				<textElement verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="138912bb-c9e2-4327-b40a-15bc3267cdd1" positionType="Float" x="67" y="39" width="5" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
@@ -229,24 +183,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[: ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="0b3e4b98-35f1-4c83-ac7f-36edf30c5681" positionType="Float" x="333" y="26" width="5" height="13">
-					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="01e8c7bb-d853-44b9-8244-0968ceacd7b0" positionType="Float" x="333" y="39" width="5" height="13">
-					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Top">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[: ]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f255d279-a0c7-4002-a3b3-91fa99a8c34e" positionType="Float" x="72" y="13" width="196" height="13"/>
 				<textElement verticalAlignment="Middle">
@@ -262,57 +198,25 @@ WHERE
 				<textFieldExpression><![CDATA[$F{bank1Name}.trim()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="2158536c-9be2-42c0-8137-407c3dd0c10c" positionType="Float" x="72" y="26" width="196" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bank1SwiftCode}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="64e74482-d1c8-4d6e-a6da-83a9562443b7" positionType="Float" x="72" y="39" width="196" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" isPdfEmbedded="true"/>
-					<paragraph tabStopWidth="50"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bank1BranchAddress}.trim()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="6f20b869-6734-45be-8267-6404dbd4f575" positionType="Float" x="338" y="0" width="196" height="13"/>
+				<reportElement uuid="6f20b869-6734-45be-8267-6404dbd4f575" positionType="Float" x="338" y="0" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2Name}.isEmpty())]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2Name}.trim()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="eb6f6e35-a958-4e68-bd51-20f816346d47" positionType="Float" x="338" y="13" width="196" height="13"/>
+				<reportElement uuid="eb6f6e35-a958-4e68-bd51-20f816346d47" positionType="Float" x="338" y="13" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2AccountNo}.isEmpty())]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank2AccountNo}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="cd65650f-9603-4508-842d-19fcbbed5717" positionType="Float" x="338" y="26" width="196" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bank2SwiftCode}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="c54af989-2266-4882-a233-1313a6008e50" positionType="Float" x="338" y="39" width="196" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" isPdfEmbedded="true"/>
-					<paragraph tabStopWidth="50"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bank2BranchAddress}.trim()]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement uuid="93ba03b8-d875-438f-aa1e-e0da4a2f9512" positionType="Float" x="0" y="13" width="1" height="13"/>
-			</line>
-			<line>
-				<reportElement uuid="e73ec1c3-35b5-4dc5-8d71-5d08423d2a9e" positionType="Float" x="0" y="26" width="1" height="13"/>
-			</line>
-			<line>
-				<reportElement uuid="78d17374-f2de-44f3-9d33-3f0a77b5e851" positionType="Float" x="0" y="39" width="1" height="13"/>
 			</line>
 			<line>
 				<reportElement uuid="0b7b057c-d3bc-4e4f-8f31-5283439fb6ab" positionType="Float" x="534" y="0" width="1" height="13"/>
@@ -321,14 +225,142 @@ WHERE
 				<reportElement uuid="80b07008-a1af-4d99-8464-146b2079600c" positionType="Float" x="534" y="13" width="1" height="13"/>
 			</line>
 			<line>
-				<reportElement uuid="19d1cfca-116f-4aca-a8ba-f21239a8879c" positionType="Float" x="534" y="26" width="1" height="13"/>
+				<reportElement uuid="95c1bb9e-fead-4aa3-8a46-daa0dddc28ec" positionType="Float" x="0" y="0" width="1" height="13"/>
 			</line>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[((!$F{bank1SwiftCode}.isEmpty()) && (!$F{bank2SwiftCode}.isEmpty()))]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="b53926c6-4dbe-43de-9033-67b2acb0b66e" positionType="Float" x="1" y="0" width="66" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Swift Code]]></text>
+			</staticText>
 			<line>
-				<reportElement uuid="c761d588-029d-4c64-9175-5207c35ed5d1" positionType="Float" x="534" y="39" width="1" height="13"/>
+				<reportElement uuid="e73ec1c3-35b5-4dc5-8d71-5d08423d2a9e" positionType="Float" x="0" y="0" width="1" height="13"/>
+			</line>
+			<staticText>
+				<reportElement uuid="12102c37-65af-473a-8084-a335bc9429a2" positionType="Float" x="67" y="0" width="5" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2158536c-9be2-42c0-8137-407c3dd0c10c" positionType="Float" x="72" y="0" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank1SwiftCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8f4222ff-d6e6-4227-b4f4-a210b83b2ea2" positionType="Float" x="268" y="0" width="65" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Swift Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0b3e4b98-35f1-4c83-ac7f-36edf30c5681" positionType="Float" x="333" y="0" width="5" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cd65650f-9603-4508-842d-19fcbbed5717" positionType="Float" x="338" y="0" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2SwiftCode}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank2SwiftCode}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="19d1cfca-116f-4aca-a8ba-f21239a8879c" positionType="Float" x="534" y="0" width="1" height="13"/>
+			</line>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[((!$F{bank1BranchAddress}.isEmpty()) && (!$F{bank2BranchAddress}.isEmpty()))]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="3d6a9e48-865d-4871-802e-39439947acf2" positionType="Float" x="1" y="0" width="66" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bank Address]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="78d17374-f2de-44f3-9d33-3f0a77b5e851" positionType="Float" x="0" y="0" width="1" height="13"/>
+			</line>
+			<staticText>
+				<reportElement uuid="138912bb-c9e2-4327-b40a-15bc3267cdd1" positionType="Float" x="67" y="0" width="5" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="64e74482-d1c8-4d6e-a6da-83a9562443b7" positionType="Float" x="72" y="0" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank1BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+					<paragraph tabStopWidth="50"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank1BranchAddress}.trim()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9295cc04-6f37-4608-b499-82aa7547dc2c" positionType="Float" x="268" y="0" width="65" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bank Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01e8c7bb-d853-44b9-8244-0968ceacd7b0" positionType="Float" x="333" y="0" width="5" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c54af989-2266-4882-a233-1313a6008e50" positionType="Float" x="338" y="0" width="196" height="13">
+					<printWhenExpression><![CDATA[(!$F{bank2BranchAddress}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+					<paragraph tabStopWidth="50"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank2BranchAddress}.trim()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c761d588-029d-4c64-9175-5207c35ed5d1" positionType="Float" x="534" y="0" width="1" height="13"/>
 			</line>
 		</band>
 		<band height="14">
 			<printWhenExpression><![CDATA[(!$F{bottomText}.isEmpty())]]></printWhenExpression>
+			<line>
+				<reportElement uuid="86e9c186-1aa1-445d-88e6-4d12f17a55c9" positionType="Float" x="0" y="13" width="534" height="1"/>
+			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="ad7340c1-c5f9-4afd-ba89-83d3aa6875f8" positionType="Float" x="1" y="0" width="533" height="13"/>
 				<textElement verticalAlignment="Bottom">
@@ -336,12 +368,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bottomText}.trim()]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement uuid="86e9c186-1aa1-445d-88e6-4d12f17a55c9" positionType="Float" x="0" y="13" width="534" height="1"/>
-			</line>
-			<line>
-				<reportElement uuid="95c1bb9e-fead-4aa3-8a46-daa0dddc28ec" positionType="Float" x="0" y="-52" width="1" height="13"/>
-			</line>
 			<line>
 				<reportElement uuid="4b61034f-31a4-4d65-b4db-7da7ab12ec72" positionType="Float" x="0" y="0" width="1" height="13"/>
 			</line>

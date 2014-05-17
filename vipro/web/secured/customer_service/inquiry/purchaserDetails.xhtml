@@ -26,59 +26,61 @@ Purchaser Details Inquiry
 				<p:outputLabel value="Purchaser Name" />
 				<h:inputText value="#{customerRegister.customer.fullName}" disabled="true" style="width:400px"/>	
 				<p:outputLabel value="Category" />
-				<h:selectOneMenu value="#{customerRegister.customer.customerCategory}" disabled="true" style="width:400px" >	
+				<h:selectOneMenu value="#{customerRegister.customer.customerCategory}" disabled="true"  >	
 					<f:selectItems value="#{customerRegister.listCategory}"/>
 				</h:selectOneMenu>
 				
 				<p:outputLabel value="ID No" />
-				<h:inputText value="#{customerRegister.customer.identityNo}" disabled="true" style="width:400px"/>	
+				<h:inputText value="#{customerRegister.customer.identityNo}" disabled="true" />	
 				<p:outputLabel value="ID Type" />
-				<h:selectOneMenu value="#{customerRegister.customer.identityType}" disabled="true" style="width:400px" >	
+				<h:selectOneMenu value="#{customerRegister.customer.identityType}" disabled="true" >	
 					<f:selectItems value="#{customerRegister.listIdType}"/>
 				</h:selectOneMenu>
 				
 				<p:outputLabel value="Address 1"/>
 				<h:inputText value="#{customerRegister.address.addressLine1}" disabled="true" style="width:400px"/>
 				<p:outputLabel value="Citizenship" />
-				<h:selectOneMenu value="#{customerRegister.customer.citizenship}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.customer.citizenship}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</h:selectOneMenu>
 					
 				<p:outputLabel value="Address 2" />
 				<h:inputText value="#{customerRegister.address.addressLine2}" disabled="true" style="width:400px"/>
 				<p:outputLabel value="Date of birth" />
-				<h:inputText value="#{customerRegister.customer.dateOfBirth}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.customer.dateOfBirth}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+				</h:inputText>
 								
 				<p:outputLabel value="Address 3" />
 				<h:inputText value="#{customerRegister.address.addressLine3}" disabled="true" style="width:400px"/>
 				<p:outputLabel value="Sex" />
-				<h:selectOneMenu value="#{customerRegister.customer.sex}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.customer.sex}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listGender}"/>
 				</h:selectOneMenu>
 				
 				<p:outputLabel value="Address 4" />
 				<h:inputText value="#{customerRegister.address.addressLine4}" disabled="true" style="width:400px"/>
 				<p:outputLabel value="Marital Status" />
-				<h:selectOneMenu value="#{customerRegister.customer.maritalStatus}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.customer.maritalStatus}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listMaritalStatus}"/>
 				</h:selectOneMenu>
 				
 				<p:outputLabel value="Post Code" />
-				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" />
 				<p:outputLabel value="Bumi Ind" />
-				<h:selectOneMenu value="#{customerRegister.customer.bumiIndicator}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.customer.bumiIndicator}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listBumi}"/>
 				</h:selectOneMenu>
 				
 				<p:outputLabel value="State" />
-				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listState}"/>
 				</h:selectOneMenu>
 				<p:outputLabel value="Mobile No"/>
-				<h:inputText value="#{customerRegister.customer.mobileNo}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.customer.mobileNo}" disabled="true" />
 					
 				<p:outputLabel value="Country" />
-				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" style="width:400px">
+				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</h:selectOneMenu>
 				<p:outputLabel value="Email Address" />
@@ -100,17 +102,23 @@ Purchaser Details Inquiry
 			<p:column headerText="Unit No">
 				<h:outputText value="#{c.projectInventory.unitNo}" />
 			</p:column>
-			
+				
 			<p:column headerText="Purchase Price">
-				<h:outputText value="#{c.projectInventory.purchasePrice}" />
+				<h:outputText value="#{c.projectInventory.purchasePrice}" style="text-align:right" >
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
 			</p:column>
 			
 			<p:column headerText="Amount Billed">
-				<h:outputText value="#{c.accountBalance + c.totalPaymentTodate}" />
+				<h:outputText value="#{c.accountBalance + c.totalPaymentTodate}" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
 			</p:column>
 			
 			<p:column headerText="Paid Todate">
-				<h:outputText value="#{c.totalPaymentTodate}" />
+				<h:outputText value="#{c.totalPaymentTodate}" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
 			</p:column>
 			
 			<p:column headerText="Type">

@@ -403,21 +403,30 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 		List<Object> resultList = new ArrayList<Object>();
 		try{
 		
-//		String query = "SELECT bp.companyName,coalesce(COUNT(a.accountId)),coalesce(SUM(a.loanAmount)) FROM Account a, BusinessPartner bp WHERE a.projectInventory.project.projectId = ?   AND a.purchaseType != ? AND a.panelBankId = bp.partnerId AND a.accountStatus in ('" 
+//		String query = "SELECT bp.companyName,coalesce(COUNT(a.accountId)),coalesce(SUM(a.loanAmount)) " +
+//				"FROM Account a, BusinessPartner bp WHERE a.projectInventory.project.projectId = ? " +
+//				"AND a.panelBankId = bp.partnerId AND a.accountStatus in ('" 
 //				+ CommonConst.STATUS_NEW + "', '" 
 //				+ CommonConst.STATUS_ACTIVE + "') GROUP BY bp.companyName";
-		String query = "SELECT cd.description,coalesce(COUNT(a.accountId)),coalesce(SUM(a.loanAmount)) " +
-				"FROM Account a, CodeDet cd WHERE a.projectInventory.project.projectId = ? AND a.purchaseType != ? " +
-				"AND (a.panelBankId = cd.code AND cd.codeHeaderId = 'BK') " +
-				"AND a.accountStatus in ('" 
-				+ CommonConst.STATUS_NEW + "', '" 
-				+ CommonConst.STATUS_ACTIVE + "') GROUP BY cd.description";
 		
-		resultList = (List<Object>)getHibernateTemplate().find(query,projectId,PurchaseTypeConst.CASH);
-		
+//		String query = "SELECT cd.description,coalesce(COUNT(a.accountId)),coalesce(SUM(a.loanAmount)) " +
+//				"FROM Account a, CodeDet cd WHERE a.projectInventory.project.projectId = ? " +
+//				"AND a.panelBankId = cd.code AND a.accountStatus in ('" 
+//				+ CommonConst.STATUS_NEW + "', '" 
+//				+ CommonConst.STATUS_ACTIVE + "' ) GROUP BY cd.description ORDER BY cd.description ASC";
+
+			String query = "SELECT a.panelBankId,coalesce(COUNT(a.accountId)),coalesce(SUM(a.loanAmount)) " +
+			"FROM Account a WHERE a.projectInventory.project.projectId = ? " +
+			"AND a.panelBankId <> Null AND a.panelBankId <> ' ' AND a.accountStatus in ('" 
+			+ CommonConst.STATUS_NEW + "', '" 
+			+ CommonConst.STATUS_ACTIVE + "' ) GROUP BY a.panelBankId ORDER BY a.panelBankId ASC";
+			
+		resultList = (List<Object>)getHibernateTemplate().find(query,projectId);
+	
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+
 		return resultList;
 	}
 

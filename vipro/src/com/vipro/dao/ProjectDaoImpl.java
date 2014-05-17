@@ -117,7 +117,6 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		}
 		query.append(" order by  th.invoiceNo ");
 		
-		System.out.println("-------- Query Is :"+query);
 		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
 		if (list != null && list.size()>0) {
 			for (Object[] ob : list) {

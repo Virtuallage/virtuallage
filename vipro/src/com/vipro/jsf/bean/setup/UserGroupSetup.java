@@ -170,7 +170,7 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 		String username = userProfileFld.getUsername();
 		userProfileFld = getUserProfile(username);
 		setPassword(userProfileFld.getPassword());
-		userProfileFld.setPassword(null);
+		userProfileFld.setPassword("******");
 		return "editUserProfile";
 	}
 
@@ -220,7 +220,7 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 		}
 
 		RefreshUserGroup();
-		addInfoMessage("Record Saved", "User Group information saved successfully.");
+		addInfoMessage("INFORMATION", "User Group information saved successfully.");
 		
 		return "listUserGroup";
 	}
@@ -231,18 +231,14 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 			UserProfileService userprofile = (UserProfileService) SpringBeanUtil
 					.lookup(UserProfileService.class.getName());
 			
-			System.out.println("saved :" + password);
-			System.out.println("input :" + userProfileFld.getPassword());
-			if (userProfileFld.getPassword() != null) {
-				System.out.println("encode now!");
-				encodedpwd = EncodePassword(userProfileFld.getPassword());
-			} else {
+			if (userProfileFld.getPassword().equalsIgnoreCase("******")) {
 				encodedpwd = password;
-				System.out.println("assign now!");
-			}
-			System.out.println("encoded :" + encodedpwd);
+			} else {
+				encodedpwd = EncodePassword(userProfileFld.getPassword());
+			}			
 			
 			userProfileFld.setPassword(encodedpwd);
+			userProfileFld.setName(userProfileFld.getName().toUpperCase());
 			userprofile.update(userProfileFld);
 			
 		} catch (Throwable t) {
@@ -252,7 +248,7 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 		}
 
 		RefreshUserGroup();
-		addInfoMessage("Record Saved", "User Profile information saved successfully.");
+		addInfoMessage("INFORMATION", "User Profile information saved successfully.");
 		
 		return "listUserProfile";
 	}
@@ -311,6 +307,7 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 			userProfileFld.setInvalidPasswordCount(0);
 			userProfileFld.setUserGroup(userGroupFld);
 			userProfileFld.setInstitution(listInstitutions.get(0));
+			userProfileFld.setName(userProfileFld.getName().toUpperCase());
 			userprofile.insert(userProfileFld);
 
 		} catch (Throwable t) {
@@ -320,7 +317,7 @@ public class UserGroupSetup extends CommonBean implements Serializable{
 		}
 
 	RefreshUserProfile(userGroupFld);
-	addInfoMessage("Record Saved", "User Profile created successfully.");
+	addInfoMessage("INFORMATION", "User Profile created successfully.");
 	
 	return "listUserProfile";
 	}

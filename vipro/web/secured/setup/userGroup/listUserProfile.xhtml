@@ -24,9 +24,6 @@ Common Code
 					<p:column style="width:15%;text-align:left;font-weight:bold">
 						<p:outputLabel value="User Group :" />
 					</p:column>
-					<p:column style="width:20%;text-align:left;font-weight:bold">
-						<p:outputLabel value="#{userGroup.userGroupFld.groupId}" />
-					</p:column>
 					<p:column style="width:65%;text-align:left;font-weight:bold">
 						<p:outputLabel value="#{userGroup.userGroupFld.groupName}" />
 					</p:column>
@@ -48,7 +45,7 @@ Common Code
 				</p:column>
 				
 				<p:column headerText="Department" style="width:20%">
-					<h:outputText value="#{up.department}" />
+					<h:outputText value="#{userGroup.getCodeDesc('DM',up.department)}" />
 				</p:column>
 
 				<p:column headerText="Staff No" style="width:15%">
@@ -75,9 +72,9 @@ Common Code
 			<p:panelGrid styleClass="no-borders" style="width:90%">
 				<p:row>
 					<p:column style="text-align:mddle;width:25%" />
-					<p:column style="text-align:mddle;width:25%">
+<!--  					<p:column style="text-align:mddle;width:25%">
 						<p:commandButton ajax="false" value="Create User Profile" action="#{userGroup.NewUserProfile}" icon="ui-icon-plus" /> 
-					</p:column>
+					</p:column> -->
 					<p:column style="text-align:mddle;width:25%">
 						<p:commandButton ajax="false" value="Back" action="#{userGroup.backTolistUserGroup}" icon="ui-icon-arrowreturnthick-1-w" /> 
 					</p:column>

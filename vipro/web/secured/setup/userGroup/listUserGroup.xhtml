@@ -21,12 +21,8 @@ User Group
 			<p:dataTable var="ug" value="#{userGroup.listUserGroups}" paginator="true" rows="10"  paginatorPosition="bottom"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
             rowsPerPageTemplate="5,10,15" id="UserGroupTable"> 
-			
-				<p:column headerText="User Group" style="width:30%">
-					<h:outputText value="#{ug.groupId}" />
-				</p:column>
 				
-				<p:column headerText="Group Name" style="width:40%">
+				<p:column headerText="User Group" style="width:40%">
 					<h:outputText value="#{ug.groupName}" />
 				</p:column>
 				
@@ -50,11 +46,11 @@ User Group
 			<br/>
 
 			<p:panelGrid styleClass="no-borders" style="width:90%">
-				<p:row>
-					<p:column style="text-align:mddle;width:100%">
+<!-- 				<p:row>
+  					<p:column style="text-align:mddle;width:100%">
 						<p:commandButton ajax="false" value="Add User Group" action="#{userGroup.NewUserGroup}" icon="ui-icon-plus" /> 
 					</p:column>
-				</p:row>
+				</p:row>  -->
 			</p:panelGrid>
 			
 		</h:form>

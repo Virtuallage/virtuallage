@@ -177,7 +177,6 @@ public class CommonCodeSetup extends CommonBean implements Serializable{
 		} else {
 			setListCodeHeaders(commoncode.findAllCodeHdrs());
 
-//			System.out.println(listCodeHeaders.size());
 			Iterator itr = listCodeHeaders.iterator();
 
 			for(int i=0; i<listCodeHeaders.size(); i++) {
@@ -260,7 +259,6 @@ public class CommonCodeSetup extends CommonBean implements Serializable{
 					.lookup(CodeService.class.getName());
 			
 			String codeheaderid = codeHeaderFld.getCodeHeaderId();
-			System.out.println(codeheaderid);
 			codeHeaderFld.setCodeHeaderId(codeheaderid.toUpperCase());
 			String name = codeHeaderFld.getName();
 			codeHeaderFld.setName(name.toUpperCase());

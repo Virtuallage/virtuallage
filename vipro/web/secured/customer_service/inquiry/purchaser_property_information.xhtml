@@ -22,86 +22,115 @@ Property Unit Account Inquiry
 			<h:panelGrid columns="5" style="width:100%;text-align:left;">
 			
 				<p:outputLabel value="Project" />
-				<h:inputText value="#{customerRegister.account.projectInventory.project.projectName}" disabled="true" style="width:400px"/>	
+				<h:inputText value="#{customerRegister.account.projectInventory.project.projectName}" disabled="true" style="width:350px"/>	
 				<p:outputLabel value="Sales Person" />
-				<h:inputText value="#{customerRegister.account.salesPerson}" disabled="true" style="width:400px"/>	
+				<h:inputText value="#{customerRegister.account.salesPerson}" disabled="true" style="width:350px"/>	
 				<p:outputLabel/>
 							
 				<p:outputLabel value="Unit No" />
-				<h:inputText value="#{customerRegister.account.projectInventory.unitNo}" disabled="true" style="width:400px"/>	
+				<h:inputText value="#{customerRegister.account.projectInventory.unitNo}" disabled="true" />	
 				<p:outputLabel value="SPA Signed" />
-				<h:inputText value="#{customerRegister.account.spaSignedDate}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.spaSignedDate}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="Date Purchased"/>
-				<h:inputText value="#{customerRegister.account.datePurchased}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.datePurchased}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+				</h:inputText>
 				<p:outputLabel value="LO Signed" />
-				<h:inputText value="#{customerRegister.account.loSignedDate}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.loSignedDate}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="Financier" />
-				<h:inputText value="#{customerRegister.account.financierId}" disabled="true" style="width:400px"/>
+				<h:selectOneMenu id="financierId" value="#{customerRegister.account.financierId}" disabled="true" style="width:355px">
+					<f:selectItems value="#{customerRegister.listFinancier}" />
+				</h:selectOneMenu>
+
 				<p:outputLabel value="Comm Paid" />
-				<h:inputText value="#{customerRegister.account.commissionPaidDate}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.commissionPaidDate}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 								
 				<p:outputLabel value="Loan Amount" />
-				<h:inputText value="#{customerRegister.account.loanAmount}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.loanAmount}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel value="Comm Amount" />
-				<h:inputText value="#{customerRegister.account.commissionAmount}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.commissionAmount}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 							
 				<p:outputLabel value="Corr Address" />
-				<h:inputText value="#{customerRegister.address.addressLine1}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.addressLine1}" disabled="true" style="width:350px"/>
 				<p:outputLabel value="Booking Fee" />
-				<h:inputText value="#{customerRegister.account.bookPymtAmount}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.bookPymtAmount}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="" />
-				<h:inputText value="#{customerRegister.address.addressLine2}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.addressLine2}" disabled="true" style="width:350px"/>
 				<p:outputLabel value="Selling Price" />
-				<h:inputText value="#{customerRegister.account.purchasePrice}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.purchasePrice}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="" />
-				<h:inputText value="#{customerRegister.address.addressLine3}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.addressLine3}" disabled="true" style="width:350px"/>
 				<p:outputLabel value="Discount Amount"/>
-				<h:inputText value="#{customerRegister.account.discountedAmount}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.discountedAmount}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 					
 				<p:outputLabel value="" />
-				<h:inputText value="#{customerRegister.address.addressLine4}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.addressLine4}" disabled="true" style="width:350px"/>
 				<p:outputLabel value="Nett Amount" />
-				<h:inputText value="#{customerRegister.account.netPrice}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.netPrice}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="Postcode" />
-				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" />
 				<p:outputLabel value="Billed Todate" />
-				<h:inputText value="#{customerRegister.account.accountBalance + customerRegister.account.totalPaymentTodate}" disabled="true" style="width:400px"/>
-			    
-				<p:panelGrid styleClass="no-borders" style="width:95%">
+				<h:inputText value="#{customerRegister.account.accountBalance + customerRegister.account.totalPaymentTodate}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
+							    
+<!--  				<p:panelGrid styleClass="no-borders" style="width:95%">
 			     	<p:row>
 			     		<p:column style="text-align:left">
 			     			<p:commandButton value="View" onclick="dlgView.show()" />  
 			     		</p:column>
 			     	</p:row>
 			     </p:panelGrid>
-			     
+-->			     
 				<p:outputLabel value="State" />
-				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" style="width:400px">
+				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listState}"/>
 				</h:selectOneMenu>
 				<p:outputLabel value="Paid Todate" />
-				<h:inputText value="#{customerRegister.account.totalPaymentTodate}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.totalPaymentTodate}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 				
 				<p:outputLabel value="Country" />
-				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" style="width:400px">
+				<h:selectOneMenu id="country" value="#{customerRegister.address.country}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listCountry}"/>
 				</h:selectOneMenu>
 				<p:outputLabel value="O/S Balance" />
-				<h:inputText value="#{customerRegister.account.accountBalance}" disabled="true" style="width:400px"/>
+				<h:inputText value="#{customerRegister.account.accountBalance}" disabled="true" style="text-align:right">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:inputText>
 				<p:outputLabel/>
 								
 			</h:panelGrid>

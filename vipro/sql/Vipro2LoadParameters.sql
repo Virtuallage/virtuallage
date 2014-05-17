@@ -57,8 +57,9 @@ INSERT INTO vipro.user_group VALUES ('SALES', 'SALES STAFF', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('SALES_PIC', 'SALES PERSON-IN-CHARGE', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('SALES_ADM', 'BACK OFFICE ADMIN', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('CUST_SERV', 'CUSTOMER SERVICE', 'SSACT');
-INSERT INTO vipro.user_group VALUES ('PIC_ADM', 'PIC ADMIN', 'SSACT');
+INSERT INTO vipro.user_group VALUES ('PIC_ADM', 'PIC MANAGER', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('ACCT', 'ACCOUNT STAFF', 'SSACT');
+INSERT INTO vipro.user_group VALUES ('SADM_STF', 'SALES ADMIN STAFF', 'SSACT');
 
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('salespic1', '5f4dcc3b5aa765d61d8327deb882cf99', 'SALES PIC 1 NAME', 1000000001,'joe.lim@mct.com.my', '0193393596', 'DMSMA', 'SSACT', 'SALES_PIC');
