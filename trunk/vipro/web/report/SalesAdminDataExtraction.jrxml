@@ -66,7 +66,7 @@ FROM
      LEFT JOIN  `customer` customer ON account.`customer_id` = customer.`customer_id`
      LEFT JOIN `customer` customer_A ON account.`customer_id2` = customer_A.`customer_id`
      LEFT JOIN `address` address ON project_inventory.`address_id` = address.`address_id`
-     LEFT JOIN `address` address_A ON account.`corr_addr_cust_id` = address_A.`address_id`
+     LEFT JOIN `address` address_A ON account.`customer_id` = address_A.`customer_id`
      LEFT JOIN `address` address_B ON account.`panel_bank_id` = address_B.`address_id`
      LEFT JOIN `business_partner` business_partner ON account.`panel_bank_id` = business_partner.`partner_id`
 	 LEFT JOIN `business_partner` business_partner_A ON account.`spa_solicitor_id` = business_partner_A.`partner_id`
