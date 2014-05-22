@@ -419,20 +419,20 @@ insert into `vipro`.`transaction_code` ( `transaction_code`, `name`, `code_type`
 
 -- Business Partner Parameters
 INSERT INTO business_partner (partner_id, institution_id) VALUES (0, 1000000001);
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRDEV', 'B&G GREENERY PROPERTY SDN BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRLND', 'MULTI BINA SDN BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRSOL', 'LOW & LEE', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'RHB BANK BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'AFFIN BANK BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'CIMB CREDIT PROCESSING', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'AMBANK MORTGAGE', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'UOB BANK BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'PUBLIC BANK BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRBNK', 'MBSB HOUSING LOAN', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRDEV', 'B & G SUPERB PROPERTY SDN BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRLND', 'B & G SUPERB PROPERTY SDN BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRDEV', 'DPRISTINE MEDINI SDN BHD', 'SSACT');
-INSERT INTO vipro.business_partner (institution_id, partner_type, company_name, status) VALUES (1000000001, 'PRLND', 'DPRISTINE MEDINI SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRDEV', 'BGGREEN','B&G GREENERY PROPERTY SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRLND', 'MULTIBINA','MULTI BINA SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRSOL', 'LOW&LEE', 'LOW & LEE', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'RHBBANK', 'RHB BANK BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'AFFIN', 'AFFIN BANK BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'CIMBBANK', 'CIMB CREDIT PROCESSING', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'AMBANK', 'AMBANK MORTGAGE', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'UOBBANK', 'UOB BANK BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'PUBLIC', 'PUBLIC BANK BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRBNK', 'MBSB', 'MBSB HOUSING LOAN', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRDEV', 'BGSUP', 'B & G SUPERB PROPERTY SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRLND', 'BGSUR2', 'B & G SUPERB PROPERTY SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRDEV', 'DP1', 'DPRISTINE MEDINI SDN BHD', 'SSACT');
+INSERT INTO vipro.business_partner (institution_id, partner_type, company_code, company_name, status) VALUES (1000000001, 'PRLND', 'FP2', 'DPRISTINE MEDINI SDN BHD', 'SSACT');
           
 -- Load Project Record
 INSERT INTO vipro.project (project_id, project_name, project_code, property_type, report_group, address1, project_office_tel_no, project_office_fax_no, pic_id, person_in_charge, pic_mobile_no, city, state, country, staff_booking_fee, public_booking_fee, launch_date, institution_id, 
