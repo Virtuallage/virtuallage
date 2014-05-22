@@ -1,2 +1,0 @@
-INSERT INTO `vipro`.`transaction_code` (`transaction_code`, `name`, `code_type`, `accounting_group`, `status`) 
-     VALUES ('510001', 'Reversal Progressive Billing', 'DR', NULL, 'SSACT'); 
