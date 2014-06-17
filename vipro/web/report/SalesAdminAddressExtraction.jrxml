@@ -52,6 +52,9 @@ WHERE
 	<group name="project_inventory_unit_no">
 		<groupExpression><![CDATA[$F{project_inventory_unit_no}]]></groupExpression>
 	</group>
+	<pageHeader>
+		<band height="5"/>
+	</pageHeader>
 	<detail>
 		<band height="121" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -90,9 +93,7 @@ WHERE
 			</elementGroup>
 			<elementGroup/>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="f43d92f4-063d-460a-acd8-575287991b4f" positionType="Float" mode="Transparent" x="11" y="29" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{1st_Purchaser}.isEmpty()]]></printWhenExpression>
-				</reportElement>
+				<reportElement uuid="f43d92f4-063d-460a-acd8-575287991b4f" positionType="Float" mode="Transparent" x="11" y="29" width="272" height="13" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single" tabStopWidth="10"/>
@@ -214,7 +215,7 @@ WHERE
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="2926b3bb-d801-4a7e-8514-98a259a168ca" positionType="Float" mode="Transparent" x="11" y="29" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{2nd_Purchaser}.isEmpty()]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{2nd_Purchaser} == null]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
