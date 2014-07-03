@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Edit Potential Purchasers
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Edit Potential Purchaser" style="width:95%">  
+
+<p:focus context="panel"/> 
+
+<h:form>
+
+			<h:panelGrid columns="4" style="width:100%;text-align:left;">
+				<p:outputLabel value="Assigned ID"/>
+				<h:inputText value="#{potentialRegister.individual.customerId}" disabled="true"/>
+				<p:outputLabel value="Type"/>
+				<h:inputText value="Potential Purchaser" disabled="true"/>
+				
+				<p:outputLabel value="Purchaser Name" for="name"/>
+				<p:inputText id="name" value="#{potentialRegister.individual.fullName}" maxlength="60" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:outputLabel value="Title" for="title"/>
+				<p:selectOneMenu id="title" value="#{potentialRegister.individual.title}" required="true">
+						<f:selectItems value="#{potentialRegister.listTitle}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="ID No" for="idno"/>
+				<h:panelGroup>
+					<p:inputText id="idno" value="#{potentialRegister.individual.identityNo}" maxlength="15" required="true" autocomplete="off"/>
+					<p:outputLabel value=" ie. 880808-08-8888" />
+				</h:panelGroup>
+				<p:outputLabel value="ID Type" for="idtype"/>
+				<p:selectOneMenu id="idtype" value="#{potentialRegister.individual.identityType}" required="true">
+					<f:selectItems value="#{potentialRegister.listIdType}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Address" for="addr1"/>
+				<p:inputText id="addr1" value="#{potentialRegister.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:outputLabel value="Race" for="race"/>
+				<p:selectOneMenu id="race" value="#{potentialRegister.individual.race}" required="false">
+						<f:selectItems value="#{potentialRegister.listRace}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="" for="addr2"/>
+				<p:inputText id="addr2" value="#{potentialRegister.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>			
+				<p:outputLabel value="Marital Status" for="marital"/>
+				<p:selectOneMenu id="marital" value="#{potentialRegister.individual.maritalStatus}" required="true">
+						<f:selectItems value="#{potentialRegister.listMaritalStatus}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Address 3" for="addr3"/>
+				<p:inputText id="addr3" value="#{potentialRegister.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:outputLabel value="Citizenship" for="citizenship"/>
+				<p:selectOneMenu id="citizenship" value="#{potentialRegister.individual.citizenship}" required="true">
+						<f:selectItems value="#{potentialRegister.listCountry}"/>
+				</p:selectOneMenu>
+			
+				<p:outputLabel value="Address 4" for="addr4"/>
+				<p:inputText id="addr4" value="#{potentialRegister.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
+				<p:outputLabel value="Age Group" for="agegroup"/>
+				<p:selectOneMenu id="agegroup" value="#{potentialRegister.individual.ageGroup}"  required="true">
+						<f:selectItems value="#{potentialRegister.listAgeGroup}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Post Code" for="postcode" />
+				<p:inputText id="postcode" value="#{potentialRegister.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
+				<p:outputLabel value="Income Group" for="income"/>
+				<p:selectOneMenu id="income" value="#{potentialRegister.individual.incomeGroup}"  required="true">
+						<f:selectItems value="#{potentialRegister.listIncomeGroup}"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="City" for="city" />
+				<p:inputText id="city" value="#{potentialRegister.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="false"/>
+				<p:outputLabel value="Mobile No" for="mobile"/>
+				<h:panelGroup>
+					<p:inputText  id="mobile" value="#{potentialRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+					<p:outputLabel value=" ie. 0123558888" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="State" for="state" />
+				<p:selectOneMenu id="state" value="#{potentialRegister.address.state}"  required="false">
+						<f:selectItems value="#{potentialRegister.listState}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Email Address" for="email"/>
+				<p:inputText id="email" value="#{potentialRegister.individual.email}" maxlength="30" autocomplete="off"/>
+
+				<p:outputLabel value="Country" for="country"/>
+				<p:selectOneMenu id="country" value="#{potentialRegister.address.country}"  required="true">
+						<f:selectItems value="#{potentialRegister.listCountry}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Marketing Code" for="marketing"/>
+				<p:selectOneMenu id="marketing" value="#{potentialRegister.individual.marketingCode}" required="true">
+					<f:selectItems value="#{potentialRegister.listMarketingCode}"/>
+				</p:selectOneMenu>
+				
+			</h:panelGrid>
+		   	
+		   	<h:panelGrid columns="2" style="width:100%">
+			   	<p:outputLabel value="DISCLAIMER"/>
+				<br/>
+			   	<p:selectBooleanCheckbox id="id" value="#{potentialRegister.pdpaCheck}" required="false"/>	
+				<p:outputLabel value="I hereby agree and expressly give consent to MCT Consortium Berhad and its group of companies
+				to collect and process my personal data for their records so as to enable them to keep me informed of any updates/ information with regard to
+				MCT Consortium Berhard's event and any other future events, promotion, products, services and marketing related information,
+				provided that the use of my personal data will not breach any applicable data protection legislation."/>
+				<p:outputLabel value="" /> 	
+		   	</h:panelGrid>
+			
+			<br/>
+			
+			<p:commandButton value="Back" ajax="false" action="#{potentialRegister.backIndividual}" immediate="true"  icon="ui-icon-arrowreturn-1-w"/>&nbsp;&nbsp;			
+			<p:commandButton value="Save" ajax="false" action="#{potentialRegister.editIndividual}" icon="ui-icon-disk"/>
+			
+</h:form>
+
+</p:panel>
+</ui:define>
+</ui:composition>
+		

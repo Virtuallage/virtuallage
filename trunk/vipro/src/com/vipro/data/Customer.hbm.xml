@@ -50,6 +50,9 @@
         <property name="employerName" type="string">
             <column name="employer_name" length="60" />
         </property>
+        <property name="incomeGroup" type="string">
+            <column name="income_group" length="5" />
+        </property>
         <property name="houseTelNo" type="string">
             <column name="house_tel_no" length="15" />
         </property>
@@ -82,6 +85,15 @@
         </property>
         <property name="email" type="string">
             <column name="email" length="30" />
+        </property>
+        <property name="ageGroup" type="string">
+            <column name="age_group" length="5" />
+        </property>
+        <property name="marketingCode" type="string">
+            <column name="marketing_code" length="5" />
+        </property>
+        <property name="pdpaDisclaimer" type="string">
+            <column name="pdpa_disclaimer" length="1" />
         </property>
         <property name="remarks" type="string">
             <column name="remarks" length="300" />

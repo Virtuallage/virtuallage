@@ -11,5 +11,7 @@ public interface CustomerTypeConst {
 	
 	public static final String COMPANY = "CCCOM";
 	
+	public static final String POTENTIAL = "CCPOT";
+	
 	public static final String BUSINESSREGISTRATION = "IDBRE";
 }
