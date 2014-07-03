@@ -28,12 +28,16 @@ public class Customer implements java.io.Serializable {
 	private String sex;
 	private String maritalStatus;
 	private String employerName;
+	private String incomeGroup;
 	private String houseTelNo;
 	private String officeTelNo;
 	private String faxNo;
 	private String communicationType;
 	private String language;
 	private Date dateOfBirth;
+	private String ageGroup;
+	private String marketingCode;
+	private String pdpaDisclaimer;
 	private Long createdBy;
 	private Date dateCreated;
 	private String customerStatus;
@@ -410,6 +414,38 @@ public class Customer implements java.io.Serializable {
 
 	public void setCustomerStatus(String customerStatus) {
 		this.customerStatus = customerStatus;
+	}
+
+	public String getIncomeGroup() {
+		return incomeGroup;
+	}
+
+	public void setIncomeGroup(String incomeGroup) {
+		this.incomeGroup = incomeGroup;
+	}
+
+	public String getAgeGroup() {
+		return ageGroup;
+	}
+
+	public void setAgeGroup(String ageGroup) {
+		this.ageGroup = ageGroup;
+	}
+
+	public String getMarketingCode() {
+		return marketingCode;
+	}
+
+	public void setMarketingCode(String marketingCode) {
+		this.marketingCode = marketingCode;
+	}
+
+	public String getPdpaDisclaimer() {
+		return pdpaDisclaimer;
+	}
+
+	public void setPdpaDisclaimer(String pdpaDisclaimer) {
+		this.pdpaDisclaimer = pdpaDisclaimer;
 	}
 	
 	

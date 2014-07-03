@@ -14,14 +14,15 @@
      	</p:submenu>
      	
     	<sec:authorize ifAnyGranted="ROLE_SETUP">
-	    	<p:submenu label="Parameters">
-	    		<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" /> 
-	    		<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
-	    		<p:menuitem value="Billing Model" url="/secured/setup/billingModel/listProgressiveBillingModel.xhtml" /> 
-	    		<p:menuitem value="Reset Password" url="#" />  
-	    		<p:menuitem value="User Group" url="#" />  
-	    		<p:menuitem value="User Profile" url="#" />  
-	    	</p:submenu>
+ 	    	<p:submenu label="Parameters"> 	
+    			<p:menuitem value="User Profile Maintenance" url="/secured/setup/userGroup/listUserGroup.xhtml" action="#{userGroup.RefreshUserGroup}" />  
+    			<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
+    			<p:menuitem value="Business Partner" url="/secured/setup/businessPartner/searchBusinessPartner.xhtml" />
+	    	</p:submenu> 
+ 	    	<p:submenu label="Setup">
+    			<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
+    			<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
+	    	</p:submenu> 
     	</sec:authorize>
     	    	
     	<sec:authorize ifAnyGranted="ROLE_PIC_ADM">
@@ -76,6 +77,7 @@
     	<p:submenu label="Customer Service" icon="ui-icon-star">
     		<p:menuitem value="Individual Purchaser Update" url="/secured/customer_service/individual/purchaser_information.xhtml" icon="ui-icon-person" />
     		<p:menuitem value="Company Purchaser Update" url="/secured/customer_service/company/purchaser_information.xhtml" icon="ui-icon-person" />
+     		<p:menuitem value="Potential Purchaser Entry" url="/secured/customer_service/potential/potentialSearch.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="Account" icon="ui-icon-star">
 	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
@@ -93,6 +95,9 @@
     		<p:menuitem value="Sales Cancellation" url="/secured/sales/cancel/cancelPropertyList.xhtml" />
     		<p:menuitem value="Sales Commission" url="/secured/sales/commission/salesCommission.xhtml" />
     	</p:submenu>
+    	<p:submenu label="Customer Service" icon="ui-icon-star">
+     		<p:menuitem value="Potential Purchaser Entry" url="/secured/customer_service/potential/potentialSearch.xhtml" icon="ui-icon-person" />
+    	</p:submenu>  	
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     	</p:submenu>
