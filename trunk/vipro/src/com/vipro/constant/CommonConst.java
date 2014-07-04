@@ -42,4 +42,5 @@ public interface CommonConst {
 	
 	public static final String MALAYSIA = "CTMAS";
 
+	public static final String NRIC = "IDNIC";
 }
