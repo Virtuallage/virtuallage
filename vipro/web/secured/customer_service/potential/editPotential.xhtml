@@ -30,7 +30,7 @@ Edit Potential Purchasers
 				<p:outputLabel value="Purchaser Name" for="name"/>
 				<p:inputText id="name" value="#{potentialRegister.individual.fullName}" maxlength="60" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
 				<p:outputLabel value="Title" for="title"/>
-				<p:selectOneMenu id="title" value="#{potentialRegister.individual.title}" required="true">
+				<p:selectOneMenu id="title" value="#{potentialRegister.individual.title}" required="false">
 						<f:selectItems value="#{potentialRegister.listTitle}"/>
 				</p:selectOneMenu>
 				
@@ -45,7 +45,7 @@ Edit Potential Purchasers
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Address" for="addr1"/>
-				<p:inputText id="addr1" value="#{potentialRegister.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" required="true" autocomplete="off"/>
+				<p:inputText id="addr1" value="#{potentialRegister.address.addressLine1}" maxlength="40" style="width:300px;text-transform:uppercase" required="false" autocomplete="off"/>
 				<p:outputLabel value="Race" for="race"/>
 				<p:selectOneMenu id="race" value="#{potentialRegister.individual.race}" required="false">
 						<f:selectItems value="#{potentialRegister.listRace}"/>
@@ -54,28 +54,28 @@ Edit Potential Purchasers
 				<p:outputLabel value="" for="addr2"/>
 				<p:inputText id="addr2" value="#{potentialRegister.address.addressLine2}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>			
 				<p:outputLabel value="Marital Status" for="marital"/>
-				<p:selectOneMenu id="marital" value="#{potentialRegister.individual.maritalStatus}" required="true">
+				<p:selectOneMenu id="marital" value="#{potentialRegister.individual.maritalStatus}" required="false">
 						<f:selectItems value="#{potentialRegister.listMaritalStatus}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Address 3" for="addr3"/>
 				<p:inputText id="addr3" value="#{potentialRegister.address.addressLine3}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				<p:outputLabel value="Citizenship" for="citizenship"/>
-				<p:selectOneMenu id="citizenship" value="#{potentialRegister.individual.citizenship}" required="true">
+				<p:selectOneMenu id="citizenship" value="#{potentialRegister.individual.citizenship}" required="false">
 						<f:selectItems value="#{potentialRegister.listCountry}"/>
 				</p:selectOneMenu>
 			
 				<p:outputLabel value="Address 4" for="addr4"/>
 				<p:inputText id="addr4" value="#{potentialRegister.address.addressLine4}" maxlength="40" style="width:300px;text-transform:uppercase" autocomplete="off"/>
 				<p:outputLabel value="Age Group" for="agegroup"/>
-				<p:selectOneMenu id="agegroup" value="#{potentialRegister.individual.ageGroup}"  required="true">
+				<p:selectOneMenu id="agegroup" value="#{potentialRegister.individual.ageGroup}"  required="false">
 						<f:selectItems value="#{potentialRegister.listAgeGroup}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Post Code" for="postcode" />
-				<p:inputText id="postcode" value="#{potentialRegister.address.postcode}" maxlength="10" autocomplete="off" required="true"/>
+				<p:inputText id="postcode" value="#{potentialRegister.address.postcode}" maxlength="10" autocomplete="off" required="false"/>
 				<p:outputLabel value="Income Group" for="income"/>
-				<p:selectOneMenu id="income" value="#{potentialRegister.individual.incomeGroup}"  required="true">
+				<p:selectOneMenu id="income" value="#{potentialRegister.individual.incomeGroup}"  required="false">
 						<f:selectItems value="#{potentialRegister.listIncomeGroup}"/>
 				</p:selectOneMenu>
 
@@ -83,7 +83,7 @@ Edit Potential Purchasers
 				<p:inputText id="city" value="#{potentialRegister.address.city}" maxlength="20" style="text-transform:uppercase" autocomplete="off" required="false"/>
 				<p:outputLabel value="Mobile No" for="mobile"/>
 				<h:panelGroup>
-					<p:inputText  id="mobile" value="#{potentialRegister.individual.mobileNo}" maxlength="15" autocomplete="off"/>
+					<p:inputText  id="mobile" value="#{potentialRegister.individual.mobileNo}" maxlength="15" autocomplete="off" required="true"/>
 					<p:outputLabel value=" ie. 0123558888" />
 				</h:panelGroup>
 				
@@ -92,14 +92,14 @@ Edit Potential Purchasers
 						<f:selectItems value="#{potentialRegister.listState}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Email Address" for="email"/>
-				<p:inputText id="email" value="#{potentialRegister.individual.email}" maxlength="30" autocomplete="off"/>
+				<p:inputText id="email" value="#{potentialRegister.individual.email}" maxlength="30" autocomplete="off" required="true"/>
 
 				<p:outputLabel value="Country" for="country"/>
-				<p:selectOneMenu id="country" value="#{potentialRegister.address.country}"  required="true">
+				<p:selectOneMenu id="country" value="#{potentialRegister.address.country}"  required="false">
 						<f:selectItems value="#{potentialRegister.listCountry}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Marketing Code" for="marketing"/>
-				<p:selectOneMenu id="marketing" value="#{potentialRegister.individual.marketingCode}" required="true">
+				<p:selectOneMenu id="marketing" value="#{potentialRegister.individual.marketingCode}" required="false">
 					<f:selectItems value="#{potentialRegister.listMarketingCode}"/>
 				</p:selectOneMenu>
 				
@@ -108,7 +108,7 @@ Edit Potential Purchasers
 		   	<h:panelGrid columns="2" style="width:100%">
 			   	<p:outputLabel value="DISCLAIMER"/>
 				<br/>
-			   	<p:selectBooleanCheckbox id="id" value="#{potentialRegister.pdpaCheck}" required="false"/>	
+			   	<p:selectBooleanCheckbox id="id" value="#{potentialRegister.pdpaCheck}" required="true"/>	
 				<p:outputLabel value="I hereby agree and expressly give consent to MCT Consortium Berhad and its group of companies
 				to collect and process my personal data for their records so as to enable them to keep me informed of any updates/ information with regard to
 				MCT Consortium Berhard's event and any other future events, promotion, products, services and marketing related information,

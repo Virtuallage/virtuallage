@@ -311,6 +311,19 @@ public class PotentialRegister extends CommonBean implements Serializable {
 				}
 			}
 			
+			if (individual.getIdentityType().equalsIgnoreCase(CommonConst.NRIC)) {
+				if (!individual.getIdentityNo().substring(6, 7).equalsIgnoreCase("-")) {
+					addErrorMessage("WARNING!",
+							"Invalid Malaysian ID No. Please enter with dash in between like 880808-08-8888.");
+					return null;				
+				}
+				if (!individual.getIdentityNo().substring(9, 10).equalsIgnoreCase("-")) {
+					addErrorMessage("WARNING!",
+							"Invalid Malaysian ID No. Please enter with dash in between like 880808-08-8888.");
+					return null;				
+				}
+			}
+			
 			if (pdpaCheck.equals(true)) {
 				individual.setPdpaDisclaimer("Y");
 			} else {
@@ -373,7 +386,9 @@ public class PotentialRegister extends CommonBean implements Serializable {
 		} catch (Throwable t) {
 			addErrorMessage(t.getClass().getName(), t.getMessage());
 		}
+
 		return "editPotential";
+			
 	}
 
 	public String editIndividual() {
@@ -390,6 +405,20 @@ public class PotentialRegister extends CommonBean implements Serializable {
 					return null;
 				}
 			}
+			
+			if (individual.getIdentityType().equalsIgnoreCase(CommonConst.NRIC)) {
+				if (!individual.getIdentityNo().substring(6, 7).equalsIgnoreCase("-")) {
+					addErrorMessage("WARNING!",
+							"Invalid Malaysian ID No. Please enter with dash in between like 880808-08-8888.");
+					return null;				
+				}
+				if (!individual.getIdentityNo().substring(9, 10).equalsIgnoreCase("-")) {
+					addErrorMessage("WARNING!",
+							"Invalid Malaysian ID No. Please enter with dash in between like 880808-08-8888.");
+					return null;				
+				}
+			}
+
 
 			if (individual.getPdpaDisclaimer().equalsIgnoreCase("Y")) {
 				pdpaCheck = true;
