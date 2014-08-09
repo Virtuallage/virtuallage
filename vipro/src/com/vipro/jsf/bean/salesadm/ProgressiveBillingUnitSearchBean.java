@@ -523,7 +523,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		 context.addCallbackParam("success2", success);
 	}
 	
-	public void onConfirmBill(){		
+	public void onConfirmBill(){
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());

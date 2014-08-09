@@ -47,7 +47,8 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 	private String chequeNo = "";
 	private String selectedPaymentMethod = "";
 	private String selectedBank = "";
-	private String selectedTransactionType = "Progressive Billing Payment";
+	private String selectedInvoice = "";
+	private String selectedTransactionType = "PROGRESSIVE BILLING PAYMENT";
 	private Date selectedChkDate = new Date();
 	private Date toDay = new Date();
 	
@@ -145,7 +146,7 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			 RequestContext context = RequestContext.getCurrentInstance();
 			 boolean success = false;
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			 success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate);
+			 success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate, selectedInvoice);
 			 
 			if(success){
 				Long txRevsalId= selectedDto.getTransaction().getTxnReversalId();
@@ -178,8 +179,33 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 		this.selectedChkDate = new Date();
 		this.selectedPaymentMethod = "";
 		this.chequeNo="";
-		this.paymentAmount = getSelectedDto().getTransaction().getAmount();
+		// this.paymentAmount = getSelectedDto().getTransaction().getAmount(); -- changed to get purchaser portion only
+		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
+			this.paymentAmount = getSelectedDto().getTransaction().getAmount().subtract(getSelectedDto().getTransaction().getFinancierPortion());
+		} else {
+			this.paymentAmount = getSelectedDto().getTransaction().getAmount();
+		}
+		this.selectedInvoice = getSelectedDto().getTransaction().getInvoiceNo();
 		
+		return null;
+	}
+	
+	public String onDtoSelection2(){
+		this.selectedBank = "";
+		this.selectedChkDate = new Date();
+		this.selectedPaymentMethod = "";
+		this.chequeNo="";
+		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
+			this.paymentAmount = getSelectedDto().getTransaction().getFinancierPortion();
+		} else {
+			this.paymentAmount = BigDecimal.ZERO;
+		}
+		if (getSelectedDto().getTransaction().getFinancierInvoiceNo() != null) {
+			this.selectedInvoice = getSelectedDto().getTransaction().getFinancierInvoiceNo();
+		} else {
+			this.selectedInvoice = getSelectedDto().getTransaction().getInvoiceNo();
+		}
+
 		return null;
 	}
 	
@@ -317,6 +343,14 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 
 	public void setToDay(Date toDay) {
 		this.toDay = toDay;
+	}
+
+	public String getSelectedInvoice() {
+		return selectedInvoice;
+	}
+
+	public void setSelectedInvoice(String selectedInvoice) {
+		this.selectedInvoice = selectedInvoice;
 	}
 	
 }

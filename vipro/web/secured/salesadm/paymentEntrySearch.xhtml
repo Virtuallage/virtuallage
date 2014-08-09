@@ -71,12 +71,12 @@
 							tableStyle="width:100%"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-							<p:column headerText="Invoice"
+							<p:column headerText="Inv#"
 								sortBy="#{dto.transaction.invoiceNo}"
 								style="text-align:left">
 								<p:outputLabel value="#{dto.transaction.invoiceNo}" />
 							</p:column>
-							<p:column headerText="Split Invoice"
+							<p:column headerText="Split Inv#"
 								sortBy="#{dto.transaction.financierInvoiceNo}"
 								style="text-align:left">
 								<p:outputLabel value="#{dto.transaction.financierInvoiceNo}" />
@@ -104,7 +104,31 @@
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Billed Amount"
+							<p:column headerText="Paid Todate"
+								sortBy="#{dto.account.totalPaymentTodate}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.totalPaymentTodate}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Discount"
+								sortBy="#{dto.account.discountedAmount}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.discountedAmount}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Outstanding"
+								sortBy="#{dto.account.accountBalance}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.accountBalance}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Billed Amt"
 								sortBy="#{dto.transaction.amount}"
 								style="text-align:right">
 								<h:outputText value="#{dto.transaction.amount}"
@@ -114,14 +138,22 @@
 							</p:column>
 							
 
-							<p:column style="width:4%">
+							<p:column style="width:4%" headerText="Received">
 								<p:commandButton id="selectDTOBtn" 
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-search" title="View"
+									icon="ui-icon-person" title="From Purchaser"
 									action="#{paymentEntryBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{paymentEntryBean.selectedDto}" />
 								</p:commandButton>
+								<p:commandButton id="selectDTOBtn2" 
+									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
+									icon="ui-icon-home" title="From Financier"
+									action="#{paymentEntryBean.onDtoSelection2}">
+									<f:setPropertyActionListener value="#{dto}"
+										target="#{paymentEntryBean.selectedDto}" />
+								</p:commandButton>
+								
 							</p:column>
 
 						</p:dataTable>
@@ -132,7 +164,7 @@
 				<h:form id="dialogForm">
 					<p:outputPanel id="dialogPanel">
 						<p:dialog id="tDialog" header="Payment Entry"
-							widgetVar="dlg" modal="true" height="350" width="950"
+							widgetVar="dlg" modal="true" height="400" width="950"
 							showEffect="explode" hideEffect="explode">
 
 							<p:growl id="growl" showDetail="true" life="3000"
@@ -162,9 +194,9 @@
 								<p:inputText
 									value="#{paymentEntryBean.selectedDto.customer.fullName}"
 									disabled="true" />
-								<p:outputLabel value="Pay for Invoice No" />
+								<p:outputLabel value="Invoice No" />
 								<p:inputText
-									value="#{paymentEntryBean.selectedDto.transaction.invoiceNo}"
+									value="#{paymentEntryBean.selectedInvoice}"
 									disabled="true" />
 								
 								<p:outputLabel id="paymentAmntTxt" value="Payment Amount" />
@@ -203,6 +235,7 @@
 								<p:inputText
 									value="#{paymentEntryBean.chequeNo}" 
 									disabled="false"  />
+								
 								<p:outputLabel value="Purchaser Portion" />
 								<h:inputText
 									value="#{paymentEntryBean.selectedDto.transaction.amount.subtract(paymentEntryBean.selectedDto.transaction.financierPortion)}"
@@ -213,6 +246,19 @@
 								<p:outputLabel value="Financier Portion" />
 								<h:inputText
 									value="#{paymentEntryBean.selectedDto.transaction.financierPortion}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>	
+								
+								<p:outputLabel value="Redemption Sum" />
+								<h:inputText
+									value="#{paymentEntryBean.selectedDto.account.bankRedemptionSum}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Total Redeemed Todate" />
+								<h:inputText
+									value="#{paymentEntryBean.selectedDto.account.bankRedemptionTodate}"
 									disabled="true"  style="text-align:right">
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:inputText>	

@@ -16,4 +16,6 @@ public interface BusinessPartnerTypeConst extends CommonConst {
 	
 	public static final String BANK = "PRBNK";
 	
+	public static final String COMMONBANK = "PRBID";
+	
 }
