@@ -212,7 +212,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			 if(!baseFolder.exists()){
 				 baseFolder.mkdirs();
 				}
-			
+			 
 			rs.generateProgressBillingLetterCash(reportDTO,invoiceNo,path);
 		} catch (SQLException e) {	
 			e.printStackTrace();
@@ -569,6 +569,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			} else {
 				if (financierPortion.compareTo(BigDecimal.ZERO) >= 0) {
 					tx.setFinancierPortion(sumDTO.getProgressiveBilling().getAmountBilled());
+				} else {
+					tx.setFinancierPortion(BigDecimal.ZERO);
 				}
 			}		
 			transactionHistoryDao.insert(tx);
@@ -596,7 +598,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	
 	@Override
 	@Transactional
-	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo,Date selectedChkDate){
+	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo,Date selectedChkDate, String selectedInvoice){
 		boolean isSuccess = false;
 		
 		String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
@@ -663,7 +665,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			th.setBank(bank);
 			th.setCardChequeNo(chqNo);
 			th.setChqDate(selectedChkDate);
-			th.setInvoiceNo(selectDto.getTransaction().getInvoiceNo());
+			//th.setInvoiceNo(selectDto.getTransaction().getInvoiceNo()); -- user select
+			th.setInvoiceNo(selectedInvoice);
 			th.setRefNo(selectDto.getTransaction().getRefNo());
 			//th.setTxnReversalId(selectDto.getTransaction().getTransactionId());
 			th.setStatus(TransactionStatusConst.TRANSACTION_PENDING);

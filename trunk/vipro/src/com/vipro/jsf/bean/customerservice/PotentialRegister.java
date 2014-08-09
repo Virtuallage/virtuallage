@@ -285,6 +285,7 @@ public class PotentialRegister extends CommonBean implements Serializable {
 
 		individual = new Customer();
 		address = new Address();
+		pdpaCheck = false;
 
 		return null;
 	}

@@ -264,6 +264,17 @@ Sales Update
 			<h:inputText value="#{propertyUnitUpdate.borrower1.identityNo}"  style="width:200px" disabled="true" />
 			<p:outputLabel value="Borrower 2 ID No"/>
 			<h:inputText value="#{propertyUnitUpdate.borrower2.identityNo}" style="width:200px" disabled="true" />
+
+   			<p:outputLabel value="Redemption Bank"/>
+			<h:panelGroup>
+   				<p:selectOneMenu id="redemptionBankId" value="#{propertyUnitUpdate.account.redemptionBankId}" style="width:200px">  
+						<f:selectItems value="#{propertyUnitUpdate.listRedemptionBanks}" />
+				</p:selectOneMenu>
+   			</h:panelGroup>
+   			<p:outputLabel value="Redemption Amount"/>
+			<h:inputText value="#{propertyUnitUpdate.account.bankRedemptionSum}" style="width:200px" autocomplete="off" disabled="false" >
+   				<f:convertNumber type="currency" currencySymbol="" />
+   			</h:inputText>	
    			
    		</h:panelGrid>
    		

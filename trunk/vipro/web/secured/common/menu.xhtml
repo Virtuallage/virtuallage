@@ -85,6 +85,7 @@
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    		<p:menuitem value="Potential Purchaser Statistics" url="/secured/mis/potentialPurchaserList.xhtml" />
     	</p:submenu>
     	</sec:authorize>
     	
@@ -132,8 +133,8 @@
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
     	</p:submenu>
     	<p:submenu label="Download" icon="ui-icon-document">
-    		<p:menuitem value="Purchaser Data for Letter" url="/secured/mis/SalesAdminDataExtraction.xhtml" />
-    		<p:menuitem value="Purchaser Addesss for Label" url="/secured/mis/SalesAdminAddressExtraction.xhtml" />
+    		<p:menuitem value="Purchaser Data for Letter" url="/secured/mis/salesAdminDataExtraction.xhtml" />
+    		<p:menuitem value="Purchaser Addesss for Label" url="/secured/mis/salesAdminAddressExtraction.xhtml" />
     	</p:submenu>
     	</sec:authorize>
 
@@ -159,6 +160,9 @@
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
     		<p:menuitem value="Sales Summary" url="/secured/mis/salesSummary.xhtml" />
+    	</p:submenu>
+    	<p:submenu label="Download" icon="ui-icon-document">
+    		<p:menuitem value="Purchaser Addesss for Label" url="/secured/mis/salesAdminAddressExtraction.xhtml" />
     	</p:submenu>
 	   	</sec:authorize>
     	

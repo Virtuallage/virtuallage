@@ -92,6 +92,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private List<SelectItem> listPanelBanks = null;
 	private List<SelectItem> listSpecial = null;
 	private List<SelectItem> listContactPersonTitle = null;
+	private List<SelectItem> listRedemptionBanks = null;
 	
 	private ProjectInventory inventory;
 	private String unitNo;
@@ -138,6 +139,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 	private String customerType = "0";
 	private Customer borrower1;
 	private Customer borrower2;
+	private BigDecimal oldLoanAmount = new BigDecimal(0.00);	
 	private CommandButton borrower1Button;
 	private CommandButton borrower2Button;
 	private CommandButton loAddAddressButton;
@@ -158,6 +160,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		listSpecial = CodeUtil.getCodes("SH");
 		listSolicitors = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.SOLICITOR);
 		listFinancier = CodeUtil.getBusinessPartnerAsItems1(BusinessPartnerTypeConst.BANK);
+		listRedemptionBanks = CodeUtil.getBusinessPartnerAsItems(BusinessPartnerTypeConst.COMMONBANK);
 		listPanelBanks = CodeUtil.getCodes("BK");
 		listContactPersonTitle = CodeUtil.getCodes("XX");
 		
@@ -676,7 +679,8 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			if(dataList != null && dataList.size() > 0) {
 				if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
 						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN) ||
-						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_ADM))
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_ADM) ||
+						userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_ADM_STF))
 				{
 					accounts.addAll(dataList);
 				}
@@ -719,6 +723,7 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		updateLAAddress();
 		
 		CustomerService customerService = (CustomerService) SpringBeanUtil.lookup(CustomerService.class.getName());
+		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
 		
 		if(borrower1 == null) {
 			if(account.getBorrowerId1() != null) {
@@ -756,6 +761,20 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				}
 			} 
 		} else {
+			disableLoanFields = "N";
+		}
+		
+		AuthUser user = getCurrentUser();
+		Long userId = user.getUserProfile().getUserId();
+		UserProfile userProfile = userProfileService.findById(userId);
+
+		if (account.getLoanAmount() == null) {
+			oldLoanAmount = new BigDecimal(0.00);
+		} else {
+			oldLoanAmount = account.getLoanAmount();
+		}
+
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_ADM)) {
 			disableLoanFields = "N";
 		}
 		
@@ -811,10 +830,10 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			AuthUser user = getCurrentUser();
 			long userId = user.getUserProfile().getUserId();
 			
-			if(attendedBy != userId){
+			if(attendedBy != userId) {
 				fontColor = "Grey";
 			}
-		} catch (Exception ex){
+		} catch (Exception ex) {
 		}
 		return fontColor;
 	}
@@ -911,15 +930,21 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 		AuthUser user = getCurrentUser();
 		String groupId = user.getUserProfile().getUserGroup().getGroupId();
 		if(docType.equalsIgnoreCase(DocumentTypeConst.SPA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || 
+				groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC) || 
+				groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM_STF)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LO)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || 
+				groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+				groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM_STF)) {
 				display = "inline";
 			}
 		} else if(docType.equalsIgnoreCase(DocumentTypeConst.LA)) {
-			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC)) {
+			if(groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM) || groupId.equalsIgnoreCase(UserGroupConst.MANAGEMENT) || 
+				groupId.equalsIgnoreCase(UserGroupConst.ADMIN) || groupId.equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+				groupId.equalsIgnoreCase(UserGroupConst.SALES_ADM_STF)) {
 				display = "inline";
 			}
 		}
@@ -1044,7 +1069,21 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 							"Please EMPTY LA Ref No.");
 					return "salesProgressUpdate";
 				}
+			}
+			
+			if(account.getAccountBalance() == null) {
+				account.setAccountBalance(BigDecimal.ZERO);
+			}
 
+			if((account.getLoanAmount().compareTo(oldLoanAmount)) != 0) {
+				if(oldLoanAmount.compareTo(account.getPurchasePrice().subtract(account.getAccountBalance())) > 0) {
+					addErrorMessage("WARNING!", "Cannot Change Loan Amount BecauseE Part Of The Amount Have Been Billed To The Financier");
+					return "salesProgressUpdate";					
+				}
+				if(account.getLoanAmount().compareTo(account.getPurchasePrice().subtract(account.getAccountBalance())) > 0) {
+					addErrorMessage("WARNING", "Loan Amount Cannot Be Greater Than The Balance To Bb Billed");
+					return "salesProgressUpdate";
+				}
 			}
 			
 			if(borrower1 != null) {
@@ -1513,6 +1552,22 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 
 	public void setFinancierName(String financierName) {
 		this.financierName = financierName;
+	}
+
+	public List<SelectItem> getListRedemptionBanks() {
+		return listRedemptionBanks;
+	}
+
+	public void setListRedemptionBanks(List<SelectItem> listRedemptionBanks) {
+		this.listRedemptionBanks = listRedemptionBanks;
+	}
+
+	public BigDecimal getOldLoanAmount() {
+		return oldLoanAmount;
+	}
+
+	public void setOldLoanAmount(BigDecimal oldLoanAmount) {
+		this.oldLoanAmount = oldLoanAmount;
 	}
 
 }

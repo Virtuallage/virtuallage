@@ -59,4 +59,6 @@ public class JasperConst {
 	
 	public static final String SalesAdminAddressExtraction = TOMCAT_HOME + "/vipro/report/SalesAdminAddressExtraction.jrxml";
 	
+	public static final String PotentialPurchaserStatistics = TOMCAT_HOME + "/vipro/report/PotentialPurchaserStatistics.jrxml";
+	
 }

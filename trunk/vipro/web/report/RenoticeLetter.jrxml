@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RenoticeLetter" pageWidth="595" pageHeight="842" columnWidth="534" leftMargin="43" rightMargin="18" topMargin="54" bottomMargin="18" uuid="4cebcb05-bb0a-4bec-9ad5-38cce2377766">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="25"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RenoticeLetter" pageWidth="595" pageHeight="842" columnWidth="534" leftMargin="43" rightMargin="18" topMargin="54" bottomMargin="18">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="237"/>
+	<property name="ireport.y" value="159"/>
 	<parameter name="projectId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
 	</parameter>
@@ -109,93 +109,100 @@ AND t.invoice_no Like $P{invoiceNo}
 		<initialValueExpression><![CDATA[$P{projectId}.toString().trim()]]></initialValueExpression>
 	</variable>
 	<title>
-		<band height="49" splitType="Stretch">
+		<band height="59" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3875fadd-6334-4d0b-8439-30822b32a968" positionType="Float" x="0" y="0" width="70" height="13"/>
+				<reportElement positionType="Float" x="0" y="10" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Financier Ref]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0ca460f3-4574-49e6-a24b-ddeef4e6d497" positionType="Float" x="0" y="26" width="70" height="13"/>
+				<reportElement positionType="Float" x="0" y="36" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Date   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="22dd89c3-75ec-443c-a9ea-f53cf55c0658" positionType="Float" x="70" y="0" width="12" height="13"/>
+				<reportElement positionType="Float" x="70" y="10" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a5dfa5f8-e962-470f-ab5c-dd587fceac08" positionType="Float" x="70" y="26" width="12" height="13"/>
+				<reportElement positionType="Float" x="70" y="36" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb3cbf78-a5a7-4f6f-b535-e4e75db3ba8e" positionType="Float" x="70" y="13" width="12" height="13"/>
+				<reportElement positionType="Float" x="70" y="23" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fa6227ca-9d80-4c86-ae90-6fe761c13dbf" positionType="Float" x="331" y="26" width="63" height="13"/>
+				<reportElement positionType="Float" x="331" y="36" width="63" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Renotice No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="aa8885a7-d43c-42d9-9eed-01f299470456" positionType="Float" x="82" y="13" width="452" height="13"/>
+				<reportElement positionType="Float" x="82" y="23" width="452" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{OurRef}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OurRef}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="d/M/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="cedc178a-3d14-4f33-af45-09a61e836b4f" positionType="Float" x="82" y="26" width="249" height="13"/>
+			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="82" y="36" width="249" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CurrentDate}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="6516c9aa-dbc7-4de6-87fd-a20bc416d22d" positionType="Float" x="82" y="0" width="452" height="13"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{FinancierRef}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CurrentDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4d015200-ac12-4d7e-8ff7-399d83c7dd2d" positionType="Float" x="406" y="26" width="128" height="13"/>
+				<reportElement positionType="Float" x="82" y="10" width="452" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{InvoiceNo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FinancierRef}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="406" y="36" width="128" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{InvoiceNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4ee705b2-43c4-4b49-89a6-2e1cbccb87e9" positionType="Float" x="0" y="13" width="70" height="13"/>
+				<reportElement positionType="Float" x="0" y="23" width="70" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Our Ref]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e64b0bab-3e8b-4908-970c-28f8a4aa5219" positionType="Float" x="394" y="26" width="12" height="13"/>
+				<reportElement positionType="Float" x="394" y="36" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d5ec3ca7-a987-4069-b042-10d2e52ce168" positionType="Float" x="0" y="39" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="49" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -206,7 +213,7 @@ AND t.invoice_no Like $P{invoiceNo}
 	<detail>
 		<band height="13" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="eac535d1-2d23-4ee7-b1d5-85cddc39bea1" positionType="Float" x="0" y="0" width="534" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="13"/>
 				<subreportParameter name="company_name">
 					<subreportParameterExpression><![CDATA[$F{companyName}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -214,248 +221,248 @@ AND t.invoice_no Like $P{invoiceNo}
 					<subreportParameterExpression><![CDATA[$F{bp_address_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_address_subreport.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_address_subreport.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="149">
 			<staticText>
-				<reportElement uuid="b24c9b6d-9871-46b1-a8a4-3febc0f58a74" positionType="Float" x="0" y="0" width="534" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Dear Sir/Madam,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e5bba975-89ea-4b9e-809a-7b94e5137db5" positionType="Float" x="29" y="23" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="23" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Project]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="69bb49b6-a36f-47c0-af7e-e7ef4771f1aa" positionType="Float" x="29" y="36" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="36" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Property Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0cf432a4-c7e3-4e75-ba2a-bd8abd1388b7" positionType="Float" x="29" y="49" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="49" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Unit No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5f0a78ab-3fb2-4a0b-a56f-8200208b6755" positionType="Float" x="29" y="88" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="88" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[P.T. (D/M) No.     ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9d811452-888e-4c94-88cf-7572b4b43a14" positionType="Float" x="29" y="101" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="101" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Selling Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2c6a8b85-4fa8-478f-809f-61068cb8bd23" positionType="Float" x="29" y="62" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="62" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Purchaser(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c0670eb8-204c-486e-a58a-27b70b713679" positionType="Float" x="29" y="75" width="80" height="13"/>
+				<reportElement positionType="Float" x="29" y="75" width="80" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Borrower(s)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="f4dd29fb-1a62-42d9-8982-96038a903843" positionType="Float" x="121" y="23" width="413" height="13"/>
+				<reportElement positionType="Float" x="121" y="23" width="413" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ProjectName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ProjectName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="c105f37e-0a04-4890-8c95-2f68ea08d48b" positionType="Float" x="121" y="36" width="413" height="13"/>
+				<reportElement positionType="Float" x="121" y="36" width="413" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PropertyTypeDesc}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PropertyTypeDesc}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4916b803-b026-4db4-9aa3-d63b68477383" positionType="Float" x="121" y="49" width="413" height="13">
+				<reportElement positionType="Float" x="121" y="49" width="413" height="13">
 					<printWhenExpression><![CDATA[(!$V{ProjectString}.equals( "1" ))]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{UnitNo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{UnitNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="5c087196-4883-4e70-ad96-a504195ffd9d" positionType="Float" x="121" y="88" width="160" height="13"/>
+				<reportElement positionType="Float" x="121" y="88" width="160" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PtNo}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PtNo}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="c9728203-308a-44ee-b3ae-b1579168280a" positionType="Float" x="281" y="88" width="69" height="13"/>
+				<reportElement positionType="Float" x="281" y="88" width="69" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[H.S.(D/M) No.    ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6345d271-603e-44ca-a0f3-940953fada44" positionType="Float" x="362" y="88" width="172" height="13"/>
+				<reportElement positionType="Float" x="362" y="88" width="172" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{HSDNo}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{HSDNo}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="aec14c60-cee5-43a2-bc9d-d0ec42343c5c" positionType="Float" x="121" y="101" width="160" height="13"/>
+				<reportElement positionType="Float" x="121" y="101" width="160" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SellingPrice}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SellingPrice}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
-				<reportElement uuid="f4190960-ae4c-4d08-8fd2-3b6b60670ad8" x="0" y="115" width="534" height="34"/>
+				<reportElement x="0" y="115" width="534" height="34"/>
 				<textElement markup="none">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["We are pleased to inform you that the construction of the above mentioned property end-financed by you has reached the following stage(s) of completion. We enclose herewith a copy of Architect's Certificate(s) for your further action. "]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["We are pleased to inform you that the construction of the above mentioned property end-financed by you has reached the following stage(s) of completion. We enclose herewith a copy of Architect's Certificate(s) for your further action. "]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="3c85244b-aae4-4c42-9f43-223f276b96cf" x="0" y="114" width="534" height="1"/>
+				<reportElement x="0" y="114" width="534" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="547236c3-14c6-48fa-add8-52a172bd5027" positionType="Float" x="0" y="23" width="29" height="13"/>
+				<reportElement positionType="Float" x="0" y="23" width="29" height="13"/>
 				<textElement verticalAlignment="Top" markup="none">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Re : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9a30012d-b34d-4e53-884f-c324b38353cd" positionType="Float" x="109" y="23" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="23" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f6ff0f02-518a-4a58-b13e-f9d75e5c8230" positionType="Float" x="109" y="36" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="36" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7f612917-8044-4b3b-8bff-95c795b29089" positionType="Float" x="109" y="49" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="49" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9b102ee5-92e3-44ce-b31b-55fd6e7e451a" positionType="Float" x="109" y="88" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="88" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ba6b6f79-3c7b-4f05-82f8-1a5ad3f3c47e" positionType="Float" x="109" y="101" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="101" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ecab6603-e1e8-41b5-b556-3d7f6d211192" positionType="Float" x="109" y="62" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="62" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a01d7edc-b8e7-4363-8c13-86a16df96817" positionType="Float" x="109" y="75" width="12" height="13"/>
+				<reportElement positionType="Float" x="109" y="75" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f36ea419-f08a-4aa1-b5d3-4b89c01a4b83" positionType="Float" x="350" y="88" width="12" height="13"/>
+				<reportElement positionType="Float" x="350" y="88" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement uuid="05c2ef4c-dea5-4191-a901-4cc31bf2e130" positionType="Float" x="121" y="62" width="413" height="13"/>
+				<reportElement positionType="Float" x="121" y="62" width="413" height="13"/>
 				<subreportParameter name="account_id">
 					<subreportParameterExpression><![CDATA[$F{account_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_customer.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_customer.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="80e836d8-5715-41e6-a629-7b894b3b8ffa" positionType="Float" x="121" y="75" width="413" height="13"/>
+				<reportElement positionType="Float" x="121" y="75" width="413" height="13"/>
 				<subreportParameter name="account_id">
 					<subreportParameterExpression><![CDATA[$F{account_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_brorrower.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_brorrower.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="a1113247-2221-4ba0-84a0-11f085757d9d" positionType="Float" x="281" y="101" width="69" height="13"/>
+				<reportElement positionType="Float" x="281" y="101" width="69" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Loan Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2e3b9b3f-44fe-4b0a-85a7-5a56168ae877" positionType="Float" x="350" y="101" width="12" height="13"/>
+				<reportElement positionType="Float" x="350" y="101" width="12" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="902524be-f867-428b-a0a6-a1d713d5a9c6" positionType="Float" x="362" y="101" width="172" height="13"/>
+				<reportElement positionType="Float" x="362" y="101" width="172" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{loan_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{loan_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="34f2175d-ec48-4c32-80ae-50238f5570c7" positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<subreport isUsingCache="false">
-				<reportElement uuid="784a6951-c3d4-4bda-8855-71f62b29c4f3" positionType="Float" x="121" y="49" width="413" height="13">
+				<reportElement positionType="Float" x="121" y="49" width="413" height="13">
 					<printWhenExpression><![CDATA[$V{ProjectString}.equals( "1" )]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="unit_no">
 					<subreportParameterExpression><![CDATA[$F{UnitNo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_unitMapping.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_unitMapping.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="23">
 			<subreport isUsingCache="false">
-				<reportElement uuid="ec598a67-d84d-4bc0-b0d5-fcd511ba3e3e" x="0" y="0" width="534" height="13"/>
+				<reportElement x="0" y="0" width="534" height="13"/>
 				<subreportParameter name="account_id">
 					<subreportParameterExpression><![CDATA[$F{account_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -475,61 +482,54 @@ AND t.invoice_no Like $P{invoiceNo}
 					<subreportParameterExpression><![CDATA[$F{LatePaymentRate}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RenoticeLetter_progresiveBilling.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "RenoticeLetter_progresiveBilling.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="b2a4eb90-b08b-457f-bc53-6817596f45d1" positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
-		<band height="69">
+		<band height="59">
 			<staticText>
-				<reportElement uuid="62f9333d-d1f4-4645-9d0d-170cc6acf616" positionType="Float" x="0" y="0" width="534" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Your faithfully,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="66284f2f-c77f-471a-8a1e-2e9da32f4a88" positionType="Float" x="0" y="36" width="534" height="13"/>
+				<reportElement positionType="Float" x="0" y="36" width="534" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[This document is computer generated, no signature is required.]]></text>
 			</staticText>
 			<textField pattern="RM #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="cb0b9cbe-d21b-4fd0-9ae8-7a607d673e44" positionType="Float" x="18" y="13" width="516" height="13"/>
+				<reportElement positionType="Float" x="18" y="13" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{companyName2}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{companyName2}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="367b4176-59ce-4098-8100-26bf1de2f102" positionType="Float" x="0" y="13" width="18" height="13"/>
+				<reportElement positionType="Float" x="0" y="13" width="18" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[for]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2a43d19f-032b-4e16-b3d6-eca50af9ab1c" positionType="Float" x="0" y="26" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="26" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a5da5a7e-1627-451d-80f0-c3e648146727" positionType="Float" x="0" y="49" width="534" height="10" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8592484d-84ad-436d-a5f2-2fb019878c3e" positionType="Float" x="0" y="59" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="49" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -538,7 +538,7 @@ AND t.invoice_no Like $P{invoiceNo}
 		</band>
 		<band height="23">
 			<subreport>
-				<reportElement uuid="167382c8-c8f4-4c1f-b0e8-5b289e7a9ef0" positionType="Float" x="276" y="0" width="258" height="13"/>
+				<reportElement positionType="Float" x="276" y="0" width="258" height="13"/>
 				<subreportParameter name="partner_id">
 					<subreportParameterExpression><![CDATA[$F{spa_solicitor_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -546,24 +546,24 @@ AND t.invoice_no Like $P{invoiceNo}
 					<subreportParameterExpression><![CDATA[$F{spa_ref_no}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_solictor.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_solictor.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="464e6217-80e9-4c35-bcb4-30eedef66837" x="0" y="0" width="18" height="13"/>
+				<reportElement x="0" y="0" width="18" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[cc :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ddae483f-771b-41c9-8201-8b7e25c6bfe5" positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" x="0" y="13" width="534" height="10" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<subreport>
-				<reportElement uuid="bbbc9085-0546-4d68-94f3-a21c0c98d487" x="18" y="0" width="258" height="13"/>
+				<reportElement x="18" y="0" width="258" height="13"/>
 				<subreportParameter name="partner_id">
 					<subreportParameterExpression><![CDATA[$F{LA_solicitor_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -571,34 +571,34 @@ AND t.invoice_no Like $P{invoiceNo}
 					<subreportParameterExpression><![CDATA[$F{la_ref_no}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_solictor.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_solictor.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="13" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="c02e5445-d223-4716-baa3-b382ff5d05aa" x="0" y="0" width="18" height="13"/>
+				<reportElement x="0" y="0" width="18" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[cc :]]></text>
 			</staticText>
 			<subreport>
-				<reportElement uuid="9f995ed1-0b69-4c0a-bc97-92918c402521" positionType="Float" x="18" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="18" y="0" width="516" height="13"/>
 				<subreportParameter name="account_id">
 					<subreportParameterExpression><![CDATA[$F{account_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_cc1.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_subreport_cc1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="13">
 			<subreport>
-				<reportElement uuid="bf1d1934-b4fa-4069-a163-0b3fce6f7df6" positionType="Float" x="0" y="0" width="534" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="13"/>
 				<subreportParameter name="project_id">
 					<subreportParameterExpression><![CDATA[$P{projectId}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_bankInfoFinancier.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ProgressiveBillingLetter_bankInfoFinancier.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
