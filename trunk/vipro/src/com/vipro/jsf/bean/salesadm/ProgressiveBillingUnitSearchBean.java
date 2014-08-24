@@ -504,6 +504,9 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 //				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 			 }		
+			 
+			 
+			 
 			 if(!isTrue){
 				 CommonBean.addInfoMessage("WARNING!","Invalid stage selected for billing. Please select other stage to Bill.");
 			 }else{

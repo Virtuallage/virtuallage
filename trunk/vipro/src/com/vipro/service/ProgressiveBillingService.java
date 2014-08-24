@@ -34,9 +34,10 @@ public interface ProgressiveBillingService {
 	public boolean generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
 			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount, BigDecimal financierPortion);
 	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
-			BigDecimal financierStageAmount, String firstStageSelected);
+			BigDecimal financierStageAmount, BigDecimal financierPortion, String firstStageSelected);
 	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo, Date selectedChkDate, String selectedInvoice);
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+	public boolean generateReversalForBilling(PaymentEntryDTO selectDto,BigDecimal txnAmount, String selectedInvoice);
 	
 	public void printProgressiveLetter(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);
 	public void printProgressiveLetterCash(String amount, Long projectId , String invoiceNo,String accountId, String lastStageSelected);

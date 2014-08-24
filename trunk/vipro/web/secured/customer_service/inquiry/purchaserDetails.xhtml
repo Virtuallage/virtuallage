@@ -103,20 +103,20 @@ Purchaser Details Inquiry
 				<h:outputText value="#{c.projectInventory.unitNo}" />
 			</p:column>
 				
-			<p:column headerText="Purchase Price">
-				<h:outputText value="#{c.projectInventory.purchasePrice}" style="text-align:right" >
+			<p:column headerText="Purchase Price" style="text-align:right" >
+				<h:outputText value="#{c.projectInventory.purchasePrice}" >
 					<f:convertNumber pattern="#,###,##0.00" />
 				</h:outputText>
 			</p:column>
 			
-			<p:column headerText="Amount Billed">
-				<h:outputText value="#{c.accountBalance + c.totalPaymentTodate}" style="text-align:right">
+			<p:column headerText="Amount Billed" style="text-align:right">
+				<h:outputText value="#{c.accountBalance + c.totalPaymentTodate}" >
 					<f:convertNumber pattern="#,###,##0.00" />
 				</h:outputText>
 			</p:column>
 			
-			<p:column headerText="Paid Todate">
-				<h:outputText value="#{c.totalPaymentTodate}" style="text-align:right">
+			<p:column headerText="Paid Todate" style="text-align:right">
+				<h:outputText value="#{c.totalPaymentTodate}" >
 					<f:convertNumber pattern="#,###,##0.00" />
 				</h:outputText>
 			</p:column>

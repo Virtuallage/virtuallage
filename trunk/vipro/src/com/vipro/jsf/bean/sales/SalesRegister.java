@@ -1166,6 +1166,7 @@ public class SalesRegister extends CommonBean implements Serializable {
 			trx.setTransactionDescription("BOOKING FEE");
 			trx.setStatus(TransactionStatusConst.PENDING);
 			trx.setAmount(account.getBookPymtAmount());
+			trx.setCodeType(TransactionCodeConst.CREDIT);
 			trx.setBank(account.getBookPymtBank());
 			trx.setCardChequeNo(account.getBookPymtCardChqNo());
 			trx.setPaymentMethod(account.getBookPymtMethod());

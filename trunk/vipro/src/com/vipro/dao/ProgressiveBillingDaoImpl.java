@@ -86,9 +86,6 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 		return true;
 	}
 	
-	
-	
-	
 	@Override
 	public ProgressiveBilling findById(Long id) {
 		return getHibernateTemplate().get(ProgressiveBilling.class, id);
