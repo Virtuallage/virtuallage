@@ -1,0 +1,343 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Progressing Billing Manual Reversal Search</title>
+</h:head>
+
+<body>
+	<ui:composition template="/template/main_template.xhtml">
+		<ui:define name="content">
+			<p:panel id="panel" header="Progressive Billing Manual Reversal Search"
+				style="width:95%">
+				<h:form id="pbUSearchForm">
+					<input type="hidden" name="selectedProjectId"
+						value="#{reversalEntryBean.selectedProjectId}" />
+					<p:outputPanel id="searchPanel" styleClass="no-borders">
+						<p:focus context="pbUSearchForm" />
+
+						<p:growl id="growlForm" showDetail="true" life="3000"
+							autoUpdate="false" />
+						<p:panelGrid style="width:100%; background-color: lightgrey;"
+							styleClass="no-borders">
+							<p:row>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="projectName">
+									<p:outputLabel value="Project Name" />
+								</p:column>
+								<p:column
+									style="width:40%;text-align:left;vertical-align:middle">
+									<p:selectOneMenu id="projectList"
+										value="#{reversalEntryBean.selectedProjectId}"
+										requiredMessage="Project Name is mandatory" required="true"
+										style="width:100%" for="projectName">
+										<f:selectItems
+											value="#{reversalEntryBean.projects}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="UnitNoLbl">
+									<p:outputLabel value="Unit No" />
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:inputText id="unitTxt"
+										value="#{reversalEntryBean.unit}" style="text-transform:uppercase"/>
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:commandButton value="Search"
+										action="#{reversalEntryBean.searchProject}"
+										ajax="false" process="projectList,unitTxt"
+										update=":pbUSearchForm:resultsPanel" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<br />
+					</p:outputPanel>
+					<p:outputPanel id="resultsPanel"
+						rendered="#{reversalEntryBean.selectedProjectId != null}">
+
+						<p:dataTable var="dto"
+							value="#{reversalEntryBean.dtoList}"
+							draggableColumns="true" resizableColumns="false"
+							paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+							tableStyle="width:100%"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+							<p:column headerText="Inv#"
+								sortBy="#{dto.transaction.invoiceNo}"
+								style="text-align:left">
+								<p:outputLabel value="#{dto.transaction.invoiceNo}" />
+							</p:column>
+							<p:column headerText="Split Inv#"
+								sortBy="#{dto.transaction.financierInvoiceNo}"
+								style="text-align:left">
+								<p:outputLabel value="#{dto.transaction.financierInvoiceNo}" />
+							</p:column>
+							<p:column headerText="Billed Date"
+								sortBy="#{dto.transaction.transactionDate}"
+								style="text-align:center">
+								<h:outputText value="#{dto.transaction.transactionDate}" >
+									<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Unit No"
+								sortBy="#{dto.projectInvetory.unitNo}">
+								<p:outputLabel value="#{dto.projectInvetory.unitNo}" />
+							</p:column>
+							<p:column headerText="Purchaser Name"
+								sortBy="#{dto.customer.fullName}">
+								<p:outputLabel value="#{dto.customer.fullName}" />
+							</p:column>
+							<p:column headerText="Selling Price"
+								sortBy="#{dto.projectInvetory.purchasePrice}"
+								style="text-align:right">
+								<h:outputText value="#{dto.projectInvetory.purchasePrice}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Paid Todate"
+								sortBy="#{dto.account.totalPaymentTodate}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.totalPaymentTodate}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Outstanding"
+								sortBy="#{dto.account.accountBalance}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.accountBalance}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Billed Amt"
+								sortBy="#{dto.transaction.amount}"
+								style="text-align:right">
+								<h:outputText value="#{dto.transaction.amount}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column style="width:4%" headerText="Select">
+								<p:commandButton id="selectDTOBtn" 
+									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
+									icon="ui-icon-person" title="Click to select"
+									action="#{reversalEntryBean.onDtoSelection}">
+									<f:setPropertyActionListener value="#{dto}"
+										target="#{reversalEntryBean.selectedDto}" />
+								</p:commandButton>
+								
+							</p:column>
+
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+
+
+				<h:form id="dialogForm">
+					<p:outputPanel id="dialogPanel">
+						<p:dialog id="tDialog" header="Payment Entry"
+							widgetVar="dlg" modal="true" height="400" width="950"
+							showEffect="explode" hideEffect="explode">
+
+							<p:growl id="growl" showDetail="true" life="3000"
+								autoUpdate="false" />
+							<h:panelGrid id="display" columns="4" cellpadding="4"
+								width="100%">
+
+								<p:outputLabel value="Project Name" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.project.projectName}"
+									disabled="true" />
+								<p:outputLabel value="Project Code" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.project.projectCode}"
+									disabled="true" />
+								
+								<p:outputLabel value="Unit No" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.projectInvetory.unitNo}"
+									disabled="true"  />							
+								<p:outputLabel value="Customer Name" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.customer.fullName}"
+									disabled="true" />
+								
+								<p:outputLabel id="reversalAmntTxt" value="Transaction Amount" />
+								 <p:inputText value="#{reversalEntryBean.selectedDto.transaction.amount}"  disabled="true" 
+									  style="text-align:right">
+            						<f:convertNumber pattern="#,###,##0.00" />
+            					</p:inputText>
+								<p:outputLabel value="Date" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.transactionDate}" disabled="true" >
+									<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+            					</p:inputText>
+
+								<p:outputLabel value="Ref No" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.refNo}"
+									disabled="true" />								
+								<p:outputLabel value="Description" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.transactionDescription}"
+									disabled="true" />
+									
+								<p:outputLabel value="Invoice No" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.invoiceNo}"
+									disabled="true" />								
+								<p:outputLabel value="Split Invoice No" />
+								<p:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.financierInvoiceNo}"
+									disabled="true" />	
+															
+								<p:outputLabel value="Purchaser Portion" />
+								<h:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.amount.subtract(reversalEntryBean.selectedDto.transaction.financierPortion)}"
+									disabled="true" style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>		
+								<p:outputLabel value="Financier Portion" />
+								<h:inputText
+									value="#{reversalEntryBean.selectedDto.transaction.financierPortion}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>	
+								
+								<p:outputLabel value="Redemption Sum" />
+								<h:inputText
+									value="#{reversalEntryBean.selectedDto.account.bankRedemptionSum}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>
+								<p:outputLabel value="Total Redeemed Todate" />
+								<h:inputText
+									value="#{reversalEntryBean.selectedDto.account.bankRedemptionTodate}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>	
+							</h:panelGrid>
+
+							<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
+								<h:panelGroup>	
+								<p:commandButton value="Back"
+									actionListener="#{reversalEntryBean.onClose}"
+									ajax="true" partialSubmit="true" immediate="true"
+									update="growl,:pbUSearchForm:resultsPanel"
+									style="margin-top:20px;margin-right:5px"
+									oncomplete="handleSaveRequest(xhr, status, args)" />										
+									<p:commandButton value="Submit" disabled="false" 
+										actionListener="#{reversalEntryBean.onSubmitAction}"
+										ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
+										title="Submit"									
+										 />
+								</h:panelGroup>
+							</h:panelGrid>
+						</p:dialog>
+						<p:dialog id="t3Dialog" header="Warning Message"
+							widgetVar="dlg3" modal="true" height="200" width="400"
+							showEffect="explode" hideEffect="explode">
+							
+							<br/>
+							<div style="text-align:left; margin-bottom:20px">
+								<h:outputText  style="font-weight:bold" value=" The Payment Amount is not the same as Amount Billed in the Invoice." />
+							</div>
+							<br/>
+							<div style="text-align:left; margin-bottom:20px">
+								<h:outputText  style="font-weight:bold" value=" Do you want to continue?" />
+							</div>
+								<h:panelGrid id="displaybtns2" columns="1" cellpadding="10" width="100%" style="text-align:center;margin-top:5px">
+								<h:panelGroup>	
+								<p:commandButton value="No"
+									ajax="true" partialSubmit="true" immediate="true"
+									update="growl" actionListener="#{paymentEntryBean.onNo}"
+									style="margin-top:20px;"
+									oncomplete="handleConfirmBillRequest(xhr, status, args)" />
+								<p:commandButton value="Yes" disabled="false"
+										actionListener="#{reversalEntryBean.onYes}"
+										ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
+										oncomplete="handleConfirmBillRequest(xhr, status, args)" />
+								</h:panelGroup>
+								</h:panelGrid>
+						</p:dialog>
+						
+						
+						<p:dialog id="t4Dialog" header="Invalid Payment Amount"
+							widgetVar="dlg4" modal="true" height="150" width="400"
+							showEffect="explode" hideEffect="explode">
+							
+							<br/>
+							<div style="text-align:left; margin-bottom:20px">
+								<h:outputText  style="font-weight:bold" value=" The Payment Amount is more than Billing Amount. Please check with the bank" />
+							</div>
+								<h:panelGrid id="displaybtns4" columns="1" cellpadding="10" width="100%" style="text-align:center;margin-top:5px">
+								<h:panelGroup>	
+								<p:commandButton value="Cancel" disabled="false" 
+										actionListener="#{reversalEntryBean.onWarningClose}"
+										ajax="true" update="growl" style="margin-top:20px"
+										oncomplete="handleMessageRequest(xhr, status, args)" />
+								</h:panelGroup>
+								</h:panelGrid>
+						</p:dialog>
+						
+						
+						</p:outputPanel>
+						
+						<script type="text/javascript">
+							function handleSaveRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success ) {
+									dlg.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleConfirmBillRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success2 ) {
+									dlg3.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg3.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleMessageRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success3 ) {
+									dlg4.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg4.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+						</script>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

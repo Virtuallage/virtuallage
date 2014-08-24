@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.vipro.common.DaoImpl;
+import com.vipro.constant.ProgressiveBillingConst;
 import com.vipro.constant.PropertyUnitStatusConst;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -177,8 +178,9 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 			
 			StringBuilder query = new StringBuilder(
 					" select max(pb.stageNo)  from  ProgressiveBilling pb " )
-			.append(" where pb.account.accountId = ? ");		
-		
+			.append(" where pb.account.accountId = ? ")
+			.append(" and pb.status = '"+ ProgressiveBillingConst.PB_STATUS_BILL +"'");		
+			
 			List<String> list = getHibernateTemplate().find(query.toString(),account_id);
 			if (list != null && !list.isEmpty()) {
 				stage = list.get(0) == null ? "0":list.get(0);

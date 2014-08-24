@@ -44,6 +44,9 @@
         <property name="amount" type="big_decimal">
             <column name="amount" precision="9" scale="2"/>
         </property>
+        <property name="codeType" type="string">
+            <column name="code_type" length="2" />
+        </property>
         <property name="financierPortion" type="big_decimal">
             <column name="financier_portion" precision="9" scale="2"/>
         </property>

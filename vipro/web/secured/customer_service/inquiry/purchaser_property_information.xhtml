@@ -148,24 +148,27 @@ Property Unit Account Inquiry
 	        <p:column headerText="Transaction Date">  
 	            <h:outputText value="#{c.transactionDate}" />  
 	        </p:column>  
-	        <p:column headerText="Posting Date">  
+	        <p:column headerText="Invoice No" >  
+	            <h:outputText value="#{c.invoiceNo}" />  
+	        </p:column>
+	        <p:column headerText="Transaction Description">  
+	            <h:outputText value="#{c.transactionDescription}" />  
+	        </p:column> 
+<!--  	        <p:column headerText="Posting Date">  
 	            <h:outputText value="#{c.postingDate}" />
 	        </p:column>  
 	        <p:column headerText="Posted By">  
 	            <h:outputText value="#{c.postedBy}" />
 	        </p:column>  
+-->
 	        <p:column headerText="Amount">  
 	            <h:outputText value="#{c.amount}" />  
 	        </p:column>  
-	        <p:column headerText="Transaction Description">  
-	            <h:outputText value="#{c.transactionDescription}" />  
-	        </p:column> 
+
 	        <p:column headerText="Reference No" >  
 	            <h:outputText value="#{c.refNo}" />  
 	        </p:column> 
-	        <p:column headerText="Invoice No" >  
-	            <h:outputText value="#{c.invoiceNo}" />  
-	        </p:column> 
+
 	        <p:column headerText="Status">
 				<h:outputText value="#{customerRegister.getCodeDesc('TS', c.status)}" />
 			</p:column>
@@ -181,26 +184,35 @@ Property Unit Account Inquiry
 	<p:dialog header="Transaction History" widgetVar="dlgView1"  modal="false" height="400" width="1100"  showEffect="fade" hideEffect="fade"> 
 		
 		<p:dataTable id="history1" var="c" value="#{customerRegister.paidHistory}" style="width:90%;">  
-	        <p:column headerText="Transaction Date">  
-	            <h:outputText value="#{c.transactionDate}" />  
+	        <p:column headerText="Transaction Date" sortBy="#{c.transactionDate}" style="text-align:center">  
+	            <h:outputText value="#{c.transactionDate}" >
+	            	<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+            	</h:outputText>  
 	        </p:column>  
-	        <p:column headerText="Posting Date">  
+	        
+	        <p:column headerText="Invoice No" >  
+	            <h:outputText value="#{c.invoiceNo}" />  
+	        </p:column> 
+	        <p:column headerText="Transaction Description">  
+	            <h:outputText value="#{c.transactionDescription}" />  
+	        </p:column> 
+<!--        <p:column headerText="Posting Date">  
 	            <h:outputText value="#{c.postingDate}" />
 	        </p:column>  
 	        <p:column headerText="Posted By">  
 	            <h:outputText value="#{customerRegister.getUserName(c.postedBy)}" />
-	        </p:column>  
-	        <p:column headerText="Amount">  
-	            <h:outputText value="#{c.amount}" />  
-	        </p:column>  
-	        <p:column headerText="Transaction Description">  
-	            <h:outputText value="#{c.transactionDescription}" />  
 	        </p:column> 
+--> 
+	        <p:column headerText="Amount" style="text-align:right">  
+	            <h:outputText value="#{c.amount}">
+	            	<f:convertNumber pattern="#,###,##0.00" />
+	            </h:outputText>  
+	        </p:column>  
+	        <p:column headerText="DR/CR" >  
+	            <h:outputText value="#{c.codeType}" />  
+	        </p:column> 				
 	        <p:column headerText="Reference No" >  
 	            <h:outputText value="#{c.refNo}" />  
-	        </p:column> 
-	        <p:column headerText="Invoice No" >  
-	            <h:outputText value="#{c.invoiceNo}" />  
 	        </p:column> 
 	        <p:column headerText="Status">
 				<h:outputText value="#{customerRegister.getCodeDesc('TS', c.status)}" />

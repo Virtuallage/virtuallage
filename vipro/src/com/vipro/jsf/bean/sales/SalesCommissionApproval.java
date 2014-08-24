@@ -337,6 +337,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					transactionHistory.setTransactionDescription("SALES COMMISSION");
 					transactionHistory.setStatus(TransactionStatusConst.PENDING);
 					transactionHistory.setAmount(history.getClaimAmount());
+					transactionHistory.setCodeType(TransactionCodeConst.CREDIT);
 					transactionHistory.setAccount(salesCommissionAccount);
 					transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
 					transactionHistoryService.insert(transactionHistory);

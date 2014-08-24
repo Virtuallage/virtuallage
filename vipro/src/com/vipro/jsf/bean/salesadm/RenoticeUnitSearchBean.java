@@ -446,6 +446,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 					 selectedStageDtoList.add(dto);
 				 }		 
 			 }
+			 
 			 if (purchaserPortion.compareTo(stageTtl) >= 0) {
 				 CommonBean.addInfoMessage("WARNING","Loan Amount is insufficient to cover for this stage! Please choose later stage or increase the Loan Amount.");
 				 isRightSelection = false;
@@ -494,7 +495,7 @@ public class RenoticeUnitSearchBean extends CommonBean implements Serializable{
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.RB_INVOICE_SEQ_TYPE, true));			
 		
-		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), financierStageAmount, firstStageSelected);
+		boolean isSucessfull = pbService.generateRenoticesForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), financierStageAmount, financierPortion, firstStageSelected);
 		
 		if(isSucessfull){
 			//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
