@@ -1076,11 +1076,11 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 			}
 
 			if((account.getLoanAmount().compareTo(oldLoanAmount)) != 0) {
-				if(oldLoanAmount.compareTo(account.getPurchasePrice().subtract(account.getAccountBalance())) > 0) {
+				if(oldLoanAmount.compareTo(account.getPurchasePrice().subtract(account.getBillingAmountTodateNotNull())) > 0) {
 					addErrorMessage("WARNING!", "Cannot Change Loan Amount Because Part Of The Amount Have Been Billed To The Financier");
 					return "salesProgressUpdate";					
 				}
-				if(account.getLoanAmount().compareTo(account.getPurchasePrice().subtract(account.getAccountBalance())) > 0) {
+				if(account.getLoanAmount().compareTo(account.getPurchasePrice().subtract(account.getBillingAmountTodateNotNull())) > 0) {
 					addErrorMessage("WARNING", "Loan Amount Cannot Be Greater Than The Balance To Be Billed");
 					return "salesProgressUpdate";
 				}

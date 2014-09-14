@@ -16,6 +16,7 @@
 -- | Try generating Foreign Keys with ALTER TABLE statements.                |
 -- +-------------------------------------------------------------------------+
 
+DROP TABLE IF EXISTS vipro.seq_no;
 DROP TABLE IF EXISTS vipro.unit_mapping;
 DROP TABLE IF EXISTS vipro.bank_account;
 DROP TABLE IF EXISTS vipro.billing_model_header;

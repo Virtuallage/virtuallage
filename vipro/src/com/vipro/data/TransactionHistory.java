@@ -30,6 +30,7 @@ public class TransactionHistory implements java.io.Serializable {
 	private String bank;
 	private String cardChequeNo;
 	private Long txnReversalId;
+	private Long userId;
 	private String codeType;
 
 	public TransactionHistory() {
@@ -211,6 +212,14 @@ public class TransactionHistory implements java.io.Serializable {
 
 	public void setCodeType(String codeType) {
 		this.codeType = codeType;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }

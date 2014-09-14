@@ -60,6 +60,10 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class SalesRegister extends CommonBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8919318015087943695L;
 	private static final Object arg0 = null;
 	private List<SelectItem> listCountry = null;
 	private List<SelectItem> listCity = null;
@@ -1164,7 +1168,8 @@ public class SalesRegister extends CommonBean implements Serializable {
 			trx.setTransactionDate(new Date());
 			trx.setAccount(account);
 			trx.setTransactionDescription("BOOKING FEE");
-			trx.setStatus(TransactionStatusConst.PENDING);
+			trx.setStatus(TransactionStatusConst.POSTED);
+	        trx.setUserId(currentUserId);
 			trx.setAmount(account.getBookPymtAmount());
 			trx.setCodeType(TransactionCodeConst.CREDIT);
 			trx.setBank(account.getBookPymtBank());

@@ -131,7 +131,7 @@ WHERE
 	<field name="purchase_type" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="panel_bank_id" class="java.lang.Long">
+	<field name="panel_bank_id" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="loan_amount" class="java.math.BigDecimal">
@@ -140,7 +140,13 @@ WHERE
 	<field name="total_payment_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="billing_payment_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="account_balance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="billing_amount_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="late_pymt_int_rate" class="java.math.BigDecimal">

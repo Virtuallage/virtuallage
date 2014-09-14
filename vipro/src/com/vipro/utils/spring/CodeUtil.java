@@ -13,12 +13,14 @@ import com.vipro.data.CodeHeader;
 import com.vipro.data.Institution;
 import com.vipro.data.Project;
 import com.vipro.data.UserProfile;
+import com.vipro.data.TransactionCode;
 import com.vipro.service.BillingModelHeaderService;
 import com.vipro.service.BusinessPartnerService;
 import com.vipro.service.CodeService;
 import com.vipro.service.InstitutionService;
 import com.vipro.service.ProjectService;
 import com.vipro.service.UserProfileService;
+import com.vipro.service.TransactionCodeService;
 
 public final class CodeUtil {
 	
@@ -90,6 +92,21 @@ public final class CodeUtil {
 		if (users!=null) {
 			for (UserProfile u : users) {
 				items.add( new SelectItem( u.getUserId().toString(), u.getName()));
+			}
+		}
+		
+		return items;
+	}
+	
+	public static List<SelectItem> getTransactionCodes() {
+		TransactionCodeService transactionCodeService = (TransactionCodeService) SpringBeanUtil.lookup(TransactionCodeService.class.getName());
+		List<TransactionCode> transactionCodes = transactionCodeService.findActiveTransactionCodes();
+		
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		items.add( new SelectItem(null, "Select One"));
+		if (transactionCodes!=null) {
+			for (TransactionCode u : transactionCodes) {
+				items.add( new SelectItem( u.getTransactionCode(), u.getName()));
 			}
 		}
 		

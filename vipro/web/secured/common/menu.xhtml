@@ -128,6 +128,8 @@
     	</p:submenu>
     	<p:submenu label="Account" icon="ui-icon-star">
 	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Entry" url="/secured/account/manualEntry.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Approval" url="/secured/account/manualEntryApproval.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
@@ -157,6 +159,7 @@
     	</p:submenu>
     	<p:submenu label="Account" icon="ui-icon-star">
 	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Entry" url="/secured/account/manualEntry.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
@@ -170,6 +173,18 @@
     	<sec:authorize ifAnyGranted="ROLE_ACCT">
     	<p:submenu label="Account" icon="ui-icon-star">
 	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Entry" url="/secured/account/manualEntry.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Approval" url="/secured/account/manualEntryApproval.xhtml" icon="ui-icon-person" />
+    	</p:submenu>
+    	<p:submenu label="MIS" icon="ui-icon-document">
+    		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />
+    	</p:submenu>
+    	</sec:authorize>
+    	
+    	<sec:authorize ifAnyGranted="ROLE_ACCT_STF">
+    	<p:submenu label="Account" icon="ui-icon-star">
+	   		<p:menuitem value="Purchaser Account Inquiry" url="/secured/customer_service/inquiry/purchaser_information.xhtml" icon="ui-icon-person" />
+	   		<p:menuitem value="Manual Transaction Entry" url="/secured/account/manualEntry.xhtml" icon="ui-icon-person" />
     	</p:submenu>
     	<p:submenu label="MIS" icon="ui-icon-document">
     		<p:menuitem value="Project Pricing" url="/secured/mis/projectPricingRpt.xhtml" />

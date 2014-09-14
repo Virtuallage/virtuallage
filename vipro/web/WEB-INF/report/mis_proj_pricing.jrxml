@@ -15,7 +15,9 @@ FROM
      `project` P INNER JOIN `project_inventory` PI ON P.`PROJECT_ID` = PI.`PROJECT_ID`
      INNER JOIN `code_det` code_det ON PI.`property_status` = code_det.`code`
 WHERE
-     P.PROJECT_ID = $P{project_id}]]>
+     P.PROJECT_ID = $P{project_id}
+ORDER BY
+     PI.unit_no ASC]]>
 	</queryString>
 	<field name="inventory_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -44,6 +46,12 @@ WHERE
 	<field name="orientation" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="facing" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="view" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="land_area" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -54,6 +62,9 @@ WHERE
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="discount_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="net_price" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="discount_rate" class="java.math.BigDecimal">
@@ -142,12 +153,12 @@ WHERE
 				<text><![CDATA[Project Pricing Listing]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="54" width="371" height="29"/>
+				<reportElement x="2" y="54" width="543" height="29"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[No. 45, 47 & 49, Jalan USJ 21/11, 47630 UEP Subang Jaya, Selangor D.E. Malaysia.
-Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text>
+				<text><![CDATA[Level 7, Block C, Sky Park One City, Jalan USJ 25/1A, 47650 UEP Subang Jaya, Selangor D.E. Malaysia.
+Tel: 03-5115 1118  Fax: 03-5115 1139  E-mail: bgcp@mct.com.my]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="94" width="100" height="20"/>
@@ -157,7 +168,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<text><![CDATA[Project Name:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="94" width="157" height="20"/>
+				<reportElement x="100" y="94" width="445" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -167,14 +178,14 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<reportElement x="0" y="87" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="408" y="63" width="37" height="20"/>
+				<reportElement x="408" y="31" width="37" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="445" y="63" width="100" height="20"/>
+				<reportElement x="445" y="31" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
@@ -209,7 +220,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<text><![CDATA[Discount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="459" y="2" width="86" height="20"/>
+				<reportElement x="445" y="2" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -244,7 +255,7 @@ Tel: 03-8023 6868 / 8024 6886 Fax: 03-8023 7831 E-mail: bgcp@mct.com.my]]></text
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{discount_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="459" y="1" width="96" height="20"/>
+				<reportElement x="445" y="1" width="130" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{code_det_description}]]></textFieldExpression>
 			</textField>

@@ -147,7 +147,7 @@
 
 				<h:form id="dialogForm">
 					<p:outputPanel id="dialogPanel">
-						<p:dialog id="tDialog" header="Payment Entry"
+						<p:dialog id="tDialog" header="Reversal Entry"
 							widgetVar="dlg" modal="true" height="400" width="950"
 							showEffect="explode" hideEffect="explode">
 
@@ -252,7 +252,7 @@
 							
 							<br/>
 							<div style="text-align:left; margin-bottom:20px">
-								<h:outputText  style="font-weight:bold" value=" The Payment Amount is not the same as Amount Billed in the Invoice." />
+								<h:outputText  style="font-weight:bold" value=" The Reversal Amount is not the same as Amount Billed in the Invoice." />
 							</div>
 							<br/>
 							<div style="text-align:left; margin-bottom:20px">
@@ -262,7 +262,7 @@
 								<h:panelGroup>	
 								<p:commandButton value="No"
 									ajax="true" partialSubmit="true" immediate="true"
-									update="growl" actionListener="#{paymentEntryBean.onNo}"
+									update="growl" actionListener="#{reversalEntryBean.onNo}"
 									style="margin-top:20px;"
 									oncomplete="handleConfirmBillRequest(xhr, status, args)" />
 								<p:commandButton value="Yes" disabled="false"
@@ -274,13 +274,13 @@
 						</p:dialog>
 						
 						
-						<p:dialog id="t4Dialog" header="Invalid Payment Amount"
+						<p:dialog id="t4Dialog" header="Invalid Reversal Amount"
 							widgetVar="dlg4" modal="true" height="150" width="400"
 							showEffect="explode" hideEffect="explode">
 							
 							<br/>
 							<div style="text-align:left; margin-bottom:20px">
-								<h:outputText  style="font-weight:bold" value=" The Payment Amount is more than Billing Amount. Please check with the bank" />
+								<h:outputText  style="font-weight:bold" value=" The Reversal Amount is more than Billing Amount. Please check with the bank" />
 							</div>
 								<h:panelGrid id="displaybtns4" columns="1" cellpadding="10" width="100%" style="text-align:center;margin-top:5px">
 								<h:panelGroup>	

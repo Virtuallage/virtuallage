@@ -23,10 +23,12 @@ Property Unit Account Inquiry
 			
 				<p:outputLabel value="Project" />
 				<h:inputText value="#{customerRegister.account.projectInventory.project.projectName}" disabled="true" style="width:350px"/>	
-				<p:outputLabel value="Sales Person" />
-				<h:inputText value="#{customerRegister.account.salesPerson}" disabled="true" style="width:350px"/>	
+				<p:outputLabel value="Date Purchased"/>
+				<h:inputText value="#{customerRegister.account.datePurchased}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+				</h:inputText>
 				<p:outputLabel/>
-							
+
 				<p:outputLabel value="Unit No" />
 				<h:inputText value="#{customerRegister.account.projectInventory.unitNo}" disabled="true" />	
 				<p:outputLabel value="SPA Signed" />
@@ -34,11 +36,9 @@ Property Unit Account Inquiry
 					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
 				</h:inputText>
 				<p:outputLabel/>
-				
-				<p:outputLabel value="Date Purchased"/>
-				<h:inputText value="#{customerRegister.account.datePurchased}" disabled="true" >
-					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
-				</h:inputText>
+
+				<p:outputLabel value="Sales Person" />
+				<h:inputText value="#{customerRegister.account.salesPerson}" disabled="true" style="width:350px"/>						
 				<p:outputLabel value="LO Signed" />
 				<h:inputText value="#{customerRegister.account.loSignedDate}" disabled="true" >
 					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
@@ -50,9 +50,9 @@ Property Unit Account Inquiry
 					<f:selectItems value="#{customerRegister.listFinancier}" />
 				</h:selectOneMenu>
 
-				<p:outputLabel value="Comm Paid" />
-				<h:inputText value="#{customerRegister.account.commissionPaidDate}" disabled="true" style="text-align:right">
-					<f:convertNumber pattern="#,###,##0.00" />
+				<p:outputLabel value="Comm Paid Date" />
+				<h:inputText value="#{customerRegister.account.commissionPaidDate}" disabled="true" >
+					<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
 				</h:inputText>
 				<p:outputLabel/>
 								
@@ -101,18 +101,11 @@ Property Unit Account Inquiry
 				<p:outputLabel value="Postcode" />
 				<h:inputText value="#{customerRegister.address.postcode}" disabled="true" />
 				<p:outputLabel value="Billed Todate" />
-				<h:inputText value="#{customerRegister.account.accountBalance + customerRegister.account.totalPaymentTodate}" disabled="true" style="text-align:right">
+				<h:inputText value="#{customerRegister.account.billingAmountTodate}" disabled="true" style="text-align:right">
 					<f:convertNumber pattern="#,###,##0.00" />
 				</h:inputText>
-							    
-<!--  				<p:panelGrid styleClass="no-borders" style="width:95%">
-			     	<p:row>
-			     		<p:column style="text-align:left">
-			     			<p:commandButton value="View" onclick="dlgView.show()" />  
-			     		</p:column>
-			     	</p:row>
-			     </p:panelGrid>
--->			     
+		     	<p:outputLabel value="" />
+		     	
 				<p:outputLabel value="State" />
 				<h:selectOneMenu value="#{customerRegister.address.state}" disabled="true" >
 						<f:selectItems value="#{customerRegister.listState}"/>
@@ -131,7 +124,7 @@ Property Unit Account Inquiry
 				<h:inputText value="#{customerRegister.account.accountBalance}" disabled="true" style="text-align:right">
 					<f:convertNumber pattern="#,###,##0.00" />
 				</h:inputText>
-				<p:outputLabel/>
+				<p:outputLabel/>					
 								
 			</h:panelGrid>
 			<br/>
@@ -154,21 +147,12 @@ Property Unit Account Inquiry
 	        <p:column headerText="Transaction Description">  
 	            <h:outputText value="#{c.transactionDescription}" />  
 	        </p:column> 
-<!--  	        <p:column headerText="Posting Date">  
-	            <h:outputText value="#{c.postingDate}" />
-	        </p:column>  
-	        <p:column headerText="Posted By">  
-	            <h:outputText value="#{c.postedBy}" />
-	        </p:column>  
--->
 	        <p:column headerText="Amount">  
 	            <h:outputText value="#{c.amount}" />  
 	        </p:column>  
-
 	        <p:column headerText="Reference No" >  
 	            <h:outputText value="#{c.refNo}" />  
 	        </p:column> 
-
 	        <p:column headerText="Status">
 				<h:outputText value="#{customerRegister.getCodeDesc('TS', c.status)}" />
 			</p:column>
@@ -196,13 +180,7 @@ Property Unit Account Inquiry
 	        <p:column headerText="Transaction Description">  
 	            <h:outputText value="#{c.transactionDescription}" />  
 	        </p:column> 
-<!--        <p:column headerText="Posting Date">  
-	            <h:outputText value="#{c.postingDate}" />
-	        </p:column>  
-	        <p:column headerText="Posted By">  
-	            <h:outputText value="#{customerRegister.getUserName(c.postedBy)}" />
-	        </p:column> 
---> 
+ 
 	        <p:column headerText="Amount" style="text-align:right">  
 	            <h:outputText value="#{c.amount}">
 	            	<f:convertNumber pattern="#,###,##0.00" />

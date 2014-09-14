@@ -60,6 +60,7 @@ INSERT INTO vipro.user_group VALUES ('CUST_SERV', 'CUSTOMER SERVICE', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('PIC_ADM', 'PIC MANAGER', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('ACCT', 'ACCOUNT STAFF', 'SSACT');
 INSERT INTO vipro.user_group VALUES ('SADM_STF', 'SALES ADMIN STAFF', 'SSACT');
+INSERT INTO vipro.user_group VALUES ('ACCT_STF', 'ACCOUNT STAFF', 'SSACT');
 
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('salespic1', '5f4dcc3b5aa765d61d8327deb882cf99', 'SALES PIC 1 NAME', 1000000001,'joe.lim@mct.com.my', '0193393596', 'DMSMA', 'SSACT', 'SALES_PIC');
@@ -82,10 +83,13 @@ INSERT INTO vipro.user_profile (username, password, name, institution_id,  email
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('picadm2', '5f4dcc3b5aa765d61d8327deb882cf99', 'PIC ADMIN 2 NAME', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'PIC_ADM');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
-     VALUES ('acct1', '5f4dcc3b5aa765d61d8327deb882cf99', 'ACCOUNT STAFF 1 NAME', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'PIC_ADM');
+     VALUES ('acct1', '5f4dcc3b5aa765d61d8327deb882cf99', 'ACCOUNT MANAGER NAME', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'ACCT');
 INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
      VALUES ('cust1', '5f4dcc3b5aa765d61d8327deb882cf99', 'CUSTOMER SERVICE STAFF 1 NAME', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'PIC_ADM');
+INSERT INTO vipro.user_profile (username, password, name, institution_id,  email, mobile_no, department, status, group_id) 
+     VALUES ('acctstf1', '5f4dcc3b5aa765d61d8327deb882cf99', 'ACCOUNT STAFF NAME', 1000000001,'slchua@mct.com.my', '0193112190', 'DMSMA', 'SSACT', 'ACCT_STF');
 
+     
 -- Create General Code Initial Data
 
 INSERT INTO vipro.code_header (code_header_id, name) VALUES ( 'CY', 'CASE TYPE / CATEGORY');
@@ -542,13 +546,35 @@ INSERT INTO vipro.bank_account
 			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
 			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address,
 			bank2_name, bank2_account_no, bank2_swift_code, bank2_branch_address, status)
-	VALUES (3, "P","For Telegraphic Transfer (TT):-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 123,
-			"Affin Bank Berhad", "10063-0017-910", "PHBMMYKL", "Subang Jaya, Malaysia",
-			"United Overseas Bank (Malaysia) Bhd", "165-301-4843", "UOVBMYKL", "Subang Jaya, Malaysia", "SSACT");
+	VALUES (1, "P","For Telegraphic Transfer (TT):-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 100,
+			"Affin Bank Berhad", "11111-11-0011", "PHBMMYKL", "Subang Jaya, Malaysia",
+			"", "", "", "", "SSACT");
 INSERT INTO vipro.bank_account 
 			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
 			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address, status)
-	VALUES (3, "F","Developer Account Particulars:-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 123,
+	VALUES (1, "F","Developer Account Particulars:-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 100,
+			"Affin Bank Berhad", "11111-11-0011", "PHBMMYKL", "Subang Jaya, Malaysia", "SSACT");
+INSERT INTO vipro.bank_account 
+			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
+			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address, status)
+	VALUES (2, "P","For Telegraphic Transfer (TT):-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 101,
+			"Affin Bank Berhad", "66666-66-666", "PHBMMYKL", "Subang Jaya, Malaysia", "SSACT");
+INSERT INTO vipro.bank_account 
+			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
+			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address, status)
+	VALUES (2, "F","Developer Account Particulars:-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 101,
+			"Affin Bank Berhad", "88888-88-888", "PHBMMYKL", "Subang Jaya, Malaysia", "SSACT");
+INSERT INTO vipro.bank_account 
+			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
+			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address,
+			bank2_name, bank2_account_no, bank2_swift_code, bank2_branch_address, status)
+	VALUES (3, "P","For Telegraphic Transfer (TT):-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 102,
+			"Affin Bank Berhad", "10063-0017-910", "PHBMMYKL", "Subang Jaya, Malaysia",
+			"", "", "", "", "SSACT");
+INSERT INTO vipro.bank_account 
+			(project_id, bill_to, top_text, bottom_text,holder_name, holder_address_id,
+			bank1_name, bank1_account_no, bank1_swift_code, bank1_branch_address, status)
+	VALUES (3, "F","Developer Account Particulars:-", "Please email your transaction slip to alvin@mct.com.my & mei@mct.com.my", "D Pristine Medini Sdn Bhd", 102,
 			"Affin Bank Berhad", "10063-0017-910", "PHBMMYKL", "Subang Jaya, Malaysia", "SSACT");
 
 -- load test purchaser info

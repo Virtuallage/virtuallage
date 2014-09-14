@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import net.sf.jasperreports.engine.JRException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +41,10 @@ import com.vipro.data.UserProfile;
 import com.vipro.dto.BillingModelStageDTO;
 import com.vipro.dto.ChangeAddressDTO;
 import com.vipro.dto.PaymentEntryDTO;
+import com.vipro.dto.TransactionEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.ReportDTO;
+import com.vipro.dto.BillingReturnParaDTO;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.utils.spring.SpringBeanUtil;
 
@@ -62,6 +66,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	@Autowired
 	private InstitutionDao institutionDao; 
 	private Long pInvoiceNo = new Long(1l);
+	BillingReturnParaDTO dto = new BillingReturnParaDTO();
 	
 	@Override
 	public List<ProgressiveBilling> getProgressiveBilling(Long accountId) {
@@ -360,7 +365,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			tx.setTransactionDescription("RENOTICE REVERSAL - PROGRESSIVE BILLING");
 			tx.setAmount(totalAmount);
 			tx.setCodeType(TransactionCodeConst.CREDIT);
-			tx.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
+	        tx.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+			tx.setStatus(TransactionStatusConst.POSTED);
 			//tx.setInvoiceNo(invoiceNo);
 			//tx.setRefNo(refNo);
 			tx.setAccount(act);
@@ -395,14 +401,16 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				txPayRev.setTransactionCode(new TransactionCode(TransactionCodeConst.REVERSAL_PAYMENT_FROM_PURCHASER));
 				txPayRev.setTransactionDescription("RENOTICE REVERSAL - PAYMENT");
 				txPayRev.setAmount(tempTotalAmountPaid);
-				tx.setCodeType(TransactionCodeConst.DEBIT);
-				txPayRev.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
+				txPayRev.setCodeType(TransactionCodeConst.DEBIT);
+		        txPayRev.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+				txPayRev.setStatus(TransactionStatusConst.POSTED);
 				txPayRev.setAccount(aa);
-				txPayRev.setTransactionDate(new Date());				
-				transactionHistoryDao.insert(txPayRev);	
+				txPayRev.setTransactionDate(new Date());
+				transactionHistoryDao.insert(txPayRev);
 				
 				//2.c
 				act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().subtract(tempTotalAmountPaid));
+				act.setBillingPaymentTodate(act.getBillingPaymentTodateNotNull().subtract(tempTotalAmountPaid));
 				act.setAccountBalance(act.getAccountBalanceNotNull().add(tempTotalAmountPaid));
 				if(act.getBankRedemptionTodateNotNull().compareTo(BigDecimal.ZERO) > 0 ){
 					act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().subtract(tempTotalAmountPaid));					
@@ -470,7 +478,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			txr.setAmount(totalAmount);
 			txr.setCodeType(TransactionCodeConst.DEBIT);
 			txr.setInvoiceNo(invoiceNo);
-			txr.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
+	        txr.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+			txr.setStatus(TransactionStatusConst.POSTED);
 			txr.setRefNo(refNo);
 			txr.setAccount(a);
 			txr.setTransactionDate(new Date());
@@ -485,11 +494,19 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	
 	@Override
 	@Transactional
-	public boolean generateProgressiveBillForSelectedStages(
+	public BillingReturnParaDTO generateProgressiveBillForSelectedStages(
 			List<BillingModelStageDTO> stageDtoList, Long seqNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
 			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount, BigDecimal financierPortion) {
-		boolean isSucessfull = false;		
+//		boolean isSucessfull = false;
 		String refNo = "";
+		dto.setIsSucessfull(false);
+		dto.setInvoiceNo("");
+		dto.setInvoiceNo2("");
+		
+		// get and update next seq no as PB Invoice No
+		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+		this.setpInvoiceNo(pbService.getAndUpdteSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+		dto.setInvoiceNo(getPInvoiceNoFormated());
 
 		if(stageDtoList!= null &&  !stageDtoList.isEmpty()){
 			refNo = getRefNo(selectedDto.getProject().getDeveloperId());
@@ -527,7 +544,8 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				ProgressiveBilling pb = new ProgressiveBilling();
 				pb.setAccount(a);
 				pb.setAmountBilled(act.getPurchasePrice().multiply(stageDto.getBillingModel().getBillingPercentage()).divide(new BigDecimal(100)));
-				pb.setInvoiceNo(invoiceNo);
+//				pb.setInvoiceNo(invoiceNo);
+				pb.setInvoiceNo(dto.getInvoiceNo());
 				pb.setPercentage(stageDto.getBillingModel().getBillingPercentage());
 				pb.setStageNo(stageDto.getBillingModel().getStage());
 				pb.setStageDescription(stageDto.getBillingModel().getDescription());
@@ -548,24 +566,28 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				}
 				
 				if (splitStageSeqNo > 0) {
-					if (stageDto.getBillingModel().getBillingSeq() == splitStageSeqNo) {
-						pInvoiceNo = getNextSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true);			
-						pInvoiceNo++;
-						pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
+					if (stageDto.getBillingModel().getBillingSeq() == splitStageSeqNo) {  // if same stage as split stage
+						this.setpInvoiceNo(pbService.getAndUpdteSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+						dto.setInvoiceNo2(getPInvoiceNoFormated());	
+//						pInvoiceNo = getNextSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true);			
+//						pInvoiceNo++;
+//						pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
+						pb.setFinancierInvoiceNo(dto.getInvoiceNo2());
 						pb.setFinancierPortion(financierStageAmount);
 						txFinancierPortion = txFinancierPortion.add(financierStageAmount);
-						seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, pInvoiceNo, selectedDto.getProject().getProjectCode());
+//						seqNoDao.updateSeqNo(ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, pInvoiceNo, selectedDto.getProject().getProjectCode());
 					} else {  // set the financier amount and invoice no
 						if (stageDto.getBillingModel().getBillingSeq() > splitStageSeqNo) {
 							txFinancierPortion = txFinancierPortion.add(pb.getAmountBilled());
 							pb.setFinancierPortion(pb.getAmountBilled());
-							pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
+							pb.setFinancierInvoiceNo(dto.getInvoiceNo2());
+//							pb.setFinancierInvoiceNo(getPInvoiceNoFormated());
 						}
 					}					
 				} else {
-					if (tempFinancierPortion.compareTo(BigDecimal.ZERO) > 0) {
+					if (tempFinancierPortion.compareTo(BigDecimal.ZERO) > 0) { // if bill to Financier
 						pb.setFinancierPortion(pb.getAmountBilled());
-						pb.setFinancierInvoiceNo(invoiceNo);
+						pb.setFinancierInvoiceNo(dto.getInvoiceNo());
 						tempFinancierPortion = tempFinancierPortion.subtract(pb.getAmountBilled());
 					} else {
 						pb.setFinancierPortion(BigDecimal.ZERO);
@@ -581,18 +603,21 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			tx.setTransactionDescription("PROGRESSIVE BILLING");
 			tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled());
 			tx.setCodeType(TransactionCodeConst.DEBIT);
-			tx.setInvoiceNo(invoiceNo);
-			tx.setStatus(TransactionStatusConst.PENDING);
+//			tx.setInvoiceNo(invoiceNo);
+			tx.setInvoiceNo(dto.getInvoiceNo());
+	        tx.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+			tx.setStatus(TransactionStatusConst.POSTED);
 			tx.setRefNo(refNo);
 			tx.setAccount(a);
 			tx.setTransactionDate(new Date());
 			if (splitStageSeqNo > 0) {
 				tx.setFinancierPortion(txFinancierPortion);				
-				tx.setFinancierInvoiceNo(getPInvoiceNoFormated());
+				tx.setFinancierInvoiceNo(dto.getInvoiceNo2());
+//				tx.setFinancierInvoiceNo(getPInvoiceNoFormated());
 			} else {
-				if (financierPortion.compareTo(BigDecimal.ZERO) > 0) {
+				if (financierPortion.compareTo(BigDecimal.ZERO) > 0) { //if bill to financier
 					tx.setFinancierPortion(sumDTO.getProgressiveBilling().getAmountBilled());
-					tx.setFinancierInvoiceNo(invoiceNo);
+					tx.setFinancierInvoiceNo(dto.getInvoiceNo());
 				} else {
 					tx.setFinancierPortion(BigDecimal.ZERO);
 				}
@@ -601,18 +626,21 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			
 			// update account balance
 			act.setAccountBalance(act.getAccountBalanceNotNull().add(sumDTO.getProgressiveBilling().getAmountBilled()));
+			act.setBillingAmountTodate(act.getBillingAmountTodateNotNull().add(sumDTO.getProgressiveBilling().getAmountBilled()));
 			act.setDateChanged(new Date());
 			act.setChangedBy(userProfile.getUserId());
 			if(isFirstSeqNo){
 				act.setAccountStatus(AccountStatusConst.STATUS_ACTIVE);
 			}			
 			accountDao.update(act);
-			
-			isSucessfull = true;
+
+			dto.setIsSucessfull(true);
+//			isSucessfull = true;
 		}
-		return isSucessfull;
+		
+		return dto;
 	}
-	
+
 	public BigDecimal getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
 	
 		return progressiveBillingDao.getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(accountId, statuses, invoiceNo);
@@ -624,7 +652,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 	@Transactional
 	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo,Date selectedChkDate, String selectedInvoice){
 		boolean isSuccess = false;
-		
+
 		String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
 		BigDecimal tempPaymentAmount = paymentAmount.add(BigDecimal.ZERO);
 		List<ProgressiveBilling> pbList = progressiveBillingDao.findByAccountIdStatusAndInvoiceNo(selectDto.getAccount().getAccountId(), statuses, selectDto.getTransaction().getInvoiceNo());
@@ -659,50 +687,57 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			}// end for
 		}//end if list.isempty
 			
-			//2. Update account table.
-			//if(tempPaymentAmount.compareTo(BigDecimal.ZERO) == 0 ){
-				Account act = selectDto.getAccount();
-				act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().add(paymentAmount));
-				act.setAccountBalance(act.getAccountBalanceNotNull().subtract(paymentAmount));
-				BigDecimal tempRemdeptionAmount = act.getBankRedemptionSumNotNull().subtract(act.getBankRedemptionTodateNotNull());
-				if (tempRemdeptionAmount.compareTo(BigDecimal.ZERO) == 1) {
-					if (tempRemdeptionAmount.compareTo(paymentAmount) == 1) {
-						act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(paymentAmount));
-					}else{
-						act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(tempRemdeptionAmount));
-					}				
-				}
-				accountDao.update(act);
+		//2. Update account table.
+		//if(tempPaymentAmount.compareTo(BigDecimal.ZERO) == 0 ){
+		Account act = selectDto.getAccount();
+		if ((selectDto.getTransaction().getTransactionCode().getTransactionCode() == TransactionCodeConst.ADD_PROGRESSIVE_BILLING) ||
+			(selectDto.getTransaction().getTransactionCode().getTransactionCode() == TransactionCodeConst.RENOTICE_BILLING)) {
+			act.setBillingPaymentTodate(act.getBillingPaymentTodateNotNull().add(paymentAmount));
+		}
+		act.setTotalPaymentTodate(act.getTotalPaymentTodateNotNull().add(paymentAmount));
+		act.setAccountBalance(act.getAccountBalanceNotNull().subtract(paymentAmount));
+		BigDecimal tempRemdeptionAmount = act.getBankRedemptionSumNotNull().subtract(act.getBankRedemptionTodateNotNull());
+		if (tempRemdeptionAmount.compareTo(BigDecimal.ZERO) == 1) {
+			if (tempRemdeptionAmount.compareTo(paymentAmount) == 1) {
+				act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(paymentAmount));
+			}else{
+				act.setBankRedemptionTodate(act.getBankRedemptionTodateNotNull().add(tempRemdeptionAmount));
+			}				
+		}
+		act.setDateChanged(new Date());
+		act.setChangedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		accountDao.update(act);
 		//	}//end if
 			
-			//3 Create Payment Transaction History Record
-			Account a = new Account();
-			a.setAccountId(selectDto.getAccount().getAccountId());
+		//3 Create Payment Transaction History Record
+		Account a = new Account();
+		a.setAccountId(selectDto.getAccount().getAccountId());
 			
-			TransactionHistory th  = new TransactionHistory();
-			th.setAccount(a);
-			th.setTransactionCode(new TransactionCode(TransactionCodeConst.PAYMENT_FROM_PURCHASER));
-			th.setTransactionDate(new Date());
-			th.setAmount(paymentAmount);
-			th.setCodeType(TransactionCodeConst.CREDIT);
-			th.setTransactionDescription("PAYMENT RECEIVED - THANK YOU");
-			th.setPaymentMethod(paymentMethod);
-			th.setBank(bank);
-			th.setCardChequeNo(chqNo);
-			th.setChqDate(selectedChkDate);
-			//th.setInvoiceNo(selectDto.getTransaction().getInvoiceNo()); -- user select
-			th.setInvoiceNo(selectedInvoice);
-			th.setRefNo(selectDto.getTransaction().getRefNo());
-			//th.setTxnReversalId(selectDto.getTransaction().getTransactionId());
-			th.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
-			transactionHistoryDao.insert(th);
+		TransactionHistory th  = new TransactionHistory();
+		th.setAccount(a);
+		th.setTransactionCode(new TransactionCode(TransactionCodeConst.PAYMENT_FROM_PURCHASER));
+		th.setTransactionDate(new Date());
+		th.setAmount(paymentAmount);
+		th.setCodeType(TransactionCodeConst.CREDIT);
+		th.setTransactionDescription("PAYMENT RECEIVED - THANK YOU");
+		th.setPaymentMethod(paymentMethod);
+		th.setBank(bank);
+		th.setCardChequeNo(chqNo);
+		th.setChqDate(selectedChkDate);
+		//th.setInvoiceNo(selectDto.getTransaction().getInvoiceNo()); -- user select
+		th.setInvoiceNo(selectedInvoice);
+		th.setRefNo(selectDto.getTransaction().getRefNo());
+		//th.setTxnReversalId(selectDto.getTransaction().getTransactionId());
+	    th.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		th.setStatus(TransactionStatusConst.POSTED);
+		transactionHistoryDao.insert(th);
 			
-			boolean fullyPaid = progressiveBillingDao.isInvoiceFullyPaid(selectDto.getAccount().getAccountId(), selectDto.getTransaction().getInvoiceNo());
-			if(fullyPaid){
-				selectDto.getTransaction().setTxnReversalId(th.getTransactionId());
-				transactionHistoryDao.update(selectDto.getTransaction());
-			}
-			isSuccess = true;
+		boolean fullyPaid = progressiveBillingDao.isInvoiceFullyPaid(selectDto.getAccount().getAccountId(), selectDto.getTransaction().getInvoiceNo());
+		if(fullyPaid){
+			selectDto.getTransaction().setTxnReversalId(th.getTransactionId());
+			transactionHistoryDao.update(selectDto.getTransaction());
+		}
+		isSuccess = true;
 		return isSuccess;		
 	}
 	
@@ -712,6 +747,9 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		//1. Update account table.
 		Account act = selectDto.getAccount();
 		act.setAccountBalance(act.getAccountBalanceNotNull().subtract(txnAmount));
+		act.setBillingAmountTodate(act.getBillingAmountTodateNotNull().subtract(txnAmount));
+		act.setDateChanged(new Date());
+		act.setChangedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());
 		accountDao.update(act);	
 
 		//2 Create Reversal Transaction History Record
@@ -724,11 +762,12 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 		trev.setTransactionDate(new Date());
 		trev.setAmount(txnAmount);
 		trev.setCodeType(TransactionCodeConst.CREDIT);
-		trev.setTransactionDescription("MANUAL REVERSAL - PROGRESSIVE BILLING");
+		trev.setTransactionDescription("REVERSAL - PROGRESSIVE BILLING");
 		trev.setInvoiceNo(selectDto.getTransaction().getInvoiceNo());
 		trev.setRefNo(selectDto.getTransaction().getRefNo());
 		trev.setTxnReversalId(selectDto.getTransaction().getTransactionId());
-		trev.setStatus(TransactionStatusConst.TRANSACTION_PENDING);
+        trev.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		trev.setStatus(TransactionStatusConst.POSTED);
 		if (selectDto.getTransaction().getFinancierInvoiceNo() != null) {
 			trev.setFinancierInvoiceNo(selectDto.getTransaction().getFinancierInvoiceNo());	
 		}
@@ -748,6 +787,46 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 			}// end for
 		}//end if list.isempty
 		
+		isSuccess = true;
+
+	return isSuccess;
+	}
+
+	public boolean processTransactionUpdate(TransactionEntryDTO selectDto,BigDecimal txnAmount, String selectedInvoice){
+		boolean isSuccess = false;
+				
+		//1. Update account table.
+		Account act = selectDto.getAccount();
+		act.setAccountBalance(act.getAccountBalanceNotNull().subtract(txnAmount));
+		act.setBillingAmountTodate(act.getBillingAmountTodateNotNull().subtract(txnAmount));
+		act.setDateChanged(new Date());
+		act.setChangedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		accountDao.update(act);	
+
+		//2 Create Reversal Transaction History Record
+		Account aa = new Account();
+		aa.setAccountId(selectDto.getAccount().getAccountId());
+		
+		TransactionHistory tu  = new TransactionHistory();
+		tu.setAccount(aa);
+		tu.setTransactionCode(new TransactionCode(TransactionCodeConst.MANUAL_REVERSAL));
+		tu.setTransactionDate(new Date());
+		tu.setAmount(txnAmount);
+		tu.setCodeType(TransactionCodeConst.CREDIT);
+		tu.setTransactionDescription("MANUAL REVERSAL - PROGRESSIVE BILLING");
+//		tu.setInvoiceNo(selectDto.getTransaction().getInvoiceNo());
+//		tu.setRefNo(selectDto.getTransaction().getRefNo());
+//		tu.setTxnReversalId(selectDto.getTransaction().getTransactionId());
+        tu.setUserId(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		tu.setStatus(TransactionStatusConst.POSTED);
+//		if (selectDto.getTransaction().getFinancierInvoiceNo() != null) {
+//			tu.setFinancierInvoiceNo(selectDto.getTransaction().getFinancierInvoiceNo());	
+//		}
+//		if (selectDto.getTransaction().getFinancierPortion() != null) {
+//			tu.setFinancierPortion(selectDto.getTransaction().getFinancierPortion());	
+//		}	
+		transactionHistoryDao.insert(tu);	
+			
 		isSuccess = true;
 
 	return isSuccess;

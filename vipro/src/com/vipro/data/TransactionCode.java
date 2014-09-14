@@ -13,6 +13,7 @@ public class TransactionCode implements java.io.Serializable {
 	private String transactionCode;
 	private String name;
 	private String codeType;
+	private String manualEntry;	
 	private String accountingGroup;
 	private String status;
 	private Set transactionHistories = new HashSet(0);
@@ -91,6 +92,14 @@ public class TransactionCode implements java.io.Serializable {
 
 	public void setTransactionGroups(Set transactionGroups) {
 		this.transactionGroups = transactionGroups;
+	}
+
+	public String getManualEntry() {
+		return manualEntry;
+	}
+
+	public void setManualEntry(String manualEntry) {
+		this.manualEntry = manualEntry;
 	}
 
 }

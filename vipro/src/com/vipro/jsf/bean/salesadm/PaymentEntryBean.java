@@ -143,10 +143,10 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 		}
 			
 		private void generatePaymentForInvoice(){
-			 RequestContext context = RequestContext.getCurrentInstance();
-			 boolean success = false;
+			RequestContext context = RequestContext.getCurrentInstance();
+			boolean success = false;
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			 success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate, selectedInvoice);
+			success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate, selectedInvoice);
 			 
 			if(success){
 				Long txRevsalId= selectedDto.getTransaction().getTxnReversalId();
@@ -154,12 +154,12 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 				  dtoList = this.projectService.getPaymentEntryDTOListByProjectIdAndUnit(selectedProjectId,this.unit);
 				//	dtoList.remove(selectedDto);
 				}
-				 setSelectedDto(new PaymentEntryDTO());
-				 CommonBean.addInfoMessage("SUCCESSFUL","The payment transaction has been submitted successfully for processing.");
-				 context.addCallbackParam("success2", success);
-				 context.execute("dlg.hide()");
+				setSelectedDto(new PaymentEntryDTO());
+				CommonBean.addInfoMessage("SUCCESSFUL","The payment transaction has been submitted successfully for processing.");
+				context.addCallbackParam("success2", success);
+				context.execute("dlg.hide()");
 			 }else{
-				 CommonBean.addErrorMessage("WARNING","Error! Please contact System Administrator.");
+				CommonBean.addErrorMessage("WARNING","Error! Please contact System Administrator.");
 			 }
 		}
 		

@@ -45,7 +45,7 @@ public class ReversalEntryBean extends CommonBean implements Serializable{
 	
 	private BigDecimal txnAmount = BigDecimal.ZERO;
 	private String selectedInvoice = "";
-	private String selectedTransactionType = "PROGRESSIVE BILLING MANUAL REVERSAL";
+	private String selectedTransactionType = "REVERSAL - PROGRESSIVE BILLING";
 	private Date toDay = new Date();
 	
 	private List<SelectItem> transactionTypeList;

@@ -1,28 +1,19 @@
 package com.vipro.jsf.bean.sales;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-import java.util.Calendar;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.primefaces.component.commandbutton.CommandButton;
-
 import com.vipro.data.Project;
 import com.vipro.auth.AuthUser;
+import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.CaseStatus;
 import com.vipro.constant.TransactionCodeConst;
 import com.vipro.constant.TransactionStatusConst;
@@ -46,6 +37,10 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class SalesCommissionApproval extends CommonBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7787463580000537136L;
 	private List<Account> salesCommissionAccounts;
 	private List<SalesCommissionHistory> salesCommissionHistorys;
 
@@ -305,15 +300,16 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 	}
 	
 	public String confirm() {
+
+		AuthUser user = getCurrentUser();
+		currentUser = user.getUserProfile();
+		Long userId = user.getUserProfile().getUserId();
 		
 		if (salesCommissionAccounts != null) {
 			Long accountId = null;
 			Date currentDate = new Date();
 			for(Account salesCommissionAccount: salesCommissionAccounts)
 			{
-				AuthUser user = getCurrentUser();
-				currentUser = user.getUserProfile();
-				Long userId = user.getUserProfile().getUserId();
 				accountId = salesCommissionAccount.getAccountId();
 				SalesCommissionHistoryService salesCommissionHistoryService = (SalesCommissionHistoryService) SpringBeanUtil.lookup(SalesCommissionHistoryService.class.getName());
 				List<SalesCommissionHistory> historys = salesCommissionHistoryService.findByAccountId(salesCommissionAccount.getAccountId());
@@ -324,8 +320,7 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					history.setDateApproved(currentDate);
 					history.setChangedBy(userId);
 					history.setDateChanged(currentDate);
-					history.setClaimStatus(ClaimStatusConst.STATUS_APPROVED);
-					
+					history.setClaimStatus(ClaimStatusConst.STATUS_APPROVED);		
 					salesCommissionHistoryService.update(history);
 					
 					TransactionHistoryService transactionHistoryService = (TransactionHistoryService) SpringBeanUtil.lookup(TransactionHistoryService.class.getName());
@@ -335,12 +330,21 @@ public class SalesCommissionApproval extends CommonBean implements Serializable{
 					transactionHistory.setTransactionCode(code);
 					transactionHistory.setTransactionDate(currentDate);
 					transactionHistory.setTransactionDescription("SALES COMMISSION");
-					transactionHistory.setStatus(TransactionStatusConst.PENDING);
+					transactionHistory.setStatus(TransactionStatusConst.POSTED);
+					transactionHistory.setUserId(userId);
 					transactionHistory.setAmount(history.getClaimAmount());
 					transactionHistory.setCodeType(TransactionCodeConst.CREDIT);
 					transactionHistory.setAccount(salesCommissionAccount);
 					transactionHistory.setRefNo(salesCommissionHistory.getBatchNo().toString());
-					transactionHistoryService.insert(transactionHistory);
+					transactionHistoryService.insert(transactionHistory);		
+					
+					// update account record
+					AccountService accountService = (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+					salesCommissionAccount.setChangedBy(userId);
+					salesCommissionAccount.setDateChanged(currentDate);
+					salesCommissionAccount.setCommissionPaidDate(currentDate);
+					salesCommissionAccount.setCommissionAmount(history.getClaimAmount());			
+					accountService.update(salesCommissionAccount);
 				}
 
 				CaseAlert caseAlert = new CaseAlert();

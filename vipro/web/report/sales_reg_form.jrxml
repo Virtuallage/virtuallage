@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales_reg_receipt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="545" leftMargin="30" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f076927a-a39a-41b0-9229-c18c8592ba32">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="90"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="146"/>
 	<parameter name="account_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -127,7 +127,7 @@ WHERE
 	<field name="purchase_type" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="panel_bank_id" class="java.lang.Long">
+	<field name="panel_bank_id" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="loan_amount" class="java.math.BigDecimal">
@@ -136,7 +136,13 @@ WHERE
 	<field name="total_payment_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="billing_payment_todate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="account_balance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="billing_amount_todate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="late_pymt_int_rate" class="java.math.BigDecimal">
