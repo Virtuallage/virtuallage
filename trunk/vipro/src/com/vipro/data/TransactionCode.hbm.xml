@@ -14,6 +14,9 @@
         <property name="codeType" type="string">
             <column name="code_type" length="5" />
         </property>
+        <property name="manualEntry" type="string">
+            <column name="manual_entry" length="1" />
+        </property>
         <property name="accountingGroup" type="string">
             <column name="accounting_group" length="5" />
         </property>

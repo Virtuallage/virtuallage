@@ -266,17 +266,17 @@
 
 									<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
 										<h:panelGroup>	
-										<p:commandButton value="Back"
-											actionListener="#{paymentEntryBean.onClose}"
-											ajax="true" partialSubmit="true" immediate="true"
-											update="growl,:pbUSearchForm:resultsPanel"
-											style="margin-top:20px;margin-right:5px"
-											oncomplete="handleSaveRequest(xhr, status, args)" />										
-										<p:commandButton value="Submit" disabled="false" 
+											<p:commandButton value="Back"
+												actionListener="#{paymentEntryBean.onClose}"
+												ajax="true" partialSubmit="true" immediate="true"
+												update="growl,:pbUSearchForm:resultsPanel"
+												style="margin-top:20px;margin-right:5px"
+												oncomplete="handleSaveRequest(xhr, status, args)" />										
+											<p:commandButton value="Submit" disabled="false" 
 												actionListener="#{paymentEntryBean.onSubmitAction}"
 												ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
 												title="Submit"									
-												 />
+												/>
 										</h:panelGroup>
 								</h:panelGrid>
 						</p:dialog>

@@ -21,8 +21,10 @@ import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.dto.AdviseUpdateDetailsDTO;
 import com.vipro.dto.PaymentEntryDTO;
+import com.vipro.dto.TransactionEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
+import com.vipro.dto.ManualEntryApprovalDTO;
 
 @SuppressWarnings("unchecked")
 @Repository("com.vipro.dao.ProjectDao")
@@ -110,7 +112,7 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
 		query.append(" and a.accountId = th.account.accountId " )
 		.append(" and th.transactionCode.transactionCode IN ("+TransactionCodeConst.ADD_PROGRESSIVE_BILLING +","+TransactionCodeConst.RENOTICE_BILLING+" ) ")
-		.append(" and th.status in ( '"+TransactionStatusConst.TRANSACTION_PENDING+"', '"+TransactionStatusConst.TRANSACTION_POSTED+"' ) ")
+		.append(" and th.status in ( '"+TransactionStatusConst.PENDING+"', '"+TransactionStatusConst.POSTED+"' ) ")
 		.append(" and th.txnReversalId is NULL " );
 		
 		if (!StringUtils.isEmpty(UnitNo)){
@@ -179,7 +181,7 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 			StringBuilder query = new StringBuilder(
 					" select max(pb.stageNo)  from  ProgressiveBilling pb " )
 			.append(" where pb.account.accountId = ? ")
-			.append(" and pb.status = '"+ ProgressiveBillingConst.PB_STATUS_BILL +"'");		
+			.append(" and pb.status in ('"+ProgressiveBillingConst.PB_STATUS_BILL+"', '"+ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT+"')");		
 			
 			List<String> list = getHibernateTemplate().find(query.toString(),account_id);
 			if (list != null && !list.isEmpty()) {
@@ -188,4 +190,54 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		}
 		return stage;
 		}
+	
+	@Override
+	public List<TransactionEntryDTO> getTransactionEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		List<TransactionEntryDTO> resultList = new ArrayList<TransactionEntryDTO>();
+
+		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer from ProjectInventory o, Account a " +
+				" where o.project.projectId=?  ");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
+		
+		if (!StringUtils.isEmpty(UnitNo)){
+			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%' ");
+		}
+		
+		query.append(" order by o.unitNo ");			
+
+		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
+		if (list != null && list.size()>0) {
+			for (Object[] ob : list) {
+				TransactionEntryDTO dto = new TransactionEntryDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2]);
+				resultList.add(dto);
+			}	
+		}
+		return resultList;
+	}
+	
+	@Override
+	public List<ManualEntryApprovalDTO> getManualEntryApprovalDTOList(Long projectId, String UnitNo){
+		List<ManualEntryApprovalDTO> resultList = new ArrayList<ManualEntryApprovalDTO>();
+		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy, th from ProjectInventory o,  Account a, TransactionHistory th" +
+				" where o.project.projectId=? and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
+		query.append(" and a.accountId = th.account.accountId " )
+		.append(" and th.status in ( '"+TransactionStatusConst.SAVED+"') ");
+		
+		if (!StringUtils.isEmpty(UnitNo)){
+			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
+		}
+		query.append(" order by o.unitNo ");
+		
+		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
+		if (list != null && list.size()>0) {
+			for (Object[] ob : list) {
+				ManualEntryApprovalDTO dto = new ManualEntryApprovalDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2],findUserNameByUserId((Long)ob[4]),(TransactionHistory)ob[5]);
+				resultList.add(dto);
+			}	
+		}
+		return resultList;
+	}
 }

@@ -1,6 +1,5 @@
 package com.vipro.jsf.bean.sales;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,30 +11,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
-import com.vipro.constant.AccountStatusConst;
 import com.vipro.constant.CommonConst;
 import com.vipro.constant.DocumentTypeConst;
 import com.vipro.constant.PropertyUnitStatusConst;
-import com.vipro.constant.TransactionCodeConst;
-import com.vipro.constant.TransactionStatusConst;
 import com.vipro.constant.UserGroupConst;
 import com.vipro.constant.CancelStatusConst;
 import com.vipro.constant.CaseStatus;
@@ -45,7 +37,6 @@ import com.vipro.data.Customer;
 import com.vipro.data.DocumentReference;
 import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
-import com.vipro.data.TransactionCode;
 import com.vipro.data.TransactionHistory;
 import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
@@ -55,7 +46,6 @@ import com.vipro.service.SalesCancellationService;
 import com.vipro.service.DocumentReferenceService;
 import com.vipro.service.ProjectInventoryService;
 import com.vipro.service.ProjectService;
-import com.vipro.service.TransactionHistoryService;
 import com.vipro.service.UserProfileService;
 import com.vipro.utils.spring.CodeUtil;
 import com.vipro.utils.spring.SpringBeanUtil;
@@ -64,6 +54,12 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @ManagedBean(name = "salesCancel")
 @SessionScoped
 public class SalesCancel extends CommonBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -812765222545363465L;
+
 
 	private List<SelectItem> cancelReasons;
 	

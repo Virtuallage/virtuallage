@@ -1636,3 +1636,8 @@ load data local infile 'C:\\Users\\SCHDLOI\\Desktop\\CSVData\\dPristine.csv'
 ;
 
 UPDATE vipro.project_inventory set net_price = purchase_price - discount_amount where project_id = 3;
+UPDATE vipro.project_inventory set pt_no = "33333 & 55555", hsd_no = "66666 & 11111" where project_id = 1;
+UPDATE vipro.project_inventory set pt_no = "ABS123XYZ", hsd_no = "JKR111ZZZ" where project_id = 2;
+UPDATE vipro.project_inventory set pt_no = "999999 & 888888", hsd_no = "22222 & 676969" where project_id = 3;
+
+

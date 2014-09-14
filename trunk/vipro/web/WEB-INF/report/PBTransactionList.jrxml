@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="800" leftMargin="21" rightMargin="21" topMargin="54" bottomMargin="18" uuid="c5dfab51-e53c-4efc-8a36-d2e80136dbb9">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="444"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.layers" value="##Sat Jan 18 00:06:39 PKT 2014\nlayer.0.name=Background\nlayer.0.visible=true\nlayer.0.id=0"/>
+	<parameter name="ProjectId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StartDate" class="java.util.Date"/>
+	<parameter name="EndDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     transaction_history.`transaction_code` AS transaction_history_transaction_code,
+     transaction_history.`transaction_date` AS transaction_history_transaction_date,
+     transaction_history.`amount` AS transaction_history_amount,
+     transaction_history.`financier_portion` AS transaction_history_financier_portion,
+     transaction_history.`financier_invoice_no` AS transaction_history_financier_invoice_no,
+     transaction_history.`ref_no` AS transaction_history_ref_no,
+     transaction_history.`invoice_no` AS transaction_history_invoice_no,
+     transaction_history.`transaction_description` AS transaction_history_transaction_description,
+     transaction_history.`status` AS transaction_history_status,
+     transaction_history.`account_id` AS transaction_history_account_id,
+     customer.`full_name` AS customer_full_name
+FROM
+     `account` account INNER JOIN `transaction_history` transaction_history ON account.`account_id` = transaction_history.`account_id`
+     INNER JOIN `customer` customer ON account.`customer_id` = customer.`customer_id`
+WHERE
+     transaction_history.`transaction_code` IN ("500001","500002")
+ AND transaction_history.`transaction_date` >= $P{StartDate}
+ AND transaction_history.`transaction_date` <= $P{EndDate}
+GROUP BY
+     transaction_history.`transaction_id`
+ORDER BY
+     transaction_history.`transaction_date` ASC]]>
+	</queryString>
+	<field name="transaction_history_transaction_code" class="java.lang.String"/>
+	<field name="transaction_history_transaction_date" class="java.sql.Timestamp"/>
+	<field name="transaction_history_amount" class="java.math.BigDecimal"/>
+	<field name="transaction_history_financier_portion" class="java.math.BigDecimal"/>
+	<field name="transaction_history_financier_invoice_no" class="java.lang.String"/>
+	<field name="transaction_history_ref_no" class="java.lang.String"/>
+	<field name="transaction_history_invoice_no" class="java.lang.String"/>
+	<field name="transaction_history_transaction_description" class="java.lang.String"/>
+	<field name="transaction_history_status" class="java.lang.String"/>
+	<field name="transaction_history_account_id" class="java.lang.Long"/>
+	<field name="customer_full_name" class="java.lang.String"/>
+	<title>
+		<band height="35" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement uuid="60472fd5-b1d3-4e4c-b3c0-578a6ab29ae6" x="0" y="0" width="100" height="35"/>
+				<imageExpression><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="67">
+			<staticText>
+				<reportElement uuid="d9c2e7e8-6242-46b7-bd1b-794fa0ee0b15" positionType="Float" x="0" y="0" width="800" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a5b4e19-19c0-4780-9faf-291589459640" positionType="Float" x="680" y="9" width="31" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a933f275-e3eb-48e0-9c00-bd8726ec2abc" positionType="Float" x="710" y="9" width="5" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="b157ef13-c9e8-40df-8e40-17f4e6f11d2e" x="591" y="9" width="90" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{StartDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="23811497-71f5-4d89-a71b-925f3aa11fee" x="715" y="9" width="85" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EndDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0fad4b1b-9504-4485-a80d-4b9a69a5d274" positionType="Float" x="0" y="28" width="800" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79f246a0-074f-46c1-b7db-e34e7b63f1c2" positionType="Float" x="0" y="37" width="60" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d6a4f804-b611-4099-a6a0-434a262034df" positionType="Float" x="59" y="37" width="100" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0bf9f96-221c-4af3-85c1-b27cd98778b6" positionType="Float" x="60" y="49" width="60" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e066a806-330a-400c-b822-76cd347693f6" positionType="Float" x="431" y="37" width="50" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d36940fc-619d-4334-a590-5b344750dbda" positionType="Float" x="481" y="37" width="199" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8c0819e9-661e-467b-be3b-d0c327ee20f1" positionType="Float" x="680" y="37" width="120" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00e1d2dd-9b79-4d2b-a63a-344227a67899" positionType="Float" x="551" y="9" width="36" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="599a7141-e3ce-4a20-9cd5-bcb4fea765ca" positionType="Float" x="586" y="9" width="5" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ff27557-f011-4951-80db-9985b60f95b0" positionType="Float" x="728" y="49" width="72" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stage Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c963c373-c0f3-453b-90d2-df4e067e8835" positionType="Float" x="431" y="49" width="50" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Due Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83a60aff-8c38-476a-b526-f451f2967e25" positionType="Float" x="381" y="49" width="50" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Billed Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="178e0186-b65f-49ff-9f01-71bf64b65881" positionType="Float" x="348" y="49" width="33" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="02ce7739-f95a-408b-8529-2f6be50d573c" positionType="Float" x="0" y="9" width="551" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Daily Progressive Billing List]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ebd990ba-63f5-4c92-81a4-6fd1a3d065a2" positionType="Float" x="159" y="37" width="272" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchaser]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement uuid="94bff17a-d45e-48ab-9543-85e2717ea223" x="0" y="0" width="59" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_history_transaction_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="715268b7-4fbd-4bba-9df9-cf0ada4a83e6" x="681" y="0" width="119" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_history_amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5775cd56-cf2a-4ab7-8d1d-6b989240ded6" x="431" y="0" width="50" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_history_transaction_code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="83ce1097-32d7-45e9-99be-f005efb52382" x="481" y="0" width="199" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_history_transaction_description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c359cdc1-e6b8-4dc7-a939-1cf2dc7fa6cb" x="59" y="0" width="100" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_history_ref_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="10d2760f-eb42-4d79-a330-a6129cf0861c" x="159" y="0" width="272" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_full_name}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<subreport>
+				<reportElement uuid="37c68d24-e9c5-4b28-bcf7-3165e4706fe7" positionType="Float" x="60" y="0" width="740" height="13" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="account_id">
+					<subreportParameterExpression><![CDATA[$F{transaction_history_account_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="invoice_no">
+					<subreportParameterExpression><![CDATA[$F{transaction_history_invoice_no}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PBInvoiceInfo_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

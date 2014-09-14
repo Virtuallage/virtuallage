@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"       
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      
+ <h:head><title>Property Unit Update</title></h:head>
+ 
+ <body>
+ 	 <ui:composition template="/template/main_template.xhtml">
+ 	 	 <ui:define name="content">
+ 	 	 
+ 	 	 <p:panel id="panel" header="Manual Transaction Entry" style="width:95%">  			
+		    <h:form id="puListForm">
+		    <input type="hidden" name="selectedProjectId" value="#{manualEntryBean.selectedProjectId}" />
+		    <p:outputPanel id="searchPanel"   styleClass="no-borders">
+				<p:focus context="puListForm"/>				
+				<p:growl id="growlForm" showDetail="true" life="3000" autoUpdate="false" />
+				
+				<p:panelGrid style="width:100%; background-color: lightgrey;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="projectName">
+							<p:outputLabel  value="Project Name"/>
+						</p:column>
+						<p:column style="width:40%;text-align:left;vertical-align:middle">											
+							<p:selectOneMenu id="projectList" value="#{manualEntryBean.selectedProjectId}"  requiredMessage="Select One of the Project"
+								 required="true" style="width:100%" for="projectName">  
+								<f:selectItems value="#{manualEntryBean.projects}"/>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="UnitNoLbl">
+							<p:outputLabel  value="Unit No"/>
+						</p:column>
+						<p:column style="width:15%;text-align:left;vertical-align:middle">
+							 <p:inputText id="unitTxt" value="#{manualEntryBean.unit}" style="text-transform:uppercase" />
+						</p:column>
+						<p:column  style="width:15%;text-align:left;vertical-align:middle">
+							 <p:commandButton value = "Search" action="#{manualEntryBean.searchProject}" ajax="false" process="projectList,unitTxt" update=":puListForm:resultsPanel"/>.
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br/>
+				</p:outputPanel>
+				
+ 	 	 		<p:outputPanel id="resultsPanel" rendered = "#{manualEntryBean.selectedProjectId != null}" >
+ 		 	 	<p:dataTable id="dt" var="dto" value="#{manualEntryBean.dtoList}" draggableColumns="true" resizableColumns="false" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+ 		 	 		paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" tableStyle="width:100%" 
+                 	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  >  
+                 
+    			    <p:column headerText="Unit No" sortBy="#{dto.projectInvetory.unitNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.unitNo}" />  
+        			</p:column>
+        			 <p:column headerText="Purchaser Name" sortBy="#{dto.customer.fullName}">  
+            			<p:outputLabel  value="#{dto.customer.fullName}" />  
+        			</p:column>
+        			 <p:column headerText="Selling Price" sortBy="#{dto.projectInvetory.purchasePrice}" style="text-align:right">          			 
+            			<h:outputText  value="#{dto.projectInvetory.purchasePrice}"  style="text-align:right" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+         			<p:column headerText="Discount" sortBy="#{dto.account.discountedAmount}" style="text-align:right" >  
+             			<h:outputText  value="#{dto.account.discountedAmount}" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+    			    <p:column headerText="Nett Price" sortBy="#{dto.account.netPrice}" style="text-align:right">  
+             			<h:outputText  value="#{dto.account.netPrice}" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+    			    <p:column headerText="O/S Balance" sortBy="#{dto.account.accountBalance}" style="text-align:right">  
+             			<h:outputText  value="#{dto.account.accountBalance}" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+		      			
+        			<p:column headerText="Action" style="width:4%">  
+			            <p:commandButton id="selectDTOBtn" 
+			            	update=":dialogForm:dialogPanel" oncomplete="dlg.show()" 
+			            	icon="ui-icon-newwin" title="Select This Unit"  
+			            	action="#{manualEntryBean.onDtoSelection}">
+			            	<f:setPropertyActionListener value="#{dto}" target="#{manualEntryBean.selectedDto}" />
+			            </p:commandButton>  
+			        </p:column> 
+        			
+		        </p:dataTable> 
+				</p:outputPanel>
+			</h:form>
+				
+			<h:form id="dialogForm">
+				<p:outputPanel id="dialogPanel">
+				<p:dialog id="tDialog" header="Manual Transaction Entry" widgetVar="dlg"
+				        modal="true" height="500" width="600"  showEffect="explode"
+				        hideEffect="explode">
+				        
+				        <p:growl id="growl" showDetail="true" life="3000" autoUpdate="false" /> 
+				        <h:panelGrid id="display" columns="2" cellpadding="2" width="100%">
+				            
+				            <p:outputLabel  value="Project Name" />
+				            <p:inputText value="#{manualEntryBean.selectedDto.project.projectName}" disabled="true"/>
+
+				            <p:outputLabel  value="Unit No" />
+				            <p:inputText value="#{manualEntryBean.selectedDto.projectInvetory.unitNo}" disabled="true" style="width:35%"/>
+
+				            <p:outputLabel  value="Purchaser Name" />
+				            <p:inputText value="#{manualEntryBean.selectedDto.customer.fullName}" disabled="true"/>				                			            		        
+
+				            <p:outputLabel value="Transaction Code" />
+				            <p:selectOneMenu id="txnCodeId"
+				            	value="#{manualEntryBean.txnCode}" 
+				            	requiredMessage="Please Select One From the List" required="true"
+								style="width:200px" for="txnCodeDesc" disabled="false">	
+								<f:selectItems value="#{manualEntryBean.transactionCodeList}" />
+								<p:ajax event="change" update="txnDescId,txnDrCrId" 
+									listener="#{manualEntryBean.findTransactionCode}"/>								
+							</p:selectOneMenu>									            		
+	
+            				<p:outputLabel id="txnAmountTxt" value="Transaction Amount" />
+							<p:inputText value="#{manualEntryBean.txnAmount}" disabled="false" required="true"
+								converterMessage="Please enter valid transaction amount" 
+								style="width:50%;text-align:right" >
+            					<f:convertNumber pattern="#,###,##0.00" />
+            				</p:inputText>
+            				
+            				<p:outputLabel id="txnDrCrTxt" value="Dr/Cr" />
+							<p:inputText id="txnDrCrId" value="#{manualEntryBean.txnDrCr}"
+								disabled="true" style="width:30px"/>        					
+           					        				
+            				<p:outputLabel  value="Transaction Date" />
+				            <p:calendar value="#{manualEntryBean.txnDate}" id="popupTxnDate"
+				            	pattern="dd/MM/yyyy" showOn="button" style="width:50%" />
+
+							<p:outputLabel value="Ref No" />
+							<p:inputText
+								value="#{manualEntryBean.txnRefNo}"
+								disabled="false" maxlength="50" style="width:400px"/>
+														
+							<p:outputLabel id="txnDescTxt" value="Description" />
+							<p:inputText id="txnDescId" value="#{manualEntryBean.txnDesc}"
+								disabled="false" maxlength="40" style="width:380px"/>
+									
+							<p:outputLabel value="Invoice No" />
+							<p:inputText
+								value="#{manualEntryBean.txnInvNo}" 
+								disabled="false" maxlength="8" style="width:50%"/>	
+																					 																		            			                 				            			            
+				        </h:panelGrid>
+		 			        
+				        <h:panelGrid id="displaybtns" columns="1" cellpadding="2" width="100%" style="text-align:center;margin-top:20px">
+							<h:panelGroup>
+								<p:commandButton value="Back"
+									actionListener="#{manualEntryBean.closePUDetails}"
+									ajax="true" partialSubmit="true" immediate="true"
+									update="growl,:puListForm:resultsPanel"
+									style="margin-top:20px;margin-right:5px"
+									oncomplete="handleSaveRequest(xhr, status, args)" />				
+								<p:commandButton value="Save" disabled="false" 
+									actionListener="#{manualEntryBean.savePUDetails}"
+									ajax="true" update="growl,:puListForm:resultsPanel" style="margin-top:20px"
+									oncomplete="handleSaveRequest(xhr, status, args)" />
+							</h:panelGroup>
+						</h:panelGrid>
+
+				    </p:dialog> 
+				    <script type="text/javascript">  
+						    function handleSaveRequest(xhr, status, args) {  
+						        if(args.validationFailed || !args.success) {  
+						            dlg.jq.effect("shake", { times:5 }, 100);
+						            
+						        }   
+						        else {  
+						        	dlg.hide();
+						           // PF('dlg').hide();  
+						           // $('#loginLink').fadeOut();  
+						        }  
+						    }  
+					</script>  
+				 </p:outputPanel> 
+ 	 	 	
+ 	 	 	</h:form>
+		</p:panel>
+ 	 	</ui:define>
+ 	 </ui:composition>
+ 	 
+ 	 
+ </body>
+</html> 

@@ -65,5 +65,8 @@
         <property name="txnReversalId" type="long">
             <column name="txn_reversal_id" />
         </property>
+        <property name="userId" type="long">
+            <column name="user_id" />
+        </property>
     </class>
 </hibernate-mapping>

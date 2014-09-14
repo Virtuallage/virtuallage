@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter" pageWidth="595" pageHeight="842" columnWidth="553" leftMargin="21" rightMargin="21" topMargin="54" bottomMargin="18">
+	<property name="ireport.zoom" value="1.0245201830476058"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.layers" value="##Sat Jan 18 00:06:39 PKT 2014\nlayer.0.name=Background\nlayer.0.visible=true\nlayer.0.id=0"/>
+	<parameter name="MarketingCode" class="java.lang.String">
+		<parameterDescription><![CDATA[5 digit code details value]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StartDate" class="java.lang.String"/>
+	<parameter name="EndDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     customer.`customer_id`,
+     customer.`identity_no` AS customer_identity_no,
+     customer.`full_name` AS customer_full_name,
+     customer.`title` AS customer_title,
+     customer.`address_id` AS customer_address_id,
+     customer.`date_created` AS customer_date_created,
+     customer.`created_by` AS customer_created_by,
+     customer.`marketing_code` AS customer_marketing_code,
+     customer.`age_group` AS customer_age_group,
+     customer.`mobile_no` AS customer_mobile_no,
+     customer.`email` AS customer_email,
+     code_det.`code` AS code_det_code,
+     code_det.`description` AS code_det_description,
+     code_det_A.`code` AS code_det_A_code,
+     code_det_A.`description` AS code_det_A_description
+FROM
+     `customer` customer INNER JOIN `code_det` code_det ON customer.`marketing_code` = code_det.`code`
+     INNER JOIN `code_det` code_det_A ON customer.`title` = code_det_A.`code`
+WHERE
+     customer.`customer_category` = "CCPOT"
+ AND customer.`marketing_code` = $P{MarketingCode}
+ AND customer.`date_created` >= $P{StartDate}
+ AND customer.`date_created` <= $P{EndDate}
+ORDER BY
+     customer.`date_created` ASC]]>
+	</queryString>
+	<field name="customer_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_identity_no" class="java.lang.String"/>
+	<field name="customer_full_name" class="java.lang.String"/>
+	<field name="customer_title" class="java.lang.String"/>
+	<field name="customer_address_id" class="java.lang.Long"/>
+	<field name="customer_date_created" class="java.sql.Date"/>
+	<field name="customer_created_by" class="java.lang.Long"/>
+	<field name="customer_marketing_code" class="java.lang.String"/>
+	<field name="customer_age_group" class="java.lang.String"/>
+	<field name="customer_mobile_no" class="java.lang.String"/>
+	<field name="customer_email" class="java.lang.String"/>
+	<field name="code_det_code" class="java.lang.String"/>
+	<field name="code_det_description" class="java.lang.String"/>
+	<field name="code_det_A_code" class="java.lang.String"/>
+	<field name="code_det_A_description" class="java.lang.String"/>
+	<title>
+		<band height="35" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="100" height="35"/>
+				<imageExpression class="java.lang.String"><![CDATA["../images/BnGLogo.gif"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="108">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="553" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="161" y="65" width="31" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="191" y="65" width="5" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="28" width="553" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="-1" y="93" width="61" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="59" y="93" width="239" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Potential Purchaser]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="65" width="36" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="35" y="65" width="5" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="9" width="553" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Potential Purchasers Registration List by Marketing Campaign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="37" width="161" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Marketing Campaign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="161" y="37" width="18" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="56" width="553" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="84" width="553" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="37" width="374" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code_det_description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="297" y="93" width="75" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mobile No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="371" y="93" width="182" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email Address]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="107" width="553" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="40" y="66" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{StartDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="198" y="66" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EndDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="59" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_date_created}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="0" width="238" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_full_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="297" y="0" width="74" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_mobile_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="371" y="0" width="182" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_email}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="15" width="553" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="55">
+			<textField>
+				<reportElement x="95" y="5" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="5" width="81" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Records]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="81" y="5" width="15" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="200" y="35" width="153" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[*** End of Report ***]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesByStaffAgentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.1000000000000008"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesByStaffAgentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="531" leftMargin="43" rightMargin="21" topMargin="21" bottomMargin="21" uuid="c90c0dce-2cdf-48d9-99dd-20bec2727ac4">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="projectId" class="java.lang.Long"/>
@@ -78,23 +78,23 @@ ORDER BY a.sales_person ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="83" splitType="Stretch">
+		<band height="87" splitType="Stretch">
 			<staticText>
-				<reportElement x="21" y="57" width="51" height="20"/>
+				<reportElement uuid="56a5edc2-4e30-44cd-baf7-d161ef2ae6f7" x="0" y="47" width="51" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Project:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="72" y="57" width="255" height="20"/>
+				<reportElement uuid="921a99d5-217a-491a-8357-3324607e74dd" x="51" y="47" width="480" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="21" y="35" width="306" height="22"/>
+				<reportElement uuid="021c87a7-ff98-4030-a376-8b79b88dc3ad" x="0" y="25" width="531" height="22"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
@@ -102,141 +102,150 @@ ORDER BY a.sales_person ASC]]>
 ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="21" y="10" width="306" height="25"/>
+				<reportElement uuid="c3668d00-37ff-4a6e-9825-c01380d8968a" x="0" y="0" width="531" height="25"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{institution_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{institution_name}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="64a3b091-66c0-494c-9892-97b8f94ab616" positionType="Float" x="0" y="67" width="531" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="50" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="168" y="10" width="208" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="5258f06d-9b85-4008-98e5-47b4cf917ede" mode="Opaque" x="182" y="0" width="194" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{blocksTitle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{blocksTitle}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="257" y="30" width="119" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="55531008-fb66-4ef0-92e9-94c653a1c7d8" mode="Opaque" x="257" y="20" width="119" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Net Sales (RM)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="17" y="10" width="151" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="a0ff06fe-db7b-436f-9359-4066c5300562" mode="Opaque" x="0" y="0" width="182" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sold By]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="168" y="30" width="89" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="195e7291-bafb-4e96-b74a-2720acff0a4a" mode="Opaque" x="182" y="20" width="75" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Units]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="376" y="10" width="78" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="776360d1-8e9a-478e-867e-8ed395c1bbb3" mode="Opaque" x="376" y="0" width="78" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Staff Purchase]]></text>
+				<text><![CDATA[Staff
+Purchase]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="454" y="10" width="86" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="3ffdc18d-e627-4af9-8eda-6a1142fdd622" mode="Opaque" x="454" y="0" width="77" height="40" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sales Campaign]]></text>
+				<text><![CDATA[Sales
+Campaign]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="17" y="0" width="151" height="20"/>
-				<textElement>
+				<reportElement uuid="3fa3406a-1d37-49de-bd84-5b175dbdcdf8" x="0" y="0" width="182" height="20"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{salesPerson}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{salesPerson}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="168" y="0" width="89" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="41d51067-bd06-4744-b0e1-c02b2484a021" x="182" y="0" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{units}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="257" y="0" width="119" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement uuid="aafbf0d1-dc1c-4dc8-aa54-b0452e15d4ea" x="257" y="0" width="119" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{netSales}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{netSales}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="376" y="0" width="78" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="d547a941-856a-4f8a-88c4-8b00544668a2" x="376" y="0" width="78" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{staffPurchase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{staffPurchase}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
-				<reportElement mode="Transparent" x="17" y="20" width="521" height="1"/>
+				<reportElement uuid="c1a9ef3b-ee05-4e8a-a1fd-6059df837098" mode="Transparent" x="0" y="20" width="531" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="455" y="2" width="85" height="20"/>
-				<textElement>
+				<reportElement uuid="37ca3c58-fe46-4a80-9337-d7c0b1e511d3" x="455" y="0" width="76" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{salesCampaign}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{salesCampaign}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="17" y="0" width="151" height="20"/>
-				<textElement textAlignment="Justified">
+				<reportElement uuid="11abf02d-7bdd-4ea9-bc24-32d4539c4a00" x="0" y="0" width="182" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total]]></text>
+				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="168" y="0" width="89" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="108095c5-90ca-4bd1-ab7c-47663058f3f5" x="182" y="0" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalUnits}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{totalUnits}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="376" y="0" width="78" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="a82d46a8-55b3-437b-bbfa-551a66013576" x="376" y="0" width="78" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalStaffPurchase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{totalStaffPurchase}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="257" y="0" width="119" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement uuid="468259e9-2197-4b6f-98a2-90601f257fad" x="257" y="0" width="119" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalNetSales}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{totalNetSales}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="0" width="85" height="20"/>
-				<textElement>
+				<reportElement uuid="60f21280-3998-4965-8408-20ac3a870d49" x="455" y="0" width="76" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$V{totalSalesCampaign}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{totalSalesCampaign}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

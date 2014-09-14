@@ -39,6 +39,7 @@ import com.vipro.data.Project;
 import com.vipro.dto.BillingModelStageDTO;
 import com.vipro.dto.ChangeAddressDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
+import com.vipro.dto.BillingReturnParaDTO;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.service.CustomerService;
 import com.vipro.service.ProgressiveBillingService;
@@ -122,152 +123,150 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		return null;
 	}
 	
-		public void onView(ActionEvent actionEvent) {
+	public void onView(ActionEvent actionEvent) {
 			
-		}
+	}
 	
-		private File getBaseFolder(Long accountId){
-			File baseFolder = new File(CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
-			if(accountId != null){
-				 baseFolder = new File(JasperConst.ACCOUNTS_FOLDER+"/"+accountId.toString()+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
-				 if(!baseFolder.exists()){
-					 baseFolder.mkdirs();
-					}
-			}
-				 return baseFolder;
+	private File getBaseFolder(Long accountId){
+		File baseFolder = new File(CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
+		if(accountId != null){
+			 baseFolder = new File(JasperConst.ACCOUNTS_FOLDER+"/"+accountId.toString()+"/"+CommonConst.PROGRESSIVE_BILL_FOLDER_NAME);
+			 if(!baseFolder.exists()){
+				 baseFolder.mkdirs();
+				}
 		}
+		return baseFolder;
+	}
 		
 		
-		public void handleFileUpload(FileUploadEvent event) {
-			try{
+	public void handleFileUpload(FileUploadEvent event) {
+		try{
 					 
-				 if(getSelectedDto().getAccount().getAccountId() != null){
-					 
-					File targetFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());
-					InputStream inputStream = event.getFile().getInputstream();
-					OutputStream out = new FileOutputStream(new File(targetFolder,event.getFile().getFileName()));
-					int read = 0;
-					byte[] bytes = new byte[1024];
-					while((read = inputStream.read(bytes)) != -1){
-						out.write(bytes,0,read);
-					}
-					inputStream.close();
-					out.flush();
-					out.close();
-					CommonBean.addInfoMessage("Upload Successful."," The document is stored at "+targetFolder.getAbsolutePath());
-				 }
-			}catch(IOException io){
-				io.printStackTrace();
+			if(getSelectedDto().getAccount().getAccountId() != null){				 
+				File targetFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());
+				InputStream inputStream = event.getFile().getInputstream();
+				OutputStream out = new FileOutputStream(new File(targetFolder,event.getFile().getFileName()));
+				int read = 0;
+				byte[] bytes = new byte[1024];
+				while((read = inputStream.read(bytes)) != -1){
+					out.write(bytes,0,read);
+				}
+				inputStream.close();
+				out.flush();
+				out.close();
+				CommonBean.addInfoMessage("Upload Successful."," The document is stored at "+targetFolder.getAbsolutePath());
 			}
+		}catch(IOException io){
+			io.printStackTrace();
 		}
+	}
 		
-		  public List<StreamedContent> getAllUploadedFiles() {
-			 List<StreamedContent> fileList = new ArrayList<StreamedContent>();
+	public List<StreamedContent> getAllUploadedFiles() {
+		List<StreamedContent> fileList = new ArrayList<StreamedContent>();
 			 
-			 if(getSelectedDto().getAccount().getAccountId() != null){
-				 File baseFolder =  getBaseFolder(getSelectedDto().getAccount().getAccountId());
+		if(getSelectedDto().getAccount().getAccountId() != null){
+			File baseFolder =  getBaseFolder(getSelectedDto().getAccount().getAccountId());
 			 
 			 File[] filesArray = baseFolder.listFiles();
 
 			 if (filesArray != null) {
 			     for (File ufile : filesArray) {
-			     InputStream stream = null;
-			     try {
-			    	 String filePath = ufile.getAbsolutePath();
-			         stream = new FileInputStream(filePath);
-			         MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-					 String mimeType = mimeTypesMap.getContentType(filePath);
-			         StreamedContent file = new DefaultStreamedContent(stream,mimeType,ufile.getName());
-			         fileList.add(file);
-			     } catch (FileNotFoundException e) {
-			         e.printStackTrace();
-			     }
+			    	 InputStream stream = null;
+			    	 try {
+			    		 String filePath = ufile.getAbsolutePath();
+			    		 stream = new FileInputStream(filePath);
+			    		 MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+			    		 String mimeType = mimeTypesMap.getContentType(filePath);
+			    		 StreamedContent file = new DefaultStreamedContent(stream,mimeType,ufile.getName());
+			    		 fileList.add(file);
+			    	 } catch (FileNotFoundException e) {
+			    		 e.printStackTrace();
+			    	 }
 			     
-			     try {
-			         stream.close();
-			     } catch (IOException e) {
-			         // TODO Auto-generated catch block
-			         e.printStackTrace();
-			     }
+			    	 try {
+			    		 stream.close();
+			    	 } catch (IOException e) {
+			    		 // TODO Auto-generated catch block
+			    		 e.printStackTrace();
+			    	 }
 			     }
 			     Collections.reverse(fileList);
 			 }
-
-			 }
-			 return fileList;
-			 }
-		 public void prepareFileToDownload(final StreamedContent arq) {
-				try{
-					 if(getSelectedDto().getAccount().getAccountId() != null){
-						 File baseFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());					 
-						 String fileName =baseFolder.getPath()+"/"+arq.getName();
-						MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-						String mimeType = mimeTypesMap.getContentType(fileName);
-						InputStream stream = new FileInputStream(fileName);
-						this.fileToDownload = new DefaultStreamedContent(stream,mimeType,arq.getName());
-					 }
-				}catch(IOException e){
-					e.printStackTrace();
-				}
-				}
+		}
+		return fileList;
+	}
 		 
-		public void onClose(ActionEvent actionEvent) {
-			 RequestContext context = RequestContext.getCurrentInstance();
-			 boolean success = true;
-//			 setSelectedDto(new AdviseUpdateDetailsDTO());
-//			 refreshProjectSearch();
-			 CommonBean.addInfoMessage("Details Closed."," Details window closed.");
-			 context.addCallbackParam("success", success);
-		}
-		
-
-		public void onCloseChangeAddress(ActionEvent actionEvent) {
-			 RequestContext context = RequestContext.getCurrentInstance();
-			 boolean success = true;
-			 clearAddressChange();
-			 CommonBean.addInfoMessage("Change Address Closed."," Change Address window closed.");
-			 context.addCallbackParam("success", success);
-		}
-		
-		public void onSaveChangeAddress(ActionEvent actionEvent) {
-			 RequestContext context = RequestContext.getCurrentInstance();
-			 boolean success = true;
-			 
-			 ProgressiveBillingService service = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			 			 
-			 if(getCorrDTO().isCorrAddress()){
-				 service.changeAddress(getCorrDTO(), getSelectedDto().getAccount());
-				 setCorrAddress(getCorrDTO().getAddress());				 
-			 }
-			 
-//			 if(getAdrs2DTO().isCorrAddress()){
-//				 service.changeAddress(getAdrs2DTO(), getSelectedDto().getAccount());
-//				 setCorrAddress(getAdrs2DTO().getAddress());
-//			 }
-
-			 this.addressDTOList.clear();
-			 //clearAddressChange();
-			 CommonBean.addInfoMessage("Address Updated"," Address details updated successfully");
-			 context.addCallbackParam("success", success);
-		}
-		
-		public void onChangeAddress(){
-			CustomerService cusService = (CustomerService)SpringBeanUtil.lookup(CustomerService.class.getName());
-			clearAddressChange();
-			Long corrCustId = getSelectedDto().getAccount().getCorrAddrCustId();
-			if(corrCustId != null){
-				getCorrDTO().setCustomer(cusService.findCustomerWithAddressByCustId(corrCustId));
-				getCorrDTO().setAddress((Address)getCorrDTO().getCustomer().getAddresses().iterator().next());
-				getCorrDTO().setCorrAddress(true);
+	public void prepareFileToDownload(final StreamedContent arq) {
+		try{
+			if(getSelectedDto().getAccount().getAccountId() != null){
+				File baseFolder = getBaseFolder(getSelectedDto().getAccount().getAccountId());					 
+				String fileName =baseFolder.getPath()+"/"+arq.getName();
+				MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+				String mimeType = mimeTypesMap.getContentType(fileName);
+				InputStream stream = new FileInputStream(fileName);
+				this.fileToDownload = new DefaultStreamedContent(stream,mimeType,arq.getName());
 			}
-			
-			getAddressDTOList().add(getCorrDTO());
-			fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer(), corrCustId, cusService) ;
-			fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer2(), corrCustId, cusService);
-			fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer3(), corrCustId, cusService);
-			fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer4(), corrCustId, cusService);
-			fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer5(), corrCustId, cusService);	
+		}catch(IOException e){
+			e.printStackTrace();
 		}
+	}
+		 
+	public void onClose(ActionEvent actionEvent) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean success = true;
+//		setSelectedDto(new AdviseUpdateDetailsDTO());
+//		refreshProjectSearch();
+		CommonBean.addInfoMessage("Details Closed."," Details window closed.");
+		context.addCallbackParam("success", success);
+	}	
+
+	public void onCloseChangeAddress(ActionEvent actionEvent) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean success = true;
+		clearAddressChange();
+		CommonBean.addInfoMessage("Change Address Closed."," Change Address window closed.");
+		context.addCallbackParam("success", success);
+	}
+		
+	public void onSaveChangeAddress(ActionEvent actionEvent) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean success = true;
+			 
+		ProgressiveBillingService service = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+			 			 
+		if(getCorrDTO().isCorrAddress()){
+			service.changeAddress(getCorrDTO(), getSelectedDto().getAccount());
+			setCorrAddress(getCorrDTO().getAddress());				 
+		}
+			 
+//		if(getAdrs2DTO().isCorrAddress()){
+//		 	service.changeAddress(getAdrs2DTO(), getSelectedDto().getAccount());
+//			setCorrAddress(getAdrs2DTO().getAddress());
+//		}
+
+		this.addressDTOList.clear();
+		//clearAddressChange();
+		CommonBean.addInfoMessage("Address Updated"," Address details updated successfully");
+		context.addCallbackParam("success", success);
+	}
+		
+	public void onChangeAddress(){
+		CustomerService cusService = (CustomerService)SpringBeanUtil.lookup(CustomerService.class.getName());
+		clearAddressChange();
+		Long corrCustId = getSelectedDto().getAccount().getCorrAddrCustId();
+		if(corrCustId != null){
+			getCorrDTO().setCustomer(cusService.findCustomerWithAddressByCustId(corrCustId));
+			getCorrDTO().setAddress((Address)getCorrDTO().getCustomer().getAddresses().iterator().next());
+			getCorrDTO().setCorrAddress(true);
+		}
+			
+		getAddressDTOList().add(getCorrDTO());
+		fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer(), corrCustId, cusService) ;
+		fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer2(), corrCustId, cusService);
+		fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer3(), corrCustId, cusService);
+		fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer4(), corrCustId, cusService);
+		fillChangeAddressDTO(getSelectedDto().getAccount().getCustomer5(), corrCustId, cusService);	
+	}
 	
 	private ChangeAddressDTO fillChangeAddressDTO(Customer c, Long corrCustId, CustomerService cusService){
 		ChangeAddressDTO dto =null;
@@ -401,38 +400,42 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			 CommonBean.addInfoMessage("WARNING!","SPA Reference is Missing! Please key in the SPA reference no before proceeding.");
 			 isCleared = false;
 		 }
-		 
-		 if (!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) &&
-		 	!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-			if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
-				CommonBean.addInfoMessage("WARNING!","Loan Amount is Missing! Please key in the Loan Amount before proceeding.");
-				isCleared = false;
-			}
-			if (getSelectedDto().getAccount().getFinancierId() == null) {
-				 CommonBean.addInfoMessage("WARNING!","Financier is Missing! Please select the Financier before proceeding.");
-				 isCleared = false;
-			}
-			if (getSelectedDto().getAccount().getFinancierRef() == null) {
-				 CommonBean.addInfoMessage("WARNING!","LO Reference is Missing! Please key in the Financier Reference before proceeding.");
-				 isCleared = false;
-			}
-			if (getSelectedDto().getAccount().getLaSolicitorId() == null) {
-				 CommonBean.addInfoMessage("WARNING!","LA Solicitor is Missing! Please select the LA Solicitor before proceeding.");
-				 isCleared = false;
-			}
-			if (getSelectedDto().getAccount().getLaRefNo() == null) {
-				 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
-				 isCleared = false;
-			} else {
-				if ((getSelectedDto().getAccount().getLaRefNo()).isEmpty()) {
+		 if (getSelectedDto().getAccount().getPurchaseType() == null) {
+			 CommonBean.addInfoMessage("WARNING!","Financing is Empty, please select one before proceeding.");
+			 isCleared = false;
+		 } else {
+			 if (!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) &&
+				!getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
+				 if (getSelectedDto().getAccount().getLoanAmount().compareTo(BigDecimal.ZERO) == 0) {
+					 CommonBean.addInfoMessage("WARNING!","Loan Amount is Missing! Please key in the Loan Amount before proceeding.");
+					 isCleared = false;
+				 }
+				 if (getSelectedDto().getAccount().getFinancierId() == null) {
+					 CommonBean.addInfoMessage("WARNING!","Financier is Missing! Please select the Financier before proceeding.");
+					 isCleared = false;
+				 }
+				 if (getSelectedDto().getAccount().getFinancierRef() == null) {
+					 CommonBean.addInfoMessage("WARNING!","LO Reference is Missing! Please key in the Financier Reference before proceeding.");
+					 isCleared = false;
+				 }
+				 if (getSelectedDto().getAccount().getLaSolicitorId() == null) {
+					 CommonBean.addInfoMessage("WARNING!","LA Solicitor is Missing! Please select the LA Solicitor before proceeding.");
+					 isCleared = false;
+				 }
+				 if (getSelectedDto().getAccount().getLaRefNo() == null) {
 					 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
 					 isCleared = false;
-				}
-			}
-			if (getSelectedDto().getAccount().getBorrowerId1() == null) {
-				 CommonBean.addInfoMessage("WARNING!","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");
-				 isCleared = false;
-			}
+				 } else {
+					 if ((getSelectedDto().getAccount().getLaRefNo()).isEmpty()) {
+						 CommonBean.addInfoMessage("WARNING!","LA Reference No is Missing! Please enter the LA Ref No before proceeding.");
+						 isCleared = false;
+					 }
+				 }
+				 if (getSelectedDto().getAccount().getBorrowerId1() == null) {
+					 CommonBean.addInfoMessage("WARNING!","Borrower Name is Missing! Please Add at least 1 borrower before proceeding.");
+					 isCleared = false;
+				 }
+			 }
 		 }
 
 		 if (getSelectedDto().getAccount().getLoanAmount() == null) {
@@ -440,15 +443,15 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		 } else {
 			 purchaserPortion = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
 		 }
-		 
-		 if (getSelectedDto().getAccount().getAccountBalance() == null) {
+
+		 if (getSelectedDto().getAccount().getBillingAmountTodate() == null) {
 			 tempPurchaserPortion = purchaserPortion;
 		 } else {
-			 if (getSelectedDto().getAccount().getTotalPaymentTodate() == null) {
-				 tempPurchaserPortion = purchaserPortion.subtract(getSelectedDto().getAccount().getAccountBalance());
-			 } else {
-				 tempPurchaserPortion = purchaserPortion.subtract((getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate())));				 
-			 }
+//			 if (getSelectedDto().getAccount().getBillingPaymentTodate() == null) {
+			 tempPurchaserPortion = purchaserPortion.subtract(getSelectedDto().getAccount().getBillingAmountTodateNotNull());
+//			 } else {
+//				 tempPurchaserPortion = purchaserPortion.subtract((getSelectedDto().getAccount().getBillingAmountTodate().add(getSelectedDto().getAccount().getBillingPaymentTodate())));				 
+//			 }
 		 }
 		 
 		 if (isCleared) {
@@ -499,10 +502,10 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 				 selectedStageDtoList.add(sumDTO);
 				 this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
 			
-				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
+//				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			
 //				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
-				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+//				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 			 }		
 			 
 			 
@@ -531,17 +534,18 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 
-		BigDecimal billedTodate = new BigDecimal(0.00);
-		if (getSelectedDto().getAccount().getAccountBalance() != null) {
-			if (getSelectedDto().getAccount().getTotalPaymentTodate() == null) {
-				billedTodate = getSelectedDto().getAccount().getAccountBalance();
-			} else {
-				billedTodate = getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate());
-			}
-		}
+//		BigDecimal billedTodate = new BigDecimal(0.00);
+//		if (getSelectedDto().getAccount().getBillingAmountTodate() != null) {
+//			if (getSelectedDto().getAccount().getBillingPaymentTodate() == null) {
+//				billedTodate = getSelectedDto().getAccount().getAccountBalance();
+//			} else {
+//				billedTodate = getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate());
+//			}
+//		}
+		BigDecimal billedTodate = getSelectedDto().getAccount().getBillingAmountTodateNotNull();
 		BigDecimal financierPortion = billedTodate.subtract(purchaserPortion);
 
-		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
+//		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 		
 //		BigDecimal purchaserAmount = new BigDecimal(0.00);
 //		if (getSelectedDto().getAccount().getLoanAmount() == null) {		
@@ -549,38 +553,43 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 //		} else {
 //			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
 //		}
-		
-		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
-				splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
 
-		if(isSucessfull){
+		BillingReturnParaDTO dto = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
+		splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
+		
+//		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
+//				splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
+		
+//		if(isSucessfull){
+		if(dto.getIsSucessfull()){			
 			if (splitStageSeqNo == 0) {
 				//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
 				if (getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.CASH) || getSelectedDto().getAccount().getPurchaseType().equalsIgnoreCase(PurchaseTypeConst.PENDING_LOAN)) {
-					pbService.printProgressiveLetterCash(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+					pbService.printProgressiveLetterCash(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
 				} else {
 					if (billedTodate.compareTo(purchaserPortion) >= 0) {
-						pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+						pbService.printProgressiveLetter(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
 					} else {
-						pbService.printProgressiveLetterPurchaser(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+						pbService.printProgressiveLetterPurchaser(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
 					}
 				}				
 			} else {
 				this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtlPurchaser);
-				pbService.printProgressiveLetterPurchaserSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
+				pbService.printProgressiveLetterPurchaserSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);
 				// to generate split billing for Financier
-				this.setInvoiceNo2(pbService.getCurrentSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));
-				lastStageSelected = lastStageSelected.trim()+"_"+getInvoiceNo2Formated();
+//				this.setInvoiceNo2(pbService.getCurrentSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));
+				lastStageSelected = lastStageSelected.trim()+"_"+dto.getInvoiceNo2();
 				this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtlFinancier);
-				pbService.printProgressiveLetterFinancierSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), getInvoiceNoFormated(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);				
+				pbService.printProgressiveLetterFinancierSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);				
 			}
+			CommonBean.addInfoMessage("SUCCESSFUL", "Progressive Billing Processed Successfully! The Progressive Billing letter is now ready for printing, click View to download. Invoice No is "+dto.getInvoiceNo());
+		} else {
+			CommonBean.addInfoMessage("FAILED", "Progressive Billing Processed Failed! Please Contact System Administrator.");
 		}
 		
 		//Update StageDTOList from DB.
 		getSelectedDto().setStageDtoList(pbService.getBillingModelListByProjectBillingModelCode(
 				selectedProjectId, getSelectedDto().getProject().getBillingModelCode(), getSelectedDto().getAccount().getAccountId()));
-		
-		CommonBean.addInfoMessage("SUCCESSFUL", "Progressive Billing Processed Successfully! The Progressive Billing letter is now ready for printing, click View to download.");
 		
 		getSelectedStageDtoList().clear();
 		setInvoiceNo(new Long(01));

@@ -53,8 +53,11 @@
         <property name="purchasePrice" type="big_decimal">
             <column name="purchase_price" precision="11" />
         </property>
-          <property name="accountBalance" type="big_decimal">
+        <property name="accountBalance" type="big_decimal">
             <column name="account_balance" precision="11" />
+        </property>
+        <property name="billingAmountTodate" type="big_decimal">
+            <column name="billing_amount_todate" precision="11" />
         </property>
         <property name="discountedAmount" type="big_decimal">
             <column name="discounted_amount" precision="11" />
@@ -91,6 +94,9 @@
         </property>
         <property name="totalPaymentTodate" type="big_decimal">
             <column name="total_payment_todate" precision="11" />
+        </property>
+        <property name="billingPaymentTodate" type="big_decimal">
+            <column name="billing_payment_todate" precision="11" />
         </property>
         <property name="redemptionBankId" type="java.lang.Long">
             <column name="redemption_bank_id" />

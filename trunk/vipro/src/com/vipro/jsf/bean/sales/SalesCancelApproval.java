@@ -1,34 +1,22 @@
 package com.vipro.jsf.bean.sales;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 
-import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.util.StringUtils;
 
 import com.vipro.auth.AuthUser;
@@ -54,7 +42,6 @@ import com.vipro.data.UserProfile;
 import com.vipro.jsf.bean.CommonBean;
 import com.vipro.jsf.bean.mydesk.CaseAlert;
 import com.vipro.service.AdjHeaderService;
-import com.vipro.service.AdjLogService;
 import com.vipro.service.AccountService;
 import com.vipro.service.SalesCancellationService;
 import com.vipro.service.DocumentReferenceService;
@@ -70,6 +57,10 @@ import com.vipro.utils.spring.SpringBeanUtil;
 @SessionScoped
 public class SalesCancelApproval extends CommonBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9165606647599148249L;
 	private List<SelectItem> cancelReasons;
 	private List<Project> projects;
 	private List<ProjectInventory> inventories;
@@ -636,7 +627,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelFeeRefund);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION REFUND AMOUNT");
-				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelNetRefundAmt());
 				transactionHistory.setCodeType(TransactionCodeConst.CREDIT);
 				transactionHistory.setAccount(account);
@@ -651,7 +643,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelAdminFee);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION ADMIN FEE");
-				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelFee());
 				transactionHistory.setCodeType(TransactionCodeConst.CREDIT);
 				transactionHistory.setAccount(account);
@@ -666,7 +659,8 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelTax);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION TAX");
-				transactionHistory.setStatus(TransactionStatusConst.PENDING);
+				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelTax());
 				transactionHistory.setCodeType(TransactionCodeConst.CREDIT);
 				transactionHistory.setAccount(account);

@@ -1,0 +1,270 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Manual Entry Approval</title>
+</h:head>
+
+<body>
+	<ui:composition template="/template/main_template.xhtml">
+		<ui:define name="content">
+			<p:panel id="panel" header="Manual Entry Approval"
+				style="width:95%">
+				<h:form id="pbUSearchForm">
+					<input type="hidden" name="selectedProjectId"
+						value="#{manualEntryApprovalBean.selectedProjectId}" />
+					<p:outputPanel id="searchPanel" styleClass="no-borders">
+						<p:focus context="pbUSearchForm" />
+
+						<p:growl id="growlForm" showDetail="true" life="3000"
+							autoUpdate="false" />
+						<p:panelGrid style="width:100%; background-color: lightgrey;"
+							styleClass="no-borders">
+							<p:row>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="projectName">
+									<p:outputLabel value="Project Name" />
+								</p:column>
+								<p:column
+									style="width:40%;text-align:left;vertical-align:middle">
+									<p:selectOneMenu id="projectList"
+										value="#{manualEntryApprovalBean.selectedProjectId}"
+										requiredMessage="Project Name is mandatory" required="true"
+										style="width:100%" for="projectName">
+										<f:selectItems
+											value="#{manualEntryApprovalBean.projects}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column
+									style="width:15%;text-align:right; margin-right:5px;vertical-align:middle"
+									id="UnitNoLbl">
+									<p:outputLabel value="Unit No" />
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:inputText id="unitTxt"
+										value="#{manualEntryApprovalBean.unit}" style="text-transform:uppercase"/>
+								</p:column>
+								<p:column
+									style="width:15%;text-align:left;vertical-align:middle">
+									<p:commandButton value="Search"
+										action="#{manualEntryApprovalBean.searchProject}"
+										ajax="false" process="projectList,unitTxt"
+										update=":pbUSearchForm:resultsPanel" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<br />
+					</p:outputPanel>
+					<p:outputPanel id="resultsPanel"
+						rendered="#{manualEntryApprovalBean.selectedProjectId != null}">
+
+						<p:dataTable var="dto"
+							value="#{manualEntryApprovalBean.dtoList}"
+							draggableColumns="true" resizableColumns="false"
+							paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+							tableStyle="width:100%"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+							<p:column headerText="Inv#"
+								sortBy="#{dto.transaction.invoiceNo}"
+								style="text-align:left">
+								<p:outputLabel value="#{dto.transaction.invoiceNo}" />
+							</p:column>
+							<p:column headerText="Billed Date"
+								sortBy="#{dto.transaction.transactionDate}"
+								style="text-align:center">
+								<h:outputText value="#{dto.transaction.transactionDate}" >
+									<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Unit No"
+								sortBy="#{dto.projectInvetory.unitNo}">
+								<p:outputLabel value="#{dto.projectInvetory.unitNo}" />
+							</p:column>
+							<p:column headerText="Purchaser Name"
+								sortBy="#{dto.customer.fullName}">
+								<p:outputLabel value="#{dto.customer.fullName}" />
+							</p:column>
+							<p:column headerText="Deacription"
+								sortBy="#{dto.transaction.transactionDescription}"
+								style="text-align:left">
+								<h:outputText value="#{dto.transaction.transactionDescription}" />
+							</p:column>							
+							<p:column headerText="Transaction Amt"
+								sortBy="#{dto.transaction.amount}"
+								style="text-align:right">
+								<h:outputText value="#{dto.transaction.amount}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Type"
+								sortBy="#{dto.transaction.codeType}">
+								<p:outputLabel value="#{dto.transaction.codeType}" />
+							</p:column>
+							<p:column headerText="O/S Balance"
+								sortBy="#{dto.account.accountBalance}"
+								style="text-align:right">
+								<h:outputText value="#{dto.account.accountBalance}"
+									style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+							</p:column>					
+							<p:column style="width:4%" headerText="Select">
+								<p:commandButton id="selectDTOBtn" 
+									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
+									icon="ui-icon-check" title="Select this for Approval"
+									action="#{manualEntryApprovalBean.onDtoSelection}">
+									<f:setPropertyActionListener value="#{dto}"
+										target="#{manualEntryApprovalBean.selectedDto}" />
+								</p:commandButton>						
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+
+				<h:form id="dialogForm">
+					<p:outputPanel id="dialogPanel">
+						<p:dialog id="tDialog" header="Transaction Aproval"
+							widgetVar="dlg" modal="true" height="400" width="1100"
+							showEffect="explode" hideEffect="explode">
+
+							<p:growl id="growl" showDetail="true" life="3000"
+								autoUpdate="false" />
+							<h:panelGrid id="display" columns="4" cellpadding="4" width="100%">
+
+								<p:outputLabel value="Project Name" />
+								<p:inputText
+									value="#{dto.project.projectName}"
+									disabled="true" style="width:300px"/>	
+								<p:outputLabel value="Unit No" />
+								<p:inputText
+									value="#{dto.projectInvetory.unitNo}"
+									disabled="true"  />
+								
+								<p:outputLabel value="Customer Name" />
+								<p:inputText
+									value="#{dto.customer.fullName}"
+									disabled="true" style="width:300px" />
+								<p:outputLabel value="O/S Balance" />
+								<h:inputText
+									value="#{dto.account.accountBalance}"
+									disabled="true"  style="text-align:right">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:inputText>	
+								
+								<p:outputLabel value="Invoice No" />
+								<p:inputText
+									value="#{manualEntryApprovalBean.txnInvNo}" 
+									disabled="false" maxlength="8" style="width:50%"/>					
+								<p:outputLabel value="Ref No" />
+								<p:inputText
+									value="#{manualEntryApprovalBean.txnRefNo}"
+									disabled="false" maxlength="50" style="width:400px"/>
+																		
+				            	<p:outputLabel value="Transaction Code" />
+				            	<p:selectOneMenu id="txnCodeId"
+				            		value="#{manualEntryApprovalBean.txnCode}" 
+				            		requiredMessage="Please Select One From the List" required="true"
+									style="width:200px" for="txnCodeDesc" disabled="false">	
+									<f:selectItems value="#{manualEntryApprovalBean.transactionCodeList}" />
+									<p:ajax event="change" update="txnDescId, txnDrCrId" 
+										listener="#{manualEntryApprovalBean.findTransactionCode}"/>								
+								</p:selectOneMenu>									  
+								<p:outputLabel id="txnDescTxt" value="Description" />
+								<p:inputText id="txnDescId" value="#{manualEntryApprovalBean.txnDesc}"
+									disabled="false" maxlength="40" style="width:380px"/>
+																							
+								<p:outputLabel id="AmntTxt" value="Transaction Amount" />
+								<p:inputText value="#{manualEntryApprovalBean.txnAmount}" disabled="false" required="true"
+								 	converterMessage="Please input numeric value"
+								  	style="text-align:right">
+            						<f:convertNumber pattern="#,###,##0.00"  for="AmntTxt" />
+            					</p:inputText>
+            					<p:outputLabel id="txnDrCrTxt" value="Dr/Cr" />
+								<p:inputText id="txnDrCrId" value="#{manualEntryApprovalBean.txnDrCr}"
+									disabled="true" style="width:30px"/>  
+									
+								<p:outputLabel value="Transaction Date" />
+								<p:calendar value="#{manualEntryApprovalBean.txnDate}" id="popupButtonCal22" showOn="button" 
+				            		pattern="#{adviseUpdateBean.dateFormat}"
+				            	 	style="width:50%" required="true" disabled="false"  />
+	
+							</h:panelGrid>
+
+							<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
+								<h:panelGroup>	
+									<p:commandButton value="Back"
+										actionListener="#{manualEntryApprovalBean.onClose}"
+										ajax="true" partialSubmit="true" immediate="true"
+										update="growl,:pbUSearchForm:resultsPanel"
+										style="margin-top:20px;margin-right:10px"
+										oncomplete="handleSaveRequest(xhr, status, args)" />
+									<p:commandButton value="Reject"
+										actionListener="#{manualEntryApprovalBean.onReject}"
+										ajax="true" partialSubmit="true" immediate="true"
+										update="growl,:pbUSearchForm:resultsPanel"
+										style="margin-top:20px;margin-right:10px"
+										oncomplete="handleSaveRequest(xhr, status, args)" />									
+									<p:commandButton value="Approve" disabled="false" 
+										actionListener="#{manualEntryApprovalBean.onApproveAction}"
+										ajax="true" update="growl,:pbUSearchForm:resultsPanel" 
+										style="margin-top:20px"
+										oncomplete="handleSaveRequest(xhr, status, args)" />
+								</h:panelGroup>
+							</h:panelGrid>
+						</p:dialog>								
+						</p:outputPanel>
+						
+						<script type="text/javascript">
+							function handleSaveRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success ) {
+									dlg.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleConfirmBillRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success2 ) {
+									dlg3.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg3.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+							
+							function handleMessageRequest(xhr, status, args) {
+								if (args.validationFailed || !args.success3 ) {
+									dlg4.jq.effect("shake", {
+										times : 5
+									}, 100);
+
+								} else {
+									dlg4.hide();
+									// PF('dlg').hide();  
+									// $('#loginLink').fadeOut();  
+								}
+							}
+						</script>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_subreport_cc1" pageWidth="530" pageHeight="842" columnWidth="530" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5a13e4e8-59c6-4510-a099-99d195a9675c">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_subreport_cc1" pageWidth="530" pageHeight="842" columnWidth="530" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="247"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="account_id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[12l]]></defaultValueExpression>
@@ -67,81 +67,81 @@ AND co2.code_header_id = 'CT']]>
 	<detail>
 		<band height="13">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6feb8afe-a129-49a0-9036-2689d7f01f5d" positionType="Float" x="0" y="0" width="516" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{full_name}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{full_name}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{c2}.equals( null )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d180caac-98e2-4047-9b83-ed8762f3deab" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{c2}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{c2}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{address_line_1}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7bd3a523-1909-45f2-997e-223ad0c51758" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{address_line_1}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_line_1}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{address_line_2}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9b87bbaa-cdbe-4a5b-ab94-9f794e433616" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{address_line_2}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_line_2}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{address_line_3}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4c3cfd8d-6420-4fc1-8bf8-9562fadfbb8f" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{address_line_3}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_line_3}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{address_line_4}.isEmpty()]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="f6ade535-4c18-409b-8bc5-4b5c22499e2f" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{address_line_4}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_line_4}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[$F{country}.equals( "CTMAS" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a43ba80e-88d9-49f0-b34d-9ecf61cfe661" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{postcode}+" "+$F{city}+" "+$F{state_name}).toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{postcode}+" "+$F{city}+" "+$F{state_name}).toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[!$F{country}.equals( "CTMAS" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cc770d2b-42c4-43e3-93bb-36d7cae2e4d7" positionType="Float" x="0" y="0" width="516" height="13"/>
+				<reportElement positionType="Float" x="0" y="0" width="516" height="13"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{postcode}+" "+$F{city}+" "+$F{country_name}).toUpperCase()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{postcode}+" "+$F{city}+" "+$F{country_name}).toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

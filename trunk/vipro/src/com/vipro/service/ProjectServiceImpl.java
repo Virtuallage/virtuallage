@@ -15,10 +15,12 @@ import com.vipro.data.Project;
 import com.vipro.data.ProjectInventory;
 import com.vipro.dto.AdviseUpdateDetailsDTO;
 import com.vipro.dto.PaymentEntryDTO;
+import com.vipro.dto.TransactionEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
+import com.vipro.dto.ManualEntryApprovalDTO;
 
 @Service("com.vipro.service.ProjectService")
 public class ProjectServiceImpl implements ProjectService,Serializable {
@@ -385,8 +387,19 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 			Long projectId, String UnitNo) {
 		return projectDao.getProgressiveBillingUnitSearchDTOListByProjectIdAndUnit(projectId, UnitNo);
 		}
+	
 	@Override
 	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
 		return projectDao.getPaymentEntryDTOListByProjectIdAndUnit(projectId, UnitNo);
+	}
+	
+	@Override
+	public List<TransactionEntryDTO> getTransactionEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
+		return projectDao.getTransactionEntryDTOListByProjectIdAndUnit(projectId, UnitNo);
+	}
+	
+	@Override
+	public List<ManualEntryApprovalDTO> getManualEntryApprovalDTOList(Long projectId, String UnitNo){
+		return projectDao.getManualEntryApprovalDTOList(projectId, UnitNo);
 	}
 }

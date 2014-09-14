@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter" pageWidth="595" pageHeight="842" columnWidth="549" leftMargin="28" rightMargin="18" topMargin="18" bottomMargin="18" uuid="c5dfab51-e53c-4efc-8a36-d2e80136dbb9">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1092"/>
+	<property name="ireport.y" value="25"/>
 	<property name="ireport.layers" value="##Sat Jan 18 00:06:39 PKT 2014\nlayer.0.name=Background\nlayer.0.visible=true\nlayer.0.id=0"/>
-	<parameter name="account_id" class="java.lang.Long">
-		<defaultValueExpression><![CDATA[1l]]></defaultValueExpression>
+	<parameter name="account_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
@@ -43,13 +43,19 @@
      BB.`description` AS bb_desc,
      BP.`company_name` AS BP_name,
      proptype.`description` AS proptype_desc,
+     addr.`address_line_1` AS c1_l1,
+     addr.`address_line_2` AS c1_l2,
+     addr.`address_line_3` AS c1_l3,
+     addr.`address_line_4` AS c1_l4,
+     addr.`postcode` AS c1_pc,
+     addr.`city` AS c1_city,
+     addr.`state` AS c1_state,
+     addr.`country` AS c1_country,
      code_det.`description` AS c1title,
-     code_det_A.`description` AS c2sex,
-     code_det_B.`description` AS c2marital,
+     code_det_A.`description` AS c1state,
+     code_det_B.`description` AS c1country,
      code_det_C.`description` AS c1sex,
-     code_det_D.`description` AS c1marital,
-     code_det_E.`description` AS c2title,
-     code_det_F.`description` AS c2idtype
+     code_det_D.`description` AS c1marital
 FROM
      `account` A INNER JOIN `project_inventory` PI ON A.`INVENTORY_ID` = PI.`INVENTORY_ID`
      INNER JOIN `project` P ON PI.`PROJECT_ID` = P.`PROJECT_ID`
@@ -59,15 +65,14 @@ FROM
      LEFT OUTER JOIN `customer` c2 ON A.`customer_id2` = c2.`customer_id`
      RIGHT OUTER JOIN `code_det` PM ON A.`book_pymt_method` = PM.`code`
      RIGHT OUTER JOIN `code_det` BB ON A.`book_pymt_bank` = BB.`code`
-     INNER JOIN `code_det` code_det_E ON c2.`title` = code_det_E.`code`
-     INNER JOIN `code_det` code_det_F ON c2.`identity_type` = code_det_F.`code`
-     INNER JOIN `code_det` code_det_A ON c2.`sex` = code_det_A.`code`
-     INNER JOIN `code_det` code_det_B ON c2.`marital_status` = code_det_B.`code`
+     INNER JOIN `address` addr ON c1.`address_id` = addr.`address_id`
      INNER JOIN `code_det` code_det ON c1.`title` = code_det.`code`
      INNER JOIN `code_det` code_det_C ON c1.`sex` = code_det_C.`code`
      INNER JOIN `code_det` code_det_D ON c1.`marital_status` = code_det_D.`code`
+     INNER JOIN `code_det` code_det_A ON addr.`state` = code_det_A.`code`
+     INNER JOIN `code_det` code_det_B ON addr.`country` = code_det_B.`code`
 WHERE
-     a.account_id = $P{account_id}]]>
+     A.ACCOUNT_ID = $P{account_id}]]>
 	</queryString>
 	<field name="account_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -541,13 +546,19 @@ WHERE
 	<field name="bb_desc" class="java.lang.String"/>
 	<field name="BP_name" class="java.lang.String"/>
 	<field name="proptype_desc" class="java.lang.String"/>
+	<field name="c1_l1" class="java.lang.String"/>
+	<field name="c1_l2" class="java.lang.String"/>
+	<field name="c1_l3" class="java.lang.String"/>
+	<field name="c1_l4" class="java.lang.String"/>
+	<field name="c1_pc" class="java.lang.String"/>
+	<field name="c1_city" class="java.lang.String"/>
+	<field name="c1_state" class="java.lang.String"/>
+	<field name="c1_country" class="java.lang.String"/>
 	<field name="c1title" class="java.lang.String"/>
-	<field name="c2sex" class="java.lang.String"/>
-	<field name="c2marital" class="java.lang.String"/>
+	<field name="c1state" class="java.lang.String"/>
+	<field name="c1country" class="java.lang.String"/>
 	<field name="c1sex" class="java.lang.String"/>
 	<field name="c1marital" class="java.lang.String"/>
-	<field name="c2title" class="java.lang.String"/>
-	<field name="c2idtype" class="java.lang.String"/>
 	<title>
 		<band height="167" splitType="Stretch">
 			<staticText>
@@ -760,6 +771,14 @@ WHERE
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
+			<subreport>
+				<reportElement uuid="bb4f5d5d-c516-402f-8e98-72c7b4d59cef" x="91" y="0" width="458" height="14"/>
+				<subreportParameter name="address_id">
+					<subreportParameterExpression><![CDATA[$F{corr_addr_cust_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CustCorrAddrSubreport.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 		<band height="91">
 			<staticText>
@@ -1025,7 +1044,6 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="71e43457-a946-4a7e-bb74-cb0661acc180" x="455" y="47" width="91" height="14"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{c2sex}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d0d6039e-948a-4b46-91c1-f703e5786311" x="90" y="47" width="108" height="14"/>
@@ -1053,7 +1071,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="0c2f8dc2-5b8e-49ad-9212-b30d2a6d2a45" x="90" y="17" width="280" height="14"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{c2title}.trim()+" "+$F{c2_fn}.trim()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{c2_fn}.trim()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="3f69cf1d-086d-4faa-a036-59f751eccce2" mode="Opaque" x="90" y="31" width="278" height="1" forecolor="#000000"/>
@@ -1074,7 +1092,6 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="c41a7c25-7625-4c38-9600-e9ca036e4f15" x="455" y="32" width="91" height="14"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{c2marital}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="dd372395-00d0-4f9e-912e-68cde5e22328" x="90" y="62" width="108" height="14"/>
@@ -1441,27 +1458,5 @@ WHERE
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
-		<band height="10">
-			<staticText>
-				<reportElement uuid="67268b83-18e5-4484-a7ad-6276a5784411" positionType="Float" x="0" y="0" width="549" height="10" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-		</band>
-		<band height="10">
-			<staticText>
-				<reportElement uuid="c7383d81-b1b6-4ae9-8f92-e9f549bce16b" positionType="Float" x="0" y="0" width="549" height="10" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-		</band>
-		<band height="50"/>
-		<band height="50"/>
-		<band height="51"/>
-		<band height="50"/>
 	</detail>
 </jasperReport>

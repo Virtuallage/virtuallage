@@ -1,5 +1,5 @@
 -- Load for Redemption Bank Information Enhancement
-UPDATE vipro.code_det SET description = "REDEMPTION BANK" where code = "PRBID' AND code_header_id = "PR";
+UPDATE vipro.code_det SET description = "REDEMPTION BANK" where code = "PRBID" AND code_header_id = "PR";
 UPDATE vipro.code_det SET description = "PENDING" where code = "TSPEN" AND code_header_id = "TS";  
 
 -- Add Transaction Type into Transaction History Table (DR/CR)

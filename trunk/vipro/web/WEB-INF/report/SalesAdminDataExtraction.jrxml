@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesAdminDataExtraction" language="groovy" pageWidth="7200" pageHeight="595" orientation="Landscape" columnWidth="7160" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fc75484-d228-4d30-aeee-cc4975cd0012">
+	<property name="ireport.zoom" value="1.0000000000000138"/>
+	<property name="ireport.x" value="6146"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="project_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     project.`project_code` AS Project_Code,
+     project.`project_name` AS Project_Name,
+     project_inventory.`unit_no` AS Unit_No,
+     business_partner_B.`company_name` AS Developer_Name,
+     project_inventory.`pt_no` AS PST_NO,
+     project_inventory.`hsd_no` AS HST_NO,
+     customer.`full_name` AS Purchaser_Name_1,
+     customer_A.`full_name` AS Purchaser_Name_2,
+
+     address_A.`address_line_1` AS Corr_add_1,
+     address_A.`address_line_2` AS Corr_add_2,
+     address_A.`address_line_3` AS Corr_add_3,
+     address_A.`address_line_4` AS Corr_add_4,
+     address_A.`postcode` AS Corr_postcode,
+     address_A.`city` AS Corr_city,
+     code_det_C.`Description` AS Corr_State,
+     code_det_D.`Description` AS Corr_Country,
+
+     project.`address1` AS Unit_add_1,
+     project.`address2` AS Unit_add_2,
+     project.`address3` AS Unit_add_3,
+     project.`address4` AS Unit_add_4,
+     project.`postcode` AS Unit_postcode,
+     project.`city` AS Unit_city,
+     code_det_A.`Description` AS Unit_State,
+     code_det_B.`Description` AS Unit_Country,
+
+     business_partner_A.`company_name` AS Solicitor_Name,
+     address_C.`address_line_1` AS Sol_add_1,
+     address_C.`address_line_2` AS Sol_add_2,
+     address_C.`address_line_3` AS Sol_add_3,
+     address_C.`address_line_4` AS Sol_add_4,
+     address_C.`postcode` AS Sol_postcode,
+     address_C.`city` AS Sol_city,
+     code_det_G.`Description` AS Sol_State,
+     code_det_H.`Description` AS Sol_Country,
+
+     account.`la_ref_no` as LA_Ref_No,
+     account.`financier_ref` as LO_Ref_No,
+     account.`spa_stamped_date` AS SPA_stamped_date,
+     account.`purchase_price` AS SPA_price,
+     account.`loan_amount` AS Loan_amount,
+     business_partner.`company_name` AS Loan_Bank,
+     address_B.`address_line_1` AS LoanBank_add_1,
+     address_B.`address_line_2` AS LoanBank_add_2,
+     address_B.`address_line_3` AS LoanBank_add_3,
+     address_B.`address_line_4` AS LoanBank_add_4,
+     address_B.`postcode` AS LoanBank_postcode,
+     address_B.`city` AS LoanBank_city,
+     code_det_E.`Description` AS LoanBank_State,
+     code_det_F.`Description` AS LoanBank_Country
+
+FROM
+     `project` project INNER JOIN `project_inventory` project_inventory ON project.`project_id` = project_inventory.`project_id`
+     INNER JOIN `account` account ON project_inventory.`inventory_id` = account.`inventory_id`
+     LEFT JOIN  `customer` customer ON account.`customer_id` = customer.`customer_id`
+     LEFT JOIN `customer` customer_A ON account.`customer_id2` = customer_A.`customer_id`
+     LEFT JOIN `address` address ON project_inventory.`address_id` = address.`address_id`
+     LEFT JOIN `address` address_A ON account.`customer_id` = address_A.`customer_id`
+     LEFT JOIN `address` address_B ON account.`financier_id` = address_B.`address_id`
+     LEFT JOIN `business_partner` business_partner ON account.`financier_id` = business_partner.`partner_id`
+	 LEFT JOIN `business_partner` business_partner_A ON account.`spa_solicitor_id` = business_partner_A.`partner_id`
+     LEFT JOIN `address` address_C ON business_partner_A.`address_id` = address_C.`address_id`
+     LEFT JOIN `business_partner` business_partner_B ON project.`developer_id` = business_partner_B.`partner_id`
+     LEFT JOIN `code_det` code_det_A ON project.`state` = code_det_A.`code`
+     LEFT JOIN `code_det` code_det_B ON project.`country` = code_det_B.`code`
+     LEFT JOIN `code_det` code_det_C ON address_A.`state` = code_det_C.`code`
+     LEFT JOIN `code_det` code_det_D ON address_A.`country` = code_det_D.`code`
+     LEFT JOIN `code_det` code_det_E ON address_B.`state` = code_det_E.`code`
+     LEFT JOIN `code_det` code_det_F ON address_B.`country` = code_det_F.`code`
+     LEFT JOIN `code_det` code_det_G ON address_C.`state` = code_det_G.`code`
+     LEFT JOIN `code_det` code_det_H ON address_C.`country` = code_det_H.`code`
+
+WHERE
+     project.`project_id` = $P{project_id}
+ORDER BY
+     Project_Name ASC, Unit_No]]>
+	</queryString>
+	<field name="Project_Code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Project_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Unit_No" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Developer_Name" class="java.lang.String"/>
+	<field name="PST_NO" class="java.lang.String"/>
+	<field name="HST_NO" class="java.lang.String"/>
+	<field name="Purchaser_Name_1" class="java.lang.String"/>
+	<field name="Purchaser_Name_2" class="java.lang.String"/>
+	<field name="Corr_add_1" class="java.lang.String"/>
+	<field name="Corr_add_2" class="java.lang.String"/>
+	<field name="Corr_add_3" class="java.lang.String"/>
+	<field name="Corr_add_4" class="java.lang.String"/>
+	<field name="Corr_postcode" class="java.lang.String"/>
+	<field name="Corr_city" class="java.lang.String"/>
+	<field name="Corr_State" class="java.lang.String"/>
+	<field name="Corr_Country" class="java.lang.String"/>
+	<field name="Unit_add_1" class="java.lang.String"/>
+	<field name="Unit_add_2" class="java.lang.String"/>
+	<field name="Unit_add_3" class="java.lang.String"/>
+	<field name="Unit_add_4" class="java.lang.String"/>
+	<field name="Unit_postcode" class="java.lang.String"/>
+	<field name="Unit_city" class="java.lang.String"/>
+	<field name="Unit_State" class="java.lang.String"/>
+	<field name="Unit_Country" class="java.lang.String"/>
+	<field name="Solicitor_Name" class="java.lang.String"/>
+	<field name="Sol_add_1" class="java.lang.String"/>
+	<field name="Sol_add_2" class="java.lang.String"/>
+	<field name="Sol_add_3" class="java.lang.String"/>
+	<field name="Sol_add_4" class="java.lang.String"/>
+	<field name="Sol_postcode" class="java.lang.String"/>
+	<field name="Sol_city" class="java.lang.String"/>
+	<field name="Sol_State" class="java.lang.String"/>
+	<field name="Sol_Country" class="java.lang.String"/>
+	<field name="LA_Ref_No" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LO_Ref_No" class="java.lang.String"/>
+	<field name="SPA_stamped_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SPA_price" class="java.math.BigDecimal"/>
+	<field name="Loan_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Loan_Bank" class="java.lang.String"/>
+	<field name="LoanBank_add_1" class="java.lang.String"/>
+	<field name="LoanBank_add_2" class="java.lang.String"/>
+	<field name="LoanBank_add_3" class="java.lang.String"/>
+	<field name="LoanBank_add_4" class="java.lang.String"/>
+	<field name="LoanBank_postcode" class="java.lang.String"/>
+	<field name="LoanBank_city" class="java.lang.String"/>
+	<field name="LoanBank_State" class="java.lang.String"/>
+	<field name="LoanBank_Country" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.toString() == "1"
+]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="2ed350bf-a090-4591-9acb-e36bd781793d" x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Project_Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54dd0a66-79e4-4966-bfd0-55ee3752e0e3" x="300" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b2be0b4d-34ca-4f26-9f46-73b536b586a2" x="400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PST_NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f36a3817-38d2-4ea0-a224-54de8f77f52f" x="500" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[HST_NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8893244d-fa0b-4f77-8329-c9e99fab7d98" x="600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Purchaser_Name_1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f4039b6f-6ff8-4b39-807a-2f689e4d6e59" x="800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Purchaser_Name_2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b184d4f-bf67-4c74-8d7d-88e21a733b03" x="1000" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_add_1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="143c96aa-2a36-440c-bcb2-7719ccb61b64" x="1200" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_add_2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7cf099ce-d6fc-448a-aee9-40612c91db1b" x="1400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_add_3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="057f839f-98e8-4bfe-8478-bb6626842429" x="1600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_add_4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5573a262-1b28-4ae8-9e74-9ebdae08d087" x="1800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_postcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bcdc2c31-8277-4ed6-932a-fb0e502ad5cb" x="1900" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_city]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f19b3d1d-0342-4fb6-aa93-bce47c27ce96" x="2000" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_State]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ca83f3d1-4a4a-403e-ac2d-eec813265afe" x="2100" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Corr_Country]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d56e7deb-ba56-4a07-ad8c-2a7b54294b95" x="2200" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_add_1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7c6fcdef-e57d-4acb-a61d-48b4cd938ea8" x="2400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_add_2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e4001dd7-ecbe-4173-9ba5-f604356ca0b2" x="2600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_add_3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d4924b4-657b-41e1-a099-2d3f497dc24f" x="2800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_add_4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a5ecdab-e78a-4e34-9772-a2c61f640098" x="3000" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_postcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dca1eaac-c2e2-442d-ba0f-a751d5dd9b6a" x="3100" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_city]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09b9c67c-03c5-45f2-ba73-cac14e1e46e1" x="3200" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_State]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="58f483ea-68ab-4e48-af8b-a8a434a25fb2" x="3300" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit_Country]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c8828bc9-8a4c-40b0-bb84-0e4080f5bcce" x="3400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Solicitor_Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a8ec8d47-b9f9-47b7-a090-d833c62f22dc" x="3600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_add_1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e2978ad-e212-4908-bfce-4b42a43734ee" x="3800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_add_2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc73cf0b-5e69-49f7-a94e-2f89eefe850d" x="4000" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_add_3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8649df9-01a2-4760-ad4f-06967e7a58cf" x="4200" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_add_4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1666f4ee-570a-4558-b0be-fb85cf351597" x="4400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_postcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e9a0da93-d69e-42d7-923e-275e64e4e524" x="4500" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_city]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8e0373a0-2723-4139-85bc-4105286480f3" x="4600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_State]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4cce89f3-38eb-4902-9ef7-a2f7d7065b1a" x="4700" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sol_Country]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7657fdac-8436-48a7-bced-ed3856b39a92" x="4800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LA_Ref_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="295e13bd-2286-4a0a-bce7-20e7b7a9d4b6" x="5000" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LO_Ref_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="57b58c8d-8a33-4f14-9eef-200c23e0b735" x="5300" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[SPA_price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="20e15743-c180-4df7-9f11-d9f82c0acc9c" x="5400" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Loan_amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="772d6a61-39a6-4c25-acaa-8a51fd7d2671" x="5500" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Loan_Bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1e7a1228-2450-4482-b030-1c19b0e5c17b" x="5700" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_add_1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9de77425-e039-4d25-b74f-7eca92bd48d7" x="5900" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_add_2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5c1b3d3-8f5a-4315-ab9d-b5df879a0072" x="6100" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_add_3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dff11247-3463-4bff-aac4-3c35166b3d91" x="6300" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_add_4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d890427-06a7-4c67-a3ef-f95209e5cbd3" x="6500" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_postcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9623d505-5fb7-4515-9992-5a2580deb4a4" x="6600" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_city]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e51f9e1-1ce3-432a-9d1c-440dc34271e0" x="6700" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_State]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c486f4c-2e89-4970-96d7-06dcdb93034c" x="6800" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LoanBank_Country]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b68b582f-9283-4da0-9a8e-2a40a7b57f7a" x="5200" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[SPA_stamped_date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4eb3ebd-4731-4888-b46c-455faf1a63ad" x="6900" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Developer_Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bcf15a6b-996a-4a24-948f-dd1525db6b55" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Project_Code]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3cd4a08f-0bb2-476a-859b-9e346eac5890" x="100" y="0" width="200" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Project_Name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b91f9aba-fb9d-4aec-ae39-d0a3c9315656" x="300" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_No}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2c889147-f0cb-44e1-8ec4-c2b609f100e2" x="400" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PST_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ef353756-2c51-45a3-a1c8-94fb68bf4052" x="500" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{HST_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9ac73483-ca50-4bbb-b6fb-1732fb0ec187" x="600" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_Name_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fed82f80-438f-433b-83de-8ceaf5dd3264" x="800" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_Name_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b29fc3c1-e18c-4f5d-a4d2-731e15438e7c" x="1000" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="379b05e4-0b02-4bf6-ae0a-8b0e8e0c7c71" x="1200" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a284228e-17bd-4c0b-a7f1-9919ba0f0202" x="1400" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c5f81cb0-e864-481a-b727-1a8612c64c71" x="1600" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b7063431-1ad2-4007-908d-24fba98e5ec1" x="1800" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_postcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a4d9aa21-cca9-4a46-98be-16b4ccf90579" x="1900" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="388e29eb-9cf5-4eaf-9f2f-5f102857a927" x="2000" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_State}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="df4c0c7a-ceb2-4a2d-9e0c-0a3117294d15" x="2100" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_Country}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="63d5dd28-b3ea-4ff6-9e9a-6ec344f5c173" x="2200" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_add_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cd9e603b-7aab-4819-9e44-f7fa8c4a5263" x="2400" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_add_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="16f65b10-0137-4ab5-9490-bc240771af00" x="2600" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_add_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e042b7a7-5458-417a-987d-311861fe0e21" x="2800" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_add_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ae1e6e3f-91da-40bf-a0a0-325f10c480d2" x="3000" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_postcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ca5a0aff-579b-4376-919f-18bd9de97a92" x="3100" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7dc3adb3-5110-4371-98dd-80f39dc6a8db" x="3200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_State}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4f4bc6e6-396e-4800-841d-54b034e970f9" x="3300" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Unit_Country}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="31314b31-0b12-48a7-b18e-543cb6780f7c" x="3400" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Solicitor_Name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8a7f206e-db7e-4184-866b-b3696f17cb02" x="3600" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_add_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b8c32fc7-bab3-4b7f-8e62-2bcb9c3d49ed" x="3800" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_add_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8d7c8ef5-0b70-40d4-8df3-be5b1210391a" x="4000" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_add_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="44619462-b573-4253-9067-bcb64035b484" x="4200" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_add_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="952f0285-134e-4d2c-a89c-a936d8a1ef46" x="4400" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_postcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2a85787a-2b0b-4bee-b3c3-f8b01d66f479" x="4500" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="04edf6af-bcda-4b1a-9788-b0440fb822cf" x="4600" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_State}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="670bdf73-e323-4306-8393-a8326b951120" x="4700" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Sol_Country}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d51fa269-d3f9-4d4d-9acc-0f8462f41f0e" x="4800" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LA_Ref_No}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="04aebba9-3026-4f64-b33c-bb729056f0dd" x="5000" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LO_Ref_No}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c99cf2aa-8e58-4b9a-abbe-9910a9887698" x="5300" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SPA_price}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="887db787-3b00-4423-8cf4-00c5d0260289" x="5400" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Loan_amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="20097cfc-a93d-4058-b0ec-5d1b6ee464f1" x="5500" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Loan_Bank}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b4259ce6-fee9-43a7-960c-e7c7ed6d4d49" x="5700" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_add_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="540af209-e9b6-4453-847d-13d76dbc33f2" x="5900" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_add_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c01a138e-d03f-43bb-bd0b-d5a3a2865014" x="6100" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_add_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2e7f7b9c-b9ae-4c24-ac90-d937f81be3a4" x="6300" y="0" width="200" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_add_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ed4dd919-201d-47d3-b8db-3de93876d106" x="6500" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_postcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a0c5d894-64a5-4317-babc-bb42e64d9436" x="6600" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="314e8fd5-9d49-44bc-a7ea-e9ffc10ae5c4" x="6700" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_State}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="27baae19-708e-4f64-8d15-2fe3cde00fdf" x="6800" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LoanBank_Country}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="d6f4854c-62af-4c8a-a4bd-e41d3dbea0cc" x="5200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SPA_stamped_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f82acb57-2e4e-4a14-aaea-722b34309a32" x="6900" y="0" width="200" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Developer_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="965fee65-c8e9-4750-a57b-e68f82a876d0" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Project_Code}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
