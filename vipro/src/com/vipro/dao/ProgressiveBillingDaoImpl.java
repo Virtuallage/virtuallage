@@ -21,7 +21,15 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 	}
 	
 	public boolean isInvoiceFullyPaid(Long accountId, String invoiceNo){
-		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status not in ('"+ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT+"') ";
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo.trim()+"%' and  o.status not in ('"+ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT+"') ";
+		@SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().find(query, accountId);
+		return ((result == null || result.isEmpty()) ? true : false);
+		
+	}
+	
+	public boolean isFInvoiceFullyPaid(Long accountId, String invoiceNo){
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.financierInvoiceNo like '"+invoiceNo.trim()+"%' and  o.status not in ('"+ProgressiveBillingConst.PB_STATUS_FULL_PAYMENT+"') ";
 		@SuppressWarnings("rawtypes")
 		List result = getHibernateTemplate().find(query, accountId);
 		return ((result == null || result.isEmpty()) ? true : false);
@@ -35,7 +43,19 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 			fString = fString+"'"+statuses[i]+"',";
 		}
 		fString = fString.substring(0, fString.length()-1);
-		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status in ("+fString+") ";
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo.trim()+"%' and  o.status in ("+fString+") ";
+		return getHibernateTemplate().find(query, accountId);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ProgressiveBilling> findByAccountIdStatusAndFInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
+		String fString ="";
+		for (int i = 0; i < statuses.length; i++) {
+			fString = fString+"'"+statuses[i]+"',";
+		}
+		fString = fString.substring(0, fString.length()-1);
+		String query = "select o from ProgressiveBilling o where o.account.accountId=? and o.financierInvoiceNo like '"+invoiceNo.trim()+"%' and  o.status in ("+fString+") ";
 		return getHibernateTemplate().find(query, accountId);
 		
 	}
@@ -47,11 +67,31 @@ public class ProgressiveBillingDaoImpl extends DaoImpl<ProgressiveBilling>
 			fString = fString+"'"+statuses[i]+"',";
 		}
 		fString = fString.substring(0, fString.length()-1);
-		String query = "select SUM(o.amountBilled) - IFNULL(SUM(o.partialPaidAmount),0)  from ProgressiveBilling o where o.account.accountId=? and o.invoiceNo like '"+invoiceNo+"%' and  o.status in ("+fString+") ";
+		String query = "select SUM(o.amountBilled) - IFNULL(SUM(o.partialPaidAmount),0)  from ProgressiveBilling o "
+				+ "where o.account.accountId=? "
+				+ "and o.invoiceNo like '"+invoiceNo.trim()+"%' "
+						+ "and  o.status in ("+fString+") ";
 		BigDecimal diff = (BigDecimal)getHibernateTemplate().find(query, accountId).get(0); 
 		return diff;
 		
 	}
+	
+	public BigDecimal getRemaingPaymentAmountByAccountIdStatusAndFInvoiceNo(Long accountId, String[] statuses, String invoiceNo){
+		String fString ="";
+		for (int i = 0; i < statuses.length; i++) {
+			fString = fString+"'"+statuses[i]+"',";
+		}
+		
+		fString = fString.substring(0, fString.length()-1);
+		String query = "select SUM(o.amountBilled) - IFNULL(SUM(o.partialPaidAmount),0)  from ProgressiveBilling o "
+				+ "where o.account.accountId=? "
+				+ "and o.financierInvoiceNo like '"+invoiceNo.trim()+"%' "
+						+ "and  o.status in ("+fString+") ";
+		BigDecimal diff = (BigDecimal)getHibernateTemplate().find(query, accountId).get(0); 
+		return diff;
+		
+	}
+	
 	@Override
 	public ProgressiveBilling findByStageAndAccountId(Long accountId, String stageNo) {
 		ProgressiveBilling pb = new ProgressiveBilling();

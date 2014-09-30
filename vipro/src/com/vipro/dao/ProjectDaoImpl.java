@@ -106,9 +106,8 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo){
 		List<PaymentEntryDTO> resultList = new ArrayList<PaymentEntryDTO>();
 		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy, th from ProjectInventory o,  Account a, TransactionHistory th, ProgressiveBilling pb" +
-				" where o.project.projectId=? and a.accountStatus <> '" 
-				+ CommonConst.STATUS_CANCELLED + "'");
-		query.append(" and th.invoiceNo = pb.invoiceNo and pb.txnReversalId is Null ");
+				" where o.project.projectId=? and a.accountStatus <> '" + CommonConst.STATUS_CANCELLED + "'");
+		query.append(" and (th.invoiceNo = pb.invoiceNo or th.invoiceNo = pb.financierInvoiceNo) and pb.txnReversalId is NULL");
 		query.append(" and a.projectInventory.inventoryId = o.inventoryId ");
 		query.append(" and a.accountId = th.account.accountId " )
 		.append(" and th.transactionCode.transactionCode IN ("+TransactionCodeConst.ADD_PROGRESSIVE_BILLING +","+TransactionCodeConst.RENOTICE_BILLING+" ) ")
@@ -118,7 +117,7 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		if (!StringUtils.isEmpty(UnitNo)){
 			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
 		}
-		query.append(" order by  th.invoiceNo ");
+		query.append(" order by  th.transactionDate ASC ");
 		
 		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
 		if (list != null && list.size()>0) {

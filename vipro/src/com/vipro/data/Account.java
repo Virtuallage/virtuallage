@@ -124,8 +124,9 @@ public class Account implements java.io.Serializable {
 			Date datePurchased, BigDecimal purchasePrice,
 			BigDecimal discountedAmount, BigDecimal commissionAmount,
 			Date commissionPaidDate, BigDecimal netPrice, String purchaseType,
-			String panelBankId, BigDecimal loanAmount,
-			BigDecimal totalPaymentTodate, Long redemptionBankId,
+			String panelBankId, BigDecimal loanAmount, BigDecimal totalPaymentTodate,
+			BigDecimal billingPaymentTodate, BigDecimal accountBalance,
+			BigDecimal billingAmountTodate, Long redemptionBankId,
 			BigDecimal bankRedemptionSum, BigDecimal bankRedemptionTodate,
 			Date spaSignedDate, Date spaStampedDate, Long spaVerifiedBy,
 			Date spaVerifiedDate, Long spaSolicitorId, Date loSignedDate,
@@ -159,6 +160,9 @@ public class Account implements java.io.Serializable {
 		this.panelBankId = panelBankId;
 		this.loanAmount = loanAmount;
 		this.totalPaymentTodate = totalPaymentTodate;
+		this.billingPaymentTodate = billingPaymentTodate;
+		this.accountBalance = accountBalance;
+		this.billingAmountTodate = billingAmountTodate;
 		this.redemptionBankId = redemptionBankId;
 		this.bankRedemptionSum = bankRedemptionSum;
 		this.bankRedemptionTodate = bankRedemptionTodate;

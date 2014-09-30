@@ -129,8 +129,8 @@ Purchaser Details Inquiry
 				<h:outputText value="#{customerRegister.getCodeDesc('SS', c.accountStatus)}" />
 			</p:column>
 			
-			<p:column headerText="Action">
-					<p:commandButton action="#{customerRegister.toPurchaserProperty(c.customer)}" ajax="false" icon="ui-icon-pencil" title="Purchaser property Inquiry">
+			<p:column headerText="Select" style="text-align:center">
+					<p:commandButton action="#{customerRegister.toPurchaserProperty(c.customer)}" ajax="false" icon="ui-icon-check" title="Click to select.">
            		 	  <f:setPropertyActionListener value="#{c}" target="#{customerRegister.account}" />
            			</p:commandButton>
 			</p:column>

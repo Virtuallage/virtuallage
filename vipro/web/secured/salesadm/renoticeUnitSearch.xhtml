@@ -112,10 +112,10 @@
 								<p:outputLabel value="#{dto.statusDesc}" />
 							</p:column>
 
-							<p:column style="width:4%">
+							<p:column style="width:4%" headerText="Select">
 								<p:commandButton id="selectDTOBtn"
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-search" title="View"
+									icon="ui-icon-check" title="Click to select"
 									action="#{renoticeUnitSearchBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{renoticeUnitSearchBean.selectedDto}" />

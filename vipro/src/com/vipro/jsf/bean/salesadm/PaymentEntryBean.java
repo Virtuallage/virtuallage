@@ -118,26 +118,37 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 			String[] statuses = new String[]{ProgressiveBillingConst.PB_STATUS_BILL, ProgressiveBillingConst.PB_STATUS_PARTIAL_PAYMENT};
-			
+
+			BigDecimal dd = new BigDecimal(0);
+			int diff = 0;			
 			int res = paymentAmount.compareTo(getSelectedDto().getTransaction().getAmount());
-		
+			
 			if (res == 1) {
 				RequestContext.getCurrentInstance().execute("dlg4.show()");
 			} else { // if equal or less check for remain amount.
-				BigDecimal dd = pbService
-						.getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(
-								getSelectedDto().getAccount().getAccountId(),
-								statuses, getSelectedDto().getTransaction()
-										.getInvoiceNo());
-
-				int diff = paymentAmount.compareTo(dd);
-	
-				if (diff == -1) { // if less
-					RequestContext.getCurrentInstance().execute("dlg3.show()");
-				} else if (diff == 1) { // if greater
-					RequestContext.getCurrentInstance().execute("dlg4.show()");
-				} else { // if equal
-					generatePaymentForInvoice();
+				if (getSelectedDto().getTransaction().getFinancierInvoiceNo().isEmpty()) {
+					dd = pbService.getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(
+										getSelectedDto().getAccount().getAccountId(),
+										statuses, getSelectedDto().getTransaction()
+												.getInvoiceNo());
+				} else {  // search by financier invoice no
+					dd = pbService.getRemaingPaymentAmountByAccountIdStatusAndFInvoiceNo(
+									getSelectedDto().getAccount().getAccountId(),
+									statuses, getSelectedDto().getTransaction()
+											.getInvoiceNo());
+				}
+				if (dd==null) {
+					RequestContext.getCurrentInstance().execute("dlg5.show()");
+				} else {
+					diff = paymentAmount.compareTo(dd);
+					
+					if (diff == -1) { // if less
+						RequestContext.getCurrentInstance().execute("dlg3.show()");
+					} else if (diff == 1) { // if greater
+						RequestContext.getCurrentInstance().execute("dlg4.show()");
+					} else { // if equal
+						generatePaymentForInvoice();
+					}
 				}
 			}
 		}
@@ -179,35 +190,35 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 		this.selectedChkDate = new Date();
 		this.selectedPaymentMethod = "";
 		this.chequeNo="";
-		// this.paymentAmount = getSelectedDto().getTransaction().getAmount(); -- changed to get purchaser portion only
-		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
-			this.paymentAmount = getSelectedDto().getTransaction().getAmount().subtract(getSelectedDto().getTransaction().getFinancierPortion());
-		} else {
-			this.paymentAmount = getSelectedDto().getTransaction().getAmount();
-		}
+		this.paymentAmount = getSelectedDto().getTransaction().getAmount(); 
+//		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
+//			this.paymentAmount = getSelectedDto().getTransaction().getAmount().subtract(getSelectedDto().getTransaction().getFinancierPortion());
+//		} else {
+//			this.paymentAmount = getSelectedDto().getTransaction().getAmount();
+//		}
 		this.selectedInvoice = getSelectedDto().getTransaction().getInvoiceNo();
-		
+	
 		return null;
 	}
 	
-	public String onDtoSelection2(){
-		this.selectedBank = "";
-		this.selectedChkDate = new Date();
-		this.selectedPaymentMethod = "";
-		this.chequeNo="";
-		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
-			this.paymentAmount = getSelectedDto().getTransaction().getFinancierPortion();
-		} else {
-			this.paymentAmount = BigDecimal.ZERO;
-		}
-		if (getSelectedDto().getTransaction().getFinancierInvoiceNo() != null) {
-			this.selectedInvoice = getSelectedDto().getTransaction().getFinancierInvoiceNo();
-		} else {
-			this.selectedInvoice = getSelectedDto().getTransaction().getInvoiceNo();
-		}
-
-		return null;
-	}
+//	public String onDtoSelection2(){
+//		this.selectedBank = "";
+//		this.selectedChkDate = new Date();
+//		this.selectedPaymentMethod = "";
+//		this.chequeNo="";
+//		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
+//			this.paymentAmount = getSelectedDto().getTransaction().getFinancierPortion();
+//		} else {
+//			this.paymentAmount = BigDecimal.ZERO;
+//		}
+//		if (getSelectedDto().getTransaction().getFinancierInvoiceNo() != null) {
+//			this.selectedInvoice = getSelectedDto().getTransaction().getFinancierInvoiceNo();
+//		} else {
+//			this.selectedInvoice = getSelectedDto().getTransaction().getInvoiceNo();
+//		}
+//
+//		return null;
+//	}
 	
 	public Project getProject() {
 		return project;
