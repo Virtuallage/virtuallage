@@ -136,13 +136,13 @@ public class ManualEntryApprovalBean extends CommonBean implements Serializable{
 		} else {
 			acct.setAccountBalance(getSelectedDto().getAccount().getAccountBalanceNotNull().subtract(txnAmount)); 			
 		}
-		acct.setDateChanged(new Date());
-		acct.setChangedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());			
+//		acct.setDateChanged(new Date());
+//		acct.setChangedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());			
 		acctService.update(acct);		
 		
 		// update transaction history record
 		txn.setInvoiceNo(txnInvNo);
-		txn.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
+		txn.setTransactionCode(new TransactionCode(txnCode));
 		txn.setTransactionDescription(txnDesc);
 		txn.setAmount(txnAmount);
 		txn.setCodeType(txnDrCr);
@@ -150,6 +150,8 @@ public class ManualEntryApprovalBean extends CommonBean implements Serializable{
 		txn.setRefNo(txnRefNo);
 		txn.setTransactionDate(txnDate);
 		txn.setStatus(TransactionStatusConst.POSTED);
+		txn.setPostedBy(CommonBean.getCurrentUser().getUserProfile().getUserId());
+		txn.setPostingDate(new Date());		
 		txnHisService.update(txn);
 		
 		// update account balance

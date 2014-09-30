@@ -11,7 +11,7 @@
 <body>
 	<ui:composition template="/template/main_template.xhtml">
 		<ui:define name="content">
-			<p:panel id="panel" header="Progressive Billing Manual Reversal Search"
+			<p:panel id="panel" header="Manual Reversal Search for Progressive Billing Transactions"
 				style="width:95%">
 				<h:form id="pbUSearchForm">
 					<input type="hidden" name="selectedProjectId"
@@ -132,7 +132,7 @@
 							<p:column style="width:4%" headerText="Select">
 								<p:commandButton id="selectDTOBtn" 
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-person" title="Click to select"
+									icon="ui-icon-check" title="Click to select"
 									action="#{reversalEntryBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{reversalEntryBean.selectedDto}" />
@@ -147,7 +147,7 @@
 
 				<h:form id="dialogForm">
 					<p:outputPanel id="dialogPanel">
-						<p:dialog id="tDialog" header="Reversal Entry"
+						<p:dialog id="tDialog" header="Reversal Entry. Click POST to reverse this transacion."
 							widgetVar="dlg" modal="true" height="400" width="950"
 							showEffect="explode" hideEffect="explode">
 
@@ -232,16 +232,16 @@
 
 							<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
 								<h:panelGroup>	
-								<p:commandButton value="Back"
+								<p:commandButton value="Cancel"
 									actionListener="#{reversalEntryBean.onClose}"
 									ajax="true" partialSubmit="true" immediate="true"
 									update="growl,:pbUSearchForm:resultsPanel"
 									style="margin-top:20px;margin-right:5px"
 									oncomplete="handleSaveRequest(xhr, status, args)" />										
-									<p:commandButton value="Submit" disabled="false" 
+									<p:commandButton value="Post" disabled="false" 
 										actionListener="#{reversalEntryBean.onSubmitAction}"
 										ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
-										title="Submit"									
+										title="Post"									
 										 />
 								</h:panelGroup>
 							</h:panelGrid>

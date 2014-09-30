@@ -763,6 +763,8 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			if(salesProfile != null) {
 				account.setSalesPerson(salesProfile.getName());
 			}
+			account.setChangedBy(salesProfile.getUserId());
+			account.setDateChanged(new Date());
 			
 			accountService.update(account);
 			addInfoMessage("Information", "Sales Update Completed Successfully.");

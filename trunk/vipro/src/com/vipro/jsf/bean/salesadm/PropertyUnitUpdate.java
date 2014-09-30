@@ -64,6 +64,7 @@ import java.io.FileOutputStream;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat; 
+
 import javax.servlet.ServletContext;  
 import javax.servlet.http.HttpServletResponse;
 
@@ -648,12 +649,12 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				.lookup(ProjectService.class.getName());
 		projects = projectService.findAllProjects();
 		
+		listProject = CodeUtil.getProjectAsItems();
+		
 		return "updateSelectProject";
 	}
 
 	public String listAccounts(){
-		
-		listProject = CodeUtil.getProjectAsItems();
 		
 		ProjectInventoryService inventoryService = (ProjectInventoryService) SpringBeanUtil.lookup(ProjectInventoryService.class.getName());
 		UserProfileService userProfileService = (UserProfileService) SpringBeanUtil.lookup(UserProfileService.class.getName());
@@ -1095,15 +1096,22 @@ public class PropertyUnitUpdate extends CommonBean implements Serializable{
 				account.setBorrowerId2(borrower2.getCustomerId());
 			}
 			AccountService accountService=  (AccountService) SpringBeanUtil.lookup(AccountService.class.getName());
+
+			AuthUser user = getCurrentUser();
+			long userId = user.getUserProfile().getUserId();
+			account.setChangedBy(userId);
+			account.setDateChanged(new Date());
 			
 			accountService.update(account);
 			addInfoMessage("Sales Update", "Updated Successfully.");
-			
-			return listAccounts();
+				
 		} else {
-			addInfoMessage("Sales Update", "Failed to update.");
-			return "salesProgressUpdate";
+			addInfoMessage("Sales Update", "Failed to update, invalida account data. Please contact your system admin.");
+			
 		}
+
+		return listAccounts();
+		
 	}
 	
 	public void upload(FileUploadEvent event){

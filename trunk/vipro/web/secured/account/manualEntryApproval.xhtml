@@ -11,7 +11,7 @@
 <body>
 	<ui:composition template="/template/main_template.xhtml">
 		<ui:define name="content">
-			<p:panel id="panel" header="Manual Entry Approval"
+			<p:panel id="panel" header="Manual Entry Posting Approval"
 				style="width:95%">
 				<h:form id="pbUSearchForm">
 					<input type="hidden" name="selectedProjectId"
@@ -119,7 +119,7 @@
 							<p:column style="width:4%" headerText="Select">
 								<p:commandButton id="selectDTOBtn" 
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-check" title="Select this for Approval"
+									icon="ui-icon-check" title="Select this to view transaction details."
 									action="#{manualEntryApprovalBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{manualEntryApprovalBean.selectedDto}" />
@@ -131,7 +131,7 @@
 
 				<h:form id="dialogForm">
 					<p:outputPanel id="dialogPanel">
-						<p:dialog id="tDialog" header="Transaction Aproval"
+						<p:dialog id="tDialog" header="Transaction Aproval. Click Approve to Confirm Posting."
 							widgetVar="dlg" modal="true" height="400" width="1100"
 							showEffect="explode" hideEffect="explode">
 
@@ -200,7 +200,7 @@
 
 							<h:panelGrid id="displaybtns" columns="1" cellpadding="4" width="100%" style="text-align:center;margin-top:20px">
 								<h:panelGroup>	
-									<p:commandButton value="Back"
+									<p:commandButton value="Cancel"
 										actionListener="#{manualEntryApprovalBean.onClose}"
 										ajax="true" partialSubmit="true" immediate="true"
 										update="growl,:pbUSearchForm:resultsPanel"

@@ -41,6 +41,8 @@ public interface ProgressiveBillingService {
 			BigDecimal financierStageAmount, BigDecimal financierPortion, String firstStageSelected);
 	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo, Date selectedChkDate, String selectedInvoice);
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndFInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
+
 	public boolean generateReversalForBilling(PaymentEntryDTO selectDto,BigDecimal txnAmount, String selectedInvoice);
 	public boolean processTransactionUpdate(TransactionEntryDTO selectDto,BigDecimal txnAmount, String selectedInvoice);
 	

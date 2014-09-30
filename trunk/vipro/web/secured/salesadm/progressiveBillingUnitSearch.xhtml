@@ -112,10 +112,10 @@
 								<p:outputLabel value="#{dto.statusDesc}" />
 							</p:column>
 
-							<p:column style="width:4%">
+							<p:column style="width:4%" headerText="Select">
 								<p:commandButton id="selectDTOBtn"
 									update=":dialogForm:dialogPanel" oncomplete="dlg.show()"
-									icon="ui-icon-search" title="View"
+									icon="ui-icon-check" title="Click to select."
 									action="#{progressiveBillingUnitSearchBean.onDtoSelection}">
 									<f:setPropertyActionListener value="#{dto}"
 										target="#{progressiveBillingUnitSearchBean.selectedDto}" />
@@ -194,7 +194,7 @@
 								</h:inputText>
 															
 								<p:outputLabel value="Billed Todate" />
-								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.accountBalance.add(progressiveBillingUnitSearchBean.selectedDto.account.totalPaymentTodate)}"
+								<h:inputText value="#{progressiveBillingUnitSearchBean.selectedDto.account.billingAmountTodate}"
 									disabled="true" style="text-align:right">
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:inputText>
