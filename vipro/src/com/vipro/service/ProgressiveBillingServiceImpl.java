@@ -703,7 +703,7 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 				tx.setRefNo(refNo);
 				tx.setAccount(a);
 				tx.setTransactionDate(new Date());
-				if (financierPortion.compareTo(BigDecimal.ZERO) > 0) { //if bill to financier
+				if (financierPortion.compareTo(BigDecimal.ZERO) >= 0) { //if bill to financier
 					tx.setFinancierPortion(sumDTO.getProgressiveBilling().getAmountBilled());
 					tx.setFinancierInvoiceNo(dto.getInvoiceNo());
 				} else {
