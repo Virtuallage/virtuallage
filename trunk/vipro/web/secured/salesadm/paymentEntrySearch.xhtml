@@ -99,14 +99,16 @@
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:outputText>
 							</p:column>
+<!--
 							<p:column headerText="Paid Todate"
-								sortBy="#{dto.account.totalPaymentTodate}"
+								sortBy="#{dto.progressiveBilling.partialPaidAmount}"
 								style="text-align:right">
-								<h:outputText value="#{dto.account.totalPaymentTodate}"
+								<h:outputText value="#{dto.progressiveBilling.partialPaidAmount}"
 									style="text-align:right">
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:outputText>
 							</p:column>
+  
 							<p:column headerText="Discount"
 								sortBy="#{dto.account.discountedAmount}"
 								style="text-align:right">
@@ -123,6 +125,7 @@
 									<f:convertNumber pattern="#,###,##0.00" />
 								</h:outputText>
 							</p:column>
+-->
 							<p:column headerText="Billed Amt"
 								sortBy="#{dto.transaction.amount}"
 								style="text-align:right">
@@ -176,7 +179,7 @@
 								<p:outputLabel value="Date" />
 								<p:calendar value="#{paymentEntryBean.toDay}" id="popupButtonCal22" showOn="button" 
 				            		pattern="#{adviseUpdateBean.dateFormat}"
-				            	 style="width:50%" 	disabled="true"  />							
+				            	 style="width:50%" 	disabled="false"  />							
 
 								<p:outputLabel value="Customer Name" />
 								<p:inputText
@@ -209,8 +212,7 @@
 								<p:outputLabel value="Cheque Date" />
 								<p:calendar value="#{paymentEntryBean.selectedChkDate}" id="popupButtonCal2" showOn="button" 
 				            		pattern="#{adviseUpdateBean.dateFormat}"
-				            	 style="width:50%" 	disabled="false"  />	
-											
+				            	 style="width:50%" 	disabled="false"  />											
 									
 								<p:outputLabel id="bnkTxt" value="Bank" />
 								<p:selectOneMenu id="bankList"

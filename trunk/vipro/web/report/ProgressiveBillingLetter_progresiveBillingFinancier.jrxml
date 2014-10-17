@@ -16,11 +16,12 @@
      progressive_billing.`stage_description` AS progressive_billing_stage_description,
      progressive_billing.`percentage` AS progressive_billing_percentage,
      progressive_billing.`amount_billed` AS progressive_billing_amount_billed,
-     progressive_billing.`financier_portion` AS FinancierPortion
+     progressive_billing.`financier_portion` AS FinancierPortion,
+     progressive_billing.`financier_invoice_no` AS FinancierInvoiceNo
 FROM
      `progressive_billing` progressive_billing
 WHERE
-    progressive_billing.`invoice_no` like $P{invoice_no}
+    progressive_billing.`financier_invoice_no` like $P{invoice_no}
 and progressive_billing.`account_id`= $P{account_id}]]>
 	</queryString>
 	<field name="progressive_billing_stage_no" class="java.lang.String"/>
@@ -28,6 +29,7 @@ and progressive_billing.`account_id`= $P{account_id}]]>
 	<field name="progressive_billing_percentage" class="java.math.BigDecimal"/>
 	<field name="progressive_billing_amount_billed" class="java.math.BigDecimal"/>
 	<field name="FinancierPortion" class="java.math.BigDecimal"/>
+	<field name="FinancierInvoiceNo" class="java.lang.String"/>
 	<variable name="Total_Amount" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{FinancierPortion}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{FinancierPortion}]]></initialValueExpression>
@@ -91,7 +93,7 @@ and progressive_billing.`account_id`= $P{account_id}]]>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FinancierPortion} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FinancierPortion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -102,7 +104,7 @@ and progressive_billing.`account_id`= $P{account_id}]]>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{Total_Amount} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Total_Amount}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="ec887d78-6c1a-446a-a66c-4892b1b042fa" positionType="Float" x="424" y="24" width="110" height="1"/>

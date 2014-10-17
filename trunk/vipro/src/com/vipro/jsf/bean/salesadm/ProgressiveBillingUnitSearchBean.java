@@ -371,6 +371,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		 boolean isTrue = false;
 		 boolean isCleared = true;
 		 Integer selectedStageCount = 0;
+		 Integer multiStagesSplitCount = 0;
 		 setSelectedStageDtoList(new ArrayList<BillingModelStageDTO>());
 		 this.ttlAmount = "";
 		 splitStageSeqNo = 0;
@@ -444,14 +445,11 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 			 purchaserPortion = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
 		 }
 
+		 // Get the remaining amount that purchaser need to pay
 		 if (getSelectedDto().getAccount().getBillingAmountTodate() == null) {
 			 tempPurchaserPortion = purchaserPortion;
-		 } else {
-//			 if (getSelectedDto().getAccount().getBillingPaymentTodate() == null) {
+		 } else {  
 			 tempPurchaserPortion = purchaserPortion.subtract(getSelectedDto().getAccount().getBillingAmountTodateNotNull());
-//			 } else {
-//				 tempPurchaserPortion = purchaserPortion.subtract((getSelectedDto().getAccount().getBillingAmountTodate().add(getSelectedDto().getAccount().getBillingPaymentTodate())));				 
-//			 }
 		 }
 		 
 		 if (isCleared) {
@@ -464,36 +462,40 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 					 selectedStageDtoList.add(dto);
 					 
 					 currentStageAmount = (getSelectedDto().getAccount().getPurchasePrice().multiply(dto.getBillingModel().getBillingPercentage()).divide(this.percent));
+					 // check if purchaser still got balance to pay and the amount for each stage.
 					 if (tempPurchaserPortion.compareTo(BigDecimal.ZERO) > 0) {
 						 if (tempPurchaserPortion.compareTo(currentStageAmount) >= 0) {
 							 tempPurchaserPortion = tempPurchaserPortion.subtract(currentStageAmount);
 							 amountTtlPurchaser = amountTtlPurchaser.add(currentStageAmount);
-						 } else {
-							 if (tempPurchaserPortion.equals(BigDecimal.ZERO)) {
-								 splitStageSeqNo = 0;
-								 purchaserStageAmount = new BigDecimal(0);
-								 financierStageAmount = new BigDecimal(0);
-							 } else {
-								 if (splitStageSeqNo == 0) {
-									 splitStageSeqNo = dto.getBillingModel().getBillingSeq();									 
-								 }
-								 financierStageAmount = currentStageAmount.subtract(tempPurchaserPortion);
-								 purchaserStageAmount = tempPurchaserPortion;
-								 amountTtlPurchaser = amountTtlPurchaser.add(tempPurchaserPortion);
+						 } else { // this is split billing condition 
+							 amountTtlPurchaser = amountTtlPurchaser.add(tempPurchaserPortion);
+							 purchaserStageAmount = tempPurchaserPortion; // set Purchaser Split Stage Portion only
+							 financierStageAmount = currentStageAmount.subtract(tempPurchaserPortion); // set Financier Split Stage Portion Only
+							 if (splitStageSeqNo == 0) {
+								 splitStageSeqNo = dto.getBillingModel().getBillingSeq();									 
+							 }
+							 tempPurchaserPortion = BigDecimal.ZERO;
+						 }
+						 multiStagesSplitCount++; // to denoted there is amount bill to purchaser on this billing
+					 } else {
+						 if (multiStagesSplitCount > 0) {
+							 if (splitStageSeqNo == 0) {
+								 splitStageSeqNo = dto.getBillingModel().getBillingSeq();									 
 							 }
 						 }
 					 }
 					 lastStageSelected = dto.getBillingModel().getStage();
 				 }
 			 }
-			 
-			 if (splitStageSeqNo > 0) {
-				 if (selectedStageCount > 1) {
-					 CommonBean.addInfoMessage("WARNING!","For Split Billing, please select and bill 1 Stage at 1 time.");
-					 isTrue = false;
-				 }
-			 }
-			 amountTtlFinancier = amountTtl.subtract(amountTtlPurchaser);
+			 amountTtlFinancier = amountTtl.subtract(amountTtlPurchaser);  // user for amount in word for Financier Portion
+
+// Changed to support split billing for multi stages 			 
+//			 if (splitStageSeqNo > 0) {
+//				 if (selectedStageCount > 1) {
+//					 CommonBean.addInfoMessage("WARNING!","For Split Billing, please select and bill 1 Stage at 1 time.");
+//					 isTrue = false;
+//				 }
+//			 }
 			 
 			 if(!selectedStageDtoList.isEmpty() && isTrue ){
 				 sumDTO.getBillingModel().setBillingPercentage(percentTtl);
@@ -501,15 +503,8 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 				 sumDTO.getBillingModel().setDescription("Total");
 				 selectedStageDtoList.add(sumDTO);
 				 this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtl);
-			
-//				 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			
-//				 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
-//				 this.setInvoiceNo(pbService.getNextSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
 			 }		
-			 
-			 
-			 
+			 	 
 			 if(!isTrue){
 				 CommonBean.addInfoMessage("WARNING!","Invalid stage selected for billing. Please select other stage to Bill.");
 			 }else{
@@ -521,8 +516,6 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 	public void onCancelBillConfirmation(){
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 boolean success = true;
-//		 ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());			
-//		 this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, false));
 		 getSelectedStageDtoList().clear();
 		 setInvoiceNo(new Long(1l));
 		 CommonBean.addInfoMessage("Billing Stages Window Closed.","");
@@ -534,33 +527,21 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 		boolean success = true;
 		ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
 
-//		BigDecimal billedTodate = new BigDecimal(0.00);
-//		if (getSelectedDto().getAccount().getBillingAmountTodate() != null) {
-//			if (getSelectedDto().getAccount().getBillingPaymentTodate() == null) {
-//				billedTodate = getSelectedDto().getAccount().getAccountBalance();
-//			} else {
-//				billedTodate = getSelectedDto().getAccount().getAccountBalance().add(getSelectedDto().getAccount().getTotalPaymentTodate());
-//			}
-//		}
 		BigDecimal billedTodate = getSelectedDto().getAccount().getBillingAmountTodateNotNull();
-		BigDecimal financierPortion = billedTodate.subtract(purchaserPortion);
+		BigDecimal financierPortion = billedTodate.subtract(purchaserPortion); // this is for checking if any billing to financier or not. +ve yes, -ve no.
 
-//		this.setInvoiceNo(pbService.getAndUpdteSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
-		
-//		BigDecimal purchaserAmount = new BigDecimal(0.00);
-//		if (getSelectedDto().getAccount().getLoanAmount() == null) {		
-//			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice();			
-//		} else {
-//			purchaserAmount = getSelectedDto().getAccount().getPurchasePrice().subtract(getSelectedDto().getAccount().getLoanAmount());
-//		}
-
-		BillingReturnParaDTO dto = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
-		splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
+		BillingReturnParaDTO dto = new BillingReturnParaDTO();
+		if (splitStageSeqNo > 0) {  // if Split Billing
+			dto = pbService.generateProgressiveBillForSplitStages(selectedStageDtoList, getSelectedDto(), 
+					splitStageSeqNo, financierStageAmount, purchaserStageAmount);			
+		} else { 
+			dto = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
+					splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);			
+		}
 		
 //		boolean isSucessfull = pbService.generateProgressiveBillForSelectedStages(selectedStageDtoList, getInvoiceNo() ,getInvoiceNoFormated(), getSelectedDto(), 
 //				splitStageSeqNo, financierStageAmount, purchaserStageAmount, financierPortion);
 		
-//		if(isSucessfull){
 		if(dto.getIsSucessfull()){			
 			if (splitStageSeqNo == 0) {
 				//BigDecimal amountTotal = selectedStageDtoList.get(selectedStageDtoList.size()).getProgressiveBilling().getAmountBilled();
@@ -580,7 +561,7 @@ public class ProgressiveBillingUnitSearchBean extends CommonBean implements Seri
 //				this.setInvoiceNo2(pbService.getCurrentSeqNO(getSelectedDto().getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));
 				lastStageSelected = lastStageSelected.trim()+"_"+dto.getInvoiceNo2();
 				this.ttlAmount = NumberConverter.convertDigitTextOnly(amountTtlFinancier);
-				pbService.printProgressiveLetterFinancierSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);				
+				pbService.printProgressiveLetterFinancierSplit(this.ttlAmount ,getSelectedDto().getProject().getProjectId(), dto.getInvoiceNo2(), getSelectedDto().getAccount().getAccountId().toString(), lastStageSelected);				
 			}
 			CommonBean.addInfoMessage("SUCCESSFUL", "Progressive Billing Processed Successfully! The Progressive Billing letter is now ready for printing, click View to download. Invoice No is "+dto.getInvoiceNo());
 		} else {

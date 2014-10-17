@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Billing Bank Information Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Billing Bank information Details" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+<h:form>  
+	<h:panelGrid columns="4" style="width:100%;text-align:left;">
+		<p:outputLabel value="Project Name"/>
+		<h:inputText value="#{bankInfoUpdate.project.projectName}" style="width:250px" disabled="true"/>	
+		<p:outputLabel value="Billing To" for="billTo"/>
+		<h:panelGroup>
+			<p:inputText id="billTo" value="#{bankInfoUpdate.bankAccount.billTo}"  maxlength="1" autocomplete="off" equired="true"/>
+			&nbsp;
+			<p:outputLabel value="F = Financier"/>
+			&nbsp;		
+			<p:outputLabel value="P = Purchaser"/>
+		</h:panelGroup>
+		
+		<p:outputLabel value="Top Message" for="topText"/>
+		<p:inputText id="topText" value="#{bankInfoUpdate.bankAccount.topText}"  maxlength="120" autocomplete="off" required="true" style="width:300px"/>
+		<p:outputLabel value="Bottom Message" for="bottomText"/>
+		<p:inputText id="bottomText" value="#{bankInfoUpdate.bankAccount.bottomText}"  maxlength="120" autocomplete="off" required="true" style="width:300px"/>
+
+		<p:outputLabel value="Developer Name" for="developerText"/>
+		<p:inputText id="developerText" value="#{bankInfoUpdate.bankAccount.holderName}"  maxlength="60" autocomplete="off" required="true" style="width:300px"/>
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+
+		<p:outputLabel value="1st Bank Name" for="bank1NameText"/>
+		<p:inputText id="bank1NameText" value="#{bankInfoUpdate.bankAccount.bank1Name}"  maxlength="40" autocomplete="off" required="true" style="width:300px"/>
+		<p:outputLabel value="1st Bank Account#" for="bank1AccountNoText"/>
+		<p:inputText id="bank1AccountNoText" value="#{bankInfoUpdate.bankAccount.bank1AccountNo}"  maxlength="19" autocomplete="off" required="true" style="width:300px"/>
+
+		<p:outputLabel value="1st Bank Swift Code" />
+		<p:inputText value="#{bankInfoUpdate.bankAccount.bank1SwiftCode}"  maxlength="12" autocomplete="off" required="false" style="width:300px"/>
+		<p:outputLabel value="1st Bank address" />
+		<p:inputText value="#{bankInfoUpdate.bankAccount.bank1BranchAddress}"  maxlength="45" autocomplete="off" required="true" style="width:300px"/>
+
+	</h:panelGrid>
+	<br/>
+	<br/>
+		<p:commandButton value="Back" action="#{bankInfoUpdate.listBankInfo}" ajax="false" immediate="true" icon="ui-icon-arrowreturn-1-w"/>  &nbsp;&nbsp;
+		<p:commandButton value="Save" action="#{bankInfoUpdate.saveBankInfo}" ajax="false" icon="ui-icon-disk" /> &nbsp;&nbsp;&nbsp;&nbsp;
+</h:form> 
+
+</p:panel>
+
+
+</ui:define>
+
+</ui:composition>

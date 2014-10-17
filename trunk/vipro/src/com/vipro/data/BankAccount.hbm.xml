@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Manually by Bill on 8 Oct 2014 -->
+<hibernate-mapping>
+    <class name="com.vipro.data.BankAccount" table="bank_account" catalog="vipro">
+        <id name="bankAccountId" type="java.lang.Long">
+            <column name="bank_account_id" />
+            <generator class="identity" />
+        </id>
+        <property name="billTo" type="string">
+            <column name="bill_to" length="1" />
+        </property>
+        <many-to-one name="project" class="com.vipro.data.Project" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>        
+        <property name="topText" type="string">
+            <column name="top_text" length="120" />
+        </property>       
+        <property name="bottomText" type="string">
+            <column name="bottom_text" length="120" />
+        </property> 
+        <property name="holderName" type="string">
+            <column name="holder_name" length="60" />
+        </property>    
+        <property name="holderAddressId" type="java.lang.Long">
+            <column name="holder_address_id" />
+        </property>
+        <property name="bank1Name" type="string">
+            <column name="bank1_name" />
+        </property>        
+        <property name="bank1AccountNo" type="string">
+            <column name="bank1_account_no" />
+        </property>  
+         <property name="bank1SwiftCode" type="string">
+            <column name="bank1_swift_code" />
+        </property>         
+        <property name="bank1BranchAddress" type="string">
+            <column name="bank1_branch_address" />
+        </property>  
+         <property name="bank2Name" type="string">
+            <column name="bank2_name" />
+        </property>  
+         <property name="bank2AccountNo" type="string">
+            <column name="bank2_account_no" />
+        </property>  
+         <property name="bank2SwiftCode" type="string">
+            <column name="bank2_swift_code" />
+        </property>         
+        <property name="bank2BranchAddress" type="string">
+            <column name="bank2_branch_address" />
+        </property>        
+        <property name="changedBy" type="java.lang.Long">
+            <column name="changed_by" />
+        </property>
+        <property name="dateChanged" type="date">
+            <column name="date_changed" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>
+
+

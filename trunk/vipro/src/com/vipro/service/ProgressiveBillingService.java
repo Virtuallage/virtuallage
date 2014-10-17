@@ -34,12 +34,15 @@ public interface ProgressiveBillingService {
 	public Long getNextSeqNO(String projectCode, String seqType, boolean isIncrement);
 	public Long getCurrentSeqNO(String projectCode, String seqType, boolean isIncrement);	
 
+	public BillingReturnParaDTO generateProgressiveBillForSplitStages(List<BillingModelStageDTO> stageDtoList, ProgressiveBillingUnitSeachDTO selectedDto, 
+			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount);
 	public BillingReturnParaDTO generateProgressiveBillForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
 			Integer splitStageSeqNo, BigDecimal financierStageAmount, BigDecimal purchaserStageAmount, BigDecimal financierPortion);
 
 	public boolean generateRenoticesForSelectedStages(List<BillingModelStageDTO> stageDtoList, Long refNo, String invoiceNo, ProgressiveBillingUnitSeachDTO selectedDto, 
 			BigDecimal financierStageAmount, BigDecimal financierPortion, String firstStageSelected);
-	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, String chqNo, Date selectedChkDate, String selectedInvoice);
+	public boolean generatePaymentForInvoice(PaymentEntryDTO selectDto,BigDecimal paymentAmount, String paymentMethod, String bank, 
+			String chqNo, Date selectedChkDate, String selectedInvoice, Date toDay);
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
 	public BigDecimal  getRemaingPaymentAmountByAccountIdStatusAndFInvoiceNo(Long accountId, String[] statuses, String invoiceNo);
 

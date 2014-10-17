@@ -157,7 +157,8 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 			RequestContext context = RequestContext.getCurrentInstance();
 			boolean success = false;
 			ProgressiveBillingService pbService = (ProgressiveBillingService)SpringBeanUtil.lookup(ProgressiveBillingService.class.getName());
-			success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, chequeNo,selectedChkDate, selectedInvoice);
+			success = pbService.generatePaymentForInvoice(getSelectedDto(), paymentAmount, selectedPaymentMethod, selectedBank, 
+					chequeNo,selectedChkDate, selectedInvoice, toDay);
 			 
 			if(success){
 				Long txRevsalId= selectedDto.getTransaction().getTxnReversalId();
@@ -190,6 +191,7 @@ public class PaymentEntryBean extends CommonBean implements Serializable{
 		this.selectedChkDate = new Date();
 		this.selectedPaymentMethod = "";
 		this.chequeNo="";
+		this.toDay = new Date();
 		this.paymentAmount = getSelectedDto().getTransaction().getAmount(); 
 //		if (getSelectedDto().getTransaction().getFinancierPortion() != null) {
 //			this.paymentAmount = getSelectedDto().getTransaction().getAmount().subtract(getSelectedDto().getTransaction().getFinancierPortion());
