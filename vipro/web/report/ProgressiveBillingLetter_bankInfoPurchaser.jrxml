@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingLetter_progresiveBilling" pageWidth="550" pageHeight="520" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e1b3bbcc-07d9-4fdc-8cd8-0cfcde156868">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="project_id" class="java.lang.Long">
@@ -229,7 +229,7 @@ WHERE
 			</line>
 		</band>
 		<band height="13">
-			<printWhenExpression><![CDATA[((!$F{bank1SwiftCode}.isEmpty()) && (!$F{bank2SwiftCode}.isEmpty()))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[!$F{bank1SwiftCode}.isEmpty()]]></printWhenExpression>
 			<staticText>
 				<reportElement uuid="b53926c6-4dbe-43de-9033-67b2acb0b66e" positionType="Float" x="1" y="0" width="66" height="13">
 					<printWhenExpression><![CDATA[(!$F{bank1SwiftCode}.isEmpty())]]></printWhenExpression>

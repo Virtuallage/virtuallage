@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<ui:define name="title">
+Billing Bank Account Information Update
+</ui:define>
+
+<ui:define name="content">	
+
+<p:panel id="panel" header="Billing Bank Account Information Selection List" style="width:95%">  
+    
+<p:focus context="panel"/> 
+      
+	<h:form>  
+	<p:panelGrid style="width:100%" styleClass="no-borders" >
+		<p:row>
+			<p:column style="width:20%;text-align:left;">
+				<h:outputText value="Project Name :" />
+			</p:column>
+			<p:column style="width:30%;text-align:left;">
+					<p:selectOneMenu id="projectList" value="#{bankInfoUpdate.projectId}" 
+						 required="true" style="width:200px">  
+						<f:selectItems value="#{bankInfoUpdate.listProject}" />
+					</p:selectOneMenu>
+			</p:column>
+			<p:column style="width:40%;text-align:left;">
+				<p:commandButton value="Search" action="#{bankInfoUpdate.listBankInfo}" update="bankInfoTable" icon="ui-icon-search"/>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<br />
+	<p:dataTable var="c" value="#{bankInfoUpdate.bankAccounts}" paginator="true" rows="10"  paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15" id="bankInfoTable"> 
+
+	 	<p:column headerText="Billing Type" sortBy="#{c.billTo}">  
+	    	<h:outputText value="#{c.billTo}" />
+		</p:column>  
+		             
+        <p:column headerText="Bank Account Holder" sortBy="#{c.holderName}">  
+	 		<h:outputText value="#{c.holderName}" />
+	    </p:column> 
+	    
+	    <p:column headerText="Bank Name" sortBy="#{c.bank1Name}">  
+	 		<h:outputText value="#{c.bank1Name}" />
+	    </p:column> 
+	    
+	    <p:column headerText="Bank Account No" sortBy="#{c.bank1AccountNo}">  
+	 		<h:outputText value="#{c.bank1AccountNo}" />
+	    </p:column> 
+	    
+        <p:column headerText="Status" sortBy="#{bankInfoUpdate.getCodeDesc('SS', c.status)}">  
+        	<h:outputText value="#{bankInfoUpdate.getCodeDesc('SS', c.status)}">
+        	</h:outputText>
+        </p:column>
+        	        
+	  	<p:column headerText="Actions">
+			<p:commandButton action="#{bankInfoUpdate.selectBankInfo}" ajax="false" icon="ui-icon-pencil" title="Edit">
+	  			<f:setPropertyActionListener value="#{c}" target="#{bankInfoUpdate.bankAccount}" />  
+			</p:commandButton>  
+	    </p:column>	
+
+	</p:dataTable>
+	<br/>
+ 	<h:outputText value="*Billing Type: "/> 
+ 	<h:outputText value="  [P] = Bill to Purchaser" /> 
+ 	<h:outputText value="  [F] = Bill to Financier" /> 
+ 	<h:outputText value="" /> 
+    <br/>
+
+</h:form> 
+
+</p:panel>
+
+</ui:define>
+
+</ui:composition>
