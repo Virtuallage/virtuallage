@@ -542,7 +542,7 @@ AND t.financier_invoice_no Like $P{invoiceNo}
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Your faithfully,]]></text>
+				<text><![CDATA[Yours faithfully,]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="d96c50a2-6189-4f02-a616-d6e29cb50ec9" positionType="Float" x="0" y="36" width="534" height="13"/>
