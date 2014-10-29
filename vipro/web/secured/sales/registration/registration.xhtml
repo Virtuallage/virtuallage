@@ -31,9 +31,14 @@
    		<h:inputText value="#{salesRegister.getCodeDesc('PT', salesRegister.project.propertyType)}"  style="width:300px" disabled="true"/>
    		
    		<p:outputLabel value="Purchase Date"/>
-   		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="false">
-   			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
-   		</h:inputText>
+ 		<h:panelGroup>
+	   		<h:inputText value="#{salesRegister.account.datePurchased}" disabled="false">
+	   			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	   		</h:inputText>
+	   		&nbsp;&nbsp;
+	   		<p:outputLabel value="e.g. (DD/MM/YYYY)"/>	 
+   		</h:panelGroup>
+    		
    		<p:outputLabel value="Attended By"/>
    		<h:inputText value="#{salesRegister.attendedBy.name}" style="width:300px" disabled="true"/>
 

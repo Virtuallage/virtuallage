@@ -13,7 +13,7 @@
     		 ajax="false" action="#{myDesk.listCases}" icon="ui-icon-script"/>
      	</p:submenu>
      	
-    	<sec:authorize ifAnyGranted="ROLE_SETUP">
+    	<sec:authorize ifAnyGranted="ROLE_ADMIN">
  	    	<p:submenu label="Parameters"> 	
     			<p:menuitem value="User Profile Maintenance" url="/secured/setup/userGroup/listUserGroup.xhtml" action="#{userGroup.RefreshUserGroup}" />  
     			<p:menuitem value="Common Code" url="/secured/setup/commonCode/listCommonCode.xhtml" />
@@ -23,6 +23,7 @@
  	    	<p:submenu label="Setup">
     			<p:menuitem value="Project Setup" url="/secured/sales/setup/project.xhtml" action="#{projectSetup.listProject}" />
     			<p:menuitem value="Property Unit Update" url="/secured/setup/propertyUnit/unitList.xhtml" />
+    			<p:menuitem value="Re-Gen Billing Letter" url="/secured/setup/billingLetterRegeneration.xhtml" />
 	    	</p:submenu> 
     	</sec:authorize>
     	    	

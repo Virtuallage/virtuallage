@@ -84,6 +84,13 @@ Sales Update
    				<f:convertNumber pattern="#,###,##0.00"  />
    			</h:inputText>	
 
+   			<p:outputLabel value="Purchase Date"/>
+ 			<h:panelGroup>
+	   			<p:calendar id="purchaseDate" value="#{salesUpdate.account.datePurchased}" pattern="dd/MM/yyyy" showOn="button"/> 
+			</h:panelGroup>
+			<p:outputLabel value=""/>
+			<p:outputLabel value=""/>			
+
    			<p:outputLabel value="SPA Signed Date"/>
  			<h:panelGroup>
 	   			<p:calendar id="spaSignedDate" value="#{salesUpdate.account.spaSignedDate}" pattern="dd/MM/yyyy" showOn="button"/> 

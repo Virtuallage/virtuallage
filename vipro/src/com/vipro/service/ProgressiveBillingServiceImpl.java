@@ -624,21 +624,6 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 					pb.setDueDate(dueDate); 
 				}
 				
-//				if (splitStageSeqNo > 0) {  // if the selected stage is split billing
-//					if (stageDto.getBillingModel().getBillingSeq() == splitStageSeqNo) {  // if same stage as split stage
-//						this.setpInvoiceNo(pbService.getAndUpdteSeqNO(selectedDto.getProject().getProjectCode(), ProgressiveBillingConst.PB_INVOICE_SEQ_TYPE, true));			
-//						dto.setInvoiceNo2(getPInvoiceNoFormated());	
-//						pb.setFinancierInvoiceNo(dto.getInvoiceNo2());
-//						pb.setFinancierPortion(financierStageAmount);
-//						txFinancierPortion = txFinancierPortion.add(financierStageAmount);
-//					} else {  // set the financier amount and invoice no
-//						if (stageDto.getBillingModel().getBillingSeq() > splitStageSeqNo) {
-//							txFinancierPortion = txFinancierPortion.add(pb.getAmountBilled());
-//							pb.setFinancierPortion(pb.getAmountBilled());
-//							pb.setFinancierInvoiceNo(dto.getInvoiceNo2());
-//						}
-//					}					
-//				} else {
 				if (tempFinancierPortion.compareTo(BigDecimal.ZERO) >= 0) { // if bill to Financier
 					pb.setFinancierPortion(pb.getAmountBilled());
 					pb.setFinancierInvoiceNo(dto.getInvoiceNo());
@@ -647,51 +632,11 @@ public class ProgressiveBillingServiceImpl implements ProgressiveBillingService 
 					pb.setFinancierPortion(BigDecimal.ZERO);
 					pb.setFinancierInvoiceNo("");
 				}
-//				}
 				
 				progressiveBillingDao.insert(pb);			
 			}// end for
-						
-			// for split billing, create 2 transaction history records
-//			if (splitStageSeqNo > 0) { 
-//				// create first transaction history for purchaser
-//				TransactionHistory tx = new TransactionHistory();
-//				tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
-//				tx.setTransactionDescription("PROGRESSIVE BILLING");
-//				tx.setAmount(sumDTO.getProgressiveBilling().getAmountBilled().subtract(financierStageAmount));
-//				tx.setCodeType(TransactionCodeConst.DEBIT);
-//				tx.setInvoiceNo(dto.getInvoiceNo());
-//		        tx.setUserId(currentUserId);
-//				tx.setStatus(TransactionStatusConst.POSTED);
-//				tx.setRefNo(refNo);
-//				tx.setAccount(a);
-//				tx.setTransactionDate(new Date());
-//				tx.setFinancierPortion(BigDecimal.ZERO);
-//				tx.setFinancierInvoiceNo("");
-//				tx.setPostedBy(currentUserId);
-//				tx.setPostingDate(new Date());
-//				transactionHistoryDao.insert(tx);
-				
-				// create second transaction history for financier
-//				TransactionHistory tx2 = new TransactionHistory();
-//				tx2.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
-//				tx2.setTransactionDescription("PROGRESSIVE BILLING");
-//				tx2.setAmount(financierStageAmount);
-//				tx2.setCodeType(TransactionCodeConst.DEBIT);
-//				tx2.setInvoiceNo(dto.getInvoiceNo2());
-//				tx2.setUserId(currentUserId);
-//				tx2.setStatus(TransactionStatusConst.POSTED);
-//				tx2.setRefNo(refNo);
-//				tx2.setAccount(a);
-//				tx2.setTransactionDate(new Date());
-//				tx2.setFinancierPortion(financierStageAmount);				
-//				tx2.setFinancierInvoiceNo(dto.getInvoiceNo2());
-//				tx2.setPostedBy(currentUserId);
-//				tx2.setPostingDate(new Date());
-//				transactionHistoryDao.insert(tx2);
-				
-//			} else { // for single billing
-				// create new PB transaction history record
+
+			// create new PB transaction history record (single record only)
 			TransactionHistory tx = new TransactionHistory();
 			tx.setTransactionCode(new TransactionCode(TransactionCodeConst.ADD_PROGRESSIVE_BILLING));
 			tx.setTransactionDescription("PROGRESSIVE BILLING");
