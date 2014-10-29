@@ -61,7 +61,7 @@ Sales Update
 	    	</h:outputText>
 		</p:column>  
 	        
-	 	<p:column headerText="Puchased Date" sortBy="#{c.datePurchased}" style="text-align:center">  
+	 	<p:column headerText="Purchase Date" sortBy="#{c.datePurchased}" style="text-align:center">  
 	  		<h:outputText value="#{c.datePurchased}" style="color:#{salesUpdate.GetFontColorByAttendedBy(c.attendedBy)}">
 	  			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
 	  		</h:outputText>

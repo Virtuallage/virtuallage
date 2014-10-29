@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -805,6 +806,18 @@ public class SalesRegister extends CommonBean implements Serializable {
 					break;
 				}
 			}
+	
+			Date tempDate = account.getDatePurchased();
+			Calendar tempCal = Calendar.getInstance();
+			tempCal.setTime(tempDate);
+			int tempYear = tempCal.get(Calendar.YEAR);
+			
+			if (tempYear < 2000) {
+				tempYear = tempYear + 2000;
+				tempCal.set(Calendar.YEAR, tempYear);
+				account.setDatePurchased(tempCal.getTime());
+			}
+			
 			account.setProjectInventory(inventory);
 			account.setAttendedBy(attendedBy.getUserId());
 			account.setAccountStatus(AccountStatusConst.STATUS_NEW);

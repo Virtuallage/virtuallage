@@ -431,7 +431,7 @@ public class ReportServiceImpl extends DownloadManager implements ReportService,
 		}
 		byte[] reportData = generateReportData(reportPath,params,reportDTO.getReportFormatId());
 		if(reportData != null){
-			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+extension);
+			File file = new File(path+"PROGRESSIVE_BILLING_"+reportDTO.getProjectId()+"_"+reportDTO.getProjectName().trim()+"_"+InvoiceNo.trim()+extension);
 			FileOutputStream fileOuputStream = new FileOutputStream(file);
 			fileOuputStream.write(reportData);
 		    fileOuputStream.close();		

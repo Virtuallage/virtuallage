@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:define name="title">
+Billing Letter Regeneration
+</ui:define>
+
+<ui:define name="content">	
+	
+	<p:panel id="panel" header="Billing Letter Regeneration" style="width:80%">  
+    
+      <p:focus context="panel"/> 
+        
+	<h:form id="regenerationForm" >
+	
+	<h:panelGrid columns="2" style="width:90%;border:0px;"> 
+		
+		<p:outputLabel value="Amount In Words" for="amount"/>
+		<p:inputText id="amount" required="true" value="#{billingLetterRegeneration.xAmountInWords}" autocomplete="off"/>
+		
+		<p:outputLabel value="Project ID" for="projectId"/>
+		<p:inputText id="projectId" required="true" value="#{billingLetterRegeneration.xProjectId}" autocomplete="off"/>
+		
+		<p:outputLabel value="Invoice No" for="invoiceNo"/>
+		<p:inputText id="invoiceNo" required="true" value="#{billingLetterRegeneration.xInvoiceNo}" autocomplete="off"/>
+
+		<p:outputLabel value="Account Id" for="accountId"/>
+		<p:inputText id="accountId" required="true" value="#{billingLetterRegeneration.xAccountId}" autocomplete="off"/>
+
+		<p:outputLabel value="Last Selected Stage" for="stage"/>
+		<p:inputText id="stage" required="true" value="#{billingLetterRegeneration.xLastSelectedStage}" autocomplete="off"/>		
+
+		<p:outputLabel value=""/>
+		<p:outputLabel value=""/>
+			
+	</h:panelGrid>
+	
+		<p:commandButton id="cashButton" action="#{billingLetterRegeneration.cashLetter}" value="Cash Letter" ajax="false"/>
+		<p:commandButton id="purchaserButton" action="#{billingLetterRegeneration.purchaserLetter}" value="Purchaser Letter" ajax="false"/>
+		<p:commandButton id="financierButton" action="#{billingLetterRegeneration.financierLetter}" value="Financier Letter" ajax="false"/>
+		<p:commandButton id="purchaserSplitButton" action="#{billingLetterRegeneration.purchaserSplitLetter}" value="Purchaser Split Letter" ajax="false"/>
+		<p:commandButton id="financierSplitButton" action="#{billingLetterRegeneration.financierSplitLetter}" value="Financier Split Letter" ajax="false"/>
+		<p:commandButton id="clearButton" action="#{billingLetterRegeneration.clearScreen}" value="To Clear The Screen" ajax="false"/>
+	
+	</h:form>
+	
+	</p:panel>
+</ui:define>
+</ui:composition>

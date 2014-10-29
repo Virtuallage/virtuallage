@@ -2,6 +2,7 @@ package com.vipro.jsf.bean.sales;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.util.Date;
@@ -60,6 +61,7 @@ import java.io.FileOutputStream;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat; 
+
 import javax.servlet.ServletContext;  
 import javax.servlet.http.HttpServletResponse;
 
@@ -747,7 +749,7 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			addErrorMessage("Invalid SPA Solicitor",
 					"Please select SPA Solicitor from the dropdown list.");
 			return "salesProgressUpdate";
-		}
+		} 
 		
 		if (account.getLaSignedDate() != null && account.getLaSolicitorId() == 0) {
 			addErrorMessage("Invalid LA Solicitor",
@@ -763,6 +765,55 @@ public class SalesUpdate extends CommonBean implements Serializable{
 			if(salesProfile != null) {
 				account.setSalesPerson(salesProfile.getName());
 			}
+			
+			if (account.getSpaSignedDate() != null) {
+				Date tempDate = account.getSpaSignedDate();
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTime(tempDate);
+				int tempYear = tempCal.get(Calendar.YEAR);		
+				if (tempYear < 2000) {
+					tempYear = tempYear + 2000;
+					tempCal.set(Calendar.YEAR, tempYear);
+					account.setSpaSignedDate(tempCal.getTime());
+				}				
+			}
+			
+			if (account.getLaSignedDate() != null) {	
+				Date tempDate = account.getLaSignedDate();
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTime(tempDate);
+				int tempYear = tempCal.get(Calendar.YEAR);			
+				if (tempYear < 2000) {
+					tempYear = tempYear + 2000;
+					tempCal.set(Calendar.YEAR, tempYear);
+					account.setLaSignedDate(tempCal.getTime());
+				}
+			}
+
+			if (account.getLoSignedDate() != null) {
+				Date tempDate = account.getLoSignedDate();
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTime(tempDate);
+				int tempYear = tempCal.get(Calendar.YEAR);
+				if (tempYear < 2000) {
+					tempYear = tempYear + 2000;
+					tempCal.set(Calendar.YEAR, tempYear);
+					account.setLoSignedDate(tempCal.getTime());
+				}
+			}
+			
+			if (account.getDatePurchased() != null) {
+				Date tempDate = account.getDatePurchased();
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTime(tempDate);
+				int tempYear = tempCal.get(Calendar.YEAR);			
+				if (tempYear < 2000) {
+					tempYear = tempYear + 2000;
+					tempCal.set(Calendar.YEAR, tempYear);
+					account.setDatePurchased(tempCal.getTime());
+				}
+			}
+			
 			account.setChangedBy(salesProfile.getUserId());
 			account.setDateChanged(new Date());
 			
