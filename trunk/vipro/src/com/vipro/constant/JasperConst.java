@@ -61,4 +61,10 @@ public class JasperConst {
 	
 	public static final String PotentialPurchaserStatistics = TOMCAT_HOME + "/vipro/report/PotentialPurchaserStatistics.jrxml";
 	
+	public static final String PostedTransactionExtractionAll = TOMCAT_HOME + "/vipro/report/PostedTransactionExtractionAll.jrxml";
+	
+	public static final String PostedTransactionExtractionDate = TOMCAT_HOME + "/vipro/report/PostedTransactionExtractionDate.jrxml";
+	
+	public static final String PROGRESSIVE_BILLING_REPORT_BY_INVOICE_NO = TOMCAT_HOME + "/vipro/report/ProgressiveBillingListingByInvoiceNo.jrxml";
+	
 }
