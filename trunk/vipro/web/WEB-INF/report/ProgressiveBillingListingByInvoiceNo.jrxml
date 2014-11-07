@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressiveBillingListingByInvoiceNo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3212c1c5-01b1-4b13-bb77-e25fbcb8b6b9">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="projectId" class="java.lang.String">
+	<parameter name="projectId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-ac.account_status		AS AccountStatus,
-th.invoice_no 		AS InvoiceNo,
-th.transaction_code 		AS TransactionCode,
-th.transaction_description 	AS DescriptionT,
-th.amount			AS Amount,
-th.financier_portion		AS FinancierPortion,
-th.status			AS Status,
-pj.project_name 		AS ProjectName
-FROM
-project pj, project_inventory pi, account ac, transaction_history th
+a.invoice_no 		AS InvoiceNo,
+a.transaction_code 		AS TransactionCode,
+a.transaction_description 	AS DescriptionT,
+a.amount			AS Amount,
+a.financier_portion		AS FinancierPortion,
+e.description		AS Status
+FROM transaction_history a
+LEFT JOIN account b 		on a.account_id = b.account_id
+LEFT JOIN project_inventory c 	on b.inventory_id = c.inventory_id
+LEFT JOIN project d 		on c.project_id = d.project_id
+LEFT JOIN code_det e 		on a.status = e.code
 WHERE
-pj.project_id = $P{projectId}	AND
-pj.project_id = pi.project_id	AND
-pi.inventory_id = ac.inventory_id AND
-ac.account_id = th.account_id AND
-ac.account_status in ('SSACT', 'SSNEW')	AND
-th.transaction_code in ('500001', '500002')
-GROUP BY
-th.invoice_no
+d.project_id = '1' 	AND
+b.account_status =  'SSACT'	AND
+(a.transaction_code = 500001	OR
+a.transaction_code = 500002)
 ORDER BY
-th.invoice_no ASC]]>
+a.invoice_no ASC]]>
 	</queryString>
-	<field name="AccountStatus" class="java.lang.String"/>
 	<field name="InvoiceNo" class="java.lang.String"/>
 	<field name="TransactionCode" class="java.lang.String"/>
 	<field name="DescriptionT" class="java.lang.String"/>
@@ -41,7 +37,6 @@ th.invoice_no ASC]]>
 	<field name="Status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ProjectName" class="java.lang.String"/>
 	<variable name="InvoiceNo_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{InvoiceNo}]]></variableExpression>
 	</variable>
@@ -58,107 +53,75 @@ th.invoice_no ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="40">
+		<band height="20">
 			<staticText>
-				<reportElement uuid="b7838298-61b6-4aa4-99a4-1ad4a5053f6a" x="57" y="20" width="66" height="20"/>
+				<reportElement uuid="b7838298-61b6-4aa4-99a4-1ad4a5053f6a" x="80" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Txn Code]]></text>
+				<text><![CDATA[TransactionCode]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0ecd1969-f9ae-4db1-9973-6c8a431715bc" x="0" y="20" width="57" height="20"/>
+				<reportElement uuid="0ecd1969-f9ae-4db1-9973-6c8a431715bc" x="0" y="0" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[InvoiceNo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="476f84b7-79af-415c-9de1-9a5bba5526bf" x="123" y="20" width="161" height="20"/>
+				<reportElement uuid="476f84b7-79af-415c-9de1-9a5bba5526bf" x="180" y="0" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e3701ce8-b800-410d-8983-3f8b948abc3d" x="284" y="20" width="75" height="20"/>
+				<reportElement uuid="e3701ce8-b800-410d-8983-3f8b948abc3d" x="300" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Amount (RM)]]></text>
+				<text><![CDATA[Amount,(RM)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="08189ab6-06a9-4c86-bfcf-cfa744e3e83f" x="359" y="20" width="73" height="20"/>
+				<reportElement uuid="08189ab6-06a9-4c86-bfcf-cfa744e3e83f" x="400" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Financier (RM)]]></text>
+				<text><![CDATA[FinancierPortion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6471057b-348e-4871-9574-d00f5147b229" x="432" y="20" width="55" height="20"/>
+				<reportElement uuid="6471057b-348e-4871-9574-d00f5147b229" x="500" y="0" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Status]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="8cdfb5a6-06e5-43dd-962b-9472058b4aaa" x="100" y="0" width="313" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{ProjectName}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="a1e3f45e-f6fd-4716-968a-26aee630bc49" x="0" y="0" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Project Name :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="e9697ab5-e572-4c22-b544-593a4bf8034b" x="413" y="0" width="42" height="20"/>
-				<textElement/>
-				<text><![CDATA[Date :]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="e0df2848-91ba-46f8-994b-fe40a14ec480" x="455" y="0" width="100" height="20"/>
-				<textElement verticalAlignment="Top">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="e33251aa-d630-4bba-92ad-f5872718d634" x="487" y="20" width="68" height="20"/>
-				<textElement/>
-				<text><![CDATA[Account]]></text>
 			</staticText>
 		</band>
 	</title>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="51a22ce9-dff7-412c-a1d2-ee845df0e3fa" x="0" y="0" width="57" height="20"/>
+				<reportElement uuid="51a22ce9-dff7-412c-a1d2-ee845df0e3fa" x="0" y="0" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{InvoiceNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e7d024e2-a39f-4167-ab19-f9d4cfb2d197" x="57" y="0" width="66" height="20"/>
+				<reportElement uuid="e7d024e2-a39f-4167-ab19-f9d4cfb2d197" x="68" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{TransactionCode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8928dda5-7dc1-4d1e-9e77-a99a8ee742cb" x="359" y="0" width="73" height="19"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{FinancierPortion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="1b44e9e2-1995-4544-baca-4a7f67b8243e" x="432" y="0" width="55" height="19"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{Status}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="762bed78-d8ca-4b15-8ad6-441e01681312" x="123" y="0" width="161" height="20"/>
+				<reportElement uuid="762bed78-d8ca-4b15-8ad6-441e01681312" x="180" y="0" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{DescriptionT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="e85c7678-46f5-4b0b-bd73-455e92b8ca94" x="284" y="0" width="75" height="20"/>
+				<reportElement uuid="e85c7678-46f5-4b0b-bd73-455e92b8ca94" x="300" y="0" width="100" height="20"/>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$F{Amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2c3bcedd-57d1-4614-88a2-40318bbe019f" x="487" y="0" width="68" height="19"/>
+				<reportElement uuid="8928dda5-7dc1-4d1e-9e77-a99a8ee742cb" x="400" y="0" width="100" height="20"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{FinancierPortion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1587bbae-c1c0-488f-9251-1c0252a60802" x="500" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{AccountStatus}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Status}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="09d2aa4a-45df-447e-8284-a1ef48a7a11f" x="0" y="0" width="34" height="20"/>
 				<textElement/>
@@ -170,12 +133,12 @@ th.invoice_no ASC]]>
 				<textFieldExpression><![CDATA[$V{InvoiceNo_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="2142a8ac-2726-41b5-b30a-cfa5c835c63f" x="326" y="1" width="87" height="20"/>
+				<reportElement uuid="2142a8ac-2726-41b5-b30a-cfa5c835c63f" x="300" y="0" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{Amount_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="e45290e7-255b-459c-a748-6c1fe4989f77" x="413" y="0" width="87" height="20"/>
+				<reportElement uuid="e45290e7-255b-459c-a748-6c1fe4989f77" x="400" y="0" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{FinancierPortion_1}]]></textFieldExpression>
 			</textField>
