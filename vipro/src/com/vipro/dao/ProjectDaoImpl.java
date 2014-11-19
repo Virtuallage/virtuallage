@@ -25,6 +25,7 @@ import com.vipro.dto.TransactionEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.ManualEntryApprovalDTO;
+import com.vipro.dto.LoanCancellationDTO;
 
 @SuppressWarnings("unchecked")
 @Repository("com.vipro.dao.ProjectDao")
@@ -234,6 +235,28 @@ public class ProjectDaoImpl extends DaoImpl<Project> implements ProjectDao {
 		if (list != null && list.size()>0) {
 			for (Object[] ob : list) {
 				ManualEntryApprovalDTO dto = new ManualEntryApprovalDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2],findUserNameByUserId((Long)ob[4]),(TransactionHistory)ob[5]);
+				resultList.add(dto);
+			}	
+		}
+		return resultList;
+	}
+	
+	@Override
+	public List<LoanCancellationDTO> getLoanCancellationByProjectIdAndUnit(Long projectId, String UnitNo){
+		List<LoanCancellationDTO> resultList = new ArrayList<LoanCancellationDTO>();
+		StringBuilder  query = new StringBuilder(" select distinct o, o.project, a , a.customer , a.adviseVerifiedBy from ProjectInventory o,  Account a " +
+				" where o.project.projectId=? and a.loanAmount > 0.00");
+		query.append(" and a.projectInventory.inventoryId = o.inventoryId and a.accountStatus <> '" 
+				+ CommonConst.STATUS_CANCELLED + "'");
+		if (!StringUtils.isEmpty(UnitNo)){
+			query.append(" and upper(o.unitNo) Like'"+ UnitNo.trim().toUpperCase()+"%'");
+		}
+		
+		query.append(" order by o.unitNo ");
+		List<Object[]> list =  getHibernateTemplate().find(query.toString() , projectId);
+		if (list != null && list.size()>0) {
+			for (Object[] ob : list) {
+				LoanCancellationDTO dto = new LoanCancellationDTO((ProjectInventory)ob[0],(Project)ob[1],(Customer)ob[3],(Account)ob[2],findUserNameByUserId((Long)ob[4]));
 				resultList.add(dto);
 			}	
 		}

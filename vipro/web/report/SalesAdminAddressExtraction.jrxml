@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StickerLabel" language="groovy" columnCount="2" pageWidth="595" pageHeight="870" columnWidth="290" columnSpacing="14" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c3989d2d-9665-4b07-978f-e51e2400e653">
-	<property name="ireport.zoom" value="1.4641000000000013"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StickerLabel" language="groovy" columnCount="2" pageWidth="595" pageHeight="870" columnWidth="269" columnSpacing="14" leftMargin="43" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c3989d2d-9665-4b07-978f-e51e2400e653">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
@@ -58,27 +58,6 @@ WHERE
 	<detail>
 		<band height="121" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="329c2036-fc3c-48d4-b253-88dff3eff07a" positionType="Float" mode="Transparent" x="11" y="42" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_1}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single" tabStopWidth="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_address_line_1}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3cb40924-1db0-4019-a24e-e1ee9456dfbe" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single" tabStopWidth="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_address_line_2}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="7eca7b05-268e-4562-ac74-d5d4edfc460b" positionType="Float" mode="Transparent" x="11" y="16" width="272" height="13" isPrintWhenDetailOverflows="true">
 					<printWhenExpression><![CDATA[!$F{2nd_Purchaser}.isEmpty()]]></printWhenExpression>
 				</reportElement>
@@ -100,119 +79,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{2nd_Purchaser}.toUpperCase()]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="74030bdc-68f4-4c69-adb7-cdd2016d77b6" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="9d157311-e1be-400d-9709-03aede16b1fd" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="4cfc3ceb-a346-4f98-b823-4d5c2e39faaf" positionType="Float" x="11" y="94" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e7130955-07f7-4b78-9475-4eced69f0ca9" positionType="Float" mode="Transparent" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single" tabStopWidth="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_address_line_3}.toUpperCase() + $F{address_address_line_4}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="b668a5e8-2bce-4fcf-b494-b9c1adde16bb" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="ff2388ab-612d-4570-b228-0f88dcbbd89f" positionType="Float" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
-($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="008ecc16-e2c9-4aa4-b7ee-9b1a4ce4c32a" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
-($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d1cf2327-4531-4a2e-94c5-149fb6e4ff3c" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
-!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single" tabStopWidth="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_address_line_3}.toUpperCase() + $F{address_address_line_4}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="964f714b-47e8-45e7-a68d-eff8d39748a6" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single" tabStopWidth="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_address_line_2}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="6574b13c-1ec5-40dc-acfc-154e7fde6a11" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="dc9598fc-15ca-4d79-a353-9a64477d559c" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
-($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="2926b3bb-d801-4a7e-8514-98a259a168ca" positionType="Float" mode="Transparent" x="11" y="29" width="272" height="13" isPrintWhenDetailOverflows="true">
 					<printWhenExpression><![CDATA[$F{2nd_Purchaser} == null]]></printWhenExpression>
@@ -223,6 +89,190 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{1st_Purchaser}.toUpperCase()]]></textFieldExpression>
 			</textField>
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="dc9598fc-15ca-4d79-a353-9a64477d559c" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&  ($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase() +' '+ $F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="a939218f-2daf-4494-9d95-3146f2b10de1" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+($F{address_address_line_3}+$F{address_address_line_4}).isEmpty() &&
+$F{State_Description}.equals( null )]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="6574b13c-1ec5-40dc-acfc-154e7fde6a11" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&  ($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="964f714b-47e8-45e7-a68d-eff8d39748a6" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" tabStopWidth="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_address_line_2}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="9d157311-e1be-400d-9709-03aede16b1fd" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="b668a5e8-2bce-4fcf-b494-b9c1adde16bb" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="5f739749-71e0-4e76-a2f2-11df9372badc" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty() &&
+$F{State_Description}.equals( null )]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="d1cf2327-4531-4a2e-94c5-149fb6e4ff3c" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" tabStopWidth="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_address_line_3}.toUpperCase() + $F{address_address_line_4}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="4cfc3ceb-a346-4f98-b823-4d5c2e39faaf" positionType="Float" x="11" y="94" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()).trim()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="74030bdc-68f4-4c69-adb7-cdd2016d77b6" positionType="Float" x="11" y="81" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{address_postcode}+' '+$F{address_city}.toUpperCase()).trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="e7130955-07f7-4b78-9475-4eced69f0ca9" positionType="Float" mode="Transparent" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" tabStopWidth="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_address_line_3}.toUpperCase() + $F{address_address_line_4}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="3cb40924-1db0-4019-a24e-e1ee9456dfbe" positionType="Float" mode="Transparent" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" tabStopWidth="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_address_line_2}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="329c2036-fc3c-48d4-b253-88dff3eff07a" positionType="Float" mode="Transparent" x="11" y="42" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_1}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" tabStopWidth="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_address_line_1}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="e9d61f61-d591-4c02-aece-9f013d1f9c27" positionType="Float" x="11" y="94" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[!$F{address_address_line_2}.isEmpty() &&
+!($F{address_address_line_3}+$F{address_address_line_4}).isEmpty() &&
+$F{State_Description}.equals( null )]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="ff2388ab-612d-4570-b228-0f88dcbbd89f" positionType="Float" x="11" y="55" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address_postcode}+' '+$F{address_city}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="a64074d5-b9c7-4a3c-bf30-85a3a08e5ddd" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+($F{address_address_line_3}+$F{address_address_line_4}).isEmpty() &&
+$F{State_Description}.equals( null )]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="008ecc16-e2c9-4aa4-b7ee-9b1a4ce4c32a" positionType="Float" x="11" y="68" width="272" height="13" isPrintWhenDetailOverflows="true">
+						<printWhenExpression><![CDATA[$F{address_address_line_2}.isEmpty() &&
+($F{address_address_line_3}+$F{address_address_line_4}).isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{State_Description}.toUpperCase()+' '+$F{Country_Description}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
 		</band>
 	</detail>
 </jasperReport>

@@ -13,6 +13,7 @@ import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
 import com.vipro.dto.ManualEntryApprovalDTO;
+import com.vipro.dto.LoanCancellationDTO;
 
 public interface ProjectService {
   
@@ -27,6 +28,7 @@ public interface ProjectService {
 	public List<TransactionEntryDTO> getTransactionEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
 	public List<ProjectInventory> findInventories(Long projectId);
 	public List<ManualEntryApprovalDTO> getManualEntryApprovalDTOList(Long projectId, String UnitNo);
+	public List<LoanCancellationDTO> getLoanCancellationByProjectIdAndUnit(Long projectId, String UnitNo);
 	
 	public void insert(Project p);
 	public void update(Project p);
