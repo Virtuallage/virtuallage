@@ -142,7 +142,7 @@
 
 				<h:form id="dialogForm">
 					<p:outputPanel id="dialogPanel">
-						<p:dialog id="tDialog" header="Reversal Entry. Click POST to reverse this transacion."
+						<p:dialog id="tDialog" header="Reversal Entry. Click Confirm to reverse this transacion."
 							widgetVar="dlg" modal="true" height="400" width="950"
 							showEffect="explode" hideEffect="explode">
 
@@ -233,7 +233,7 @@
 									update="growl,:pbUSearchForm:resultsPanel"
 									style="margin-top:20px;margin-right:5px"
 									oncomplete="handleSaveRequest(xhr, status, args)" />										
-									<p:commandButton value="Post" disabled="false" 
+									<p:commandButton value="Confirm" disabled="false" 
 										actionListener="#{reversalEntryBean.onSubmitAction}"
 										ajax="true" update="growl,:pbUSearchForm:resultsPanel" style="margin-top:20px"
 										title="Post"									

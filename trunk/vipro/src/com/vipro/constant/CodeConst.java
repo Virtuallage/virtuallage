@@ -19,5 +19,6 @@ public interface CodeConst {
 	public static final String PAYMENT_METHOD = "PM";
 	public static final String TRANSACTION_STATUS = "TS";
 	public static final String PROPERTY_STATUS = "PS";
+	public static final String PURCHASE_TYPE = "PU";
 	
 }

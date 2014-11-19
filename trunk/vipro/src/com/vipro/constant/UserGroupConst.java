@@ -18,5 +18,7 @@ public interface UserGroupConst extends CommonConst {
 	public static final String SALES_ADM_STF="SADM_STF";
 	
 	public static final String MANAGEMENT="MANAGEMENT";
+	
+	public static final String PIC_ADM="PIC_ADM";
 
 }

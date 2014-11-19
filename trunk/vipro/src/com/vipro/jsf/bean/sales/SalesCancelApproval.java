@@ -627,7 +627,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelFeeRefund);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION REFUND AMOUNT");
-				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelNetRefundAmt());
 				transactionHistory.setCodeType(TransactionCodeConst.DEBIT);
@@ -643,7 +643,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelAdminFee);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION ADMIN FEE");
-				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelFee());
 				transactionHistory.setCodeType(TransactionCodeConst.DEBIT);
@@ -659,7 +659,7 @@ public class SalesCancelApproval extends CommonBean implements Serializable{
 				transactionHistory.setTransactionCode(codeCancelTax);
 				transactionHistory.setTransactionDate(currentDate);
 				transactionHistory.setTransactionDescription("CANCELLATION TAX");
-				transactionHistory.setStatus(TransactionStatusConst.POSTED);
+				transactionHistory.setStatus(TransactionStatusConst.PENDING);
 		        transactionHistory.setUserId(userId);
 				transactionHistory.setAmount(salesCancellationHistory.getCancelTax());
 				transactionHistory.setCodeType(TransactionCodeConst.DEBIT);

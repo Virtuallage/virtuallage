@@ -21,6 +21,7 @@ import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.SalesByAgentItemDTO;
 import com.vipro.dto.TotalLoanOfferedItemDTO;
 import com.vipro.dto.ManualEntryApprovalDTO;
+import com.vipro.dto.LoanCancellationDTO;
 
 @Service("com.vipro.service.ProjectService")
 public class ProjectServiceImpl implements ProjectService,Serializable {
@@ -402,4 +403,9 @@ public class ProjectServiceImpl implements ProjectService,Serializable {
 	public List<ManualEntryApprovalDTO> getManualEntryApprovalDTOList(Long projectId, String UnitNo){
 		return projectDao.getManualEntryApprovalDTOList(projectId, UnitNo);
 	}
+	
+	public List<LoanCancellationDTO> getLoanCancellationByProjectIdAndUnit(Long projectId, String UnitNo){
+		return projectDao.getLoanCancellationByProjectIdAndUnit(projectId, UnitNo);
+	}
+
 }

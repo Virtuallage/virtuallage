@@ -1,0 +1,150 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"       
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+ <h:head><title>Advise Update List</title></h:head>
+ 
+ <body>
+ 	 <ui:composition template="/template/main_template.xhtml">
+ 	 	 <ui:define name="content">
+ 	 	 
+ 	 	 <p:panel id="panel" header="Loan Cancellation Selection List" style="width:95%">  			
+		    <h:form id="puListForm">
+		    <input type="hidden" name="selectedProjectId" value="#{loanCancellationBean.selectedProjectId}" />
+		    <p:outputPanel id="searchPanel"   styleClass="no-borders">
+				<p:focus context="puListForm"/>
+					
+				<p:growl id="growlForm" showDetail="true" life="3000" autoUpdate="false" /> 
+				<p:panelGrid style="width:100%; background-color: lightgrey;" styleClass="no-borders">
+					<p:row>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="projectName">
+							<p:outputLabel  value="Project Name"/>
+						</p:column>
+						<p:column style="width:40%;text-align:left;vertical-align:middle">											
+							<p:selectOneMenu id="projectList" value="#{loanCancellationBean.selectedProjectId}"  requiredMessage="Project Name is mandatory"
+								 required="true" style="width:100%" for="projectName">  
+								<f:selectItems value="#{loanCancellationBean.projects}"/>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:15%;text-align:right; margin-right:5px;vertical-align:middle" id="UnitNoLbl">
+							<p:outputLabel  value="Unit No"/>
+						</p:column>
+						<p:column style="width:15%;text-align:left;vertical-align:middle">
+							 <p:inputText id="unitTxt" value="#{loanCancellationBean.unit}" style="text-transform:uppercase"/>
+						</p:column>
+						<p:column  style="width:15%;text-align:left;vertical-align:middle">
+							 <p:commandButton value = "Search" action="#{loanCancellationBean.searchProject}" ajax="false" process="projectList,unitTxt" update=":puListForm:resultsPanel"/>.
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br/>
+			</p:outputPanel>
+ 	 	 	<p:outputPanel id="resultsPanel" rendered = "#{loanCancellationBean.selectedProjectId != null}" >
+ 	 	 	
+ 		 	 	<p:dataTable id="dt" var="dto" value="#{loanCancellationBean.dtoList}" draggableColumns="true" resizableColumns="false" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+ 		 	 			paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" tableStyle="width:100%" 
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  >  
+                 
+    			    <p:column headerText="Unit No" sortBy="#{dto.projectInvetory.unitNo}">  
+            			<p:outputLabel  value="#{dto.projectInvetory.unitNo}" />  
+        			</p:column>
+        			<p:column headerText="Purchaser Name" sortBy="#{dto.customer.fullName}">  
+            			<p:outputLabel  value="#{dto.customer.fullName}" />  
+        			</p:column>
+        			<p:column headerText="Selling Price(RM)" sortBy="#{dto.projectInvetory.purchasePrice}" style="text-align:right">          			 
+            			<h:outputText  value="#{dto.projectInvetory.purchasePrice}"  style="text-align:right" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+        			 <p:column headerText="Purchased Date" sortBy="#{dto.account.datePurchased}" style="text-align:center">  
+            			<h:outputText  value="#{dto.account.datePurchased}" >
+            				<f:convertDateTime type="both" locale="ms-my" pattern="#{adviseUpdateBean.dateFormat}" />
+            			</h:outputText>  
+        			</p:column>
+        			<p:column headerText="Loan Amount(RM)" sortBy="#{dto.account.loanAmount}" style="text-align:right">          			 
+            			<h:outputText  value="#{dto.account.loanAmount}"  style="text-align:right" >
+            				<f:convertNumber pattern="#,###,##0.00"   />
+            			</h:outputText>  
+        			</p:column>
+        			<p:column headerText="Action" style="width:4%">  
+			                <p:commandButton id="selectDTOBtn" update=":dialogForm:dialogPanel" oncomplete="dlg.show()" icon="ui-icon-pencil" title="Cancel Loan" >  
+			                	<f:setPropertyActionListener value="#{dto}" target="#{loanCancellationBean.selectedDto}" />  
+			            </p:commandButton>  
+			        </p:column> 
+        			
+		        </p:dataTable> 
+			</p:outputPanel>
+			</h:form>
+				
+			<h:form id="dialogForm">
+			<p:outputPanel id="dialogPanel">
+				<p:dialog id="tDialog" header="Loan Cancellation Confirmation" widgetVar="dlg"
+				        modal="true" height="340" width="750"  showEffect="explode"
+				        hideEffect="explode">
+				        
+				        <p:growl id="growl" showDetail="true" life="3000" autoUpdate="false" /> 
+				        <h:panelGrid id="display" columns="4" cellpadding="4" width="100%">
+				            
+				            <p:outputLabel  value="Project Name" />
+				            <p:inputText value="#{loanCancellationBean.selectedDto.project.projectName}" disabled="true"/>
+				            <p:outputLabel  value="Project Code" />
+				            <p:inputText value="#{loanCancellationBean.selectedDto.project.projectCode}"  disabled="true"/>		
+				        
+				 	        <p:outputLabel  value="Purchaser Name" />
+				            <p:inputText value="#{loanCancellationBean.selectedDto.customer.fullName}" disabled="true"/>
+				             <p:outputLabel  value="Registration No." />
+				            <p:inputText value="#{loanCancellationBean.selectedDto.account.accountId}" disabled="true" style="width:35%"/>
+	        
+				            <p:outputLabel  value="Unit No" />
+				            <p:inputText value="#{loanCancellationBean.selectedDto.projectInvetory.unitNo}" disabled="true" style="width:35%"/>
+				            <p:outputLabel  value="Purchaser Type" />
+							<p:selectOneMenu id="purchasetype"
+									value="#{loanCancellationBean.selectedDto.account.purchaseType}"
+									style="width:200px" for="ptTxt" disabled="true">
+									<f:selectItems value="#{loanCancellationBean.purchaseTypeList}" />
+							</p:selectOneMenu>					            
+				            
+				            <p:outputLabel  value="Financier" />
+							<p:selectOneMenu id="financier"
+									value="#{loanCancellationBean.selectedDto.account.panelBankId}"
+									style="width:200px" for="pmTxt" disabled="true">
+									<f:selectItems value="#{loanCancellationBean.panelBankList}" />
+							</p:selectOneMenu>						            
+				            
+				            <p:outputLabel  value="Loan Amount" />	
+							<p:inputText value="#{loanCancellationBean.selectedDto.account.loanAmount}" disabled="true" style="text-align:right">
+            					<f:convertNumber pattern="#,###,##0.00" />
+            				</p:inputText>
+				          		           				            				            				            			            
+				            <p:outputLabel value=""/>
+				            <p:commandButton value = "Close" actionListener="#{loanCancellationBean.closeAccount}" ajax="true" partialSubmit="true" update="growl,:puListForm:resultsPanel" style="margin-top:20px;float:right"
+							 oncomplete="handleSaveRequest(xhr, status, args)"/>					            			            
+							<p:commandButton value = "Confirm" actionListener="#{loanCancellationBean.saveAccount}" ajax="true" update="growl,:puListForm:resultsPanel" style="margin-top:20px"
+							 oncomplete="handleSaveRequest(xhr, status, args)"/>
+							 <p:outputLabel value=""/>				            				            			            
+				        </h:panelGrid>				        
+				</p:dialog> 
+				    <script type="text/javascript">  
+						    function handleSaveRequest(xhr, status, args) {  
+						        if(args.validationFailed || !args.success) {  
+						            dlg.jq.effect("shake", { times:5 }, 100);
+						            
+						        }   
+						        else {  
+						        	dlg.hide();
+						           // PF('dlg').hide();  
+						           // $('#loginLink').fadeOut();  
+						        }  
+						    }
+						    
+					</script>  
+			</p:outputPanel> 
+ 	 	 	</h:form>
+		</p:panel>
+ 	 	</ui:define>
+ 	 </ui:composition>
+ 	 
+ </body>
+</html> 

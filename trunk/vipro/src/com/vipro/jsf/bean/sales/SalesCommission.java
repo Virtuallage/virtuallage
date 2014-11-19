@@ -208,7 +208,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 		
 		accounts = new ArrayList<Account>(); 
 		List<Account> accountList = new ArrayList<Account>();
-		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.SALES_PIC) ||
+		if(userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.PIC_ADM) ||
 				userProfile.getUserGroup().getGroupId().equalsIgnoreCase(UserGroupConst.ADMIN))
 		{
 			accountList = accountService.findAllAvailable();
@@ -373,7 +373,7 @@ public class SalesCommission extends CommonBean implements Serializable{
 				}
 			}
 		}*/
-		accounts = accountService.findByAvailableUserId(userId);
+//		accounts = accountService.findByAvailableUserId(userId);
 		for(Account account: accounts) {
 			String status = GetClaimStatusByAccountId(account.getAccountId().toString());
 			if(status.equalsIgnoreCase("New")) {

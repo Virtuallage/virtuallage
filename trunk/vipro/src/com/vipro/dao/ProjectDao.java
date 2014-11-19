@@ -10,6 +10,7 @@ import com.vipro.dto.TransactionEntryDTO;
 import com.vipro.dto.ProgressiveBillingUnitSeachDTO;
 import com.vipro.dto.PropertyUnitDetailsDTO;
 import com.vipro.dto.ManualEntryApprovalDTO;
+import com.vipro.dto.LoanCancellationDTO;
 
 public interface ProjectDao extends Dao<Project> {
 
@@ -22,4 +23,6 @@ public interface ProjectDao extends Dao<Project> {
 	public List<PaymentEntryDTO> getPaymentEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
 	public List<TransactionEntryDTO> getTransactionEntryDTOListByProjectIdAndUnit(Long projectId, String UnitNo);
 	public List<ManualEntryApprovalDTO> getManualEntryApprovalDTOList(Long projectId, String UnitNo);
+	public List<LoanCancellationDTO> getLoanCancellationByProjectIdAndUnit(Long projectId, String UnitNo);
+
 }
