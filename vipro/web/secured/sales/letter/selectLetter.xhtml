@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/main_template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+Business Partner
+</ui:define>
+	<ui:define name="content">
+	<p:panel id="panel" header="List of Letters for this property unit" style="width:75%">  
+	<p:focus context="panel"/>
+		
+	<h:form>
+		<p:panelGrid style="width:100%;" styleClass="no-borders">
+			<p:row>
+				<p:column style="width:15%;text-align:left">
+					<h:outputText value="Project Name :"/>
+				</p:column>
+				<p:column style="width:40%;text-align:left">
+					<p:selectOneMenu id="projectList" value="#{salesLetter.projectId}" 
+						 required="true" style="width:300px">  
+						<f:selectItems value="#{salesLetter.listProject}"/>
+					</p:selectOneMenu>
+				</p:column>
+				<p:column style="width:10%;text-align:left">
+					<p:outputLabel value="Unit No :" for="unitNo"/>
+				</p:column>
+				<p:column style="width:20%;text-align:left">
+					<p:inputText id="unitNo" length="30" size="10" value="#{salesLetter.unitNo}" style="text-transform:uppercase" autocomplete="off"/>
+				</p:column>
+				<p:column style="width:15%;text-align:left;">
+					<p:commandButton value="Search" action="#{salesLetter.listPropertyUnits}" update="inventoriesDataTable" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<br/>
+		
+		<p:dataTable var="c" value="#{salesLetter.inventories}" paginator="true" rows="10"  paginatorPosition="bottom"
+	                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+	                 rowsPerPageTemplate="10,20,40,60,80,100" id="inventoriesDataTable">    
+                   	                 
+	        <p:column headerText="Unit No." sortBy="#{c.unitNo}">  
+	            <h:outputText value="#{c.unitNo}">
+	            </h:outputText>
+	        </p:column>  
+	  
+	        <p:column headerText="Status Changed Date" sortBy="#{c.statusChangeDate}">  
+	            <h:outputText value="#{c.statusChangeDate}">
+	           	  		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+8"/>
+	  		    </h:outputText>
+	        </p:column>  
+	        
+	        <p:column headerText="Status" sortBy="#{salesLetter.getCodeDesc('PS', c.propertyStatus)}">  
+	        	<h:outputText value="#{salesLetter.getCodeDesc('PS', c.propertyStatus)}">
+	        	</h:outputText>
+	        </p:column>
+	        
+	        <p:column headerText="Actions">
+	           <p:commandButton action="#{salesLetter.selectAccount}" ajax="false"
+	           		icon="ui-icon-check" title="Select Property Unit">
+	           		 <f:setPropertyActionListener value="#{c}" target="#{salesLetter.inventory}" />  
+	           </p:commandButton>
+	         
+	        </p:column>
+	    </p:dataTable>  
+	   <br/>
+	</h:form> 
+
+	</p:panel>
+	</ui:define>
+</ui:composition>

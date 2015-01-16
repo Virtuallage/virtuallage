@@ -9,6 +9,8 @@ public class JasperConst {
 	
 	public static final String TOMCAT_HOME = System.getProperty("catalina.base") + "/wtpwebapps";
 	
+	public static final String JASPER_PATH = TOMCAT_HOME + "/vipro/report/";
+	
 	public static final String SALES_REG_RECEIPT = TOMCAT_HOME + "/vipro/report/sales_reg_receipt.jrxml";
 
 	public static final String SALES_REG_RECEIPT2 = TOMCAT_HOME + "/vipro/report/sales_reg_receipt2.jrxml";

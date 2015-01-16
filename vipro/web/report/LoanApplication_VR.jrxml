@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Loan Application Letter" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fe144ae-f07e-489d-b2c5-19c51932eb27">
+	<property name="ireport.zoom" value="1.0881456789507435"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ProjectId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Unit_No" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AccountId" class="java.lang.String"/>
+	<parameter name="ProjectCode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     project.`project_name` AS Project_Name,
+     project_inventory.`unit_no` AS Lot_no,
+     project_inventory.`address_id` AS PI_address_id,
+     account.`corr_addr_cust_id` AS AC_address_id,
+     customer.`full_name` AS Purchaser_1,
+     customer_A.`full_name` AS Purchaser_2,
+     account.`spa_verified_date` AS SPA_verified_date,
+     account.`panel_bank_id` AS Panel_bank_id,
+     account.`loan_amount` AS Loan_amount,
+     account.`purchase_price` AS SPA_price,
+     project.`property_type` AS project_property_type,
+     address.`address_line_1` AS Unit_add_1,
+     address.`address_line_2` AS Unit_add_2,
+     address.`address_line_3` AS Unit_add_3,
+     address.`address_line_4` AS Unit_add_4,
+     address.`postcode` AS Unit_postcode,
+     address.`city` AS Unit_city,
+     code_det_A.`Description` AS Unit_State,
+     code_det_B.`Description` AS Unit_Country,
+     address_A.`address_id` AS Corr_address_id,
+     address_A.`address_line_1` AS Corr_add_1,
+     address_A.`address_line_2` AS Corr_add_2,
+     address_A.`address_line_3` AS Corr_add_3,
+     address_A.`address_line_4` AS Corr_add_4,
+     address_A.`postcode` AS Corr_postcode,
+     address_A.`city` AS Corr_city,
+     address_A.`country` AS Corr_countrycode,
+     code_det_C.`Description` AS Corr_State,
+     code_det_D.`Description` AS Corr_Country
+
+FROM
+     `project` project INNER JOIN `project_inventory` project_inventory ON project.`project_id` = project_inventory.`project_id`
+     INNER JOIN `account` account ON project_inventory.`inventory_id` = account.`inventory_id`
+     LEFT JOIN  `customer` customer ON account.`customer_id` = customer.`customer_id`
+     LEFT JOIN `customer` customer_A ON account.`customer_id2` = customer_A.`customer_id`
+     LEFT JOIN `address` address ON project_inventory.`address_id` = address.`address_id`
+     LEFT JOIN `address` address_A ON account.`corr_addr_cust_id` = address_A.`address_id`
+     LEFT JOIN `code_det` code_det_A ON address.`state` = code_det_A.`code`
+     LEFT JOIN `code_det` code_det_B ON address.`country` = code_det_B.`code`
+     LEFT JOIN `code_det` code_det_C ON address_A.`state` = code_det_C.`code`
+     LEFT JOIN `code_det` code_det_D ON address_A.`country` = code_det_D.`code`
+
+WHERE
+     project.`project_id` = $P{ProjectId} AND
+     project_inventory.`unit_no` = $P{Unit_No} AND
+     account.`account_id` = $P{AccountId}
+ORDER BY
+     Project_Name ASC, Lot_no]]>
+	</queryString>
+	<field name="Project_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Lot_no" class="java.lang.String"/>
+	<field name="PI_address_id" class="java.lang.Long"/>
+	<field name="AC_address_id" class="java.lang.Long"/>
+	<field name="Purchaser_1" class="java.lang.String"/>
+	<field name="Purchaser_2" class="java.lang.String"/>
+	<field name="SPA_verified_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Panel_bank_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Loan_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SPA_price" class="java.math.BigDecimal"/>
+	<field name="project_property_type" class="java.lang.String"/>
+	<field name="Unit_add_1" class="java.lang.String"/>
+	<field name="Unit_add_2" class="java.lang.String"/>
+	<field name="Unit_add_3" class="java.lang.String"/>
+	<field name="Unit_add_4" class="java.lang.String"/>
+	<field name="Unit_postcode" class="java.lang.String"/>
+	<field name="Unit_city" class="java.lang.String"/>
+	<field name="Unit_State" class="java.lang.String"/>
+	<field name="Unit_Country" class="java.lang.String"/>
+	<field name="Corr_address_id" class="java.lang.Long"/>
+	<field name="Corr_add_1" class="java.lang.String"/>
+	<field name="Corr_add_2" class="java.lang.String"/>
+	<field name="Corr_add_3" class="java.lang.String"/>
+	<field name="Corr_add_4" class="java.lang.String"/>
+	<field name="Corr_postcode" class="java.lang.String"/>
+	<field name="Corr_city" class="java.lang.String"/>
+	<field name="Corr_countrycode" class="java.lang.String"/>
+	<field name="Corr_State" class="java.lang.String"/>
+	<field name="Corr_Country" class="java.lang.String"/>
+	<variable name="runDate" class="java.util.Date">
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="334" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8a13922b-0b2f-470a-8a03-bb8d9f3eeee9" x="0" y="10" width="34" height="15"/>
+				<textElement/>
+				<text><![CDATA[Our ref	]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ecfe5687-0c53-4b3a-b91d-bdce7af2d2c2" x="105" y="10" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1963711e-4f9f-4713-8232-f9a342866c89" x="0" y="25" width="34" height="15"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="76855ee1-a649-4d4f-8f98-37bc2b92b572" x="0" y="51" width="462" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3d686b9a-74d6-46dc-963a-357323305816" x="0" y="66" width="462" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0cc80c15-aec9-42c5-9a0d-685a1b0f6c79" x="0" y="81" width="462" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_1}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7bad9280-01de-4107-b68e-46d9364e46ae" x="0" y="96" width="462" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_2}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d514a584-798e-4142-87c0-edf60dccac1d" x="0" y="111" width="462" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_3}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e6e6c461-61cb-42c7-af4f-e3deac8e9e90" x="0" y="126" width="462" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Corr_add_4}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f982698e-1ef9-4ca1-b969-fff96215f092" x="0" y="178" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f545a778-9cd1-489c-9bf3-4ae38bf9deac" x="0" y="289" width="70" height="15"/>
+				<textElement/>
+				<text><![CDATA[Unit No]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2d03bbb1-e0e1-43c7-a877-b995a75f959f" x="83" y="289" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fa44e0cf-aa7d-4fcd-8ffc-da4692982375" x="83" y="259" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3c91b501-ed5b-4754-9389-18a756ac1186" x="83" y="274" width="100" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Purchaser_2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="5d427c34-bd9b-4a00-823b-b04e0e5b9ae5" x="0" y="319" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="fbbf63f8-2c87-4467-89c7-6a1c9a1574a5" x="39" y="10" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f1de49d-d7fa-4f2e-a0e3-eaeba0d3340e" x="78" y="10" width="32" height="15"/>
+				<textElement/>
+				<text><![CDATA[/Loan/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97ebfded-64cf-4ed0-b392-e87aeecaa710" x="39" y="25" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="17ce118b-c37f-48b7-82a5-4e9afed4c149" x="70" y="229" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4ad4677a-3ac7-447b-9072-daa21c5f6a05" x="70" y="244" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b2ccdf5c-c3c1-41da-ae4e-24a105e4ecd2" x="70" y="259" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e42adb28-aef9-46ed-9c4c-92ef5f3dc3ec" x="0" y="229" width="70" height="15"/>
+				<textElement/>
+				<text><![CDATA[PROJECT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4faf1b2-be59-44e5-bf3f-a422eee079e0" x="0" y="214" width="343" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOAN APPLICATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c178e6e5-46cc-4a2c-b0ee-4b5d2afe7f4b" x="0" y="244" width="70" height="15"/>
+				<textElement/>
+				<text><![CDATA[DEVELOPER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c0b103cc-9645-465f-a39a-e0dd04d57705" x="77" y="229" width="266" height="15"/>
+				<textElement/>
+				<text><![CDATA[  V-RESIDENSI, SELAYANG HEIGHTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="36353fdf-222f-4f64-b8cf-57f2ea17df0a" x="77" y="244" width="266" height="15"/>
+				<textElement/>
+				<text><![CDATA[  B&G GREENERY PROPERTY SDN BHD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d70b0cb7-a540-44bf-b7b8-5f485fa6a9c0" x="0" y="259" width="70" height="15"/>
+				<textElement/>
+				<text><![CDATA[Purchaser(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="125d70de-ddda-41a8-bf02-e063c712f8b1" x="70" y="289" width="7" height="15"/>
+				<textElement/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="4599a77d-d845-4933-a261-0fc00e5f2f7e" x="50" y="24" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{runDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5765ae05-2f6e-477b-bdd0-7bec75f56e9c" x="50" y="10" width="75" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{ProjectCode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d5ec46da-fdeb-4f3d-9198-160bb3dfd189" x="0" y="141" width="462" height="16" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{Corr_countrycode}.equals( "CTMAS" )]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[($F{Corr_postcode}.trim()+" "+$F{Corr_city}.trim()+" "+$F{Corr_State}).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="1848d6ac-de80-4a25-8be1-6ae84b141b34" x="0" y="141" width="462" height="16" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$F{Corr_countrycode}.equals( "CTMAS" )]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[($F{Corr_postcode}.trim()+" "+$F{Corr_city}.trim()+" "+$F{Corr_Country}).toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="393">
+			<staticText>
+				<reportElement uuid="6bffa541-1c33-4d10-9e8a-402471f89f3c" x="0" y="0" width="555" height="388"/>
+				<textElement/>
+				<text><![CDATA[The above refers.
+
+We wish to inform you that the construction of the above building shall commence soon.
+
+According to our records, you have yet to make any application for a housing loan to facilitate you in the purchase of the above property.
+
+However, if you have arranged for your end financing, kindly inform us so that your records with us can be updated otherwise if you fail to reply to us within 14 days from the date hereof, we shall deem that you purchase the above property by  CASH without a loan facility.
+
+Please be reminded that late payment interest penalty at 10% per annum shall be levied on all outstanding amount from the due date until the settlement date regardless  such sums are due from you or your end financier.
+
+Please ignore this letter if you have applied for a loan facility during the transition period of this letter to you.
+
+Thank you.
+
+
+Yours faithfully,
+B&G GREENERY PROPERTY SDN BHD
+
+
+
+This document is computer generated, no signature is required.
+
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

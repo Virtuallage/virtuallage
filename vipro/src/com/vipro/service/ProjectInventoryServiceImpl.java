@@ -40,6 +40,11 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	}
 	
 	@Override
+	public List<ProjectInventory> getUnAvailableInventories(Long projectId) {
+		return projectInventoryDao.findByUnAvailableProjectId(projectId);
+	}
+
+	@Override
 	public List<ProjectInventory> getCancellingInventories(Long projectId) {
 		return projectInventoryDao.findCancellingById(projectId);
 	}
@@ -107,6 +112,11 @@ public class ProjectInventoryServiceImpl implements ProjectInventoryService {
 	@Override
 	public List<ProjectInventory> getAvailableInventories(Long projectId, String unitNo) {
 		return projectInventoryDao.findByAvailableProjectIdUnitNo(projectId, unitNo);
+	}
+
+	@Override
+	public List<ProjectInventory> getUnAvailableInventories(Long projectId, String unitNo) {
+		return projectInventoryDao.findByUnAvailableProjectIdUnitNo(projectId, unitNo);
 	}
 
 	@Override
