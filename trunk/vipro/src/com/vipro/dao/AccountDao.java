@@ -11,6 +11,7 @@ public interface AccountDao extends Dao<Account> {
 	public List<Account> findAll();
 	public List<Account> findAllAvailable();
 	public List<Account> findByProjectInventoryId(Long inventoryId);
+	public List<Account> findAllByProjectInventoryId(Long inventoryId);
 	public List<Account> findByAvailableProjectInventoryId(Long inventoryId);
 	public List<Account> findByUserId(Long userId);
 	public List<Account> findByAvailableUserId(Long userId);

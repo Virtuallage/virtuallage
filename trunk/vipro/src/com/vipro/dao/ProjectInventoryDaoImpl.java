@@ -22,6 +22,13 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 		String query = "select o from ProjectInventory o where o.project.projectId=?";
 		return getHibernateTemplate().find(query, projectId);
 	}
+
+	@Override
+	public List<ProjectInventory> findByUnAvailableProjectId(Long projectId) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? and o.propertyStatus<>'" 
+				+ PropertyUnitStatusConst.STATUS_AVAILABLE + "'"; 
+		return getHibernateTemplate().find(query, projectId);
+	}
 	
 	@Override
 	public List<ProjectInventory> findByAvailableProjectId(Long projectId) {
@@ -80,6 +87,13 @@ public class ProjectInventoryDaoImpl extends DaoImpl<ProjectInventory>
 		
 	}
 	
+	@Override
+	public List<ProjectInventory> findByUnAvailableProjectIdUnitNo(Long projectId,String unitNo) {
+		String query = "select o from ProjectInventory o where o.project.projectId=? and o.unitNo=? and o.propertyStatus<>'" 
+				+ PropertyUnitStatusConst.STATUS_AVAILABLE + "'"; 
+		return getHibernateTemplate().find(query, projectId, unitNo);
+	}
+
 	@Override
 	public List<ProjectInventory> findLockedUnit(Long projectId, Long userId) {
 		String query = "select o from ProjectInventory o where o.project.projectId=? and o.changeUserId=? and o.propertyStatus='"

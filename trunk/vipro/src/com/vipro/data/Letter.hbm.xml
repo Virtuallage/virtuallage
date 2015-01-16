@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 10, 2014 3:54:07 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class catalog="vipro" name="com.vipro.data.Letter" table="letter">
+  <id name="letterId" type="java.lang.Long">
+   <column name="letter_id"/>
+   <generator class="native"/>
+  </id>
+  <many-to-one class="com.vipro.data.Project" fetch="select" name="project">
+   <column name="project_id" not-null="true"/>
+  </many-to-one>
+  <property name="letterCode" type="java.lang.String">
+   <column length="5" name="letter_code"/>
+  </property>
+  <property name="jasperName" type="java.lang.String">
+   <column length="5" name="jasper_name"/>
+  </property>
+  <property name="createdBy" type="java.lang.Long">
+   <column name="created_by"/>
+  </property>
+  <property name="dateCreated" type="java.util.Date">
+   <column length="10" name="date_created"/>
+  </property>
+  <property name="changedBy" type="java.lang.Long">
+   <column name="changed_by"/>
+  </property>
+  <property name="dateChanged" type="java.util.Date">
+   <column length="10" name="date_changed"/>
+  </property>
+  <property name="status" type="java.lang.String">
+   <column length="5" name="status"/>
+  </property>
+ </class>
+</hibernate-mapping>
